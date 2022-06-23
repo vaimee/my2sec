@@ -20,12 +20,6 @@
         <Literal>OPO- Open Project Ontology</Literal>
     </Annotation>
     <Declaration>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#admin"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#employee"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#logTime"/>
     </Declaration>
     <Declaration>
@@ -35,16 +29,31 @@
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#openProject"/>
     </Declaration>
     <Declaration>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#project"/>
-    </Declaration>
-    <Declaration>
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
     </Declaration>
     <Declaration>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#watcher"/>
+        <ObjectProperty IRI="#attachedBy"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="http://www.vaimee.it/ontology/1.0/sw#requires"/>
+        <ObjectProperty IRI="#attachedTo"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#get"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasLogTime"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasProject"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasTask"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#post"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#usesOpenProject"/>
     </Declaration>
     <Declaration>
         <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#activityType"/>
@@ -65,35 +74,52 @@
         <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#projectName"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#titleTask"/>
+        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#userName"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#userName"/>
+        <DataProperty IRI="#titleTask"/>
     </Declaration>
     <Declaration>
         <AnnotationProperty abbreviatedIRI="owl:title"/>
     </Declaration>
     <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#admin"/>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#employee"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#employee"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#logTime"/>
         <DataExactCardinality cardinality="1">
-            <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#userName"/>
-            <Datatype abbreviatedIRI="owl:rational"/>
+            <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#activityType"/>
         </DataExactCardinality>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#member"/>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#employee"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#logTime"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#comment"/>
+        </DataExactCardinality>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#project"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#logTime"/>
         <DataExactCardinality cardinality="1">
-            <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#projectName"/>
-            <Datatype abbreviatedIRI="owl:rational"/>
+            <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#dateTime"/>
+            <Datatype abbreviatedIRI="xsd:dateTimeStamp"/>
         </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#logTime"/>
+        <DataExactCardinality cardinality="1">
+            <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#hours"/>
+            <Datatype abbreviatedIRI="xsd:float"/>
+        </DataExactCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#openProject"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#hasProject"/>
+        </ObjectMinCardinality>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
+        <ObjectMinCardinality cardinality="1">
+            <ObjectProperty IRI="#attachedTo"/>
+            <Class IRI="http://www.vaimee.it/ontology/1.0/opo#member"/>
+        </ObjectMinCardinality>
     </SubClassOf>
     <SubClassOf>
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
@@ -105,14 +131,49 @@
     <SubClassOf>
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
         <DataExactCardinality cardinality="1">
-            <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#titleTask"/>
-            <Datatype abbreviatedIRI="owl:rational"/>
+            <DataProperty IRI="#titleTask"/>
         </DataExactCardinality>
     </SubClassOf>
-    <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#watcher"/>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#employee"/>
-    </SubClassOf>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#attachedBy"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#attachedTo"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasProject"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#openProject"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#attachedTo"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#member"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#get"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasLogTime"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#logTime"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasTask"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#post"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#usesOpenProject"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#openProject"/>
+    </ObjectPropertyRange>
+    <SubDataPropertyOf>
+        <DataProperty abbreviatedIRI="owl:topDataProperty"/>
+        <DataProperty IRI="#titleTask"/>
+    </SubDataPropertyOf>
     <DataPropertyDomain>
         <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#activityType"/>
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#logTime"/>
@@ -134,28 +195,12 @@
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#projectName"/>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#project"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#titleTask"/>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#userName"/>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#admin"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
-        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#userName"/>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#employee"/>
-    </DataPropertyDomain>
-    <DataPropertyDomain>
         <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#userName"/>
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#member"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#userName"/>
-        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#watcher"/>
+        <DataProperty IRI="#titleTask"/>
+        <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#activityType"/>
@@ -175,38 +220,23 @@
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#idTask"/>
-        <Datatype abbreviatedIRI="rdfs:Literal"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#projectName"/>
         <Datatype abbreviatedIRI="rdfs:Literal"/>
     </DataPropertyRange>
     <DataPropertyRange>
-        <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#titleTask"/>
-        <Datatype abbreviatedIRI="rdfs:Literal"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
         <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#userName"/>
         <Datatype abbreviatedIRI="rdfs:Literal"/>
     </DataPropertyRange>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
-        <IRI>http://www.vaimee.it/ontology/1.0/opo#admin</IRI>
-        <Literal>http://xmlns.com/foaf/1.0/Person</Literal>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
-        <IRI>http://www.vaimee.it/ontology/1.0/opo#employee</IRI>
-        <IRI>http://xmlns.com/foaf/1.0/Person</IRI>
-    </AnnotationAssertion>
+    <DataPropertyRange>
+        <DataProperty IRI="#titleTask"/>
+        <Datatype abbreviatedIRI="rdfs:Literal"/>
+    </DataPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
         <IRI>http://www.vaimee.it/ontology/1.0/opo#member</IRI>
-        <IRI>http://xmlns.com/foaf/1.0/Person</IRI>
-    </AnnotationAssertion>
-    <AnnotationAssertion>
-        <AnnotationProperty abbreviatedIRI="rdfs:isDefinedBy"/>
-        <IRI>http://www.vaimee.it/ontology/1.0/opo#watcher</IRI>
         <IRI>http://xmlns.com/foaf/1.0/Person</IRI>
     </AnnotationAssertion>
 </Ontology>
