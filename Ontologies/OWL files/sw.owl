@@ -182,12 +182,6 @@
         <DataProperty abbreviatedIRI="sw:nameBrowser"/>
     </Declaration>
     <Declaration>
-        <DataProperty abbreviatedIRI="sw:startDateTime"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty abbreviatedIRI="sw:stopDateTime"/>
-    </Declaration>
-    <Declaration>
         <DataProperty abbreviatedIRI="sw:titleFile"/>
     </Declaration>
     <Declaration>
@@ -301,7 +295,7 @@
         <Class IRI="http://www.vaimee.it/ontology/1.0/opo#task"/>
         <DataExactCardinality cardinality="1">
             <DataProperty IRI="http://www.vaimee.it/ontology/1.0/opo#idTask"/>
-            <Datatype abbreviatedIRI="owl:rational"/>
+            <Datatype abbreviatedIRI="xsd:int"/>
         </DataExactCardinality>
     </SubClassOf>
     <SubClassOf>
@@ -596,14 +590,6 @@
     <DataPropertyRange>
         <DataProperty abbreviatedIRI="sw:nameBrowser"/>
         <Datatype abbreviatedIRI="rdfs:Literal"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty abbreviatedIRI="sw:startDateTime"/>
-        <Datatype abbreviatedIRI="xsd:dateTime"/>
-    </DataPropertyRange>
-    <DataPropertyRange>
-        <DataProperty abbreviatedIRI="sw:stopDateTime"/>
-        <Datatype abbreviatedIRI="xsd:dateTime"/>
     </DataPropertyRange>
     <DataPropertyRange>
         <DataProperty abbreviatedIRI="sw:titleFile"/>
