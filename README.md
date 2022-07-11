@@ -2,6 +2,16 @@
 
 ![Architecture](https://github.com/vaimee/my2sec/blob/main/img/architecture.png?raw=true)
 
+## Reference technologies
+
+SEPA
+ActivityWatch
+SuperSet
+OpenProject
+Keycloak
+Drools
+...
+
 ## ActivityWatch
 
 Forked. Adding new Watchers like a MeetingWatcher.
