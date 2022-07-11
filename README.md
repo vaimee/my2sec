@@ -2,6 +2,16 @@
 
 ![Architecture](https://github.com/vaimee/my2sec/blob/main/img/architecture.png?raw=true)
 
+## ActivityWatch
+
+Forked. Adding new Watchers like a MeetingWatcher.
+
 ## AI tools
 
-## ActivityWatch or not ActivityWatch
+Under evaluation. Drools can be an option in first instance.
+
+## Blockchain
+
+
+
+
