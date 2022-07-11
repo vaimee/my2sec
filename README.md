@@ -16,6 +16,10 @@ Keycloak
 
 Drools
 
+Jena
+
+OpenLink Virtuoso
+
 ...
 
 ## ActivityWatch
