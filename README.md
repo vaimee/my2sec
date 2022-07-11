@@ -5,11 +5,17 @@
 ## Reference technologies
 
 SEPA
+
 ActivityWatch
+
 SuperSet
+
 OpenProject
+
 Keycloak
+
 Drools
+
 ...
 
 ## ActivityWatch
