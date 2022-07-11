@@ -7,6 +7,7 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="http://www.vaimee.it/ontology/sw"
      versionIRI="http://www.vaimee.it/ontology/1.0/sw">
+    <Prefix name="" IRI="http://www.vaimee.it/ontology/sw"/>
     <Prefix name="sw" IRI="http://www.vaimee.it/ontology/1.0/sw#"/>
     <Prefix name="opo" IRI="http://www.vaimee.it/ontology/0.1/opo#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
@@ -16,7 +17,7 @@
     <Prefix name="jsap" IRI="http://www.vaimee.it/ontology/2.0/jsap#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Declaration>
-        <Class abbreviatedIRI="opo:logTime"/>
+        <Class abbreviatedIRI="opo:LogTime"/>
     </Declaration>
     <Declaration>
         <Class abbreviatedIRI="opo:member"/>
@@ -28,22 +29,22 @@
         <Class abbreviatedIRI="opo:watcher"/>
     </Declaration>
     <Declaration>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="http://www.vaimee.it/ontology/0.1/sw#ApplicationEvent"/>
     </Declaration>
     <Declaration>
         <Class IRI="http://www.vaimee.it/ontology/0.1/sw#BrowserEvent"/>
     </Declaration>
     <Declaration>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Event"/>
     </Declaration>
     <Declaration>
         <Class IRI="http://www.vaimee.it/ontology/0.1/sw#counter"/>
     </Declaration>
     <Declaration>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#event"/>
-    </Declaration>
-    <Declaration>
-        <Class abbreviatedIRI="sw:aiClassificator"/>
+        <Class abbreviatedIRI="sw:AIClassifier"/>
     </Declaration>
     <Declaration>
         <ObjectProperty abbreviatedIRI="sw:classifiedBy"/>
@@ -92,70 +93,70 @@
         <ObjectMinCardinality cardinality="1">
             <ObjectProperty abbreviatedIRI="sw:requires"/>
             <ObjectIntersectionOf>
-                <Class abbreviatedIRI="opo:logTime"/>
-                <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+                <Class abbreviatedIRI="opo:LogTime"/>
+                <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
             </ObjectIntersectionOf>
         </ObjectMinCardinality>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#ApplicationEvent"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#event"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#BrowserEvent"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#event"/>
-    </SubClassOf>
-    <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
         <ObjectAllValuesFrom>
             <ObjectProperty abbreviatedIRI="sw:classifiedBy"/>
-            <Class abbreviatedIRI="sw:aiClassificator"/>
+            <Class abbreviatedIRI="sw:AIClassifier"/>
         </ObjectAllValuesFrom>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
         <ObjectExactCardinality cardinality="1">
             <ObjectProperty abbreviatedIRI="sw:hasCounter"/>
         </ObjectExactCardinality>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
         <ObjectExactCardinality cardinality="1">
             <ObjectProperty abbreviatedIRI="sw:hasEvent"/>
         </ObjectExactCardinality>
     </SubClassOf>
     <SubClassOf>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
         <ObjectExactCardinality cardinality="1">
             <ObjectProperty abbreviatedIRI="sw:loggedWith"/>
-            <Class abbreviatedIRI="opo:logTime"/>
+            <Class abbreviatedIRI="opo:LogTime"/>
         </ObjectExactCardinality>
     </SubClassOf>
     <SubClassOf>
-        <Class abbreviatedIRI="sw:aiClassificator"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#ApplicationEvent"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Event"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#BrowserEvent"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Event"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI="sw:AIClassifier"/>
         <ObjectAllValuesFrom>
             <ObjectProperty abbreviatedIRI="sw:classifiedBy"/>
             <ObjectUnionOf>
                 <Class abbreviatedIRI="opo:member"/>
-                <Class abbreviatedIRI="sw:aiClassificator"/>
+                <Class abbreviatedIRI="sw:AIClassifier"/>
             </ObjectUnionOf>
         </ObjectAllValuesFrom>
     </SubClassOf>
     <ObjectPropertyDomain>
         <ObjectProperty abbreviatedIRI="sw:classifiedBy"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty abbreviatedIRI="sw:hasCounter"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty abbreviatedIRI="sw:hasEvent"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty abbreviatedIRI="sw:loggedWith"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty abbreviatedIRI="sw:requires"/>
@@ -167,7 +168,7 @@
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty abbreviatedIRI="sw:classifiedBy"/>
-        <Class abbreviatedIRI="sw:aiClassificator"/>
+        <Class abbreviatedIRI="sw:AIClassifier"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty abbreviatedIRI="sw:hasCounter"/>
@@ -175,22 +176,22 @@
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty abbreviatedIRI="sw:hasEvent"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#event"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Event"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty abbreviatedIRI="sw:loggedWith"/>
-        <Class abbreviatedIRI="opo:logTime"/>
+        <Class abbreviatedIRI="opo:LogTime"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty abbreviatedIRI="sw:requires"/>
         <ObjectIntersectionOf>
-            <Class abbreviatedIRI="opo:logTime"/>
-            <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+            <Class abbreviatedIRI="opo:LogTime"/>
+            <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
         </ObjectIntersectionOf>
     </ObjectPropertyRange>
     <DataPropertyDomain>
         <DataProperty abbreviatedIRI="sw:eventName"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#event"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Event"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty abbreviatedIRI="sw:nameApp"/>
@@ -222,7 +223,7 @@
     </DataPropertyDomain>
     <DataPropertyDomain>
         <DataProperty abbreviatedIRI="sw:work"/>
-        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#activity"/>
+        <Class IRI="http://www.vaimee.it/ontology/0.1/sw#Activity"/>
     </DataPropertyDomain>
     <DataPropertyRange>
         <DataProperty abbreviatedIRI="sw:eventName"/>
@@ -264,5 +265,5 @@
 
 
 
-<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+<!-- Generated by the OWL API (version 4.5.7.2018-12-02T02:23:35Z) https://github.com/owlcs/owlapi -->
 
