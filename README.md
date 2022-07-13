@@ -26,6 +26,9 @@ OpenLink Virtuoso
 
 Forked. Adding new Watchers like a MeetingWatcher.
 
+New watchers:
+- Detecting meetings (Jitsi, Google Meet, Teams, Zoom)
+
 ## AI tools
 
 Under evaluation. Drools can be an option in first instance.
