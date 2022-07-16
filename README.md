@@ -1,4 +1,4 @@
-# My2Sec - The Ultimate Project Management Suite for Smart Workers
+# My2Sec - The Ultimate Project Management Suite By Smart Workers for Smart Workers
 
 ![Architecture](https://github.com/vaimee/my2sec/blob/main/img/architecture.png?raw=true)
 
