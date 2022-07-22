@@ -1,6 +1,6 @@
 # My2Sec - The Ultimate PM & HR Suite By Smart Workers for Smart Workers
 
-![Architecture](https://github.com/vaimee/my2sec/blob/main/img/architecture.png?raw=true)
+![Architecture](img/architecture.png?raw=true)
 
 ## Reference technologies
 
