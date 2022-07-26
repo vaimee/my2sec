@@ -1,0 +1,168 @@
+@prefix : <http://www.vaimee.it/ontology/pac> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pac: <http://www.vaimee.it/ontology/1.0/pac> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/1.0/#> .
+@prefix jsap: <http://www.vaimee.it/ontology/2.0/jsap#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@base <http://www.vaimee.it/ontology/pac> .
+
+<http://www.vaimee.it/ontology/pac> rdf:type owl:Ontology ;
+                                     owl:versionIRI <http://www.vaimee.it/ontology/1.0/pac> ;
+                                     owl:versionInfo "1.0"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.vaimee.it/ontology/pac/1.0#makesQuery
+<http://www.vaimee.it/ontology/pac/1.0#makesQuery> rdf:type owl:ObjectProperty ;
+                                                   rdfs:domain <http://www.vaimee.it/ontology/pac/1.0#aggregator> ,
+                                                               <http://www.vaimee.it/ontology/pac/1.0#consumer> ;
+                                                   rdfs:range jsap:sparql11query .
+
+
+###  http://www.vaimee.it/ontology/pac/1.0#makesSubscription
+<http://www.vaimee.it/ontology/pac/1.0#makesSubscription> rdf:type owl:ObjectProperty ;
+                                                          rdfs:domain <http://www.vaimee.it/ontology/pac/1.0#aggregator> ,
+                                                                      <http://www.vaimee.it/ontology/pac/1.0#consumer> ;
+                                                          rdfs:range jsap:sparql11subscribe .
+
+
+###  http://www.vaimee.it/ontology/pac/1.0#makesUpdate
+<http://www.vaimee.it/ontology/pac/1.0#makesUpdate> rdf:type owl:ObjectProperty ;
+                                                    rdfs:domain <http://www.vaimee.it/ontology/pac/1.0#aggregator> ,
+                                                                <http://www.vaimee.it/ontology/pac/1.0#producer> ;
+                                                    rdfs:range jsap:sparql11update .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.vaimee.it/ontology/pac/1.0#uri
+<http://www.vaimee.it/ontology/pac/1.0#uri> rdf:type owl:DatatypeProperty ;
+                                            rdfs:domain jsap:sparql11query ,
+                                                        jsap:sparql11subscribe ,
+                                                        jsap:sparql11update ,
+                                                        <http://www.vaimee.it/ontology/pac/1.0#interaction> ;
+                                            rdfs:range xsd:anyURI .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.vaimee.it/ontology/2.0/jsap#sparql11query
+jsap:sparql11query rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.vaimee.it/ontology/pac/1.0#reading> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#uri> ;
+                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                     owl:onDataRange xsd:anyURI
+                                   ] ;
+                   rdfs:isDefinedBy schema:Action ;
+                   rdfs:label "Query" .
+
+
+###  http://www.vaimee.it/ontology/2.0/jsap#sparql11subscribe
+jsap:sparql11subscribe rdf:type owl:Class ;
+                       rdfs:subClassOf <http://www.vaimee.it/ontology/pac/1.0#reading> ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#uri> ;
+                                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                         owl:onDataRange xsd:anyURI
+                                       ] ;
+                       rdfs:label "Subscription"@en .
+
+
+###  http://www.vaimee.it/ontology/2.0/jsap#sparql11update
+jsap:sparql11update rdf:type owl:Class ;
+                    rdfs:subClassOf <http://www.vaimee.it/ontology/pac/1.0#writing> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#uri> ;
+                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                      owl:onDataRange xsd:anyURI
+                                    ] ;
+                    rdfs:label "Update"@en .
+
+
+###  http://www.vaimee.it/ontology/pac/1.0#aggregator
+<http://www.vaimee.it/ontology/pac/1.0#aggregator> rdf:type owl:Class ;
+                                                   rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#makesQuery> ;
+                                                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                     owl:onClass jsap:sparql11query
+                                                                   ] ,
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#makesSubscription> ;
+                                                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                     owl:onClass jsap:sparql11subscribe
+                                                                   ] ,
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#makesUpdate> ;
+                                                                     owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                     owl:onClass jsap:sparql11update
+                                                                   ] ;
+                                                   rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Agent> ;
+                                                   rdfs:label "Aggregator"@en .
+
+
+###  http://www.vaimee.it/ontology/pac/1.0#consumer
+<http://www.vaimee.it/ontology/pac/1.0#consumer> rdf:type owl:Class ;
+                                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#makesQuery> ;
+                                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                   owl:onClass jsap:sparql11query
+                                                                 ] ,
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#makesSubscription> ;
+                                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                   owl:onClass jsap:sparql11subscribe
+                                                                 ] ;
+                                                 rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Agent> ;
+                                                 rdfs:label "Consumer"@en .
+
+
+###  http://www.vaimee.it/ontology/pac/1.0#interaction
+<http://www.vaimee.it/ontology/pac/1.0#interaction> rdf:type owl:Class ;
+                                                    rdfs:isDefinedBy schema:Action ;
+                                                    rdfs:label "Interaction"@en .
+
+
+###  http://www.vaimee.it/ontology/pac/1.0#producer
+<http://www.vaimee.it/ontology/pac/1.0#producer> rdf:type owl:Class ;
+                                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty <http://www.vaimee.it/ontology/pac/1.0#makesUpdate> ;
+                                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                   owl:onClass jsap:sparql11update
+                                                                 ] ;
+                                                 rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Agent> ;
+                                                 rdfs:label "Producer"@en .
+
+
+###  http://www.vaimee.it/ontology/pac/1.0#reading
+<http://www.vaimee.it/ontology/pac/1.0#reading> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.vaimee.it/ontology/pac/1.0#interaction> ;
+                                                rdfs:isDefinedBy schema:Action ;
+                                                rdfs:label "Reading"@en .
+
+
+###  http://www.vaimee.it/ontology/pac/1.0#writing
+<http://www.vaimee.it/ontology/pac/1.0#writing> rdf:type owl:Class ;
+                                                rdfs:subClassOf <http://www.vaimee.it/ontology/pac/1.0#interaction> ;
+                                                rdfs:label "Writing"@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
