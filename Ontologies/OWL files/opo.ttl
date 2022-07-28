@@ -4,9 +4,15 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix schema: <http://schema.org/> .
 @base <http://www.vaimee.it/ontology/opo> .
 
 <http://www.vaimee.it/ontology/opo> rdf:type owl:Ontology ;
+ 									dct:author _:genid1 ;
+                                    dct:contributor _:genid1 ;
+									vann:preferredNamespacePrefix "opo" ;
                                      owl:versionIRI <http://www.vaimee.it/ontology/1.0/opo#> ;
                                      <http://purl.org/dc/terms/description> """The Open Project Ontology is inteded as a semantic representation of the open source tool Open Project. This vocabulary describe in generic manner the whole managment for projects, in term of resources and spent time.
 
@@ -15,6 +21,9 @@ The OPO is developed as part of a stack of ontologies in the context of the My2S
                                                   "OPO ontology map and owl: http://github/vaimee/my2sec/tree/main/Ontologies"@en ;
                                      owl:title "OPO- Open Project Ontology" .
 
+_:genid1 rdf:type schema:Person ;
+          schema:name "Elisa Riforgiato" .
+          
 #################################################################
 #    Annotation properties
 #################################################################
@@ -32,17 +41,17 @@ owl:title rdf:type owl:AnnotationProperty .
 #################################################################
 
 ###  http://www.vaimee.it/ontology/1.0/opo#attachedBy
-<http://www.vaimee.it/ontology/1.0/opo#attachedBy> rdf:type owl:ObjectProperty ;
-                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#task> ;
-                                                   rdfs:range <http://www.vaimee.it/ontology/1.0/opo#admin> ;
+:attachedBy rdf:type owl:ObjectProperty ;
+                                                   rdfs:domain :task ;
+                                                   rdfs:range :admin ;
                                                    rdfs:comment "Attach something to someone."@en ;
                                                    rdfs:label "attachedBy"@en .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#attachedTo
-<http://www.vaimee.it/ontology/1.0/opo#attachedTo> rdf:type owl:ObjectProperty ;
-                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#task> ;
-                                                   rdfs:range <http://www.vaimee.it/ontology/1.0/opo#member> ;
+:attachedTo rdf:type owl:ObjectProperty ;
+                                                   rdfs:domain :task ;
+                                                   rdfs:range :member ;
                                                    rdfs:comment "Be attached to something."@en ;
                                                    rdfs:label "attachedTo"@en .
 

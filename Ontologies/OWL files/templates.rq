@@ -55,8 +55,8 @@ template :main(?ns) {
     }
 } where {
     ?o a owl:Ontology ;
-       rdfs:label ?title ;
-       rdfs:comment ?desc ;
+       owl:title ?title ;
+        <http://purl.org/dc/terms/description> ?desc ;
        vann:preferredNamespacePrefix ?prefix
 }
 
@@ -177,7 +177,7 @@ template :class-domain-all(?c ?prefix) {
 template :class-domain(?c ?prefix) {
     st:call-template(:term-link, ?p, ?prefix) ; separator = "<br>"
 } where {
-    ?p schema:domainIncludes ?c .
+    ?p rdfs:domain ?c .
 } order by ?p
 
 template :class-range-all(?c ?prefix) {
@@ -187,7 +187,7 @@ template :class-range-all(?c ?prefix) {
     "</tr>"
 } where {
     filter exists {
-        ?p schema:rangeIncludes ?c .
+        ?p rdfs:range ?c .
     }
 }
 
