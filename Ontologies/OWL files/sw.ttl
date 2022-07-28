@@ -1,6 +1,6 @@
 @prefix : <http://www.vaimee.it/ontology/sw> .
 @prefix sw: <http://www.vaimee.it/ontology/1.0/sw#> .
-@prefix opo: <http://www.vaimee.it/ontology/0.1/opo#> .
+@prefix opo: <http://www.vaimee.it/ontology/1.0/opo#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -18,7 +18,7 @@
 
 ###  http://www.vaimee.it/ontology/swhasActivity
 :hasActivity rdf:type owl:ObjectProperty ;
-             rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#task> ;
+             rdfs:domain opo:task ;
              rdfs:range <http://www.vaimee.it/ontology/0.1/sw#activity> .
 
 
@@ -43,14 +43,14 @@
 ###  http://www.vaimee.it/ontology/swloggedWith
 :loggedWith rdf:type owl:ObjectProperty ;
             rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#activity> ;
-            rdfs:range <http://www.vaimee.it/ontology/1.0/opo#logTime> .
+            rdfs:range opo:logTime .
 
 
 ###  http://www.vaimee.it/ontology/1.0/sw#classifiedBy
 sw:classifiedBy rdf:type owl:ObjectProperty ;
                 rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#activity> ;
                 rdfs:range [ rdf:type owl:Class ;
-                             owl:unionOf ( <http://www.vaimee.it/ontology/1.0/opo#member>
+                             owl:unionOf ( opo:member
                                            sw:aiClassificator
                                          )
                            ] .
@@ -75,35 +75,35 @@ sw:loggedWith rdf:type owl:ObjectProperty ;
 
 ###  http://www.vaimee.it/ontology/opo#attachedBy
 <http://www.vaimee.it/ontology/opo#attachedBy> rdf:type owl:ObjectProperty ;
-                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#task> .
+                                               rdfs:domain opo:task .
 
 
 ###  http://www.vaimee.it/ontology/opo#attachedTo
 <http://www.vaimee.it/ontology/opo#attachedTo> rdf:type owl:ObjectProperty ;
-                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#task> ;
-                                               rdfs:range <http://www.vaimee.it/ontology/1.0/opo#member> .
+                                               rdfs:domain opo:task ;
+                                               rdfs:range opo:member .
 
 
 ###  http://www.vaimee.it/ontology/opo#get
 <http://www.vaimee.it/ontology/opo#get> rdf:type owl:ObjectProperty ;
-                                        rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#member> ;
-                                        rdfs:range <http://www.vaimee.it/ontology/1.0/opo#task> .
+                                        rdfs:domain opo:member ;
+                                        rdfs:range opo:task .
 
 
 ###  http://www.vaimee.it/ontology/opo#hasLogTime
 <http://www.vaimee.it/ontology/opo#hasLogTime> rdf:type owl:ObjectProperty ;
-                                               rdfs:range <http://www.vaimee.it/ontology/1.0/opo#logTime> .
+                                               rdfs:range opo:logTime .
 
 
 ###  http://www.vaimee.it/ontology/opo#hasTask
 <http://www.vaimee.it/ontology/opo#hasTask> rdf:type owl:ObjectProperty ;
-                                            rdfs:range <http://www.vaimee.it/ontology/1.0/opo#task> .
+                                            rdfs:range opo:task .
 
 
 ###  http://www.vaimee.it/ontology/opo#post
 <http://www.vaimee.it/ontology/opo#post> rdf:type owl:ObjectProperty ;
-                                         rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#member> ;
-                                         rdfs:range <http://www.vaimee.it/ontology/1.0/opo#task> .
+                                         rdfs:domain opo:member ;
+                                         rdfs:range opo:task .
 
 
 ###  http://www.w3.org/2006/time#inside
@@ -117,39 +117,39 @@ sw:loggedWith rdf:type owl:ObjectProperty ;
 #################################################################
 
 ###  http://www.vaimee.it/ontology/1.0/opo#activityType
-<http://www.vaimee.it/ontology/1.0/opo#activityType> rdf:type owl:DatatypeProperty ;
-                                                     rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#logTime> ;
-                                                     rdfs:range rdfs:Literal .
+opo:activityType rdf:type owl:DatatypeProperty ;
+                 rdfs:domain opo:logTime ;
+                 rdfs:range rdfs:Literal .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#comment
-<http://www.vaimee.it/ontology/1.0/opo#comment> rdf:type owl:DatatypeProperty ;
-                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#logTime> ;
-                                                rdfs:range rdfs:Literal .
+opo:comment rdf:type owl:DatatypeProperty ;
+            rdfs:domain opo:logTime ;
+            rdfs:range rdfs:Literal .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#dateTime
-<http://www.vaimee.it/ontology/1.0/opo#dateTime> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#logTime> ;
-                                                 rdfs:range xsd:dateTime .
+opo:dateTime rdf:type owl:DatatypeProperty ;
+             rdfs:domain opo:logTime ;
+             rdfs:range xsd:dateTime .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#hours
-<http://www.vaimee.it/ontology/1.0/opo#hours> rdf:type owl:DatatypeProperty ;
-                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#logTime> ;
-                                              rdfs:range xsd:float .
+opo:hours rdf:type owl:DatatypeProperty ;
+          rdfs:domain opo:logTime ;
+          rdfs:range xsd:float .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#idTask
-<http://www.vaimee.it/ontology/1.0/opo#idTask> rdf:type owl:DatatypeProperty ;
-                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#task> ;
-                                               rdfs:range xsd:int .
+opo:idTask rdf:type owl:DatatypeProperty ;
+           rdfs:domain opo:task ;
+           rdfs:range xsd:int .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#userName
-<http://www.vaimee.it/ontology/1.0/opo#userName> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#member> ;
-                                                 rdfs:range rdfs:Literal .
+opo:userName rdf:type owl:DatatypeProperty ;
+             rdfs:domain opo:member ;
+             rdfs:range rdfs:Literal .
 
 
 ###  http://www.vaimee.it/ontology/1.0/sw#eventName
@@ -208,12 +208,18 @@ sw:work rdf:type owl:DatatypeProperty ;
 
 ###  http://www.vaimee.it/ontology/opo#titleTask
 <http://www.vaimee.it/ontology/opo#titleTask> rdf:type owl:DatatypeProperty ;
-                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#task> ;
+                                              rdfs:domain opo:task ;
                                               rdfs:range rdfs:Literal .
 
 
 ###  http://www.w3.org/2002/07/owl#topDataProperty
 owl:topDataProperty rdfs:subPropertyOf <http://www.vaimee.it/ontology/opo#titleTask> .
+
+
+###  http://www.w3.org/2006/time#inXSDDateTimeStamp
+<http://www.w3.org/2006/time#inXSDDateTimeStamp> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.w3.org/2006/time#instant> ;
+                                                 rdfs:range xsd:dateTimeStamp .
 
 
 #################################################################
@@ -326,7 +332,7 @@ owl:topDataProperty rdfs:subPropertyOf <http://www.vaimee.it/ontology/opo#titleT
                                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
                                                                   owl:onProperty sw:classifiedBy ;
                                                                   owl:allValuesFrom [ rdf:type owl:Class ;
-                                                                                      owl:unionOf ( <http://www.vaimee.it/ontology/1.0/opo#member>
+                                                                                      owl:unionOf ( opo:member
                                                                                                     sw:aiClassificator
                                                                                                   )
                                                                                     ]
@@ -344,7 +350,7 @@ owl:topDataProperty rdfs:subPropertyOf <http://www.vaimee.it/ontology/opo#titleT
                                                                 [ rdf:type owl:Restriction ;
                                                                   owl:onProperty :loggedWith ;
                                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onClass <http://www.vaimee.it/ontology/1.0/opo#logTime>
+                                                                  owl:onClass opo:logTime
                                                                 ] .
 
 
@@ -368,53 +374,53 @@ owl:topDataProperty rdfs:subPropertyOf <http://www.vaimee.it/ontology/opo#titleT
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#logTime
-<http://www.vaimee.it/ontology/1.0/opo#logTime> rdf:type owl:Class ;
-                                                rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#activityType> ;
-                                                                  owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#comment> ;
-                                                                  owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#dateTime> ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onDataRange xsd:dateTimeStamp
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#hours> ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onDataRange xsd:float
-                                                                ] .
+opo:logTime rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:activityType ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:comment ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:dateTime ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onDataRange xsd:dateTimeStamp
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:hours ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onDataRange xsd:float
+                            ] .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#member
-<http://www.vaimee.it/ontology/1.0/opo#member> rdf:type owl:Class ;
-                                               rdfs:isDefinedBy <http://xmlns.com/foaf/1.0/Person> .
+opo:member rdf:type owl:Class ;
+           rdfs:isDefinedBy <http://xmlns.com/foaf/1.0/Person> .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#task
-<http://www.vaimee.it/ontology/1.0/opo#task> rdf:type owl:Class ;
-                                             rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                               owl:onProperty :hasActivity ;
-                                                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                               owl:onClass <http://www.vaimee.it/ontology/0.1/sw#activity>
-                                                             ] ,
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/opo#attachedTo> ;
-                                                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                               owl:onClass <http://www.vaimee.it/ontology/1.0/opo#member>
-                                                             ] ,
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#idTask> ;
-                                                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                               owl:onDataRange xsd:int
-                                                             ] ,
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/opo#titleTask> ;
-                                                               owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                             ] .
+opo:task rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasActivity ;
+                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass <http://www.vaimee.it/ontology/0.1/sw#activity>
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://www.vaimee.it/ontology/opo#attachedTo> ;
+                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass opo:member
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty opo:idTask ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:int
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty <http://www.vaimee.it/ontology/opo#titleTask> ;
+                           owl:cardinality "1"^^xsd:nonNegativeInteger
+                         ] .
 
 
 ###  http://www.vaimee.it/ontology/1.0/sw#activityType
@@ -453,6 +459,16 @@ sw:message rdf:type owl:Class ;
 
 ###  http://www.w3.org/2006/time#interval
 <http://www.w3.org/2006/time#interval> rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.vaimee.it/ontology/1.0/sw#greg
+sw:greg rdf:type owl:NamedIndividual ,
+                 opo:member ;
+        opo:userName "gregorio" .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
