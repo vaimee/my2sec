@@ -15,8 +15,7 @@ sttl.connect(q => {
 });
 
 const ontologies = [
-    'opo.ttl'
-];
+    'opo.ttl','jsap.ttl','pac.ttl','sw.ttl'];
 
 
 console.log("Rendering ontology documentation...");
