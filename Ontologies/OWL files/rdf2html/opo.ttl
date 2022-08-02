@@ -233,7 +233,7 @@ owl:title rdf:type owl:AnnotationProperty .
 ###  http://www.vaimee.it/ontology/1.0/opo#ActivityType
 <http://www.vaimee.it/ontology/1.0/opo#ActivityType> rdf:type owl:Class ;
                                                      owl:equivalentClass [ rdf:type owl:Class ;
-                                                                           owl:oneOf ( <http://www.vaimee.it/ontology/1.0/opo#DataModelling>
+                                                                           owl:oneOf ( <http://www.vaimee.it/ontology/1.0/opo#DataModeling>
                                                                                        <http://www.vaimee.it/ontology/1.0/opo#Developing>
                                                                                        <http://www.vaimee.it/ontology/1.0/opo#Management>
                                                                                        <http://www.vaimee.it/ontology/1.0/opo#Meeting>
@@ -343,11 +343,18 @@ owl:title rdf:type owl:AnnotationProperty .
 #    Individuals
 #################################################################
 
-###  http://www.vaimee.it/ontology/1.0/opo#DataModelling
-<http://www.vaimee.it/ontology/1.0/opo#DataModelling> rdf:type owl:NamedIndividual ,
-                                                               <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
-                                                      rdfs:comment "Data modelling (e.g., using Protegè to build an ontology)" ;
-                                                      rdfs:label "DataModelling" .
+###  http://www.vaimee.it/ontology/1.0/opo#Accounting
+<http://www.vaimee.it/ontology/1.0/opo#Accounting> rdf:type owl:NamedIndividual ,
+                                                            <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
+                                                   rdfs:comment "Administrative stuffs (like payments, invoicing, ...)" ;
+                                                   rdfs:label "Accounting" .
+
+
+###  http://www.vaimee.it/ontology/1.0/opo#DataModeling
+<http://www.vaimee.it/ontology/1.0/opo#DataModeling> rdf:type owl:NamedIndividual ,
+                                                              <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
+                                                     rdfs:comment "Data modeling (e.g., using Protegè to build an ontology)" ;
+                                                     rdfs:label "DataModeling" .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#Developing
@@ -355,6 +362,20 @@ owl:title rdf:type owl:AnnotationProperty .
                                                             <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
                                                    rdfs:comment "In particular software developing (e.g., Java, Js, Node, Python, C#, ...)" ;
                                                    rdfs:label "Developing" .
+
+
+###  http://www.vaimee.it/ontology/1.0/opo#Email
+<http://www.vaimee.it/ontology/1.0/opo#Email> rdf:type owl:NamedIndividual ,
+                                                       <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
+                                              rdfs:comment "In some casese, a very time consuming activity" ;
+                                              rdfs:label "Email" .
+
+
+###  http://www.vaimee.it/ontology/1.0/opo#InstantMessaging
+<http://www.vaimee.it/ontology/1.0/opo#InstantMessaging> rdf:type owl:NamedIndividual ,
+                                                                  <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
+                                                         rdfs:comment "Like Slack, WhatsApp, Messanger, ..." ;
+                                                         rdfs:label "InstantMessaging" .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#Management
@@ -371,6 +392,19 @@ owl:title rdf:type owl:AnnotationProperty .
                                                 rdfs:label "Meeting" .
 
 
+###  http://www.vaimee.it/ontology/1.0/opo#Other
+<http://www.vaimee.it/ontology/1.0/opo#Other> rdf:type owl:NamedIndividual ,
+                                                       <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
+                                              rdfs:label "Other" .
+
+
+###  http://www.vaimee.it/ontology/1.0/opo#PhoneCall
+<http://www.vaimee.it/ontology/1.0/opo#PhoneCall> rdf:type owl:NamedIndividual ,
+                                                           <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
+                                                  rdfs:comment "Could be detected on a phone or using a messaging system (e.g., WhatsApp, Messenger, ...)" ;
+                                                  rdfs:label "PhoneCall" .
+
+
 ###  http://www.vaimee.it/ontology/1.0/opo#Reporting
 <http://www.vaimee.it/ontology/1.0/opo#Reporting> rdf:type owl:NamedIndividual ,
                                                            <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
@@ -383,6 +417,13 @@ owl:title rdf:type owl:AnnotationProperty .
                                                           <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
                                                  rdfs:comment "All the activities related to study new technologies and tools" ;
                                                  rdfs:label "Studying" .
+
+
+###  http://www.vaimee.it/ontology/1.0/opo#Travelling
+<http://www.vaimee.it/ontology/1.0/opo#Travelling> rdf:type owl:NamedIndividual ,
+                                                            <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
+                                                   rdfs:comment "By car, plane, train, bike, motorbike, ..." ;
+                                                   rdfs:label "Travelling" .
 
 
 [ <http://schema.org/affiliation> [ <http://schema.org/name> "VAIMEE" ;
