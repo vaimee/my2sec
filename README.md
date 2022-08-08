@@ -18,7 +18,7 @@
   <div class="text-paragraph">
     <h2>INSTALLATION</h2>
       <h3>Production</h3>
-      <p>
+      
       In Production, the USER needs to download only the AW-PRODUCER, it will be the Server Administrator which will deploy the mapping part.<br>
       The AW-PRODUCER is an ELECTRON APP distribuited via an exe file. Follow this steps to download and use the producer:
       <ol>
@@ -35,7 +35,7 @@
         <li>Select the http port and ws port</li>
         <li>Save options. The APP will reload automatically</li>
       </ol>
-      </p>
+      
 
       ## Developement
       
