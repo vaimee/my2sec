@@ -37,7 +37,7 @@
       </ol>
       </p>
 
-      <h3>Developement</h3>
+      ## Developement
       
 To test the whole adapter architecture, you can deploy mapper,producer and a sepa on your local host using the following docker-compose file:
 <pre>
