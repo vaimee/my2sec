@@ -1,14 +1,3 @@
-
-  <style type="text/css">
-    .content-wrapper{
-
-    }
-    .text-paragraph{
-
-    }
-  </style>
-
-
 <div class="content-wrapper">
 
   <h1>MY2SEC: ActivityWatch-ADAPTER</h1>
@@ -49,7 +38,7 @@
       </p>
 
       <h3>Developement</h3>
-      <p>
+      
 To test the whole adapter architecture, you can deploy mapper,producer and a sepa on your local host using the following docker-compose file:
 <pre>
 version: "3.9"
@@ -122,7 +111,7 @@ services:
 
 
 </pre>
-      </p>
+      
   </div> 
 
 
