@@ -1,0 +1,68 @@
+version: "3.9"
+#================================================#
+# NAME: awmapper4SEPA stack
+# DATE: 7-8-2022
+# AUTHOR: Gregorio Monari
+# DESCRIPTION: minimal configuration to test
+#   the aw mapper functionalities. Data must be
+#   produced by the AW-PRODUCER
+#================================================#
+volumes:
+  rdf_my2sec: #blazegraph db
+networks:
+  net_my2sec: #my2sec internal network and DNS
+
+
+services:
+
+  aw_mapper: #activity watch mapper
+    image: gregnet/awmapper:v0.1
+    user: node
+    restart: always
+    working_dir: /home/node/myapp
+    command: "node main.js"
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=0
+      - HOST_NAME=engine #sepa engine ip address
+      - HTTP_PORT=8000 #engine query/update port
+      - WS_PORT=9000 #engine subscription port
+    networks:
+      - "net_my2sec"
+
+
+  dashboard: #sepa dashboard: manual sparql1.1 queries and updates
+    image: gregnet/sepa_dashboard:1.0
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - "net_my2sec"
+
+      
+  engine: #the sepa core
+    image: gregnet/sepablaze:dev2j-0.1
+    command: sh -c "java Dev2jConnector && java -jar engine-0-SNAPSHOT.jar"
+    restart: always
+    environment:
+      - host_name=db
+    depends_on:
+      - db
+    ports:
+      - "8000:8000" #query/update port
+      - "9000:9000" #subscription port
+    networks:
+      - "net_my2sec"
+
+
+  db: #endpoint
+    image: lyrasis/blazegraph:2.1.5
+    restart: always
+    environment:
+        JAVA_XMS: 512m
+        JAVA_XMX: 1g
+    volumes:
+      - rdf_my2sec:/var/lib/jetty
+    networks:
+      - "net_my2sec"
+
