@@ -1,6 +1,7 @@
 <div class="content-wrapper">
 
   <h1>MY2SEC: ActivityWatch-ADAPTER</h1>
+  BRING ACTIVITY WATCH INTO THE CLOUD!
   <hr>
   <br>
 
