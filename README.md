@@ -36,7 +36,7 @@
         <li>Launch the executable file inside the extracted folder: AwProducer.exe for Windows, electron for Linux, Electron.app for Macos</li>
         <li>Create a desktop shortcut for easy access to the executable</li>
       </ol>
-      Producer CONFIGURATION
+      Producer CONFIGURATION<br>
       <ol>
         <li>Press the menu button on the top-left corner of the screen</li>
         <li>Select your user</li>
