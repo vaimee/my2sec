@@ -1,4 +1,5 @@
 @prefix : <http://www.vaimee.it/ontology/sw> .
+@prefix dct: <http://purl.org/dc/terms/> .
 @prefix sw: <http://www.vaimee.it/ontology/1.0/sw#> .
 @prefix opo: <http://www.vaimee.it/ontology/1.0/opo#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -10,38 +11,41 @@
 @base <http://www.vaimee.it/ontology/sw> .
 
 <http://www.vaimee.it/ontology/sw> rdf:type owl:Ontology ;
-                                    owl:versionIRI <http://www.vaimee.it/ontology/1.0/sw> .
+                                    owl:versionIRI <http://www.vaimee.it/ontology/1.0/sw> ;
+                                     dct:abstract "A short abstract goes here!" ;
+                                     dct:description "A description goes here!" ;
+                                     owl:title "Here the title!" .
 
 #################################################################
 #    Object Properties
 #################################################################
 
 ###  http://www.vaimee.it/ontology/swhasActivity
-:hasActivity rdf:type owl:ObjectProperty ;
+sw:hasActivity rdf:type owl:ObjectProperty ;
              rdfs:domain opo:task ;
              rdfs:range <http://www.vaimee.it/ontology/0.1/sw#activity> .
 
 
 ###  http://www.vaimee.it/ontology/swhasActivityType
-:hasActivityType rdf:type owl:ObjectProperty ;
+sw:hasActivityType rdf:type owl:ObjectProperty ;
                  rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#activity> ;
                  rdfs:range sw:activityType .
 
 
 ###  http://www.vaimee.it/ontology/swhasTimeInstant
-:hasTimeInstant rdf:type owl:ObjectProperty ;
+sw:hasTimeInstant rdf:type owl:ObjectProperty ;
                 rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#event> ;
                 rdfs:range <http://www.w3.org/2006/time#instant> .
 
 
 ###  http://www.vaimee.it/ontology/swhasTimeInterval
-:hasTimeInterval rdf:type owl:ObjectProperty ;
+sw:hasTimeInterval rdf:type owl:ObjectProperty ;
                  rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#activity> ;
                  rdfs:range <http://www.w3.org/2006/time#interval> .
 
 
 ###  http://www.vaimee.it/ontology/swloggedWith
-:loggedWith rdf:type owl:ObjectProperty ;
+sw:loggedWith rdf:type owl:ObjectProperty ;
             rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#activity> ;
             rdfs:range opo:logTime .
 
