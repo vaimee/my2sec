@@ -32,8 +32,8 @@
         - Mac: coming soon<br>
         - Linux: coming soon
         </li>
-        <li>Extract it wherever you want</li>
-        <li>Launch the executable inside the extracted folder</li>
+        <li>Extract the zip</li>
+        <li>Launch the AwProducer.exe file inside the extracted folder</li>
         <li>Create a desktop shortcut for easy access to the executable</li>
       </ol>
       Producer CONFIGURATION
