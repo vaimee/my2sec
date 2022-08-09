@@ -15,13 +15,13 @@ sttl.connect(q => {
 });
 
 const ontologies = [
-    'opo.ttl','jsap.ttl','pac.ttl','sw.ttl'];
+    'opo1.ttl','jsap1.ttl','pac1.ttl','sw1.ttl'];
 
 
 console.log("Rendering ontology documentation...");
 const promiseChain = ontologies.reduce((p, src) => {
     const ontologyFile = src
-    const templateURI = 'http://vaimee.it/template#main' 
+    const templateURI = 'http://vaimee.it/template#main'
     return p.then( _ => render(ontologyFile,templateURI,ontologyFile.replace('.ttl', '.html'))).then(() => urdf.clear())
 }, Promise.resolve());
 
