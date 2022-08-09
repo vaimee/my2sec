@@ -2,7 +2,7 @@ let fs = require('fs');
 let sttl = require('sttl');
 let urdf = require('urdf');
 
-const tpl = fs.readFileSync('templates.rq', 'utf-8');
+const tpl = fs.readFileSync('vaimee.rq', 'utf-8');
 
 sttl.register(tpl);
 sttl.connect(q => {
@@ -15,7 +15,7 @@ sttl.connect(q => {
 });
 
 const ontologies = [
-    'opo1.ttl','jsap1.ttl','pac1.ttl','sw1.ttl'];
+    '../Ontologies/OWL files/opo.ttl','../Ontologies/OWL files/jsap.ttl','../Ontologies/OWL files/pac.ttl','../Ontologies/OWL files/sw.ttl'];
 
 
 console.log("Rendering ontology documentation...");
