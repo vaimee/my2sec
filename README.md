@@ -24,7 +24,7 @@
       <h3>Production</h3>
       <p>
       In Production, the USER needs to download only the AW-PRODUCER, it will be the Server Administrator which will deploy the mapping part.<br>
-      The AW-PRODUCER is an ELECTRON APP distribuited via an exe file. Follow this steps to download and use the producer:
+      The AW-PRODUCER is an ELECTRON APP distribuited via an exe file. Follow this steps to download and use the producer:</p>
       <ol>
         <li>
         Download the latest release zip file: <br>
@@ -44,10 +44,7 @@
         <li>Select the http port and ws port</li>
         <li>Save options. The APP will reload automatically</li>
       </ol>
-      <p>
-
-      ## Developement
-      
+<h3>Developement</h3>
 To test the whole adapter architecture, you can deploy mapper,producer and a sepa on your local host using the following docker-compose file:
 <pre>
 version: "3.9"
