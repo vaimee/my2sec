@@ -29,7 +29,7 @@
         <li>
         Download the latest release zip file: <br>
         - Windows: <a href="https://github.com/vaimee/my2sec/raw/adapter/AwAdapter-RELEASES/AwProducer-v0.8.3-win32-x64.zip" download>AwProducer-win32-x64</a><br>
-        - Mac: coming soon<br>
+        - Mac: <a href="https://github.com/vaimee/my2sec/raw/adapter/AwAdapter-RELEASES/awproducer-v0.8.3-macos.zip" download>AwProducer-macos</a><br>
         - Linux: coming soon
         </li>
         <li>Extract the zip</li>
