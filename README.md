@@ -33,7 +33,7 @@
         - Linux: <a href="https://github.com/vaimee/my2sec/raw/adapter/AwAdapter-RELEASES/awproducer-v0.8.3-linux-x64.tar.gz" download>AwProducer-linux-x64</a>
         </li>
         <li>Extract the zip</li>
-        <li>Launch the AwProducer.exe file inside the extracted folder</li>
+        <li>Launch the executable file inside the extracted folder: AwProducer.exe for Windows, electron for Linux, Electron.app for Macos</li>
         <li>Create a desktop shortcut for easy access to the executable</li>
       </ol>
       Producer CONFIGURATION
