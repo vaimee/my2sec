@@ -81,10 +81,14 @@ template :editor(?o) {
     "companyURL:" ?url
     "}" ; separator = ","
 } where {
-    { ?o dct:creator ?ed } union { ?o dct:contributor ?ed }
-    ?ed schema:name ?name ; schema:affiliation ?org .
-    ?org schema:name ?company ; schema:url ?url .
+	VALUES (?name ?company ?url)
+    {("Elisa Riforgiato" "VAIMEE" "https://vaimee.it")
+    ("Luca Roffia" "VAIMEE" "https://vaimee.it")}
 }
+
+#{ ?o dct:creator ?ed } union { ?o dct:contributor ?ed }
+#    ?ed schema:name ?name ; schema:affiliation ?org .
+#    ?org schema:name ?company ; schema:url ?url .
 
 ### Basic structure
 template :axioms(?ns ?prefix) {
