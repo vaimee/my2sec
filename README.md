@@ -1,7 +1,10 @@
 <div class="content-wrapper">
 
+  <div align="center">
   <h1>MY2SEC: ActivityWatch-ADAPTER</h1>
-  BRING ACTIVITY WATCH INTO THE CLOUD!
+   BRING ACTIVITY WATCH INTO THE CLOUD!<br><br>
+  <img src="img/awlovesepa.png"></img>
+  </div>
   <hr>
   <br>
 
