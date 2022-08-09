@@ -26,9 +26,14 @@
       In Production, the USER needs to download only the AW-PRODUCER, it will be the Server Administrator which will deploy the mapping part.<br>
       The AW-PRODUCER is an ELECTRON APP distribuited via an exe file. Follow this steps to download and use the producer:
       <ol>
-        <li>Download the latest release zip file (you can find it into AwAdapter-RELEASES)</li>
-        <li>Extract it wherever you want</li>
-        <li>Launch the executable inside the extracted folder</li>
+        <li>
+        Download the latest release zip file: <br>
+        - Windows: <a href="https://github.com/vaimee/my2sec/raw/adapter/AwAdapter-RELEASES/AwProducer-v0.8.3-win32-x64.zip" download>AwProducer-win32-x64</a><br>
+        - Mac: coming soon<br>
+        - Linux: coming soon
+        </li>
+        <li>Extract the zip</li>
+        <li>Launch the AwProducer.exe file inside the extracted folder</li>
         <li>Create a desktop shortcut for easy access to the executable</li>
       </ol>
       Producer CONFIGURATION
