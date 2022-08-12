@@ -159,20 +159,18 @@ owl:title rdf:type owl:AnnotationProperty .
 #    Data properties
 #################################################################
 
+###  http://www.vaimee.it/my2sec/ontologies/opo#uri
+<http://www.vaimee.it/my2sec/ontologies/opo#uri> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:comment "URI"@en ;
+                                                 rdfs:label "uri"@en .
+
+
 ###  http://www.vaimee.it/ontology/1.0/opo#comment
 <http://www.vaimee.it/ontology/1.0/opo#comment> rdf:type owl:DatatypeProperty ;
                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
                                                 rdfs:range rdfs:Literal ;
-                                                rdfs:comment "During the logging time you have to write a comment in order to describe wich kind of activity it was performed."@en ;
+                                                rdfs:comment "A comment about the activity done."@en ;
                                                 rdfs:label "comment"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#dateTime
-<http://www.vaimee.it/ontology/1.0/opo#dateTime> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                 rdfs:range xsd:dateTime ;
-                                                 rdfs:comment "The log Time is registred with a specific date and time"@en ;
-                                                 rdfs:label "dateTime"@en .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#hours
@@ -180,14 +178,24 @@ owl:title rdf:type owl:AnnotationProperty .
                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ,
                                                           <http://www.vaimee.it/ontology/1.0/opo#SpentTime> ;
                                               rdfs:range xsd:float ;
-                                              rdfs:comment "Amount of working hours for a specific activity which has to be logged."@en ;
+                                              rdfs:comment "Logged duration of an activity."@en ;
                                               rdfs:label "hours"@en .
+
+
+###  http://www.vaimee.it/ontology/1.0/opo#idTask
+<http://www.vaimee.it/ontology/1.0/opo#idTask> rdf:type owl:DatatypeProperty ;
+                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
+                                               rdfs:range xsd:int ;
+                                               rdfs:comment "Each task has an ID."@en ;
+                                               rdfs:label "idTask"@en .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#logActivityType
 <http://www.vaimee.it/ontology/1.0/opo#logActivityType> rdf:type owl:DatatypeProperty ;
                                                         rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                        rdfs:range rdfs:Literal .
+                                                        rdfs:range rdfs:Literal ;
+                                                        rdfs:comment "Type of an activity logged."@en ;
+                                                        rdfs:label "logActivityType"@en .
 
 
 ###  http://www.vaimee.it/ontology/1.0/opo#projectName
@@ -198,19 +206,11 @@ owl:title rdf:type owl:AnnotationProperty .
                                                     rdfs:label "projectName"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#taskId
-<http://www.vaimee.it/ontology/1.0/opo#taskId> rdf:type owl:DatatypeProperty ;
-                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                               rdfs:range xsd:int ;
-                                               rdfs:comment "Each task has an ID."@en ;
-                                               rdfs:label "taskId"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#taskTitle
-<http://www.vaimee.it/ontology/1.0/opo#taskTitle> rdf:type owl:DatatypeProperty ;
+###  http://www.vaimee.it/ontology/1.0/opo#titleTask
+<http://www.vaimee.it/ontology/1.0/opo#titleTask> rdf:type owl:DatatypeProperty ;
                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
                                                   rdfs:range rdfs:Literal ;
-                                                  rdfs:comment "Each task has a title."@en ;
+                                                  rdfs:comment "Title of a task."@en ;
                                                   rdfs:label "taskTitle"@en .
 
 
@@ -222,6 +222,14 @@ owl:title rdf:type owl:AnnotationProperty .
                                                  rdfs:range rdfs:Literal ;
                                                  rdfs:comment "Each physical person has an unique user name."@en ;
                                                  rdfs:label "userName"@en .
+
+
+###  http://www.w3.org/2006/time#inXSDDateTimeStamp
+<http://www.w3.org/2006/time#inXSDDateTimeStamp> rdf:type owl:DatatypeProperty ;
+                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
+                                                 rdfs:range xsd:dateTimeStamp ;
+                                                 rdfs:comment "Position of an instant, expressed using xsd:dateTimeStamp"@en ;
+                                                 rdfs:label "in XSD Date-Time-Stamp"@en .
 
 
 #################################################################
@@ -270,11 +278,6 @@ owl:title rdf:type owl:AnnotationProperty .
                                                                   owl:cardinality "1"^^xsd:nonNegativeInteger
                                                                 ] ,
                                                                 [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#dateTime> ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onDataRange xsd:dateTimeStamp
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
                                                                   owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#hours> ;
                                                                   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                                                   owl:onDataRange xsd:float
@@ -311,12 +314,12 @@ owl:title rdf:type owl:AnnotationProperty .
 ###  http://www.vaimee.it/ontology/1.0/opo#Task
 <http://www.vaimee.it/ontology/1.0/opo#Task> rdf:type owl:Class ;
                                              rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#taskId> ;
+                                                               owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#idTask> ;
                                                                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                                                owl:onDataRange owl:rational
                                                              ] ,
                                                              [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#taskTitle> ;
+                                                               owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#titleTask> ;
                                                                owl:cardinality "1"^^xsd:nonNegativeInteger
                                                              ] ;
                                              rdfs:comment "A task, attached by an admin to a member."@en ;

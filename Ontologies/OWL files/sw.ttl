@@ -136,106 +136,132 @@ opo:post rdf:type owl:ObjectProperty ;
 #    Data properties
 #################################################################
 
-###  http://www.vaimee.it/my2sec/ontologies/opo#activityType
-opo:activityType rdf:type owl:DatatypeProperty ;
-                 rdfs:domain opo:LogTime ;
-                 rdfs:range rdfs:Literal .
-
-
 ###  http://www.vaimee.it/my2sec/ontologies/opo#comment
 opo:comment rdf:type owl:DatatypeProperty ;
             rdfs:domain opo:LogTime ;
-            rdfs:range rdfs:Literal .
-
-
-###  http://www.vaimee.it/my2sec/ontologies/opo#dateTime
-opo:dateTime rdf:type owl:DatatypeProperty ;
-             rdfs:domain opo:LogTime ;
-             rdfs:range xsd:dateTime .
+            rdfs:range rdfs:Literal ;
+            rdfs:comment "A comment about the activity done." ;
+            rdfs:label "comment" .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/opo#hours
 opo:hours rdf:type owl:DatatypeProperty ;
           rdfs:domain opo:LogTime ;
-          rdfs:range xsd:float .
+          rdfs:range xsd:float ;
+          rdfs:comment "Logged duration of an activity."@en ;
+          rdfs:label "hours"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/opo#idTask
 opo:idTask rdf:type owl:DatatypeProperty ;
            rdfs:domain opo:Task ;
-           rdfs:range xsd:int .
+           rdfs:range xsd:int ;
+           rdfs:comment "Each task has an ID."@en ;
+           rdfs:label "idTask"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#logActivityType
+opo:logActivityType rdf:type owl:DatatypeProperty ;
+                    rdfs:domain opo:LogTime ;
+                    rdfs:range rdfs:Literal ;
+                    rdfs:comment "Type of an activity logged."@en ;
+                    rdfs:label "logActivityType"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/opo#titleTask
 opo:titleTask rdf:type owl:DatatypeProperty ;
               rdfs:domain opo:Task ;
-              rdfs:range rdfs:Literal .
+              rdfs:range rdfs:Literal ;
+              rdfs:comment "Title of a task."@en ;
+              rdfs:label "titleTask"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/opo#userName
 opo:userName rdf:type owl:DatatypeProperty ;
              rdfs:domain opo:Member ;
-             rdfs:range rdfs:Literal .
+             rdfs:range rdfs:Literal ;
+             rdfs:comment "Each phisical person has an unique user name."@en ;
+             rdfs:label "userName"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#eventName
 :eventName rdf:type owl:DatatypeProperty ;
            rdfs:domain :Event ;
-           rdfs:range rdfs:Literal .
+           rdfs:range rdfs:Literal ;
+           rdfs:comment "Name of an event."@en ;
+           rdfs:label "eventName"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#hostName
 :hostName rdf:type owl:DatatypeProperty ;
           rdfs:domain :Device ;
-          rdfs:range rdfs:Literal .
+          rdfs:range rdfs:Literal ;
+          rdfs:comment "Name of the host device."@en ;
+          rdfs:label "host"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#messageValue
 :messageValue rdf:type owl:DatatypeProperty ;
               rdfs:domain :Message ;
-              rdfs:range rdfs:Literal .
+              rdfs:range rdfs:Literal ;
+              rdfs:comment "Value of a message."@en ;
+              rdfs:label "messageValue"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#nameApp
 :nameApp rdf:type owl:DatatypeProperty ;
          rdfs:domain :ApplicationEvent ;
-         rdfs:range rdfs:Literal .
+         rdfs:range rdfs:Literal ;
+         rdfs:comment "Name of an application."@en ;
+         rdfs:label "nameApp"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#nameBrowser
 :nameBrowser rdf:type owl:DatatypeProperty ;
              rdfs:domain :BrowserEvent ;
-             rdfs:range rdfs:Literal .
+             rdfs:range rdfs:Literal ;
+             rdfs:comment "Name of a browser."@en ;
+             rdfs:label "nameBrowser"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#titleFile
 :titleFile rdf:type owl:DatatypeProperty ;
            rdfs:domain :ApplicationEvent ;
-           rdfs:range rdfs:Literal .
+           rdfs:range rdfs:Literal ;
+           rdfs:comment "Title of an application file."@en ;
+           rdfs:label "titleFile"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#titleTab
 :titleTab rdf:type owl:DatatypeProperty ;
           rdfs:domain :BrowserEvent ;
-          rdfs:range rdfs:Literal .
+          rdfs:range rdfs:Literal ;
+          rdfs:comment "Title of a browser tab."@en ;
+          rdfs:label "titleTab"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#work
 :work rdf:type owl:DatatypeProperty ;
       rdfs:domain :Activity ;
-      rdfs:range xsd:boolean .
+      rdfs:range xsd:boolean ;
+      rdfs:label "Flag to identify a work activity from a not work activity."@en ,
+                 "work"@en .
 
 
 ###  http://www.vaimee.it/my2sec/opo#uri
 <http://www.vaimee.it/my2sec/opo#uri> rdf:type owl:DatatypeProperty ;
                                       rdfs:domain opo:Member ;
-                                      rdfs:range xsd:anyURI .
+                                      rdfs:range xsd:anyURI ;
+                                      rdfs:comment "URI"@en ;
+                                      rdfs:label "uri"@en .
 
 
 ###  http://www.vaimee.it/my2sec/sw#clientName
 <http://www.vaimee.it/my2sec/sw#clientName> rdf:type owl:DatatypeProperty ;
                                             rdfs:domain <http://www.vaimee.it/my2sec/sw#Watcher> ;
-                                            rdfs:range rdfs:Literal .
+                                            rdfs:range rdfs:Literal ;
+                                            rdfs:comment "Client name for a specific watcher."@en ;
+                                            rdfs:label "clientName"@en .
 
 
 ###  http://www.w3.org/2002/07/owl#topDataProperty
@@ -244,9 +270,12 @@ owl:topDataProperty rdfs:subPropertyOf opo:titleTask .
 
 ###  http://www.w3.org/2006/time#inXSDDateTimeStamp
 <http://www.w3.org/2006/time#inXSDDateTimeStamp> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain :Message ,
+                                                 rdfs:domain opo:LogTime ,
+                                                             :Message ,
                                                              <http://www.w3.org/2006/time#instant> ;
-                                                 rdfs:range xsd:dateTimeStamp .
+                                                 rdfs:range xsd:dateTimeStamp ;
+                                                 rdfs:comment "Position of an istant, expressed using xsd:dateTimeStamp."@en ;
+                                                 rdfs:label "in XSD Date-Time-Stamp"@en .
 
 
 #################################################################
@@ -256,22 +285,17 @@ owl:topDataProperty rdfs:subPropertyOf opo:titleTask .
 ###  http://www.vaimee.it/my2sec/ontologies/opo#LogTime
 opo:LogTime rdf:type owl:Class ;
             rdfs:subClassOf [ rdf:type owl:Restriction ;
-                              owl:onProperty opo:activityType ;
-                              owl:cardinality "1"^^xsd:nonNegativeInteger
-                            ] ,
-                            [ rdf:type owl:Restriction ;
                               owl:onProperty opo:comment ;
                               owl:cardinality "1"^^xsd:nonNegativeInteger
-                            ] ,
-                            [ rdf:type owl:Restriction ;
-                              owl:onProperty opo:dateTime ;
-                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                              owl:onDataRange xsd:dateTimeStamp
                             ] ,
                             [ rdf:type owl:Restriction ;
                               owl:onProperty opo:hours ;
                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                               owl:onDataRange xsd:float
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:logActivityType ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
                             ] ;
             rdfs:comment "The duration for each dayly activity that has to be logged inside a specific task."@en ;
             rdfs:label "LogTime"@en .
