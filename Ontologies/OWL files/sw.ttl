@@ -1,224 +1,251 @@
-@prefix : <http://www.vaimee.it/ontology/sw> .
-@prefix sw: <http://www.vaimee.it/ontology/1.0/sw#> .
-@prefix opo: <http://www.vaimee.it/ontology/0.1/opo#> .
+@prefix : <http://www.vaimee.it/my2sec/ontologies/sw#> .
+@prefix opo: <http://www.vaimee.it/my2sec/ontologies/opo#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix jsap: <http://www.vaimee.it/ontology/2.0/jsap#> .
+@prefix jsap: <http://www.vaimee.it/ontology/jsap#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.vaimee.it/ontology/sw> .
+@base <http://www.vaimee.it/my2sec/ontologies/sw> .
 
-<http://www.vaimee.it/ontology/sw> rdf:type owl:Ontology ;
-                                    owl:versionIRI <http://www.vaimee.it/ontology/1.0/sw> .
+<http://www.vaimee.it/my2sec/ontologies/sw> rdf:type owl:Ontology ;
+                                             owl:versionIRI <http://www.vaimee.it/my2sec/ontologies/sw/0.1> ;
+                                             owl:versionInfo "1.0"@en .
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  http://www.vaimee.it/ontology/swhasActivity
+###  http://www.vaimee.it/my2sec/ontologies/opo#attachedTo
+opo:attachedTo rdf:type owl:ObjectProperty ;
+               rdfs:domain opo:Task ;
+               rdfs:range opo:Member ;
+               rdfs:comment "Be attach to something."@en ;
+               rdfs:label "attachedTo"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#get
+opo:get rdf:type owl:ObjectProperty ;
+        rdfs:domain opo:Member ;
+        rdfs:range opo:Task ;
+        rdfs:comment "Get request to retrive resource information."@en ;
+        rdfs:label "get"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#hasLogTime
+opo:hasLogTime rdf:type owl:ObjectProperty ;
+               rdfs:domain :Activity ;
+               rdfs:range opo:LogTime ;
+               rdfs:comment "Having or made by Log Time."@en ;
+               rdfs:label "hasLogTime"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#hasTask
+opo:hasTask rdf:type owl:ObjectProperty ;
+            rdfs:domain :Activity ;
+            rdfs:range opo:Task ;
+            rdfs:comment "Have a task."@en ;
+            rdfs:label "hasTask"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#post
+opo:post rdf:type owl:ObjectProperty ;
+         rdfs:domain opo:Member ;
+         rdfs:range opo:Task ;
+         rdfs:comment "Post request."@en ;
+         rdfs:label "post"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#classifiedBy
+:classifiedBy rdf:type owl:ObjectProperty ;
+              rdfs:domain :Activity ;
+              rdfs:range [ rdf:type owl:Class ;
+                           owl:unionOf ( opo:Member
+                                         :AiClassificator
+                                       )
+                         ] ;
+              rdfs:comment "Classify activities by someone or something."@en ;
+              rdfs:label "classifiedBy"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#generatedBy
+:generatedBy rdf:type owl:ObjectProperty ;
+             rdfs:domain :Message ;
+             rdfs:range :Device ;
+             rdfs:comment "Ability to generate something by someone."@en ;
+             rdfs:label "generatedBy"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#hasActivity
 :hasActivity rdf:type owl:ObjectProperty ;
-             rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-             rdfs:range <http://www.vaimee.it/ontology/0.1/sw#Activity> .
+             rdfs:domain opo:Task ;
+             rdfs:range :Activity ;
+             rdfs:comment "Having or made by activities."@en ;
+             rdfs:label "hasActivity"@en .
 
 
-###  http://www.vaimee.it/ontology/swhasActivityType
+###  http://www.vaimee.it/my2sec/ontologies/sw#hasActivityType
 :hasActivityType rdf:type owl:ObjectProperty ;
-                 rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Activity> ;
-                 rdfs:range <http://www.vaimee.it/ontology/ActivityType> .
+                 rdfs:domain :Activity ;
+                 rdfs:range :ActivityType ;
+                 rdfs:comment "Having or made by an activity type."@en ;
+                 rdfs:label "hasActivityType"@en .
 
 
-###  http://www.vaimee.it/ontology/swhasTimeInstant
+###  http://www.vaimee.it/my2sec/ontologies/sw#hasEvent
+:hasEvent rdf:type owl:ObjectProperty ;
+          rdfs:domain :Activity ;
+          rdfs:range :Event ;
+          rdfs:comment "Having or made by event."@en ;
+          rdfs:label "hasEvent"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#hasTimeInstant
 :hasTimeInstant rdf:type owl:ObjectProperty ;
-                rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Event> ;
-                rdfs:range <http://www.w3.org/2006/time#instant> .
+                rdfs:domain :Event ;
+                rdfs:range <http://www.w3.org/2006/time#instant> ;
+                rdfs:comment "Having a time istant."@en ;
+                rdfs:label "hasTimeInstant"@en .
 
 
-###  http://www.vaimee.it/ontology/swhasTimeInterval
+###  http://www.vaimee.it/my2sec/ontologies/sw#hasTimeInterval
 :hasTimeInterval rdf:type owl:ObjectProperty ;
-                 rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Activity> ;
-                 rdfs:range <http://www.w3.org/2006/time#interval> .
+                 rdfs:domain :Activity ;
+                 rdfs:range <http://www.w3.org/2006/time#interval> ;
+                 rdfs:comment "Having a time interval duration."@en ;
+                 rdfs:label "hasTimeInterval"@en .
 
 
-###  http://www.vaimee.it/ontology/swloggedWith
+###  http://www.vaimee.it/my2sec/ontologies/sw#loggedWith
 :loggedWith rdf:type owl:ObjectProperty ;
-            rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Activity> ;
-            rdfs:range <http://www.vaimee.it/ontology/1.0/opo#LogTime> .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#classifiedBy
-sw:classifiedBy rdf:type owl:ObjectProperty ;
-                rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Activity> ;
-                rdfs:range [ rdf:type owl:Class ;
-                             owl:unionOf ( <http://www.vaimee.it/ontology/1.0/opo#Member>
-                                           sw:AiClassificator
-                                         )
-                           ] .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#generatedBy
-sw:generatedBy rdf:type owl:ObjectProperty ;
-               rdfs:domain sw:Message ;
-               rdfs:range sw:Device .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#hasEvent
-sw:hasEvent rdf:type owl:ObjectProperty ;
-            rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Activity> ;
-            rdfs:range <http://www.vaimee.it/ontology/0.1/sw#Event> .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#loggedWith
-sw:loggedWith rdf:type owl:ObjectProperty ;
-              rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Activity> .
-
-
-###  http://www.vaimee.it/ontology/opo#attachedBy
-<http://www.vaimee.it/ontology/opo#attachedBy> rdf:type owl:ObjectProperty ;
-                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> .
-
-
-###  http://www.vaimee.it/ontology/opo#attachedTo
-<http://www.vaimee.it/ontology/opo#attachedTo> rdf:type owl:ObjectProperty ;
-                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                               rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Member> .
-
-
-###  http://www.vaimee.it/ontology/opo#get
-<http://www.vaimee.it/ontology/opo#get> rdf:type owl:ObjectProperty ;
-                                        rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Member> ;
-                                        rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Task> .
-
-
-###  http://www.vaimee.it/ontology/opo#hasLogTime
-<http://www.vaimee.it/ontology/opo#hasLogTime> rdf:type owl:ObjectProperty ;
-                                               rdfs:range <http://www.vaimee.it/ontology/1.0/opo#LogTime> .
-
-
-###  http://www.vaimee.it/ontology/opo#hasTask
-<http://www.vaimee.it/ontology/opo#hasTask> rdf:type owl:ObjectProperty ;
-                                            rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Task> .
-
-
-###  http://www.vaimee.it/ontology/opo#post
-<http://www.vaimee.it/ontology/opo#post> rdf:type owl:ObjectProperty ;
-                                         rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Member> ;
-                                         rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Task> .
+            rdfs:domain :Activity ;
+            rdfs:range opo:LogTime ;
+            rdfs:comment "Be logged with."@en ;
+            rdfs:label "loggedWith"@en .
 
 
 ###  http://www.w3.org/2006/time#inside
 <http://www.w3.org/2006/time#inside> rdf:type owl:ObjectProperty ;
                                      rdfs:domain <http://www.w3.org/2006/time#interval> ;
-                                     rdfs:range <http://www.w3.org/2006/time#instant> .
+                                     rdfs:range <http://www.w3.org/2006/time#instant> ;
+                                     rdfs:comment "An instant that falls inside the interval. It is not intended to include beginnings and ends of interval."@en ;
+                                     rdfs:label "has time instant inside"@en .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
-###  http://www.vaimee.it/ontology/1.0/opo#activityType
-<http://www.vaimee.it/ontology/1.0/opo#activityType> rdf:type owl:DatatypeProperty ;
-                                                     rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                     rdfs:range rdfs:Literal .
+###  http://www.vaimee.it/my2sec/ontologies/opo#activityType
+opo:activityType rdf:type owl:DatatypeProperty ;
+                 rdfs:domain opo:LogTime ;
+                 rdfs:range rdfs:Literal .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#comment
-<http://www.vaimee.it/ontology/1.0/opo#comment> rdf:type owl:DatatypeProperty ;
-                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                rdfs:range rdfs:Literal .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#dateTime
-<http://www.vaimee.it/ontology/1.0/opo#dateTime> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                 rdfs:range xsd:dateTime .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#hours
-<http://www.vaimee.it/ontology/1.0/opo#hours> rdf:type owl:DatatypeProperty ;
-                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                              rdfs:range xsd:float .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#idTask
-<http://www.vaimee.it/ontology/1.0/opo#idTask> rdf:type owl:DatatypeProperty ;
-                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                               rdfs:range xsd:int .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#userName
-<http://www.vaimee.it/ontology/1.0/opo#userName> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Member> ;
-                                                 rdfs:range rdfs:Literal .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#eventName
-sw:eventName rdf:type owl:DatatypeProperty ;
-             rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Event> ;
-             rdfs:range rdfs:Literal .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#hostName
-sw:hostName rdf:type owl:DatatypeProperty ;
-            rdfs:domain sw:Device ;
+###  http://www.vaimee.it/my2sec/ontologies/opo#comment
+opo:comment rdf:type owl:DatatypeProperty ;
+            rdfs:domain opo:LogTime ;
             rdfs:range rdfs:Literal .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#messageValue
-sw:messageValue rdf:type owl:DatatypeProperty ;
-                rdfs:domain sw:Message ;
-                rdfs:range rdfs:Literal .
+###  http://www.vaimee.it/my2sec/ontologies/opo#dateTime
+opo:dateTime rdf:type owl:DatatypeProperty ;
+             rdfs:domain opo:LogTime ;
+             rdfs:range xsd:dateTime .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#nameApp
-sw:nameApp rdf:type owl:DatatypeProperty ;
-           rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#applicationEvent> ;
+###  http://www.vaimee.it/my2sec/ontologies/opo#hours
+opo:hours rdf:type owl:DatatypeProperty ;
+          rdfs:domain opo:LogTime ;
+          rdfs:range xsd:float .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#idTask
+opo:idTask rdf:type owl:DatatypeProperty ;
+           rdfs:domain opo:Task ;
+           rdfs:range xsd:int .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#titleTask
+opo:titleTask rdf:type owl:DatatypeProperty ;
+              rdfs:domain opo:Task ;
+              rdfs:range rdfs:Literal .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#userName
+opo:userName rdf:type owl:DatatypeProperty ;
+             rdfs:domain opo:Member ;
+             rdfs:range rdfs:Literal .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#eventName
+:eventName rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Event ;
            rdfs:range rdfs:Literal .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#nameBrowser
-sw:nameBrowser rdf:type owl:DatatypeProperty ;
-               rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#browserEvent> ;
-               rdfs:range rdfs:Literal .
+###  http://www.vaimee.it/my2sec/ontologies/sw#hostName
+:hostName rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Device ;
+          rdfs:range rdfs:Literal .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#titleFile
-sw:titleFile rdf:type owl:DatatypeProperty ;
-             rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#applicationEvent> ;
+###  http://www.vaimee.it/my2sec/ontologies/sw#messageValue
+:messageValue rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Message ;
+              rdfs:range rdfs:Literal .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#nameApp
+:nameApp rdf:type owl:DatatypeProperty ;
+         rdfs:domain :ApplicationEvent ;
+         rdfs:range rdfs:Literal .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#nameBrowser
+:nameBrowser rdf:type owl:DatatypeProperty ;
+             rdfs:domain :BrowserEvent ;
              rdfs:range rdfs:Literal .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#titleTab
-sw:titleTab rdf:type owl:DatatypeProperty ;
-            rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#browserEvent> ;
-            rdfs:range rdfs:Literal .
+###  http://www.vaimee.it/my2sec/ontologies/sw#titleFile
+:titleFile rdf:type owl:DatatypeProperty ;
+           rdfs:domain :ApplicationEvent ;
+           rdfs:range rdfs:Literal .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#url
-sw:url rdf:type owl:DatatypeProperty ;
-       rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#browserEvent> ;
-       rdfs:range xsd:anyURI .
+###  http://www.vaimee.it/my2sec/ontologies/sw#titleTab
+:titleTab rdf:type owl:DatatypeProperty ;
+          rdfs:domain :BrowserEvent ;
+          rdfs:range rdfs:Literal .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#work
-sw:work rdf:type owl:DatatypeProperty ;
-        rdfs:domain <http://www.vaimee.it/ontology/0.1/sw#Activity> ;
-        rdfs:range xsd:boolean .
+###  http://www.vaimee.it/my2sec/ontologies/sw#work
+:work rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Activity ;
+      rdfs:range xsd:boolean .
 
 
-###  http://www.vaimee.it/ontology/opo#titleTask
-<http://www.vaimee.it/ontology/opo#titleTask> rdf:type owl:DatatypeProperty ;
-                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                              rdfs:range rdfs:Literal .
+###  http://www.vaimee.it/my2sec/opo#uri
+<http://www.vaimee.it/my2sec/opo#uri> rdf:type owl:DatatypeProperty ;
+                                      rdfs:domain opo:Member ;
+                                      rdfs:range xsd:anyURI .
+
+
+###  http://www.vaimee.it/my2sec/sw#clientName
+<http://www.vaimee.it/my2sec/sw#clientName> rdf:type owl:DatatypeProperty ;
+                                            rdfs:domain <http://www.vaimee.it/my2sec/sw#Watcher> ;
+                                            rdfs:range rdfs:Literal .
 
 
 ###  http://www.w3.org/2002/07/owl#topDataProperty
-owl:topDataProperty rdfs:subPropertyOf <http://www.vaimee.it/ontology/opo#titleTask> .
+owl:topDataProperty rdfs:subPropertyOf opo:titleTask .
 
 
 ###  http://www.w3.org/2006/time#inXSDDateTimeStamp
 <http://www.w3.org/2006/time#inXSDDateTimeStamp> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.w3.org/2006/time#instant> ;
+                                                 rdfs:domain :Message ,
+                                                             <http://www.w3.org/2006/time#instant> ;
                                                  rdfs:range xsd:dateTimeStamp .
 
 
@@ -226,296 +253,336 @@ owl:topDataProperty rdfs:subPropertyOf <http://www.vaimee.it/ontology/opo#titleT
 #    Classes
 #################################################################
 
-###  http://www.vaimee.it/ontology/ActivityType
-<http://www.vaimee.it/ontology/ActivityType> rdf:type owl:Class ;
-                                             owl:equivalentClass [ rdf:type owl:Class ;
-                                                                   owl:oneOf ( sw:Developing
-                                                                               sw:Management
-                                                                               sw:Meeting
-                                                                               sw:Other
-                                                                               sw:Reporting
-                                                                               sw:Reserching
-                                                                               sw:Testing
-                                                                             )
-                                                                 ] ;
-                                             rdfs:comment "ActivityType" ,
-                                                          "The typer of activity. It is an enumerated class of all the activity type that can be associated with a logtime in Open Project."@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#LogTime
+opo:LogTime rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:activityType ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:comment ;
+                              owl:cardinality "1"^^xsd:nonNegativeInteger
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:dateTime ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onDataRange xsd:dateTimeStamp
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty opo:hours ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onDataRange xsd:float
+                            ] ;
+            rdfs:comment "The duration for each dayly activity that has to be logged inside a specific task."@en ;
+            rdfs:label "LogTime"@en .
 
 
-###  http://www.vaimee.it/ontology/swafkEvent
-:afkEvent rdf:type owl:Class ;
-          rdfs:subClassOf <http://www.vaimee.it/ontology/0.1/sw#Event> ;
-          owl:disjointWith :inputEvent .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Member
+opo:Member rdf:type owl:Class ;
+           rdfs:comment "A worker who is attached to tasks or projects by the admin."@en ;
+           rdfs:isDefinedBy <http://xmlns.com/foaf/1.0/Person> ;
+           rdfs:label "Member"@en .
 
 
-###  http://www.vaimee.it/ontology/swbreak
-:break rdf:type owl:Class ;
-       rdfs:subClassOf :stopEvent .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Task
+opo:Task rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty opo:attachedTo ;
+                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass opo:Member
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :hasActivity ;
+                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass :Activity
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty opo:idTask ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onDataRange xsd:int
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty opo:titleTask ;
+                           owl:cardinality "1"^^xsd:nonNegativeInteger
+                         ] ;
+         rdfs:comment "A task attached by an admin to a member."@en ;
+         rdfs:label "Task"@en .
 
 
-###  http://www.vaimee.it/ontology/swcpuEvent
-:cpuEvent rdf:type owl:Class ;
-          rdfs:subClassOf <http://www.vaimee.it/ontology/0.1/sw#Event> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Activity
+:Activity rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :classifiedBy ;
+                            owl:allValuesFrom [ rdf:type owl:Class ;
+                                                owl:unionOf ( opo:Member
+                                                              :AiClassificator
+                                                            )
+                                              ]
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasActivityType ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :ActivityType
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasTimeInterval ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass <http://www.w3.org/2006/time#interval>
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :loggedWith ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass opo:LogTime
+                          ] ;
+          rdfs:comment "A working activity."@me ;
+          rdfs:label "Activity"@en .
 
 
-###  http://www.vaimee.it/ontology/swdeveloping
-:developing rdf:type owl:Class ;
-            rdfs:subClassOf <http://www.vaimee.it/ontology/ActivityType> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#ActivityType
+:ActivityType rdf:type owl:Class ;
+              owl:equivalentClass [ rdf:type owl:Class ;
+                                    owl:oneOf ( :Developing
+                                                :Management
+                                                :Meeting
+                                                :Other
+                                                :Reporting
+                                                :Reserching
+                                                :Testing
+                                              )
+                                  ] ;
+              rdfs:comment "The type of a working activity."@en ;
+              rdfs:label "ActivityType"@en .
 
 
-###  http://www.vaimee.it/ontology/swinputEvent
-:inputEvent rdf:type owl:Class ;
-            rdfs:subClassOf <http://www.vaimee.it/ontology/0.1/sw#Event> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#AiClassificator
+:AiClassificator rdf:type owl:Class ;
+                 rdfs:comment "The cassificator AI."@en ;
+                 rdfs:label "AiClassificator"@en .
 
 
-###  http://www.vaimee.it/ontology/swmeeting
-:meeting rdf:type owl:Class ;
-         rdfs:subClassOf <http://www.vaimee.it/ontology/ActivityType> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#ApplicationEvent
+:ApplicationEvent rdf:type owl:Class ;
+                  rdfs:subClassOf :WindowEvent ;
+                  rdfs:comment "A window event related to an application."@en ;
+                  rdfs:label "ApplicationEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swmeetingEvent
-:meetingEvent rdf:type owl:Class ;
-              rdfs:subClassOf :windowEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Break
+:Break rdf:type owl:Class ;
+       rdfs:subClassOf :StopEvent ;
+       rdfs:comment "The event representing a break during the work."@en ;
+       rdfs:label "Break"@en .
 
 
-###  http://www.vaimee.it/ontology/swonClickEvent
-:onClickEvent rdf:type owl:Class ;
-              rdfs:subClassOf :inputEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#BrowserEvent
+:BrowserEvent rdf:type owl:Class ;
+              rdfs:subClassOf :WindowEvent ;
+              rdfs:comment "A window event related to a Browser."@en ;
+              rdfs:label "BrowserEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swonFocusEvent
-:onFocusEvent rdf:type owl:Class ;
-              rdfs:subClassOf :inputEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#CpuEvent
+:CpuEvent rdf:type owl:Class ;
+          rdfs:subClassOf :Event ;
+          rdfs:comment "A CPU event."@en ;
+          rdfs:label "CpuEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swonKeyPressEvent
-:onKeyPressEvent rdf:type owl:Class ;
-                 rdfs:subClassOf :inputEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Device
+:Device rdf:type owl:Class ;
+        rdfs:comment "A device."@en ;
+        rdfs:label "Device"@en .
 
 
-###  http://www.vaimee.it/ontology/swonMouseMoveEvent
-:onMouseMoveEvent rdf:type owl:Class ;
-                  rdfs:subClassOf :inputEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Event
+:Event rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :hasTimeInstant ;
+                         owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                         owl:onClass <http://www.w3.org/2006/time#instant>
+                       ] ;
+       rdfs:comment "An event is something that happen in an istant and has no temporal duration."@en ;
+       rdfs:label "Event"@en .
 
 
-###  http://www.vaimee.it/ontology/swother
-:other rdf:type owl:Class ;
-       rdfs:subClassOf <http://www.vaimee.it/ontology/ActivityType> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#InputEvent
+:InputEvent rdf:type owl:Class ;
+            rdfs:subClassOf :Event ;
+            owl:disjointWith <http://www.vaimee.it/myy2sec/ontologies/sw#AfkEvent> ;
+            rdfs:comment "An event which defines an input."@en ;
+            rdfs:label "InputEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swrestartFromBreak
-:restartFromBreak rdf:type owl:Class ;
-                  rdfs:subClassOf :startEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#MeetingEvent
+:MeetingEvent rdf:type owl:Class ;
+              rdfs:subClassOf :WindowEvent ;
+              rdfs:comment "A window event relating to a meeting."@en ;
+              rdfs:label "MeetingEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swshoutdownEvent
-:shoutdownEvent rdf:type owl:Class ;
-                rdfs:subClassOf <http://www.vaimee.it/ontology/0.1/sw#Event> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Message
+:Message rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :generatedBy ;
+                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                           owl:onClass :Device
+                         ] ;
+         rdfs:comment "A JSON message containing an array of events produced by Activity Watch and represented with Activity Watch data schema."@en ;
+         rdfs:label "Message"@en .
 
 
-###  http://www.vaimee.it/ontology/swstartDay
-:startDay rdf:type owl:Class ;
-          rdfs:subClassOf :startEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#OnClickEvent
+:OnClickEvent rdf:type owl:Class ;
+              rdfs:subClassOf :InputEvent ;
+              rdfs:comment "An input event which occurs when an user clicks on an element."@en ;
+              rdfs:label "OnClickEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swstartEvent
-:startEvent rdf:type owl:Class ;
-            rdfs:subClassOf <http://www.vaimee.it/ontology/0.1/sw#Event> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#OnFocusEvent
+:OnFocusEvent rdf:type owl:Class ;
+              rdfs:subClassOf :InputEvent ;
+              rdfs:comment "An input event which occurs when an element gets focus."@en ;
+              rdfs:label "OnFocusEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swstopDay
-:stopDay rdf:type owl:Class ;
-         rdfs:subClassOf :stopEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#OnKeyPressEvent
+:OnKeyPressEvent rdf:type owl:Class ;
+                 rdfs:subClassOf :InputEvent ;
+                 rdfs:comment "An imput event generated by pressing the keyboard."@en ;
+                 rdfs:label "OnKeyPressEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swstopEvent
-:stopEvent rdf:type owl:Class ;
-           rdfs:subClassOf <http://www.vaimee.it/ontology/0.1/sw#Event> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#OnMouseMoveEvent
+:OnMouseMoveEvent rdf:type owl:Class ;
+                  rdfs:subClassOf :InputEvent ;
+                  rdfs:comment "An input event generated by moving the mouse."@en ;
+                  rdfs:label "OnMouseMoveEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/swstudying
-:studying rdf:type owl:Class ;
-          rdfs:subClassOf <http://www.vaimee.it/ontology/ActivityType> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#RestartFromBreak
+:RestartFromBreak rdf:type owl:Class ;
+                  rdfs:subClassOf :StartEvent ;
+                  rdfs:comment "The event representing the turning back at work from a break."@en ;
+                  rdfs:label "RestartFromBreak"@en .
 
 
-###  http://www.vaimee.it/ontology/swwindowEvent
-:windowEvent rdf:type owl:Class ;
-             rdfs:subClassOf <http://www.vaimee.it/ontology/0.1/sw#Event> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#ShoutDownEvent
+:ShoutDownEvent rdf:type owl:Class ;
+                rdfs:subClassOf :Event ;
+                rdfs:comment "The event related to a shout down."@en ;
+                rdfs:label "ShoutDownEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/0.1/sw#Activity
-<http://www.vaimee.it/ontology/0.1/sw#Activity> rdf:type owl:Class ;
-                                                rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty sw:classifiedBy ;
-                                                                  owl:allValuesFrom [ rdf:type owl:Class ;
-                                                                                      owl:unionOf ( <http://www.vaimee.it/ontology/1.0/opo#Member>
-                                                                                                    sw:AiClassificator
-                                                                                                  )
-                                                                                    ]
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty :hasActivityType ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onClass <http://www.vaimee.it/ontology/ActivityType>
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty :hasTimeInterval ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onClass <http://www.w3.org/2006/time#interval>
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty :loggedWith ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onClass <http://www.vaimee.it/ontology/1.0/opo#LogTime>
-                                                                ] .
+###  http://www.vaimee.it/my2sec/ontologies/sw#StartDay
+:StartDay rdf:type owl:Class ;
+          rdfs:subClassOf :StartEvent ;
+          rdfs:comment "The event representing the beginning of a working day."@en ;
+          rdfs:label "StartDay"@en .
 
 
-###  http://www.vaimee.it/ontology/0.1/sw#Event
-<http://www.vaimee.it/ontology/0.1/sw#Event> rdf:type owl:Class ;
-                                             rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                               owl:onProperty :hasTimeInstant ;
-                                                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                               owl:onClass <http://www.w3.org/2006/time#instant>
-                                                             ] .
+###  http://www.vaimee.it/my2sec/ontologies/sw#StartEvent
+:StartEvent rdf:type owl:Class ;
+            rdfs:subClassOf :Event ;
+            rdfs:comment "An event which defines the beginning."@en ;
+            rdfs:label "StartEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/0.1/sw#applicationEvent
-<http://www.vaimee.it/ontology/0.1/sw#applicationEvent> rdf:type owl:Class ;
-                                                        rdfs:subClassOf :windowEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#StopDay
+:StopDay rdf:type owl:Class ;
+         rdfs:subClassOf :StopEvent ;
+         rdfs:comment "The event representing the end of the working day."@en ;
+         rdfs:label "StopDay"@en .
 
 
-###  http://www.vaimee.it/ontology/0.1/sw#browserEvent
-<http://www.vaimee.it/ontology/0.1/sw#browserEvent> rdf:type owl:Class ;
-                                                    rdfs:subClassOf :windowEvent .
+###  http://www.vaimee.it/my2sec/ontologies/sw#StopEvent
+:StopEvent rdf:type owl:Class ;
+           rdfs:subClassOf :Event ;
+           rdfs:comment "An event which defines the end."@en ;
+           rdfs:label "StopEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#LogTime
-<http://www.vaimee.it/ontology/1.0/opo#LogTime> rdf:type owl:Class ;
-                                                rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#activityType> ;
-                                                                  owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#comment> ;
-                                                                  owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#dateTime> ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onDataRange xsd:dateTimeStamp
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#hours> ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onDataRange xsd:float
-                                                                ] .
+###  http://www.vaimee.it/my2sec/ontologies/sw#WindowEvent
+:WindowEvent rdf:type owl:Class ;
+             rdfs:subClassOf :Event ;
+             rdfs:comment "A window event is a particular event visualized as a window."@en ;
+             rdfs:label "WindowEvent"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Member
-<http://www.vaimee.it/ontology/1.0/opo#Member> rdf:type owl:Class ;
-                                               rdfs:isDefinedBy <http://xmlns.com/foaf/1.0/Person> .
+###  http://www.vaimee.it/my2sec/sw#Watcher
+<http://www.vaimee.it/my2sec/sw#Watcher> rdf:type owl:Class ;
+                                         rdfs:comment "A program that collects event and saves them inside the Activity Watch server."@en ;
+                                         rdfs:label "Watcher"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Task
-<http://www.vaimee.it/ontology/1.0/opo#Task> rdf:type owl:Class ;
-                                             rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                               owl:onProperty :hasActivity ;
-                                                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                               owl:onClass <http://www.vaimee.it/ontology/0.1/sw#Activity>
-                                                             ] ,
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/opo#attachedTo> ;
-                                                               owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                               owl:onClass <http://www.vaimee.it/ontology/1.0/opo#Member>
-                                                             ] ,
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#idTask> ;
-                                                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                               owl:onDataRange xsd:int
-                                                             ] ,
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/opo#titleTask> ;
-                                                               owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                             ] .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#AiClassificator
-sw:AiClassificator rdf:type owl:Class .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#Device
-sw:Device rdf:type owl:Class ;
-          rdfs:comment "A device"@en ;
-          rdfs:label "device"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#Message
-sw:Message rdf:type owl:Class ;
-           rdfs:subClassOf [ rdf:type owl:Restriction ;
-                             owl:onProperty sw:generatedBy ;
-                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                             owl:onClass sw:Device
-                           ] .
+###  http://www.vaimee.it/myy2sec/ontologies/sw#AfkEvent
+<http://www.vaimee.it/myy2sec/ontologies/sw#AfkEvent> rdf:type owl:Class ;
+                                                      rdfs:subClassOf :Event ;
+                                                      rdfs:comment "An afk event."@en ;
+                                                      rdfs:label "AfkEvent"@en .
 
 
 ###  http://www.w3.org/2006/time#instant
-<http://www.w3.org/2006/time#instant> rdf:type owl:Class .
+<http://www.w3.org/2006/time#instant> rdf:type owl:Class ;
+                                      rdfs:comment "A temporal entity with zero extent or duration."@en ;
+                                      rdfs:label "Time instant"@en .
 
 
 ###  http://www.w3.org/2006/time#interval
-<http://www.w3.org/2006/time#interval> rdf:type owl:Class .
+<http://www.w3.org/2006/time#interval> rdf:type owl:Class ;
+                                       rdfs:comment "A temporal entity with an extent or duration."@en ;
+                                       rdfs:label "Time interval"@en .
 
 
 #################################################################
 #    Individuals
 #################################################################
 
-###  http://www.vaimee.it/ontology/1.0/sw#Developing
-sw:Developing rdf:type owl:NamedIndividual ,
-                       <http://www.vaimee.it/ontology/ActivityType> ;
-              rdfs:comment "An activity mostly dedicated to software devoloping (e.g., Java, Js, Node, Python, C#, ...)"@en ;
-              rdfs:label "Developing"@en .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Developing
+:Developing rdf:type owl:NamedIndividual ,
+                     :ActivityType ;
+            rdfs:comment "An activity mostly dedicated to software devoloping (e.g., Java, Js, Node, Python, C#, ...)"@en ;
+            rdfs:label "Developing"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#Management
-sw:Management rdf:type owl:NamedIndividual ,
-                       <http://www.vaimee.it/ontology/ActivityType> ;
-              rdfs:label "Management"@en ,
-                         "The activity of manage something or someone."@en .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Management
+:Management rdf:type owl:NamedIndividual ,
+                     :ActivityType ;
+            rdfs:label "Management"@en ,
+                       "The activity of manage something or someone."@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#Meeting
-sw:Meeting rdf:type owl:NamedIndividual ,
-                    <http://www.vaimee.it/ontology/ActivityType> ;
-           rdfs:comment "An activity which involeves the use of meeting tools like Jitsi, Google Meet, Zoom, Teams, .."@en ;
-           rdfs:label "Meeting"@en .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Meeting
+:Meeting rdf:type owl:NamedIndividual ,
+                  :ActivityType ;
+         rdfs:comment "An activity which involeves the use of meeting tools like Jitsi, Google Meet, Zoom, Teams, .."@en ;
+         rdfs:label "Meeting"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#Other
-sw:Other rdf:type owl:NamedIndividual ,
-                  <http://www.vaimee.it/ontology/ActivityType> ;
-         rdfs:comment "A generic activity whitch has no typedefined inside the enumeral list of Activity type."@en ;
-         rdfs:label "Other"@en .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Other
+:Other rdf:type owl:NamedIndividual ,
+                :ActivityType ;
+       rdfs:comment "A generic activity whitch has no typedefined inside the enumeral list of Activity type."@en ;
+       rdfs:label "Other"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#Reporting
-sw:Reporting rdf:type owl:NamedIndividual ,
-                      <http://www.vaimee.it/ontology/ActivityType> ;
-             rdfs:comment "An activity based on writing documents and reports."@en ;
-             rdfs:label "Reporting"@en .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Reporting
+:Reporting rdf:type owl:NamedIndividual ,
+                    :ActivityType ;
+           rdfs:comment "An activity based on writing documents and reports."@en ;
+           rdfs:label "Reporting"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#Reserching
-sw:Reserching rdf:type owl:NamedIndividual ,
-                       <http://www.vaimee.it/ontology/ActivityType> ;
-              rdfs:comment "An activity based on researching and studing."@en ;
-              rdfs:label "Research"@en .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Reserching
+:Reserching rdf:type owl:NamedIndividual ,
+                     :ActivityType ;
+            rdfs:comment "An activity based on researching and studing."@en ;
+            rdfs:label "Research"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/sw#Testing
-sw:Testing rdf:type owl:NamedIndividual ,
-                    <http://www.vaimee.it/ontology/ActivityType> ;
-           rdfs:comment "An activity based on testing something."@en .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Testing
+:Testing rdf:type owl:NamedIndividual ,
+                  :ActivityType ;
+         rdfs:comment "An activity based on testing something."@en .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
