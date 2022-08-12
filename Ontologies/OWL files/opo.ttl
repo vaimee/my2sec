@@ -9,12 +9,13 @@
 @base <http://www.vaimee.it/ontology/opo> .
 
 <http://www.vaimee.it/ontology/opo> rdf:type owl:Ontology ;
-                                     owl:versionIRI <http://www.vaimee.it/ontology/1.0/opo#> ;
+                                     owl:versionIRI <http://www.vaimee.it/ontology/opo/1.0#> ;
                                      dct:abstract "A short abstract goes here!" ;
                                      dct:description "The Open Project Ontology is intended as a semantic representation of the open source tool Open Project. This vocabulary describe in generic manner the whole management for projects, in term of resources and spent time. The OPO is developed as part of a stack of ontologies in the context of the My2Sec project, an activity tracking application to aggregate activities according with the task assigned on Open Project." ;
                                      rdfs:seeAlso "My2Sec Project:  http://github.com/vaimee/my2sec"@en ,
                                                   "OPO ontology map and owl: http://github/vaimee/my2sec/tree/main/Ontologies"@en ;
-                                     owl:title "OPO-The Open Project Ontology" .
+                                     owl:title "OPO-The Open Project Ontology" ;
+                                     owl:versionInfo 1.0 .
 
 #################################################################
 #    Annotation properties
@@ -56,108 +57,157 @@ owl:title rdf:type owl:AnnotationProperty .
 #    Object Properties
 #################################################################
 
-###  http://www.vaimee.it/ontology/1.0/opo#attachedBy
-<http://www.vaimee.it/ontology/1.0/opo#attachedBy> rdf:type owl:ObjectProperty ;
-                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                                   rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Admin> ;
-                                                   rdfs:comment "Attach something to someone."@en ;
-                                                   rdfs:label "attachedBy"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#attachedBy
+<http://www.vaimee.it/my2sec/ontologies/opo#attachedBy> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                        rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#Admin> ;
+                                                        rdfs:comment "Attach something to someone."@en ;
+                                                        rdfs:label "attachedBy"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#attachedTo
-<http://www.vaimee.it/ontology/1.0/opo#attachedTo> rdf:type owl:ObjectProperty ;
-                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                                   rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Member> ;
-                                                   rdfs:comment "Be attached to something."@en ;
-                                                   rdfs:label "attachedTo"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#attachedTo
+<http://www.vaimee.it/my2sec/ontologies/opo#attachedTo> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                        rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#Member> ;
+                                                        rdfs:comment "Be attached to something."@en ;
+                                                        rdfs:label "attachedTo"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#get
-<http://www.vaimee.it/ontology/1.0/opo#get> rdf:type owl:ObjectProperty ;
-                                            rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Admin> ,
-                                                        <http://www.vaimee.it/ontology/1.0/opo#Member> ,
-                                                        <http://www.vaimee.it/ontology/1.0/opo#Watcher> ;
-                                            rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                            rdfs:comment "Read something."@en ;
-                                            rdfs:label "get"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#get
+<http://www.vaimee.it/my2sec/ontologies/opo#get> rdf:type owl:ObjectProperty ;
+                                                 rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Admin> ,
+                                                             <http://www.vaimee.it/my2sec/ontologies/opo#Member> ,
+                                                             <http://www.vaimee.it/my2sec/ontologies/opo#Watcher> ;
+                                                 rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                 rdfs:comment "Read something."@en ;
+                                                 rdfs:label "get"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#hasActivityType
-<http://www.vaimee.it/ontology/1.0/opo#hasActivityType> rdf:type owl:ObjectProperty ;
-                                                        rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                        rdfs:range <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
-                                                        rdfs:comment "The type of activity the log is referred to" ;
-                                                        rdfs:label "hasActivityType" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#hasActivityType
+<http://www.vaimee.it/my2sec/ontologies/opo#hasActivityType> rdf:type owl:ObjectProperty ;
+                                                             rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#LogTime> ;
+                                                             rdfs:range <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                             rdfs:comment "The type of activity the log is referred to" ;
+                                                             rdfs:label "hasActivityType" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#hasLogTime
-<http://www.vaimee.it/ontology/1.0/opo#hasLogTime> rdf:type owl:ObjectProperty ;
-                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#SpentTime> ;
-                                                   rdfs:range <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                   rdfs:comment "Have time that is need to be logged for each activity."@en ;
-                                                   rdfs:label "hasLogTime"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#hasLogTime
+<http://www.vaimee.it/my2sec/ontologies/opo#hasLogTime> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#SpentTime> ;
+                                                        rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#LogTime> ;
+                                                        rdfs:comment "Have time that is need to be logged for each activity."@en ;
+                                                        rdfs:label "hasLogTime"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#hasProject
-<http://www.vaimee.it/ontology/1.0/opo#hasProject> rdf:type owl:ObjectProperty ;
-                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#OpenProject> ;
-                                                   rdfs:range <http://xmlns.com/foaf/0.1/Project> ;
-                                                   rdfs:comment "Have or be made of projects."@en ;
-                                                   rdfs:label "hasProject"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#hasProject
+<http://www.vaimee.it/my2sec/ontologies/opo#hasProject> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#OpenProject> ;
+                                                        rdfs:range <http://xmlns.com/foaf/0.1/Project> ;
+                                                        rdfs:comment "Have or be made of projects."@en ;
+                                                        rdfs:label "hasProject"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#hasSpentTime
-<http://www.vaimee.it/ontology/1.0/opo#hasSpentTime> rdf:type owl:ObjectProperty ;
-                                                     rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                                     rdfs:range <http://www.vaimee.it/ontology/1.0/opo#SpentTime> ;
-                                                     rdfs:comment "Have a total spent time gets as sum of several logged times."@en ;
-                                                     rdfs:label "hasSpentTime"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#hasSpentTime
+<http://www.vaimee.it/my2sec/ontologies/opo#hasSpentTime> rdf:type owl:ObjectProperty ;
+                                                          rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                          rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#SpentTime> ;
+                                                          rdfs:comment "Have a total spent time gets as sum of several logged times."@en ;
+                                                          rdfs:label "hasSpentTime"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#hasTask
-<http://www.vaimee.it/ontology/1.0/opo#hasTask> rdf:type owl:ObjectProperty ;
-                                                rdfs:domain <http://xmlns.com/foaf/0.1/Project> ;
-                                                rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                                rdfs:comment "Have a task."@en ;
-                                                rdfs:label "hasTask"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#hasTask
+<http://www.vaimee.it/my2sec/ontologies/opo#hasTask> rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain <http://xmlns.com/foaf/0.1/Project> ;
+                                                     rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                     rdfs:comment "Have a task."@en ;
+                                                     rdfs:label "hasTask"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#loggedWith
-<http://www.vaimee.it/ontology/1.0/opo#loggedWith> rdf:type owl:ObjectProperty ;
-                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/sw#Activity> ;
-                                                   rdfs:range <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                   rdfs:comment "Logging something with date, time, and a specification of what is inteded to log."@en ;
-                                                   rdfs:label "loggedWith"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#loggedWith
+<http://www.vaimee.it/my2sec/ontologies/opo#loggedWith> rdf:type owl:ObjectProperty ;
+                                                        rdfs:domain <http://www.vaimee.it/ontology/1.0/sw#Activity> ;
+                                                        rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#LogTime> ;
+                                                        rdfs:comment "Logging something with date, time, and a specification of what is inteded to log."@en ;
+                                                        rdfs:label "loggedWith"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#post
-<http://www.vaimee.it/ontology/1.0/opo#post> rdf:type owl:ObjectProperty ;
-                                             rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Admin> ,
-                                                         <http://www.vaimee.it/ontology/1.0/opo#Watcher> ;
-                                             rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                             rdfs:comment "Ability to write something."@en ;
-                                             rdfs:label "post"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#post
+<http://www.vaimee.it/my2sec/ontologies/opo#post> rdf:type owl:ObjectProperty ;
+                                                  rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Admin> ,
+                                                              <http://www.vaimee.it/my2sec/ontologies/opo#Watcher> ;
+                                                  rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                  rdfs:comment "Ability to write something."@en ;
+                                                  rdfs:label "post"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#setsOut
-<http://www.vaimee.it/ontology/1.0/opo#setsOut> rdf:type owl:ObjectProperty ;
-                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Admin> ;
-                                                rdfs:range <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                                rdfs:comment "Ability to create something and set it out."@en ;
-                                                rdfs:label "setsOut"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#setsOut
+<http://www.vaimee.it/my2sec/ontologies/opo#setsOut> rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Admin> ;
+                                                     rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                     rdfs:comment "Ability to create something and set it out."@en ;
+                                                     rdfs:label "setsOut"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#usesOpenProject
-<http://www.vaimee.it/ontology/1.0/opo#usesOpenProject> rdf:type owl:ObjectProperty ;
-                                                        rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Employee> ;
-                                                        rdfs:range <http://www.vaimee.it/ontology/1.0/opo#OpenProject> ;
-                                                        rdfs:comment "Using of the Open Project tool."@en ;
-                                                        rdfs:label "usesOpenProject"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#usesOpenProject
+<http://www.vaimee.it/my2sec/ontologies/opo#usesOpenProject> rdf:type owl:ObjectProperty ;
+                                                             rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Employee> ;
+                                                             rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#OpenProject> ;
+                                                             rdfs:comment "Using of the Open Project tool."@en ;
+                                                             rdfs:label "usesOpenProject"@en .
 
 
 #################################################################
 #    Data properties
 #################################################################
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#comment
+<http://www.vaimee.it/my2sec/ontologies/opo#comment> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#LogTime> ;
+                                                     rdfs:range rdfs:Literal ;
+                                                     rdfs:comment "A comment about the activity done."@en ;
+                                                     rdfs:label "comment"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#hours
+<http://www.vaimee.it/my2sec/ontologies/opo#hours> rdf:type owl:DatatypeProperty ;
+                                                   rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#LogTime> ,
+                                                               <http://www.vaimee.it/my2sec/ontologies/opo#SpentTime> ;
+                                                   rdfs:range xsd:float ;
+                                                   rdfs:comment "Logged duration of an activity."@en ;
+                                                   rdfs:label "hours"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#idTask
+<http://www.vaimee.it/my2sec/ontologies/opo#idTask> rdf:type owl:DatatypeProperty ;
+                                                    rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                    rdfs:range xsd:int ;
+                                                    rdfs:comment "Each task has an ID."@en ;
+                                                    rdfs:label "idTask"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#logActivityType
+<http://www.vaimee.it/my2sec/ontologies/opo#logActivityType> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#LogTime> ;
+                                                             rdfs:range rdfs:Literal ;
+                                                             rdfs:comment "Type of an activity logged."@en ;
+                                                             rdfs:label "logActivityType"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#projectName
+<http://www.vaimee.it/my2sec/ontologies/opo#projectName> rdf:type owl:DatatypeProperty ;
+                                                         rdfs:domain <http://xmlns.com/foaf/0.1/Project> ;
+                                                         rdfs:range rdfs:Literal ;
+                                                         rdfs:comment "Each project has a name."@en ;
+                                                         rdfs:label "projectName"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#titleTask
+<http://www.vaimee.it/my2sec/ontologies/opo#titleTask> rdf:type owl:DatatypeProperty ;
+                                                       rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Task> ;
+                                                       rdfs:range rdfs:Literal ;
+                                                       rdfs:comment "Title of a task."@en ;
+                                                       rdfs:label "taskTitle"@en .
+
 
 ###  http://www.vaimee.it/my2sec/ontologies/opo#uri
 <http://www.vaimee.it/my2sec/ontologies/opo#uri> rdf:type owl:DatatypeProperty ;
@@ -165,68 +215,19 @@ owl:title rdf:type owl:AnnotationProperty .
                                                  rdfs:label "uri"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#comment
-<http://www.vaimee.it/ontology/1.0/opo#comment> rdf:type owl:DatatypeProperty ;
-                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                rdfs:range rdfs:Literal ;
-                                                rdfs:comment "A comment about the activity done."@en ;
-                                                rdfs:label "comment"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#hours
-<http://www.vaimee.it/ontology/1.0/opo#hours> rdf:type owl:DatatypeProperty ;
-                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ,
-                                                          <http://www.vaimee.it/ontology/1.0/opo#SpentTime> ;
-                                              rdfs:range xsd:float ;
-                                              rdfs:comment "Logged duration of an activity."@en ;
-                                              rdfs:label "hours"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#idTask
-<http://www.vaimee.it/ontology/1.0/opo#idTask> rdf:type owl:DatatypeProperty ;
-                                               rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                               rdfs:range xsd:int ;
-                                               rdfs:comment "Each task has an ID."@en ;
-                                               rdfs:label "idTask"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#logActivityType
-<http://www.vaimee.it/ontology/1.0/opo#logActivityType> rdf:type owl:DatatypeProperty ;
-                                                        rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
-                                                        rdfs:range rdfs:Literal ;
-                                                        rdfs:comment "Type of an activity logged."@en ;
-                                                        rdfs:label "logActivityType"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#projectName
-<http://www.vaimee.it/ontology/1.0/opo#projectName> rdf:type owl:DatatypeProperty ;
-                                                    rdfs:domain <http://xmlns.com/foaf/0.1/Project> ;
-                                                    rdfs:range rdfs:Literal ;
-                                                    rdfs:comment "Each project has a name."@en ;
-                                                    rdfs:label "projectName"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#titleTask
-<http://www.vaimee.it/ontology/1.0/opo#titleTask> rdf:type owl:DatatypeProperty ;
-                                                  rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Task> ;
-                                                  rdfs:range rdfs:Literal ;
-                                                  rdfs:comment "Title of a task."@en ;
-                                                  rdfs:label "taskTitle"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#userName
-<http://www.vaimee.it/ontology/1.0/opo#userName> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#Admin> ,
-                                                             <http://www.vaimee.it/ontology/1.0/opo#Employee> ,
-                                                             <http://www.vaimee.it/ontology/1.0/opo#Watcher> ;
-                                                 rdfs:range rdfs:Literal ;
-                                                 rdfs:comment "Each physical person has an unique user name."@en ;
-                                                 rdfs:label "userName"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#userName
+<http://www.vaimee.it/my2sec/ontologies/opo#userName> rdf:type owl:DatatypeProperty ;
+                                                      rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#Admin> ,
+                                                                  <http://www.vaimee.it/my2sec/ontologies/opo#Employee> ,
+                                                                  <http://www.vaimee.it/my2sec/ontologies/opo#Watcher> ;
+                                                      rdfs:range rdfs:Literal ;
+                                                      rdfs:comment "Each physical person has an unique user name."@en ;
+                                                      rdfs:label "userName"@en .
 
 
 ###  http://www.w3.org/2006/time#inXSDDateTimeStamp
 <http://www.w3.org/2006/time#inXSDDateTimeStamp> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/opo#LogTime> ;
+                                                 rdfs:domain <http://www.vaimee.it/my2sec/ontologies/opo#LogTime> ;
                                                  rdfs:range xsd:dateTimeStamp ;
                                                  rdfs:comment "Position of an instant, expressed using xsd:dateTimeStamp"@en ;
                                                  rdfs:label "in XSD Date-Time-Stamp"@en .
@@ -236,102 +237,102 @@ owl:title rdf:type owl:AnnotationProperty .
 #    Classes
 #################################################################
 
-###  http://www.vaimee.it/ontology/1.0/opo#ActivityType
-<http://www.vaimee.it/ontology/1.0/opo#ActivityType> rdf:type owl:Class ;
-                                                     owl:equivalentClass [ rdf:type owl:Class ;
-                                                                           owl:oneOf ( <http://www.vaimee.it/ontology/1.0/opo#Developing>
-                                                                                       <http://www.vaimee.it/ontology/1.0/opo#Management>
-                                                                                       <http://www.vaimee.it/ontology/1.0/opo#Meeting>
-                                                                                       <http://www.vaimee.it/ontology/1.0/opo#Other>
-                                                                                       <http://www.vaimee.it/ontology/1.0/opo#Reporting>
-                                                                                       <http://www.vaimee.it/ontology/1.0/opo#Researching>
-                                                                                       <http://www.vaimee.it/ontology/1.0/opo#Testing>
-                                                                                     )
+###  http://www.vaimee.it/my2sec/ontologies/opo#Admin
+<http://www.vaimee.it/my2sec/ontologies/opo#Admin> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <http://www.vaimee.it/my2sec/ontologies/opo#Employee> ;
+                                                   rdfs:comment "A worker who manages project and task for all other workers including herself."@en ;
+                                                   rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Person> ;
+                                                   rdfs:label "Admin"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#Employee
+<http://www.vaimee.it/my2sec/ontologies/opo#Employee> rdf:type owl:Class ;
+                                                      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                        owl:onProperty <http://www.vaimee.it/my2sec/ontologies/opo#userName> ;
+                                                                        owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                      ] ;
+                                                      rdfs:comment "A generic worker" ;
+                                                      rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Person> ;
+                                                      rdfs:label "Employee"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#LogTime
+<http://www.vaimee.it/my2sec/ontologies/opo#LogTime> rdf:type owl:Class ;
+                                                     rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.vaimee.it/my2sec/ontologies/opo#comment> ;
+                                                                       owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                     ] ,
+                                                                     [ rdf:type owl:Restriction ;
+                                                                       owl:onProperty <http://www.vaimee.it/my2sec/ontologies/opo#hours> ;
+                                                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                       owl:onDataRange xsd:float
+                                                                     ] ;
+                                                     rdfs:comment "The duration for each dayly activity tha has to be logged inside a specific task."@en ;
+                                                     rdfs:label "LogTime"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#Member
+<http://www.vaimee.it/my2sec/ontologies/opo#Member> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <http://www.vaimee.it/my2sec/ontologies/opo#Employee> ;
+                                                    rdfs:comment "A worker who is attached to a specific tasks or projects by the admin and is in charge for them."@en ;
+                                                    rdfs:isDefinedBy <http://xmlns.com/foaf/1.0/Person> ;
+                                                    rdfs:label "Member"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/opo#OpenProject
+<http://www.vaimee.it/my2sec/ontologies/opo#OpenProject> rdf:type owl:Class ;
+                                                         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                           owl:onProperty <http://www.vaimee.it/my2sec/ontologies/opo#hasProject> ;
+                                                                           owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                           owl:onClass <http://xmlns.com/foaf/0.1/Project>
                                                                          ] ;
-                                                     rdfs:comment "The type of activity. It is an enumerated class of all the activity type that can be associated with a logtime in OpenProject" ;
-                                                     rdfs:label "ActivityType" .
+                                                         rdfs:comment "Open source tool for projects management."@en ;
+                                                         rdfs:label "OpenProject"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Admin
-<http://www.vaimee.it/ontology/1.0/opo#Admin> rdf:type owl:Class ;
-                                              rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/opo#Employee> ;
-                                              rdfs:comment "A worker who manages project and task for all other workers including herself."@en ;
-                                              rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Person> ;
-                                              rdfs:label "Admin"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#SpentTime
+<http://www.vaimee.it/my2sec/ontologies/opo#SpentTime> rdf:type owl:Class ;
+                                                       rdfs:comment "Amount of time spent for a task, every time a new activity duration is logged the spent time increases of an equivalent time."@en ;
+                                                       rdfs:label "SpentTime"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Employee
-<http://www.vaimee.it/ontology/1.0/opo#Employee> rdf:type owl:Class ;
-                                                 rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                   owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#userName> ;
-                                                                   owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                 ] ;
-                                                 rdfs:comment "A generic worker" ;
-                                                 rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Person> ;
-                                                 rdfs:label "Employee"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Task
+<http://www.vaimee.it/my2sec/ontologies/opo#Task> rdf:type owl:Class ;
+                                                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty <http://www.vaimee.it/my2sec/ontologies/opo#idTask> ;
+                                                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                    owl:onDataRange owl:rational
+                                                                  ] ,
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty <http://www.vaimee.it/my2sec/ontologies/opo#titleTask> ;
+                                                                    owl:cardinality "1"^^xsd:nonNegativeInteger
+                                                                  ] ;
+                                                  rdfs:comment "A task, attached by an admin to a member."@en ;
+                                                  rdfs:label "Task"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#LogTime
-<http://www.vaimee.it/ontology/1.0/opo#LogTime> rdf:type owl:Class ;
-                                                rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#comment> ;
-                                                                  owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                                ] ,
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#hours> ;
-                                                                  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                  owl:onDataRange xsd:float
-                                                                ] ;
-                                                rdfs:comment "The duration for each dayly activity tha has to be logged inside a specific task."@en ;
-                                                rdfs:label "LogTime"@en .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Watcher
+<http://www.vaimee.it/my2sec/ontologies/opo#Watcher> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <http://www.vaimee.it/my2sec/ontologies/opo#Employee> ;
+                                                     rdfs:comment "A worker who can have a look about other worker tasks and projects but can just watch and not modified in anyway their status."@en ;
+                                                     rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Person> ;
+                                                     rdfs:label "Watcher"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Member
-<http://www.vaimee.it/ontology/1.0/opo#Member> rdf:type owl:Class ;
-                                               rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/opo#Employee> ;
-                                               rdfs:comment "A worker who is attached to a specific tasks or projects by the admin and is in charge for them."@en ;
-                                               rdfs:isDefinedBy <http://xmlns.com/foaf/1.0/Person> ;
-                                               rdfs:label "Member"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#OpenProject
-<http://www.vaimee.it/ontology/1.0/opo#OpenProject> rdf:type owl:Class ;
-                                                    rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                                      owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#hasProject> ;
-                                                                      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                      owl:onClass <http://xmlns.com/foaf/0.1/Project>
-                                                                    ] ;
-                                                    rdfs:comment "Open source tool for projects management."@en ;
-                                                    rdfs:label "OpenProject"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#SpentTime
-<http://www.vaimee.it/ontology/1.0/opo#SpentTime> rdf:type owl:Class ;
-                                                  rdfs:comment "Amount of time spent for a task, every time a new activity duration is logged the spent time increases of an equivalent time."@en ;
-                                                  rdfs:label "SpentTime"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#Task
-<http://www.vaimee.it/ontology/1.0/opo#Task> rdf:type owl:Class ;
-                                             rdfs:subClassOf [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#idTask> ;
-                                                               owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                               owl:onDataRange owl:rational
-                                                             ] ,
-                                                             [ rdf:type owl:Restriction ;
-                                                               owl:onProperty <http://www.vaimee.it/ontology/1.0/opo#titleTask> ;
-                                                               owl:cardinality "1"^^xsd:nonNegativeInteger
-                                                             ] ;
-                                             rdfs:comment "A task, attached by an admin to a member."@en ;
-                                             rdfs:label "Task"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/opo#Watcher
-<http://www.vaimee.it/ontology/1.0/opo#Watcher> rdf:type owl:Class ;
-                                                rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/opo#Employee> ;
-                                                rdfs:comment "A worker who can have a look about other worker tasks and projects but can just watch and not modified in anyway their status."@en ;
-                                                rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Person> ;
-                                                rdfs:label "Watcher"@en .
+###  http://www.vaimee.it/my2sec/ontologies/sw#ActivityType
+<http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> rdf:type owl:Class ;
+                                                         owl:equivalentClass [ rdf:type owl:Class ;
+                                                                               owl:oneOf ( <http://www.vaimee.it/my2sec/ontologies/opo#Developing>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Management>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Meeting>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Other>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Reporting>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Researching>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Testing>
+                                                                                         )
+                                                                             ] ;
+                                                         rdfs:comment "The type of activity. It is an enumerated class of all the activity type that can be associated with a logtime in OpenProject" ;
+                                                         rdfs:label "ActivityType" .
 
 
 ###  http://www.vaimee.it/ontology/1.0/sw#Activity
@@ -351,72 +352,72 @@ owl:title rdf:type owl:AnnotationProperty .
 #    Individuals
 #################################################################
 
-###  http://www.vaimee.it/ontology/1.0/opo#DataModeling
-<http://www.vaimee.it/ontology/1.0/opo#DataModeling> rdf:type owl:NamedIndividual ;
-                                                     rdfs:comment "Data modeling (e.g., using Protegè to build an ontology)" ;
-                                                     rdfs:label "DataModeling" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#DataModeling
+<http://www.vaimee.it/my2sec/ontologies/opo#DataModeling> rdf:type owl:NamedIndividual ;
+                                                          rdfs:comment "Data modeling (e.g., using Protegè to build an ontology)" ;
+                                                          rdfs:label "DataModeling" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Developing
-<http://www.vaimee.it/ontology/1.0/opo#Developing> rdf:type owl:NamedIndividual ,
-                                                            <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
-                                                   rdfs:comment "In particular software developing (e.g., Java, Js, Node, Python, C#, ...)" ;
-                                                   rdfs:label "Developing" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Developing
+<http://www.vaimee.it/my2sec/ontologies/opo#Developing> rdf:type owl:NamedIndividual ,
+                                                                 <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                        rdfs:comment "In particular software developing (e.g., Java, Js, Node, Python, C#, ...)" ;
+                                                        rdfs:label "Developing" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Management
-<http://www.vaimee.it/ontology/1.0/opo#Management> rdf:type owl:NamedIndividual ,
-                                                            <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
-                                                   rdfs:comment "The activity of managing projects" ;
-                                                   rdfs:label "Management" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Management
+<http://www.vaimee.it/my2sec/ontologies/opo#Management> rdf:type owl:NamedIndividual ,
+                                                                 <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                        rdfs:comment "The activity of managing projects" ;
+                                                        rdfs:label "Management" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Meeting
-<http://www.vaimee.it/ontology/1.0/opo#Meeting> rdf:type owl:NamedIndividual ,
-                                                         <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
-                                                rdfs:comment "A meeting like Jitsi, Google Meet, Zoom, Teams, ..." ;
-                                                rdfs:label "Meeting" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Meeting
+<http://www.vaimee.it/my2sec/ontologies/opo#Meeting> rdf:type owl:NamedIndividual ,
+                                                              <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                     rdfs:comment "A meeting like Jitsi, Google Meet, Zoom, Teams, ..." ;
+                                                     rdfs:label "Meeting" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Other
-<http://www.vaimee.it/ontology/1.0/opo#Other> rdf:type owl:NamedIndividual ,
-                                                       <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
-                                              rdfs:label "Other" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Other
+<http://www.vaimee.it/my2sec/ontologies/opo#Other> rdf:type owl:NamedIndividual ,
+                                                            <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                   rdfs:label "Other" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#PhoneCall
-<http://www.vaimee.it/ontology/1.0/opo#PhoneCall> rdf:type owl:NamedIndividual ;
-                                                  rdfs:comment "Could be detected on a phone or using a messaging system (e.g., WhatsApp, Messenger, ...)" ;
-                                                  rdfs:label "PhoneCall" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#PhoneCall
+<http://www.vaimee.it/my2sec/ontologies/opo#PhoneCall> rdf:type owl:NamedIndividual ;
+                                                       rdfs:comment "Could be detected on a phone or using a messaging system (e.g., WhatsApp, Messenger, ...)" ;
+                                                       rdfs:label "PhoneCall" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Reporting
-<http://www.vaimee.it/ontology/1.0/opo#Reporting> rdf:type owl:NamedIndividual ,
-                                                           <http://www.vaimee.it/ontology/1.0/opo#ActivityType> ;
-                                                  rdfs:comment "Writing documents and reports" ;
-                                                  rdfs:label "Reporting" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Reporting
+<http://www.vaimee.it/my2sec/ontologies/opo#Reporting> rdf:type owl:NamedIndividual ,
+                                                                <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                       rdfs:comment "Writing documents and reports" ;
+                                                       rdfs:label "Reporting" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Researching
-<http://www.vaimee.it/ontology/1.0/opo#Researching> rdf:type owl:NamedIndividual ,
-                                                             <http://www.vaimee.it/ontology/1.0/opo#ActivityType> .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Researching
+<http://www.vaimee.it/my2sec/ontologies/opo#Researching> rdf:type owl:NamedIndividual ,
+                                                                  <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Studying
-<http://www.vaimee.it/ontology/1.0/opo#Studying> rdf:type owl:NamedIndividual ;
-                                                 rdfs:comment "All the activities related to study new technologies and tools" ;
-                                                 rdfs:label "Studying" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Studying
+<http://www.vaimee.it/my2sec/ontologies/opo#Studying> rdf:type owl:NamedIndividual ;
+                                                      rdfs:comment "All the activities related to study new technologies and tools" ;
+                                                      rdfs:label "Studying" .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Testing
-<http://www.vaimee.it/ontology/1.0/opo#Testing> rdf:type owl:NamedIndividual ,
-                                                         <http://www.vaimee.it/ontology/1.0/opo#ActivityType> .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Testing
+<http://www.vaimee.it/my2sec/ontologies/opo#Testing> rdf:type owl:NamedIndividual ,
+                                                              <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> .
 
 
-###  http://www.vaimee.it/ontology/1.0/opo#Travelling
-<http://www.vaimee.it/ontology/1.0/opo#Travelling> rdf:type owl:NamedIndividual ;
-                                                   rdfs:comment "By car, plane, train, bike, motorbike, ..." ;
-                                                   rdfs:label "Travelling" .
+###  http://www.vaimee.it/my2sec/ontologies/opo#Travelling
+<http://www.vaimee.it/my2sec/ontologies/opo#Travelling> rdf:type owl:NamedIndividual ;
+                                                        rdfs:comment "By car, plane, train, bike, motorbike, ..." ;
+                                                        rdfs:label "Travelling" .
 
 
 [ <http://schema.org/affiliation> [ <http://schema.org/name> "VAIMEE" ;
