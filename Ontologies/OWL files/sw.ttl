@@ -10,7 +10,37 @@
 
 <http://www.vaimee.it/my2sec/ontologies/sw> rdf:type owl:Ontology ;
                                              owl:versionIRI <http://www.vaimee.it/my2sec/ontologies/sw/0.1> ;
-                                             owl:versionInfo "1.0"@en .
+                                             <http://purl.org/dc/terms/abstract> "SW-abstract"@en ;
+                                             <http://purl.org/dc/terms/contributor> "Luca Roffia"@en ;
+                                             <http://purl.org/dc/terms/creator> "Elisa Riforgiato"@en ;
+                                             <http://purl.org/dc/terms/description> "The SEPA Watch ontology is intended as a semantic representation of the open source tool Activity Watch. This vocabulary descrive a tracking activity system for smart workers and it is develop on top of a stack of ontologies in the context of the My2sec project."@en ;
+                                             rdfs:seeAlso "SW ontology map and owl: http://github/vaimee/my2sec/tree/main/Ontologies"@en ;
+                                             owl:title "SW- Sepa Watch"@en ;
+                                             owl:versionInfo "http://www.vaimee.it/my2sec/ontologies/sw/1.0"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/abstract
+<http://purl.org/dc/terms/abstract> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/contributor
+<http://purl.org/dc/terms/contributor> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+<http://purl.org/dc/terms/creator> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#title
+owl:title rdf:type owl:AnnotationProperty .
+
 
 #################################################################
 #    Object Properties

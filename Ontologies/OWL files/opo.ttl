@@ -15,7 +15,7 @@
                                      rdfs:seeAlso "My2Sec Project:  http://github.com/vaimee/my2sec"@en ,
                                                   "OPO ontology map and owl: http://github/vaimee/my2sec/tree/main/Ontologies"@en ;
                                      owl:title "OPO-The Open Project Ontology" ;
-                                     owl:versionInfo 1.0 .
+                                     owl:versionInfo "http://www.vaimee.it/my2sec/ontologies/opo/1.0" .
 
 #################################################################
 #    Annotation properties
