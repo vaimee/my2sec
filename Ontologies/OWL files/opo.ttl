@@ -125,7 +125,7 @@ owl:title rdf:type owl:AnnotationProperty .
 
 ###  http://www.vaimee.it/my2sec/ontologies/opo#loggedWith
 <http://www.vaimee.it/my2sec/ontologies/opo#loggedWith> rdf:type owl:ObjectProperty ;
-                                                        rdfs:domain <http://www.vaimee.it/ontology/1.0/sw#Activity> ;
+                                                        rdfs:domain <http://www.vaimee.it/my2sec/ontologies/sw#Activity> ;
                                                         rdfs:range <http://www.vaimee.it/my2sec/ontologies/opo#LogTime> ;
                                                         rdfs:comment "Logging something with date, time, and a specification of what is inteded to log."@en ;
                                                         rdfs:label "loggedWith"@en .
@@ -319,26 +319,26 @@ owl:title rdf:type owl:AnnotationProperty .
                                                      rdfs:label "Watcher"@en .
 
 
+###  http://www.vaimee.it/my2sec/ontologies/sw#Activity
+<http://www.vaimee.it/my2sec/ontologies/sw#Activity> rdf:type owl:Class ;
+                                                     rdfs:comment "An activity is everithing is necessary to perform an assigned task, it could be a meeting with collegues as well as a creation of a file."@en ;
+                                                     rdfs:label "Activity"@en .
+
+
 ###  http://www.vaimee.it/my2sec/ontologies/sw#ActivityType
 <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> rdf:type owl:Class ;
                                                          owl:equivalentClass [ rdf:type owl:Class ;
-                                                                               owl:oneOf ( <http://www.vaimee.it/my2sec/ontologies/opo#Developing>
-                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Management>
-                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Meeting>
-                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Other>
-                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Reporting>
-                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Researching>
-                                                                                           <http://www.vaimee.it/my2sec/ontologies/opo#Testing>
+                                                                               owl:oneOf ( <http://www.vaimee.it/my2sec/ontologies/sw#Developing>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/sw#Management>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/sw#Meeting>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/sw#Other>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/sw#Reporting>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/sw#Researching>
+                                                                                           <http://www.vaimee.it/my2sec/ontologies/sw#Testing>
                                                                                          )
                                                                              ] ;
                                                          rdfs:comment "The type of activity. It is an enumerated class of all the activity type that can be associated with a logtime in OpenProject" ;
                                                          rdfs:label "ActivityType" .
-
-
-###  http://www.vaimee.it/ontology/1.0/sw#Activity
-<http://www.vaimee.it/ontology/1.0/sw#Activity> rdf:type owl:Class ;
-                                                rdfs:comment "An activity is everithing is necessary to perform an assigned task, it could be a meeting with collegues as well as a creation of a file."@en ;
-                                                rdfs:label "Activity"@en .
 
 
 ###  http://xmlns.com/foaf/0.1/Project
@@ -352,72 +352,53 @@ owl:title rdf:type owl:AnnotationProperty .
 #    Individuals
 #################################################################
 
-###  http://www.vaimee.it/my2sec/ontologies/opo#DataModeling
-<http://www.vaimee.it/my2sec/ontologies/opo#DataModeling> rdf:type owl:NamedIndividual ;
-                                                          rdfs:comment "Data modeling (e.g., using Protegè to build an ontology)" ;
-                                                          rdfs:label "DataModeling" .
-
-
-###  http://www.vaimee.it/my2sec/ontologies/opo#Developing
-<http://www.vaimee.it/my2sec/ontologies/opo#Developing> rdf:type owl:NamedIndividual ,
-                                                                 <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
-                                                        rdfs:comment "In particular software developing (e.g., Java, Js, Node, Python, C#, ...)" ;
-                                                        rdfs:label "Developing" .
-
-
-###  http://www.vaimee.it/my2sec/ontologies/opo#Management
-<http://www.vaimee.it/my2sec/ontologies/opo#Management> rdf:type owl:NamedIndividual ,
-                                                                 <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
-                                                        rdfs:comment "The activity of managing projects" ;
-                                                        rdfs:label "Management" .
-
-
-###  http://www.vaimee.it/my2sec/ontologies/opo#Meeting
-<http://www.vaimee.it/my2sec/ontologies/opo#Meeting> rdf:type owl:NamedIndividual ,
-                                                              <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
-                                                     rdfs:comment "A meeting like Jitsi, Google Meet, Zoom, Teams, ..." ;
-                                                     rdfs:label "Meeting" .
-
-
-###  http://www.vaimee.it/my2sec/ontologies/opo#Other
-<http://www.vaimee.it/my2sec/ontologies/opo#Other> rdf:type owl:NamedIndividual ,
-                                                            <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
-                                                   rdfs:label "Other" .
-
-
-###  http://www.vaimee.it/my2sec/ontologies/opo#PhoneCall
-<http://www.vaimee.it/my2sec/ontologies/opo#PhoneCall> rdf:type owl:NamedIndividual ;
-                                                       rdfs:comment "Could be detected on a phone or using a messaging system (e.g., WhatsApp, Messenger, ...)" ;
-                                                       rdfs:label "PhoneCall" .
-
-
-###  http://www.vaimee.it/my2sec/ontologies/opo#Reporting
-<http://www.vaimee.it/my2sec/ontologies/opo#Reporting> rdf:type owl:NamedIndividual ,
+###  http://www.vaimee.it/my2sec/ontologies/sw#Developing
+<http://www.vaimee.it/my2sec/ontologies/sw#Developing> rdf:type owl:NamedIndividual ,
                                                                 <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
-                                                       rdfs:comment "Writing documents and reports" ;
-                                                       rdfs:label "Reporting" .
+                                                       rdfs:comment "An activity mostly dedicated to software developing (e.g., Java, Js, Node, Python, C#, ...)"@en ;
+                                                       rdfs:label "Developing"@en .
 
 
-###  http://www.vaimee.it/my2sec/ontologies/opo#Researching
-<http://www.vaimee.it/my2sec/ontologies/opo#Researching> rdf:type owl:NamedIndividual ,
-                                                                  <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Management
+<http://www.vaimee.it/my2sec/ontologies/sw#Management> rdf:type owl:NamedIndividual ,
+                                                                <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                       rdfs:comment "The activity of manage something or someone."@en ;
+                                                       rdfs:label "Management"@en .
 
 
-###  http://www.vaimee.it/my2sec/ontologies/opo#Studying
-<http://www.vaimee.it/my2sec/ontologies/opo#Studying> rdf:type owl:NamedIndividual ;
-                                                      rdfs:comment "All the activities related to study new technologies and tools" ;
-                                                      rdfs:label "Studying" .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Meeting
+<http://www.vaimee.it/my2sec/ontologies/sw#Meeting> rdf:type owl:NamedIndividual ,
+                                                             <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                    rdfs:comment "An activity which involves the use of meeting tool like Jitsi, Google Meet, Zoom, Teams, ..."@en ;
+                                                    rdfs:label "Meeting"@en .
 
 
-###  http://www.vaimee.it/my2sec/ontologies/opo#Testing
-<http://www.vaimee.it/my2sec/ontologies/opo#Testing> rdf:type owl:NamedIndividual ,
-                                                              <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Other
+<http://www.vaimee.it/my2sec/ontologies/sw#Other> rdf:type owl:NamedIndividual ,
+                                                           <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                  rdfs:comment "A generic activity which has no type defined inside the enumeral list of Activity type."@en ;
+                                                  rdfs:label "Other" .
 
 
-###  http://www.vaimee.it/my2sec/ontologies/opo#Travelling
-<http://www.vaimee.it/my2sec/ontologies/opo#Travelling> rdf:type owl:NamedIndividual ;
-                                                        rdfs:comment "By car, plane, train, bike, motorbike, ..." ;
-                                                        rdfs:label "Travelling" .
+###  http://www.vaimee.it/my2sec/ontologies/sw#Reporting
+<http://www.vaimee.it/my2sec/ontologies/sw#Reporting> rdf:type owl:NamedIndividual ,
+                                                               <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                      rdfs:comment "An activity based on writing documents and reports."@en ;
+                                                      rdfs:label "Reporting"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#Researching
+<http://www.vaimee.it/my2sec/ontologies/sw#Researching> rdf:type owl:NamedIndividual ,
+                                                                 <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                        rdfs:comment "An activity based on researching and studing."@en ;
+                                                        rdfs:label "Research"@en .
+
+
+###  http://www.vaimee.it/my2sec/ontologies/sw#Testing
+<http://www.vaimee.it/my2sec/ontologies/sw#Testing> rdf:type owl:NamedIndividual ,
+                                                             <http://www.vaimee.it/my2sec/ontologies/sw#ActivityType> ;
+                                                    rdfs:comment "An activity based on testing something, mostly software."@en ;
+                                                    rdfs:label "Testing"@en .
 
 
 [ <http://schema.org/affiliation> [ <http://schema.org/name> "VAIMEE" ;
