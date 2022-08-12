@@ -11,6 +11,8 @@
 <http://www.vaimee.it/ontology/opo> rdf:type owl:Ontology ;
                                      owl:versionIRI <http://www.vaimee.it/ontology/opo/1.0#> ;
                                      dct:abstract "A short abstract goes here!" ;
+                                     dct:contributor "Luca Roffia"@en ;
+                                     dct:creator "Elisa Riforgiato"@en ;
                                      dct:description "The Open Project Ontology is intended as a semantic representation of the open source tool Open Project. This vocabulary describe in generic manner the whole management for projects, in term of resources and spent time. The OPO is developed as part of a stack of ontologies in the context of the My2Sec project, an activity tracking application to aggregate activities according with the task assigned on Open Project." ;
                                      rdfs:seeAlso "My2Sec Project:  http://github.com/vaimee/my2sec"@en ,
                                                   "OPO ontology map and owl: http://github/vaimee/my2sec/tree/main/Ontologies"@en ;
