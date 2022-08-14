@@ -30,7 +30,7 @@
         Download the latest release zip file: <br>
         - Windows: <a href="https://github.com/vaimee/my2sec/raw/adapter/Aw-Adapter/AwProducer-0.9-RELEASES/awproducer-v0.9-win32-x64.zip" download>AwProducer-win32-x64</a><br>
         - Mac: <a href="https://github.com/vaimee/my2sec/raw/adapter/AwAdapter-RELEASES/awproducer-v0.8.3-macos.zip" download>AwProducer-macos</a><br>
-        - Linux: <a href="https://github.com/vaimee/my2sec/raw/adapter/AwAdapter-RELEASES/awproducer-v0.8.3-linux-x64.tar.gz" download>AwProducer-linux-x64</a>
+        - Linux: <a href="https://github.com/vaimee/my2sec/raw/adapter/Aw-Adapter/AwProducer-0.9-RELEASES/awproducer-v0.9-linux-x64.tar.gz" download>AwProducer-linux-x64</a>
         </li>
         <li>Extract the zip</li>
         <li>Launch the executable file inside the extracted folder: AwProducer.exe for Windows, electron for Linux, Electron.app for Macos</li>
