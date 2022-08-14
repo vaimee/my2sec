@@ -69,10 +69,11 @@ Pressing this button will start the upload procedure: if data is uploaded correc
 
 <h2>TROUBLESHOOTING</h2> 
 <p>
-The application is still in development, so it has not been signed yet. Some operating systems like macos are very strict on running unsigned applications: if you have trouble starting the application try with this link: https://support.apple.com/it-it/guide/mac-help/mh40616/mac
-If you have other issues during the usage of the application please report them as an issue here on GitHub! While the issue gets fixed, try to restart the application...
+The application is still in development, so it has not been signed yet. Some operating systems like macos are very strict on running unsigned applications: if you have trouble starting the application try with this link: https://support.apple.com/it-it/guide/mac-help/mh40616/mac<br>
+If you have other issues during the usage of the application please report them as an issue here on GitHub! Meanwhile, try to restart the application...
 </p>
-
+  
+  
 
 <br>
 <h2>DEVELOPMENT</h2>
@@ -165,7 +166,16 @@ aw_working_mapper: #activity watch mapper for working events
 
 
 </pre>
-      
+  
+  
+  
+ <h2>COMING SOON</h2> 
+<p>
+- Keycloack user management
+- UI and UX improvements
+</p> 
+  
+  
   </div> 
 
 
