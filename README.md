@@ -11,9 +11,8 @@
   <div class="text-paragraph">
     <h2>INTRODUCTION</h2>
       <p>
-      Built on top of the Activity Watch tracking app, the AW ADAPTER allows to expand said app functionalities making it a "CLOUD-APP".<br>
-      In general, an ADAPTER allows not only to upload data produced by a generic local app to a remote server, but also to "map" that data into "semantic data".<br>
-      My2sec Servers run a semantic event processor, the SEPA, which allows to take all the advantages of a semantic based architecture, while maintaining speed and scalability of the system.
+      Built on top of the Activity Watch tracking app, the AW ADAPTER allows to expand said app functionalities making it a "CLOUD-APP". <br><br>In general, an ADAPTER allows not only to upload data produced by a generic local app to a remote server, but also to "map" that data into "semantic data".<br>
+      My2sec Servers run a semantic event processor, the SEPA, which allows to take all the advantages of a semantic based architecture, while maintaining speed and scalability of the system.<br><br> In practice, the adapter is composed by two modules: Aw-producer and Aw-mapper. The end-user needs to download the Aw-Producer on his host-machine, while the mapper needs to be deployed on the remote server. 
       </p>
   </div> 
 
@@ -171,8 +170,9 @@ aw_working_mapper: #activity watch mapper for working events
   
  <h2>COMING SOON</h2> 
 <p>
-- Keycloack user management
-- UI and UX improvements
+- Keycloack user management<br>
+- UI and UX improvements<br>
+- Integration with my2sec scanner
 </p> 
   
   
