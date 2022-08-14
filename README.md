@@ -86,8 +86,8 @@ networks:
 
 services:
 
-  aw_mapper: #activity watch mapper
-    image: gregnet/awmapper:v0.1
+aw_working_mapper: #activity watch mapper for working events
+    image: gregnet/awmapper:v0.3.2
     user: node
     restart: always
     working_dir: /home/node/myapp
@@ -95,6 +95,23 @@ services:
     environment:
       - NODE_ENV=production
       - LOG_LEVEL=0
+      - SOURCE=http://www.vaimee.it/sources/aw-watcher-working #listen to a specific watcher
+      - HOST_NAME=engine #sepa engine ip address
+      - HTTP_PORT=8000 #engine query/update port
+      - WS_PORT=9000 #engine subscription port
+    networks:
+      - "net_my2sec"
+      
+  aw_my2sec_mapper: #activity watch mapper for start-stop events
+    image: gregnet/awmapper:v0.3.2
+    user: node
+    restart: always
+    working_dir: /home/node/myapp
+    command: "node main.js"
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=0
+      - SOURCE=http://www.vaimee.it/sources/aw-my2sec #listen to a specific watcher
       - HOST_NAME=engine #sepa engine ip address
       - HTTP_PORT=8000 #engine query/update port
       - WS_PORT=9000 #engine subscription port
