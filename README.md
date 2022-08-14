@@ -21,10 +21,8 @@
 
   <div class="text-paragraph">
     <h2>INSTALLATION</h2>
-      <h3>Production</h3>
       <p>
-      In Production, the USER needs to download only the AW-PRODUCER, it will be the Server Administrator which will deploy the mapping part.<br>
-      The AW-PRODUCER is an ELECTRON APP distribuited via an exe file. Follow this steps to download and use the producer:</p>
+      Follow this steps to download and use the Aw-Producer:</p>
       <ol>
         <li>
         Download the latest release zip file: <br>
@@ -36,15 +34,39 @@
         <li>Launch the executable file inside the extracted folder: AwProducer.exe for Windows, electron for Linux, Electron.app for Macos</li>
         <li>Create a desktop shortcut for easy access to the executable</li>
       </ol>
-      Producer CONFIGURATION:<br><br>
-      <ol>
-        <li>Press the menu button on the top-left corner of the screen</li>
-        <li>Select your user</li>
-        <li>Select the remote sepa hostname</li>
-        <li>Select the http port and ws port</li>
-        <li>Save options. The APP will reload automatically</li>
-      </ol>
-<h3>Developement</h3>
+
+ 
+<h2>USAGE</h2> 
+<p>
+The Aw-Producer allows a User to manually upload data to a remote SEPA cloud.<br>
+The flow of the application is composed by 3 steps: configuration, data fetch and data upload.
+</p>
+<h4>1- CONFIGURATION</h4> 
+<p>The app comes with a default configuration which can be changed from the menu:</p>
+  <ol>
+    <li>Press the menu button on the top-left corner of the screen to open the configuration menu</li>
+    <li>Set your username (es default.user@vaimee.it)</li>
+    <li>Set the SEPA ip address (es dld.arces.unibo.it)</li>
+    <li>Set the http port (es. 8500) and ws port (es. 9500)</li>
+    <li>Set whitelisted watchers (es. aw-my2sec,aw-watcher-working)</li>
+    <li>Press the save button. The APP will reload automatically</li>
+  </ol>
+
+<h4>2- GET DATA</h4> 
+<p>
+At startup, the application will automatically get the events from aw-server and display them to the user. Only the whitelisted watchers will be shown.<br>
+The app will show the events of one watcher at a time, to view other watchers press the arrow buttons on the sides of the screen.
+</p>
+
+<h4>3- UPLOAD DATA</h4> 
+<p>
+After fetching the events, the app will try to connect to the remote SEPA server. If connection is successful, a button will appear on the bottom of the screen.<br>
+Pressing this button will start the upload procedure: if data is uploaded correctly, a popup will appear signaling the user of the succeeded operation.
+</p>
+
+
+
+<h2>Developement</h2>
 To test the whole adapter architecture, you can deploy mapper,producer and a sepa on your local host using the following docker-compose file:
 <pre>
 version: "3.9"
