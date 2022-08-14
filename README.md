@@ -67,7 +67,7 @@ Pressing this button will start the upload procedure: if data is uploaded correc
 
 
 <h2>Developement</h2>
-To test the whole adapter architecture, you can deploy mapper,producer and a sepa on your local host using the following docker-compose file:
+To test the whole adapter architecture, on top of the producer you need to deploy a mapper, a SEPA engine and a DB on your local host using the following docker-compose file as an example:
 <pre>
 version: "3.9"
 #================================================#
