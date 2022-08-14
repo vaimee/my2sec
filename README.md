@@ -34,7 +34,7 @@
         <li>Launch the executable file inside the extracted folder: AwProducer.exe for Windows, electron for Linux, Electron.app for Macos</li>
         <li>Create a desktop shortcut for easy access to the executable</li>
       </ol>
-
+ 
  
 <h2>USAGE</h2> 
 <p>
@@ -62,6 +62,15 @@ The app will show the events of one watcher at a time, to view other watchers pr
 <p>
 After fetching the events, the app will try to connect to the remote SEPA server. If connection is successful, a button will appear on the bottom of the screen.<br>
 Pressing this button will start the upload procedure: if data is uploaded correctly, a popup will appear signaling the user of the succeeded operation.
+</p>
+
+
+
+
+<h2>TROUBLESHOOTING</h2> 
+<p>
+The application is still in development, so it has not been signed yet. Some operating systems like macos are very strict on running unsigned applications: if you have trouble starting the application try with this link: https://support.apple.com/it-it/guide/mac-help/mh40616/mac
+If you have other issues during the usage of the application please report them as an issue here on GitHub! While the issue gets fixed, try to restart the application...
 </p>
 
 
