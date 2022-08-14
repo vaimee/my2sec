@@ -41,7 +41,7 @@
 The Aw-Producer allows a User to manually upload data to a remote SEPA cloud.<br>
 The flow of the application is composed by 3 steps: configuration, data fetch and data upload.
 </p>
-<h4>1- CONFIGURATION</h4> 
+<h4>1- Configuration</h4> 
 <p>The app comes with a default configuration which can be changed from the menu:</p>
   <ol>
     <li>Press the menu button on the top-left corner of the screen to open the configuration menu</li>
@@ -52,13 +52,13 @@ The flow of the application is composed by 3 steps: configuration, data fetch an
     <li>Press the save button. The APP will reload automatically</li>
   </ol>
 
-<h4>2- GET DATA</h4> 
+<h4>2- Get data</h4> 
 <p>
 At startup, the application will automatically get the events from aw-server and display them to the user. Only the whitelisted watchers will be shown.<br>
 The app will show the events of one watcher at a time, to view other watchers press the arrow buttons on the sides of the screen.
 </p>
 
-<h4>3- UPLOAD DATA</h4> 
+<h4>3- Upload data</h4> 
 <p>
 After fetching the events, the app will try to connect to the remote SEPA server. If connection is successful, a button will appear on the bottom of the screen.<br>
 Pressing this button will start the upload procedure: if data is uploaded correctly, a popup will appear signaling the user of the succeeded operation.
@@ -66,7 +66,7 @@ Pressing this button will start the upload procedure: if data is uploaded correc
 
 
 
-<h2>Developement</h2>
+<h2>DEVELOPMENT</h2>
 To test the whole adapter architecture, on top of the producer you need to deploy a mapper, a SEPA engine and a DB on your local host using the following docker-compose file as an example:<br>
 <pre>
 version: "3.9"
