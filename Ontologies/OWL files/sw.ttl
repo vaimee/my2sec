@@ -630,7 +630,7 @@ opo:Task rdf:type owl:Class ;
 :Reserching rdf:type owl:NamedIndividual ,
                      :ActivityType ;
             rdfs:comment "An activity based on researching and studing."@en ;
-            rdfs:label "Research"@en .
+            rdfs:label "Researching"@en .
 
 
 ###  http://www.vaimee.it/my2sec/ontologies/sw#Testing
