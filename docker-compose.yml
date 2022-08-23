@@ -1,0 +1,153 @@
+version: "3.9"
+#================================================#
+# NAME: MY2SEC
+# DATE: 23-8-2022
+# AUTHOR: Gregorio Monari
+# DESCRIPTION: deploys all my2sec modules
+#================================================#
+volumes:
+  rdf_my2sec_public: #blazegraph db
+  mysql_my2sec:
+  superset_my2sec_home:
+networks:
+  net_my2sec: #my2sec internal network and DNS
+
+
+
+services:
+
+  ######################
+  # DATA VISUALIZATION #
+  ######################
+  superset: #data visualization tool
+    image: apache/superset:latest
+    restart: always
+    depends_on:
+      - "mysql"
+    ports:
+      - "8088:8088"
+    volumes:
+      - superset_my2sec_home:/app/superset_home
+    networks:
+      - "net_my2sec"
+
+  adminer: #basic db administration tool
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - "net_my2sec"
+
+  mysql_events_consumer: #consumes events from SEPA and stores them in an sql db
+    image: gregnet/eventsconsumer:v0.3.1-my2sec
+    user: node
+    restart: always
+    working_dir: /home/node/myapp
+    command: "node main.js"
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=0
+      #Connect to SEPA
+      - HOST_NAME=engine #sepa engine ip address
+      - HTTP_PORT=8000 #engine query/update port
+      - WS_PORT=9000 #engine subscription port
+      #Connect to MYSQL
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PW=Gregnet/99
+      - MYSQL_DB=EventsDB
+    networks:
+      - "net_my2sec"
+
+  mysql: #sql db
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Gregnet/99
+    volumes:
+      - mysql_my2sec:/var/lib/mysql
+    networks:
+      - "net_my2sec"
+
+
+
+
+  ####################
+  # SEMANTIC MAPPERS #
+  ####################
+  aw_working_mapper: #activity watch mapper
+    image: gregnet/awmapper:v0.3.2
+    user: node
+    restart: always
+    working_dir: /home/node/myapp
+    command: "node main.js"
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=0
+      - SOURCE=http://www.vaimee.it/sources/aw-watcher-working
+      - HOST_NAME=engine #sepa engine ip address
+      - HTTP_PORT=8000 #engine query/update port
+      - WS_PORT=9000 #engine subscription port
+    networks:
+      - "net_my2sec"
+      
+  aw_my2sec_mapper: #activity watch mapper
+    image: gregnet/awmapper:v0.3.2
+    user: node
+    restart: always
+    working_dir: /home/node/myapp
+    command: "node main.js"
+    environment:
+      - NODE_ENV=production
+      - LOG_LEVEL=0
+      - SOURCE=http://www.vaimee.it/sources/aw-my2sec
+      - HOST_NAME=engine #sepa engine ip address
+      - HTTP_PORT=8000 #engine query/update port
+      - WS_PORT=9000 #engine subscription port
+    networks:
+      - "net_my2sec"
+
+
+
+
+
+  ##################
+  # THE CORE: SEPA #
+  ##################
+  dashboard: #sepa dashboard: manual sparql1.1 queries and updates
+    image: gregnet/sepa_dashboard:1.0
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - "net_my2sec"
+
+  engine: #the sepa core
+    image: gregnet/sepablaze:dev2j-0.1
+    command: sh -c "java Dev2jConnector && java -jar engine-0-SNAPSHOT.jar"
+    restart: always
+    environment:
+      - host_name=db
+    depends_on:
+      - db
+    ports:
+      - "8000:8000" #query/update port
+      - "9000:9000" #subscription port
+    networks:
+      - "net_my2sec"
+
+  db: #endpoint
+    image: lyrasis/blazegraph:2.1.5
+    restart: always
+    environment:
+        JAVA_XMS: 512m
+        JAVA_XMX: 1g
+    volumes:
+      - rdf_my2sec_public:/var/lib/jetty
+    networks:
+      - "net_my2sec"
