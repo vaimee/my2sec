@@ -13,24 +13,26 @@
                                       dct:description """The JSON SPQRQL Application Profile Ontology (JSAP) is intended to describe semantically an application based on SPARQL Event Processing Architecture (SEPA) and following the application design pattern named PAC (Producer-Aggregator-Consumer).
 
 Finally, this work is strongly related to the realization of a JSAP for Linked Data (in JSON-LD rather than JSON). Therefore this first version of JSAP Ontology is meant to represent the JSAP in its basic parts and functioning and it does not include the description of Producer, Aggregator and Consumer and their interactions as well as representations of a more specific level, but it is expected to be done in future versions of this ontology."""@en ;
-                                      owl:title "JSAP: JSON SPARQL Application Profile Ontology"@en ;
                                       rdfs:seeAlso <http://mml.arces.unibo.it/TR/jsap.html> ,
                                                    <https://github.com/arces-wot/JSAP-LD> ;
                                       owl:priorVersion "http://www.vaimee.it/ontology/jsap/1.0"@en ;
-                                      dct:abstract "A short abstract goes here!" ;
+                                      owl:title "JSAP: JSON SPARQL Application Profile Ontology"@en ;
                                       owl:versionInfo "2.0"@en .
-									  
 
 #################################################################
 #    Annotation properties
 #################################################################
 
 ###  http://purl.org/dc/terms/description
-<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+dct:description rdf:type owl:AnnotationProperty .
 
 
 ###  http://purl.org/dc/terms/title
-<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
+dct:title rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#title
+owl:title rdf:type owl:AnnotationProperty .
 
 
 #################################################################
@@ -44,61 +46,64 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
                                                  rdfs:comment "The SPARQL 1.1 SE Protocol extends and wraps the SPARQL 1.1 Protocol supporting subscriptions and secure connections."@en ;
                                                  rdfs:label "extends" .
 
+
 ###  http://www.vaimee.it/ontology/1.0/jsap#hasForcedBindings
 <http://www.vaimee.it/ontology/1.0/jsap#hasForcedBindings> rdf:type owl:ObjectProperty ;
-                                                           rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#queries> ,
-                                                                       <http://www.vaimee.it/ontology/1.0/jsap#updates> ;
-                                                           rdfs:range <http://www.vaimee.it/ontology/1.0/jsap#forcedBindings> ;
-														   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
-                                                 		   rdfs:label "hasForcedBindings" .
+                                                           rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#Queries> ,
+                                                                       <http://www.vaimee.it/ontology/1.0/jsap#Updates> ;
+                                                           rdfs:range <http://www.vaimee.it/ontology/1.0/jsap#ForcedBindings> ;
+                                                           rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
+                                                           rdfs:label "hasForcedBindings" .
+
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#hasProtocolQuery
 <http://www.vaimee.it/ontology/1.0/jsap#hasProtocolQuery> rdf:type owl:ObjectProperty ;
-                                                          rdfs:domain <http://www.vaimee.it/ontology/2.0/jsap#sparql11query> ;
+                                                          rdfs:domain <http://www.vaimee.it/ontology/2.0/jsap#Sparql11query> ;
                                                           rdfs:range <http://www.vaimee.it/ontology/1.0/jsap#sparq11protocol> ,
                                                                      <http://www.vaimee.it/ontology/1.0/jsap#sparql11protocol-query> ,
                                                                      <http://www.vaimee.it/ontology/1.0/jsap#sparql11seprotocol> ;
-														   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
-                                                 		   rdfs:label "hasProtocolQuery" .
-                                                 		   
+                                                          rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
+                                                          rdfs:label "hasProtocolQuery" .
+
+
 ###  http://www.vaimee.it/ontology/1.0/jsap#hasProtocolUpdate
 <http://www.vaimee.it/ontology/1.0/jsap#hasProtocolUpdate> rdf:type owl:ObjectProperty ;
-                                                           rdfs:domain <http://www.vaimee.it/ontology/2.0/jsap#sparql11update> ;
+                                                           rdfs:domain <http://www.vaimee.it/ontology/2.0/jsap#Sparql11update> ;
                                                            rdfs:range <http://www.vaimee.it/ontology/1.0/jsap#sparq11protocol> ,
                                                                       <http://www.vaimee.it/ontology/1.0/jsap#sparql11protocol-update> ;
-														   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
-                                                 		   rdfs:label "hasProtocolUpdate" .
+                                                           rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
+                                                           rdfs:label "hasProtocolUpdate" .
 
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#hasQuery
 <http://www.vaimee.it/ontology/1.0/jsap#hasQuery> rdf:type owl:ObjectProperty ;
-                                                  rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#queries> ;
-                                                  rdfs:range <http://www.vaimee.it/ontology/2.0/jsap#sparql11query> ;
-														   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
-                                                 		   rdfs:label "hasQuery" .
+                                                  rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#Queries> ;
+                                                  rdfs:range <http://www.vaimee.it/ontology/2.0/jsap#Sparql11query> ;
+                                                  rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
+                                                  rdfs:label "hasQuery" .
 
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#hasUpdate
 <http://www.vaimee.it/ontology/1.0/jsap#hasUpdate> rdf:type owl:ObjectProperty ;
                                                    rdfs:subPropertyOf owl:topObjectProperty ;
-                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#updates> ;
-                                                   rdfs:range <http://www.vaimee.it/ontology/2.0/jsap#sparql11update> ;
-														   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
-                                                 		   rdfs:label "hasUpdate" .
+                                                   rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#Updates> ;
+                                                   rdfs:range <http://www.vaimee.it/ontology/2.0/jsap#Sparql11update> ;
+                                                   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
+                                                   rdfs:label "hasUpdate" .
 
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#madeBy
 <http://www.vaimee.it/ontology/1.0/jsap#madeBy> rdf:type owl:ObjectProperty ;
-                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#jsap> ;
-                                                rdfs:range <http://www.vaimee.it/ontology/1.0/jsap#extended> ,
-                                                           <http://www.vaimee.it/ontology/1.0/jsap#graphs> ,
-                                                           <http://www.vaimee.it/ontology/1.0/jsap#namespaces> ,
-                                                           <http://www.vaimee.it/ontology/1.0/jsap#oauth> ,
-                                                           <http://www.vaimee.it/ontology/1.0/jsap#protocols> ,
-                                                           <http://www.vaimee.it/ontology/1.0/jsap#queries> ,
-                                                           <http://www.vaimee.it/ontology/1.0/jsap#updates> ;
-														   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
-                                                 		   rdfs:label "madeBy" .
+                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#Jsap> ;
+                                                rdfs:range <http://www.vaimee.it/ontology/1.0/jsap#Extended> ,
+                                                           <http://www.vaimee.it/ontology/1.0/jsap#Graphs> ,
+                                                           <http://www.vaimee.it/ontology/1.0/jsap#Namespaces> ,
+                                                           <http://www.vaimee.it/ontology/1.0/jsap#Oauth> ,
+                                                           <http://www.vaimee.it/ontology/1.0/jsap#Protocols> ,
+                                                           <http://www.vaimee.it/ontology/1.0/jsap#Queries> ,
+                                                           <http://www.vaimee.it/ontology/1.0/jsap#Updates> ;
+                                                rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
+                                                rdfs:label "madeBy" .
 
 
 #################################################################
@@ -107,16 +112,16 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#datatype
 <http://www.vaimee.it/ontology/1.0/jsap#datatype> rdf:type owl:DatatypeProperty ;
-                                                  rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#forcedBindings> ;
+                                                  rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#ForcedBindings> ;
                                                   rdfs:comment "Forced binding type.It must be one of \"uri\", \"bnode\", \"literal\"."@en ;
                                                   rdfs:label "datatype"@en .
 
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#default
 <http://www.vaimee.it/ontology/1.0/jsap#default> rdf:type owl:DatatypeProperty ;
-                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#LiteralForcedBinding> ,
-                                                             <http://www.vaimee.it/ontology/1.0/jsap#UriForcedBinding> ,
-                                                             <http://www.vaimee.it/ontology/1.0/jsap#forcedBindings> ;
+                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#ForcedBindings> ,
+                                                             <http://www.vaimee.it/ontology/1.0/jsap#LiteralForcedBinding> ,
+                                                             <http://www.vaimee.it/ontology/1.0/jsap#UriForcedBinding> ;
                                                  rdfs:range xsd:string ;
                                                  rdfs:comment "Forced binding value. It is optional and should be used to specify a default value for that variable."@en ;
                                                  rdfs:label "default"@en .
@@ -124,7 +129,7 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#enable
 <http://www.vaimee.it/ontology/1.0/jsap#enable> rdf:type owl:DatatypeProperty ;
-                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#oauth> ;
+                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#Oauth> ;
                                                 rdfs:range xsd:boolean ;
                                                 rdfs:comment "It is used for the oauth member enabling."@en ;
                                                 rdfs:label "enable"@en .
@@ -135,8 +140,8 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#sparq11protocol> ,
                                                             <http://www.vaimee.it/ontology/1.0/jsap#sparql11protocol-query> ,
                                                             <http://www.vaimee.it/ontology/1.0/jsap#sparql11protocol-update> ,
-                                                            <http://www.vaimee.it/ontology/2.0/jsap#sparql11query> ,
-                                                            <http://www.vaimee.it/ontology/2.0/jsap#sparql11update> ;
+                                                            <http://www.vaimee.it/ontology/2.0/jsap#Sparql11query> ,
+                                                            <http://www.vaimee.it/ontology/2.0/jsap#Sparql11update> ;
                                                 rdfs:range xsd:string ;
                                                 rdfs:comment "It expresses the format of the response. All the SEPA implementations must support JSON as return format, while other formats like XML,CSV or HTML may be supported."@en ;
                                                 rdfs:label "format"@en .
@@ -144,7 +149,7 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#host
 <http://www.vaimee.it/ontology/1.0/jsap#host> rdf:type owl:DatatypeProperty ;
-                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#protocols> ,
+                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#Protocols> ,
                                                           <http://www.vaimee.it/ontology/1.0/jsap#sparq11protocol> ,
                                                           <http://www.vaimee.it/ontology/1.0/jsap#sparql11protocol-query> ,
                                                           <http://www.vaimee.it/ontology/1.0/jsap#sparql11protocol-update> ,
@@ -159,8 +164,8 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
                                                 rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#sparq11protocol> ,
                                                             <http://www.vaimee.it/ontology/1.0/jsap#sparql11protocol-query> ,
                                                             <http://www.vaimee.it/ontology/1.0/jsap#sparql11protocol-update> ,
-                                                            <http://www.vaimee.it/ontology/2.0/jsap#sparql11query> ,
-                                                            <http://www.vaimee.it/ontology/2.0/jsap#sparql11update> ;
+                                                            <http://www.vaimee.it/ontology/2.0/jsap#Sparql11query> ,
+                                                            <http://www.vaimee.it/ontology/2.0/jsap#Sparql11update> ;
                                                 rdfs:range xsd:string ;
                                                 rdfs:comment "It specifies the HTTP or HTTPS method used."@en ;
                                                 rdfs:label "method"@en .
@@ -168,9 +173,9 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#name
 <http://www.vaimee.it/ontology/1.0/jsap#name> rdf:type owl:DatatypeProperty ;
-                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#LiteralForcedBinding> ,
-                                                          <http://www.vaimee.it/ontology/1.0/jsap#UriForcedBinding> ,
-                                                          <http://www.vaimee.it/ontology/1.0/jsap#forcedBindings> ;
+                                              rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#ForcedBindings> ,
+                                                          <http://www.vaimee.it/ontology/1.0/jsap#LiteralForcedBinding> ,
+                                                          <http://www.vaimee.it/ontology/1.0/jsap#UriForcedBinding> ;
                                               rdfs:range rdfs:Literal ;
                                               rdfs:comment "Name of a forced binding."@en ;
                                               rdfs:label "name"@en .
@@ -218,8 +223,8 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#sparql
 <http://www.vaimee.it/ontology/1.0/jsap#sparql> rdf:type owl:DatatypeProperty ;
-                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#queries> ,
-                                                            <http://www.vaimee.it/ontology/1.0/jsap#updates> ;
+                                                rdfs:domain <http://www.vaimee.it/ontology/1.0/jsap#Queries> ,
+                                                            <http://www.vaimee.it/ontology/1.0/jsap#Updates> ;
                                                 rdfs:range xsd:string ;
                                                 rdfs:comment "It defines if the SPARQL action is a query or an update."@en ;
                                                 rdfs:label "sparql"@en .
@@ -229,71 +234,77 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
 #    Classes
 #################################################################
 
-###  http://www.vaimee.it/ontology/1.0/jsap#LiteralForcedBinding
-<http://www.vaimee.it/ontology/1.0/jsap#LiteralForcedBinding> rdf:type owl:Class ;
-                                                              rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/jsap#forcedBindings> ;
-                                                              rdfs:comment "A Literal Forced Binding is a forced binding described as literal type."@en ;
-                                                              rdfs:label "Literal Forced Binding"@en .
-														
-###  http://www.vaimee.it/ontology/1.0/jsap#UriForcedBinding
-<http://www.vaimee.it/ontology/1.0/jsap#UriForcedBinding> rdf:type owl:Class ;
-                                                          rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/jsap#forcedBindings> ;
-                                                          rdfs:comment "An URI forced binding is a forced binding described in an URI."@en ;
-                                                          rdfs:label "URI Forced Binding"@en .
-
-
-###  http://www.vaimee.it/ontology/1.0/jsap#extended
-<http://www.vaimee.it/ontology/1.0/jsap#extended> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/1.0/jsap#Extended
+<http://www.vaimee.it/ontology/1.0/jsap#Extended> rdf:type owl:Class ;
                                                   rdfs:comment "The extended member is optional and it may be used to store application specific data."@en ;
                                                   rdfs:label "Extended"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/jsap#forcedBindings
-<http://www.vaimee.it/ontology/1.0/jsap#forcedBindings> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/1.0/jsap#ForcedBindings
+<http://www.vaimee.it/ontology/1.0/jsap#ForcedBindings> rdf:type owl:Class ;
                                                         rdfs:comment "A forced binding enables the developer to substitute at run-time a variable in a template with a custom value."@en ;
                                                         rdfs:label "Forced Binding"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/jsap#graphs
-<http://www.vaimee.it/ontology/1.0/jsap#graphs> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/1.0/jsap#Graphs
+<http://www.vaimee.it/ontology/1.0/jsap#Graphs> rdf:type owl:Class ;
                                                 rdfs:comment "The graphs member may be used to specify zero or more default graph URIs."@en ;
                                                 rdfs:label "Graphs"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/jsap#jsap
-<http://www.vaimee.it/ontology/1.0/jsap#jsap> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/1.0/jsap#Jsap
+<http://www.vaimee.it/ontology/1.0/jsap#Jsap> rdf:type owl:Class ;
                                               rdfs:comment "JSAP (JSON SPARQL Application Profile) is used to describe an application based on the SPARQL Event Processing Architecure (SEPA) and folllowing the application design pattern named PAC (Producer-Aggregator-Consumer). A client assumes a different role depending on how it interacts with a SEPA broker."@en ;
                                               rdfs:label "JSAP"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/jsap#namespaces
-<http://www.vaimee.it/ontology/1.0/jsap#namespaces> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/1.0/jsap#LiteralForcedBinding
+<http://www.vaimee.it/ontology/1.0/jsap#LiteralForcedBinding> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/jsap#ForcedBindings> ;
+                                                              rdfs:comment "A Literal Forced Binding is a forced binding described as literal type."@en ;
+                                                              rdfs:label "Literal Forced Binding"@en .
+
+
+###  http://www.vaimee.it/ontology/1.0/jsap#Namespaces
+<http://www.vaimee.it/ontology/1.0/jsap#Namespaces> rdf:type owl:Class ;
                                                     rdfs:comment "JSAP may include a set of namespaces used b SPARQL updates and queries. Client_side APIs should take the namespace and prepend them to a SPARQL update/subscribe."@en ;
                                                     rdfs:label "Namespaces"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/jsap#oauth
-<http://www.vaimee.it/ontology/1.0/jsap#oauth> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/1.0/jsap#Oauth
+<http://www.vaimee.it/ontology/1.0/jsap#Oauth> rdf:type owl:Class ;
                                                rdfs:comment "The oauth member allows to specify the Autorization Server URLs used to register a new client identity and request tokens."@en ;
                                                rdfs:label "Oauth"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/jsap#protocols
-<http://www.vaimee.it/ontology/1.0/jsap#protocols> rdf:type owl:Class ;
-                                                   rdfs:label "Protocols"@en ;
-														   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en .
-                                                 		   
+###  http://www.vaimee.it/ontology/1.0/jsap#Protocols
+<http://www.vaimee.it/ontology/1.0/jsap#Protocols> rdf:type owl:Class ;
+                                                   rdfs:comment "ADD COMMENT HERE. THANK YOU!"@en ;
+                                                   rdfs:label "Protocols"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/jsap#queries
-<http://www.vaimee.it/ontology/1.0/jsap#queries> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/1.0/jsap#Queries
+<http://www.vaimee.it/ontology/1.0/jsap#Queries> rdf:type owl:Class ;
                                                  rdfs:comment "The queries member contain a list of SPARQL 1.1 queries."@en ;
                                                  rdfs:label "Queries"@en .
 
 
+###  http://www.vaimee.it/ontology/1.0/jsap#Updates
+<http://www.vaimee.it/ontology/1.0/jsap#Updates> rdf:type owl:Class ;
+                                                 rdfs:comment "The updates member contain a list of SPARQL 1.1 updates."@en ;
+                                                 rdfs:label "Updates"@en .
+
+
+###  http://www.vaimee.it/ontology/1.0/jsap#UriForcedBinding
+<http://www.vaimee.it/ontology/1.0/jsap#UriForcedBinding> rdf:type owl:Class ;
+                                                          rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/jsap#ForcedBindings> ;
+                                                          rdfs:comment "An URI forced binding is a forced binding described in an URI."@en ;
+                                                          rdfs:label "URI Forced Binding"@en .
+
+
 ###  http://www.vaimee.it/ontology/1.0/jsap#sparq11protocol
 <http://www.vaimee.it/ontology/1.0/jsap#sparq11protocol> rdf:type owl:Class ;
-                                                         rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/jsap#protocols> ;
+                                                         rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/jsap#Protocols> ;
                                                          rdfs:comment "SPARQL 1.1 Protocol decribes a means for conveying SPARQL queries and updates to a SPARQL processing service and returning the results via HTTP to the entity that requested them."@en ;
                                                          rdfs:label "SPARQL 1.1 Protocol"@en .
 
@@ -314,31 +325,25 @@ Finally, this work is strongly related to the realization of a JSAP for Linked D
 
 ###  http://www.vaimee.it/ontology/1.0/jsap#sparql11seprotocol
 <http://www.vaimee.it/ontology/1.0/jsap#sparql11seprotocol> rdf:type owl:Class ;
-                                                            rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/jsap#protocols> ;
+                                                            rdfs:subClassOf <http://www.vaimee.it/ontology/1.0/jsap#Protocols> ;
                                                             rdfs:comment "ThE SPARQL 1.1 SE Protocol wraps the SPARQL 1.1 Protocol to support subscriptions and secure connections."@en ;
                                                             rdfs:label "SPARQL 1.1 Secure Event Protocol"@en .
 
 
-###  http://www.vaimee.it/ontology/1.0/jsap#updates
-<http://www.vaimee.it/ontology/1.0/jsap#updates> rdf:type owl:Class ;
-                                                 rdfs:comment "The updates member contain a list of SPARQL 1.1 updates."@en ;
-                                                 rdfs:label "Updates"@en .
-
-
-###  http://www.vaimee.it/ontology/2.0/jsap#sparql11query
-<http://www.vaimee.it/ontology/2.0/jsap#sparql11query> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/2.0/jsap#Sparql11query
+<http://www.vaimee.it/ontology/2.0/jsap#Sparql11query> rdf:type owl:Class ;
                                                        rdfs:comment "SPARQL 1.1 Query language contains capabilities for querying required and optional graph patterns along with their conjunctions and disjunctions.The results of SPARQL queries can be result sets or RDF graphs."@en ;
                                                        rdfs:label "Query"@en .
 
 
-###  http://www.vaimee.it/ontology/2.0/jsap#sparql11subscribe
-<http://www.vaimee.it/ontology/2.0/jsap#sparql11subscribe> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/2.0/jsap#Sparql11subscribe
+<http://www.vaimee.it/ontology/2.0/jsap#Sparql11subscribe> rdf:type owl:Class ;
                                                            rdfs:comment "The SPARQL 1.1 Subscribe Language defines the content of subscription/unsubscriptions requests and notificatications through ws and wss protocols."@en ;
                                                            rdfs:label "Subscription"@en .
 
 
-###  http://www.vaimee.it/ontology/2.0/jsap#sparql11update
-<http://www.vaimee.it/ontology/2.0/jsap#sparql11update> rdf:type owl:Class ;
+###  http://www.vaimee.it/ontology/2.0/jsap#Sparql11update
+<http://www.vaimee.it/ontology/2.0/jsap#Sparql11update> rdf:type owl:Class ;
                                                         rdfs:comment "SPARQL 1.1 Update is a standard language for specifying and executing updates to RDF graphs in a Graph Store."@en ;
                                                         rdfs:label "Update"@en .
 
