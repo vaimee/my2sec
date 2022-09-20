@@ -9,21 +9,39 @@
 @prefix jsap: <http://www.vaimee.it/ontology/2.0/jsap#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
-@base <http://www.vaimee.it/ontology/pac> .
+@base <http://www.vaimee.it/my2sec/ontologies/pac> .
 
-<http://www.vaimee.it/ontology/pac> rdf:type owl:Ontology ;
-                                     owl:versionIRI <http://www.vaimee.it/ontology/1.0/pac> ;
-                                     owl:versionInfo "1.0"@en ;
-                                     dct:abstract "A short abstract goes here!" ;
-                                     dct:description "A description goes here!" ;
-                                     owl:title "Here the title!" .
+<http://www.vaimee.it/my2sec/ontologies/pac> rdf:type owl:Ontology ;
+                                              owl:versionIRI <http://www.vaimee.it/my2sec/ontologies/pac/1.0> ;
+                                              dct:abstract "This ontology describe tthe application design pattern named PAC (Producer-Aggregator-Consumer). The PAC pattern may be attractive for Web of Things applications: producer and consumers interact with the pysical world and should be kept as simpler as possible. Aggregators may be more resource greedy (e.g., may run on high performance server machine). Producers and Consumers can be re-used in other applications and the application business logic can be changed (or extended) just by adding (or extending) aggregators."@en ;
+                                              dct:contributor "Luca Roffia"@en ;
+                                              dct:creator "Elisa Riforgiato"@en ;
+                                              dct:description "Introduction."@en ;
+                                              owl:title "PAC Ontology" ;
+                                              owl:versionInfo "http://www.vaimee.it/my2sec/ontologies/pac/1.0"@en .
 
 #################################################################
 #    Annotation properties
 #################################################################
 
+###  http://purl.org/dc/terms/abstract
+dct:abstract rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/contributor
+dct:contributor rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dct:creator rdf:type owl:AnnotationProperty .
+
+
 ###  http://purl.org/dc/terms/description
-<http://purl.org/dc/terms/description> rdf:type owl:AnnotationProperty .
+dct:description rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2002/07/owl#title
+owl:title rdf:type owl:AnnotationProperty .
 
 
 #################################################################
@@ -35,8 +53,8 @@
                                                    rdfs:domain <http://www.vaimee.it/ontology/pac/1.0#aggregator> ,
                                                                <http://www.vaimee.it/ontology/pac/1.0#consumer> ;
                                                    rdfs:range jsap:sparql11query ;
-                                                   rdfs:label "makesQuery" ;
-                                                   rdfs:comment "A comment goes here!" .
+                                                   rdfs:comment "Makes query."@en ;
+                                                   rdfs:label "makesQuery" .
 
 
 ###  http://www.vaimee.it/ontology/pac/1.0#makesSubscription
@@ -44,8 +62,8 @@
                                                           rdfs:domain <http://www.vaimee.it/ontology/pac/1.0#aggregator> ,
                                                                       <http://www.vaimee.it/ontology/pac/1.0#consumer> ;
                                                           rdfs:range jsap:sparql11subscribe ;
-                                                   rdfs:label "makesSubscription" ;
-                                                   rdfs:comment "A comment goes here!" .
+                                                          rdfs:comment "Makes subscription."@en ;
+                                                          rdfs:label "makesSubscription" .
 
 
 ###  http://www.vaimee.it/ontology/pac/1.0#makesUpdate
@@ -53,8 +71,8 @@
                                                     rdfs:domain <http://www.vaimee.it/ontology/pac/1.0#aggregator> ,
                                                                 <http://www.vaimee.it/ontology/pac/1.0#producer> ;
                                                     rdfs:range jsap:sparql11update ;
-                                                   rdfs:label "makesUpdate" ;
-                                                   rdfs:comment "A comment goes here!" .
+                                                    rdfs:comment "Makes update."@en ;
+                                                    rdfs:label "makesUpdate" .
 
 
 #################################################################
@@ -68,8 +86,9 @@
                                                         jsap:sparql11update ,
                                                         <http://www.vaimee.it/ontology/pac/1.0#interaction> ;
                                             rdfs:range xsd:anyURI ;
-                                                   rdfs:label "uri" ;
-                                                   rdfs:comment "A comment goes here! What is this??????????" .
+                                            rdfs:comment "Each interaction (query, subscription, update) has its uri."@en ;
+                                            rdfs:label "uri" .
+
 
 #################################################################
 #    Classes
@@ -83,9 +102,9 @@ jsap:sparql11query rdf:type owl:Class ;
                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                      owl:onDataRange xsd:anyURI
                                    ] ;
+                   rdfs:comment "SPARQL 1.1 Query language contains capabilities for querying required and optional graph patterns along with their conjunction and disjunctions. The result of SPARQL queries can be result sets or RDF graphs."@en ;
                    rdfs:isDefinedBy schema:Action ;
-                   rdfs:label "Query" ;                                                   
-                                                   rdfs:comment "A comment goes here!" .
+                   rdfs:label "Query" .
 
 
 ###  http://www.vaimee.it/ontology/2.0/jsap#sparql11subscribe
@@ -96,8 +115,8 @@ jsap:sparql11subscribe rdf:type owl:Class ;
                                          owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                          owl:onDataRange xsd:anyURI
                                        ] ;
-                       rdfs:label "Subscription"@en ;
-                                                   rdfs:comment "A comment goes here!" .
+                       rdfs:comment "The SPARQL 1.1 Subscribe Language defines the content of subscription/unsubscriptions requests and notifications through ws and wss protocols."@en ;
+                       rdfs:label "Subscription"@en .
 
 
 ###  http://www.vaimee.it/ontology/2.0/jsap#sparql11update
@@ -108,8 +127,8 @@ jsap:sparql11update rdf:type owl:Class ;
                                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                       owl:onDataRange xsd:anyURI
                                     ] ;
-                    rdfs:label "Update"@en ;
-                                                   rdfs:comment "A comment goes here!" .
+                    rdfs:comment "SPARQL 1.1 Update is a standard language for specifying and executing updates to RDF graphs in a Graph Store."@en ;
+                    rdfs:label "Update"@en .
 
 
 ###  http://www.vaimee.it/ontology/pac/1.0#aggregator
@@ -129,9 +148,9 @@ jsap:sparql11update rdf:type owl:Class ;
                                                                      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                                                      owl:onClass jsap:sparql11update
                                                                    ] ;
+                                                   rdfs:comment "An Aggregator when receives a notification, it processes the notification content and invokes an update (if needed). The processing of an Aggregator can be combinatorial or sequential. To be classified as Aggregator, a relation between the notification and the corrispondign update should exist. In the PAC pattern, aggregators implement the application business logic."@en ;
                                                    rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Agent> ;
-                                                   rdfs:label "Aggregator"@en ;
-                                                   rdfs:comment "A comment goes here!" .
+                                                   rdfs:label "Aggregator"@en .
 
 
 ###  http://www.vaimee.it/ontology/pac/1.0#consumer
@@ -146,16 +165,16 @@ jsap:sparql11update rdf:type owl:Class ;
                                                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                                                    owl:onClass jsap:sparql11subscribe
                                                                  ] ;
+                                                 rdfs:comment "A Consumer invokes one and only one SPARQL 1.1 Subscribe or SPARQL 1.1 Query."@en ;
                                                  rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Agent> ;
-                                                 rdfs:label "Consumer"@en ;
-                                                   rdfs:comment "A comment goes here!" .
+                                                 rdfs:label "Consumer"@en .
 
 
 ###  http://www.vaimee.it/ontology/pac/1.0#interaction
 <http://www.vaimee.it/ontology/pac/1.0#interaction> rdf:type owl:Class ;
+                                                    rdfs:comment "Types of interaction between Aggregator, Producer, Consumer and SEPA."@en ;
                                                     rdfs:isDefinedBy schema:Action ;
-                                                    rdfs:label "Interaction"@en ;
-                                                   rdfs:comment "A comment goes here!" .
+                                                    rdfs:label "Interaction"@en .
 
 
 ###  http://www.vaimee.it/ontology/pac/1.0#producer
@@ -165,25 +184,24 @@ jsap:sparql11update rdf:type owl:Class ;
                                                                    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                                                                    owl:onClass jsap:sparql11update
                                                                  ] ;
+                                                 rdfs:comment "A Proiducer invokes a SPARQL 1.1 Update and such update must be always the same. A sensor producing some measures is an example."@en ;
                                                  rdfs:isDefinedBy <http://xmlns.com/foaf/0.1/Agent> ;
-                                                 rdfs:label "Producer"@en ;                                                   
-                                                   rdfs:comment "A comment goes here!" .
+                                                 rdfs:label "Producer"@en .
 
 
 ###  http://www.vaimee.it/ontology/pac/1.0#reading
 <http://www.vaimee.it/ontology/pac/1.0#reading> rdf:type owl:Class ;
                                                 rdfs:subClassOf <http://www.vaimee.it/ontology/pac/1.0#interaction> ;
+                                                rdfs:comment "Able to read."@en ;
                                                 rdfs:isDefinedBy schema:Action ;
-                                                rdfs:label "Reading"@en ;
-                                                   rdfs:label "makesQuery" ;
-                                                   rdfs:comment "A comment goes here!" .
+                                                rdfs:label "Reading"@en .
 
 
 ###  http://www.vaimee.it/ontology/pac/1.0#writing
 <http://www.vaimee.it/ontology/pac/1.0#writing> rdf:type owl:Class ;
                                                 rdfs:subClassOf <http://www.vaimee.it/ontology/pac/1.0#interaction> ;
-                                                rdfs:label "Writing"@en ;
-                                                   rdfs:comment "A comment goes here!" .
+                                                rdfs:comment "Able to wtite."@en ;
+                                                rdfs:label "Writing"@en .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
