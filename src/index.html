@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<!---------------------------------------------------------
+|| index.html: AW-PRODUCER
+|| 	DATE: 18/7/2022
+|| 	AUTHOR: Gregorio Monari
+|| 	DESCRIPTION: main html file, contains the structure of
+||				 the web app
+\\-------------------------------------------------------->
+<head>
+	<!--APP METADATA-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--TITLE AND ICON-->
+	<title>AW PRODUCER</title>
+	<link rel="icon" type="image/x-icon" href="Assets/vaimeelogo.jpg">
+
+	<!--JQUERY-->
+    <script src="lib/jquery-3.6.0.min.js"></script>
+    <!--SEPA CLIENT-->
+    <script src="https://cdn.jsdelivr.net/npm/@arces-wot/sepa-js/web/sepa.js"></script>
+    <!--DATATABLES.NET-->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+	<!--SUPERSET EMBEDDED SDK-->
+	<script src="https://unpkg.com/@superset-ui/embedded-sdk"></script>
+	<!--REACT-->
+    <!-- Nota: quando rilasci il codice in produzione, sostituisci "development.js" con "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+	<!--MAIN STYLE-->
+	<link rel="stylesheet" type="text/css" href="CSS/main.css">
+    <link rel="stylesheet" type="text/css" href="lib/gregnet-grid-plugin/gregnet-grid-style.css">   
+</head>
+
+
+
+<body>
+	
+	<!--============
+		[0] TOPBAR
+	==============-->
+	<div id="topbar">
+		<img onclick="menu_switch()" class="white-icon" src="Assets/icons/menu.svg"> 
+
+		<div id="sepa_connectionstatus_wrapper" class="mini-wrapper">
+			Not Connected
+			<!--<img class="white-icon" src="Assets/icons/wifi.svg"> -->
+		</div>
+
+		<div id="user_info_wrapper" class="mini-wrapper">
+			<img id="user-menu-icon" class="white-icon" src="Assets/icons/triangle.svg" width="15px" onclick="switch_user_menu()"> 
+			<span id="user_name">User</span>
+			<img id="user-icon" class="white-icon" src="Assets/icons/user.svg"> 
+		</div>
+	</div>
+
+	<!--============
+		[0.1] MENU
+	==============-->
+	<div id="menu_window">
+		<div class="menu_title">
+			<b>AW-PRODUCER Configuration</b>
+		</div>
+		<br>
+		<div id="sepa-config-wrapper" class="menu_form_wrapper">
+			SEPA CONFIGURATION
+			<hr>
+			<form id="sepa-config-form">
+				<label for="hostname_options">HostName:</label><br>
+				<input type="text" id="hostname_options" name="hostname_options" value="dld.arces.unibo.it"><br>
+
+				<label for="http_port_options">http_port:</label><br>
+				<input type="text" id="http_port_options" name="http_port_options" value="8500"><br>
+
+				<label for="ws_port_options">ws_port:</label><br>
+				<input type="text" id="ws_port_options" name="ws_port_options" value="9500"><br>
+
+				<label for="tls_options">tls:</label><br>
+				<input type="text" id="tls_options" name="tls_options" value="false"><br>
+
+			</form>
+
+		</div>
+
+		<br>
+
+		<div id="whitelist-config" class="menu_form_wrapper">
+			WATCHERS WHITELIST
+			<hr>
+			<form id="whitelist-form">
+				<label for="whitelist_options">Insert watchers clientname separated by comma:</label><br>
+				<textarea rows="4" id="whitelist_options" name="whitelist_options">aw-watcher-window</textarea><br>
+			</form>
+
+		</div>
+
+			<br>
+
+		<div id="app-config" class="menu_form_wrapper">
+			USER CONFIGURATION
+			<hr>
+			<form id="username-form">
+				<label for="username_options">Username:</label><br>
+				<input type="text" id="username_options" name="username_options" value="greg" contenteditable="true"><br>
+			</form>
+
+		</div>
+
+			<br>
+		
+		<div id="save-options-wrapper" class="menu_save_button_wrapper">
+			SAVE OPTIONS AND RESTART
+			<hr>
+			<button id="save_options_button" onclick="save_options_button()"><img src="Assets/icons/save-action-floppy.svg"></button>
+		</div>
+
+		<div id="menu_bottombar">
+			<a href="">GitHub<img class="white-icon" src="Assets/icons/github.svg"></a>
+		</div>
+
+	</div>
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------------------>
+	<!--=========================================
+		[1] CONTENITORE PER SUPERSET
+	=========================================-->
+	
+	<div align="center" id="superset-wrapper">
+
+		<!--USER HEADER-->
+		<div id="superset-header">
+			
+			<div id="welcome-board">
+				<span id="user_welcome"><b>Welcome back, <span id="user_name_welcome">USER</span>!</b></span>
+				<br>
+				<span>You have collected a total of <b><span id="sub_counter">0</span></b> events</span>
+			</div>
+			
+			<div id="events_control_panel">
+				<div id="superset-buttons">
+					<button class="default-button" onclick="button_press()">
+						<span style="display:flex;align-items:center;justify-content:center;">	
+							Update events&nbsp
+							<img class="white-icon" src="Assets/icons/upload.svg">
+						</span>
+					</button>
+					<button class="default-button" onclick="switch_content()">
+						<span style="display:flex;align-items:center;justify-content:center;">
+							Explorer&nbsp
+							<img class="white-icon" src="Assets/icons/table-rows.svg">
+						</span>
+					</button>
+				</div>
+				<div id="update_status" style="margin-top:5px;">
+					<div id="ready_status">Ready to upload <b><span id="ev_counter">0</span></b> new events from <b><span id="wc_counter">0</span></b> watchers</div>
+					<div id="success_status" style="display:none">Success! Events uploaded to SEPA</div>
+					<div id="error_status" style="display:none">Error: something went wrong...</div>
+					<div id="update_spinner" class="spinner" style="display:none"></div>
+				</div>
+			</div>
+
+		
+		</div>
+		
+
+		<!--# EMBEDDED DASHBOARD! #-->
+		<div id="my-superset-container">LOADING</div>
+
+	</div>	
+
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------------------>
+	<!--=========================================
+		[2] CONTENITORE PER IL WATCHER VIEW PANEL
+	=========================================-->
+	
+	<div id="content-wrapper">
+		<br>
+		<button class="default-button" onclick="switch_content()">back to home</button>
+
+		<div id="row-0">
+
+
+			<div id="nav-points-wrapper">
+
+				<!--
+				<div class="nav-point"></div>
+				<div class="nav-point"></div>
+				<div class="nav-point"></div>
+				<div class="nav-point"></div>
+				-->
+
+			</div>
+
+			<div id="watcher-title">
+				<h2>AW-WATCHER-WINDOW [1/4]</h2>
+			</div>
+
+
+		</div>
+		<!--#ROW-ZERO-->
+
+
+
+
+
+		<br>
+
+
+
+
+
+		<div id="row-1">
+
+
+			<button class="round_button" onclick="change_watcher('l')" align="center">
+				<img src="Assets/icons/arrow-left.svg" class="white-icon" id="sepabutton_icon" width="36px">
+			</button>
+
+			<!--TABLE CARD-->
+			<div id="table-card">
+				<span id="events-title">Loading events...</span>
+				<br><br>
+
+				<!--CONTAINS THE TABLE-->
+				<div id="table_wrapper">
+					<div class="spinner"></div>
+					<div id="content_obscurer">
+						<table id="events_table" class="display">
+							<thead>
+  								<tr id="cols_header">     					
+								</tr>
+							</thead>
+   							<tbody id="table_rows">
+   							</tbody>
+						</table>
+					</div>
+				</div>
+				<!--#table_wrapper-->
+			</div>
+			<!--#table-card-->
+
+
+			<button class="round_button" onclick="change_watcher('r')" align="center">
+				<img src="Assets/icons/arrow-right.svg" class="white-icon" id="sepabutton_icon" width="36px">
+			</button>
+
+
+		</div>
+		<!--#row-1-->
+
+
+
+
+
+
+
+
+
+
+		<!--ALIGNS CONTENT TO CENTER-->
+		<div id="row-2">
+			
+				<div class="sepa_cp_wrapper">
+
+					<div align="center" class="sepa_cp_title">
+						READY TO UPLOAD DATA
+					</div>
+					
+					<div class="sepa_cp_row1" id="sepa_cp_row1">
+
+						<!--SEPA SEND BUTTON-->
+						<div id="send_button_wrapper">
+							<button id="send_button" onclick="fake_send()" align="center">
+								<img src="Assets/icons/cloud-upload.svg" class="white-icon" id="sepabutton_icon" width="25px">
+							</button>
+						</div>
+
+				
+						<!--OPERATION STATUS
+						<div id="operation-status">Loading...</div>-->
+	
+						<!--EVENTS COUNTER-->
+						<div id="events_counter_wrapper" align="center">
+							mapped events:
+							<textarea id="sub_counter_old" rows="1">0</textarea>
+						</div>
+						
+						<!--
+						<div class="loading_box" id="loading_box">
+							<div class="loading_bar" id="loading_bar"></div>
+						</div>
+						-->
+	
+					</div>
+					
+				</div>
+			
+		</div>
+
+
+
+	</div>
+	<!--#content-wrapper-->
+
+
+
+
+	<!--Load external scripts-->
+	<script type="text/javascript" src="JS/jsap.js"></script>
+	<script type="text/javascript" src="JS/greglogs.js"></script>
+	<script type="text/javascript" src="JS/local_storage_menu.js"></script>
+	<script type="text/javascript" src="JS/superset-embed.js"></script>
+	<script type="text/javascript" src="JS/data_format.js"></script>
+	<script type="text/javascript" src="JS/aw-client.js"></script>
+	<script type="text/javascript" src="JS/sepa-client.js"></script>
+	<script type="text/javascript" src="JS/main.js"></script>
+</body>
+</html>

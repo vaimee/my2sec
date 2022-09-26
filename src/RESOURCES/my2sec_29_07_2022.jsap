@@ -1,0 +1,128 @@
+{
+	"host": "localhost",
+	"oauth": {
+		"enable": false,
+		"register": "https://localhost:8443/oauth/register",
+		"tokenRequest": "https://localhost:8443/oauth/token"
+	},
+	"sparql11protocol": {
+		"protocol": "http",
+		"port": 8600,
+		"query": {
+			"path": "/query",
+			"method": "POST",
+			"format": "JSON"
+		},
+		"update": {
+			"path": "/update",
+			"method": "POST",
+			"format": "JSON"
+		}
+	},
+	"sparql11seprotocol": {
+		"protocol": "ws",
+		"availableProtocols": {
+			"ws": {
+				"port": 9600,
+				"path": "/subscribe"
+			},
+			"wss": {
+				"port": 9443,
+				"path": "/secure/subscribe"
+			}
+		}
+	},
+	"graphs": {
+		
+	},
+	"namespaces": {
+
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"owl": "http://www.w3.org/2002/07/owl#",
+		"time":"http://www.w3.org/2006/time#",
+
+		"jsap": "http://www.vaimee.it/ontology/jsap#",
+		"opo": "http://www.vaimee.it/ontology/opo#",
+		"sw": "http://www.vaimee.it/ontology/sw#",
+		"pac": "http://www.vaimee.it/ontology/pac#"
+
+	},
+	"extended": {
+		
+	},
+	"updates": {
+
+		"CREATE_USERNAMES_GRAPH":{
+			"sparql": "CREATE (SILENT)? GRAPH <http://www.vaimee.it/members>"
+		},
+		"DROP_USERNAMES_GRAPH":{
+			"sparql":"DROP (SILENT)? GRAPH <http://www.vaimee.it/members>"
+		},
+
+
+
+		"CREATE_USER":{
+			"sparql":"INSERT DATA { GRAPH <http://www.vaimee.it/members> { <http://www.vaimee.it/defuser> opo:username '''defuser''' }}"
+		},
+		"DELETE_USER":{
+			"sparql":"DELETE {?s ?p ?o} WHERE { GRAPH <http://www.vaimee.it/members> { <http://www.vaimee.it/defuser> ?p ?o }}"
+		},
+
+
+
+		"CREATE_USER_PRIVATE_GRAPH":{
+			"sparql":"CREATE (SILENT)? GRAPH <http://www.vaimee.it/defuser>"
+		},
+		"DELETE_USER_PRIVATE_GRAPH":{
+			"sparql":"DROP (SILENT)? GRAPH <http://www.vaimee.it/defuser>"
+		},
+
+		"DELETE_ALL_USER_DATA":{
+			"sparql":"DELETE {?s ?p ?o} WHERE { GRAPH <http://www.vaimee.it/defuser> { ?s ?p ?o }}"
+		},
+
+
+
+		"SEND_MESSAGE":{
+			"sparql":"INSERT { GRAPH <http://www.vaimee.it/defuser> { _:b sw:messageValue '''json_msg''';  time:inXSDDateTimeStamp '''timestamp''' . }}"
+		},	
+			
+		"DELETE_MESSAGE":{
+			"sparql":"DELETE { GRAPH <http://www.vaimee.it/defuser> { ?bnode sw:messageValue ?jsonmsg;  time:inXSDDateTimeStamp '''timestamp''' . }} WHERE { GRAPH <http://www.vaimee.it/defuser> { ?bnode sw:messageValue ?jsonmsg;  time:inXSDDateTimeStamp '''timestamp''' . } }"
+		}
+
+
+	},
+	"queries": {
+
+		"USERS": {
+			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/members> { ?s opo:username ?o }}"
+		},
+
+		"USER_MESSAGES": {
+			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/greg> { ?s sw:messageValue ?message } }"
+		},
+
+		"ALL_USERS_MESSAGES":{
+			"sparql":"SELECT ?g ?s ?message WHERE { GRAPH <http://www.vaimee.it/members> { ?g opo:username ?o } GRAPH ?g { ?s sw:messageValue ?message } }"
+		},
+
+		"USER_EVENTS": {
+			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/greg> { ?nodeid rdf:type sw:event; sw:nameApp ?app; sw:titleFile ?title; time:inXSDDateTimeStamp ?timestamp } }"
+		},
+
+		"ALL_USERS_EVENTS":{
+			"sparql":"SELECT ?g ?s ?message WHERE { GRAPH <http://www.vaimee.it/members> { ?g opo:username ?o } GRAPH ?g { ?s sw:messageValue ?message } }"
+		},
+
+		"ALL_USER_DATA": {
+			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/greg> { ?s ?p ?o } }"
+		},
+
+		"TIMETEST": {
+			"sparql": "SELECT * WHERE {<http://sepatest/currentTime> <http://sepatest/hasValue> ?time}"
+		}
+	}
+}

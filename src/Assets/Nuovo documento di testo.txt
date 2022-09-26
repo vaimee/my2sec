@@ -1,0 +1,4 @@
+My2sec is an open source project which integrates many open source microservices into the ultimate tracking app.
+It allows cloud-storage of user data into a decentralized datacenter, where semantic tecnologies and the SEPA event handler come togheder
+to offer fast, reliable analysis and visualization tools.
+Users have full control of when and what data is sent so that privacy    
