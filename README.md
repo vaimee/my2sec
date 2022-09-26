@@ -60,6 +60,8 @@ INSTALLATION GUIDE
 <h2>USAGE</h2> 
 <p>
 The Aw-Producer allows a User to manually upload data to a remote SEPA cloud.<br>
+After the installation, the homescreen should look like this:
+<img src="img/AwProducer.PNG"></img>
 The flow of the application is composed by 3 steps: configuration, data fetch and data upload.
 </p>
 <h4>1- Configuration</h4> 
