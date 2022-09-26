@@ -1,31 +1,25 @@
-<div class="content-wrapper">
-
-  <div align="center">
+<div align="center">
   <h1>MY2SEC: ActivityWatch-PRODUCER</h1>
-   BRING ACTIVITY WATCH INTO THE CLOUD!<br><br>
+  BRING ACTIVITY WATCH INTO THE CLOUD!<br><br>
   <img src="img/awlovesepa.png"></img>
-  </div>
-  <hr>
-  <br>
+</div>
+<hr>
+<br>
 
 <!--#############
 INTRODUCTION
 ###############-->
-  <div class="text-paragraph">
-    <h2>INTRODUCTION</h2>
-      <p>
-      Built on top of the Activity Watch tracking app, the AW Producer allows to expand said app functionalities making it a "CLOUD-APP". <br><br>In general, an    ADAPTER allows not only to upload data produced by a generic local app to a remote server, but also to "map" that data into "semantic data".<br>
-      My2sec Servers run a semantic event processor, the SEPA, which allows to take all the advantages of a semantic based architecture, while maintaining speed and scalability of the system.<br><br> In practice, the adapter is composed by two modules: Aw-producer and Aw-mapper. The end-user needs to download the Aw-Producer on his host-machine, while the mapper needs to be deployed on the remote server. 
-      </p>
-  </div> 
-
-  <br>
+<h2>INTRODUCTION</h2>
+<p>
+  Built on top of the Activity Watch tracking app, the AW Producer allows to expand said app functionalities making it a "CLOUD-APP". <br><br>In general, an    ADAPTER   allows not only to upload data produced by a generic local app to a remote server, but also to "map" that data into "semantic data".<br>
+  My2sec Servers run a semantic event processor, the SEPA, which allows to take all the advantages of a semantic based architecture, while maintaining speed and        scalability of the system.<br><br> In practice, the adapter is composed by two modules: Aw-producer and Aw-mapper. The end-user needs to download the Aw-Producer on   his host-machine, while the mapper needs to be deployed on the remote server. 
+</p>
+<br>
 
 
 <!--#############
 INSTALLATION GUIDE
 ###############-->
-<div class="text-paragraph">
 <h2>QUICK START</h2>
 <p>This guide will step you through download and installation of the ActivityWatch Producer application.</p>
       
@@ -95,104 +89,8 @@ Pressing this button will start the upload procedure: if data is uploaded correc
 The application is still in development, so it has not been signed yet. Some operating systems like macos are very strict on running unsigned applications: if you have trouble starting the application try with this link: https://support.apple.com/it-it/guide/mac-help/mh40616/mac<br>
 If you have other issues during the usage of the application please report them as an issue here on GitHub! Meanwhile, try to restart the application...
 </p>
-  
-  
 
-<br>
-<h2>DEVELOPMENT</h2>
-To test the whole adapter architecture, on top of the producer you need to deploy a mapper, a SEPA engine and a DB on your local host using the following docker-compose file as an example:<br><br>
-<pre>
-version: "3.9"
-#================================================#
-# NAME: awmapper4SEPA stack
-# DATE: 7-8-2022
-# AUTHOR: Gregorio Monari
-# DESCRIPTION: minimal configuration to test
-#   the aw mapper functionalities. Data must be
-#   produced by the AW-PRODUCER
-#================================================#
-volumes:
-  rdf_my2sec: #blazegraph db
-networks:
-  net_my2sec: #my2sec internal network and DNS
-
-
-services:
-
-aw_working_mapper: #activity watch mapper for working events
-    image: gregnet/awmapper:v0.3.2
-    user: node
-    restart: always
-    working_dir: /home/node/myapp
-    command: "node main.js"
-    environment:
-      - NODE_ENV=production
-      - LOG_LEVEL=0
-      - SOURCE=http://www.vaimee.it/sources/aw-watcher-working #listen to a specific watcher
-      - HOST_NAME=engine #sepa engine ip address
-      - HTTP_PORT=8000 #engine query/update port
-      - WS_PORT=9000 #engine subscription port
-    networks:
-      - "net_my2sec"
-      
-  aw_my2sec_mapper: #activity watch mapper for start-stop events
-    image: gregnet/awmapper:v0.3.2
-    user: node
-    restart: always
-    working_dir: /home/node/myapp
-    command: "node main.js"
-    environment:
-      - NODE_ENV=production
-      - LOG_LEVEL=0
-      - SOURCE=http://www.vaimee.it/sources/aw-my2sec #listen to a specific watcher
-      - HOST_NAME=engine #sepa engine ip address
-      - HTTP_PORT=8000 #engine query/update port
-      - WS_PORT=9000 #engine subscription port
-    networks:
-      - "net_my2sec"
-
-
-  dashboard: #sepa dashboard: manual sparql1.1 queries and updates
-    image: gregnet/sepa_dashboard:1.0
-    restart: always
-    ports:
-      - "80:80"
-    networks:
-      - "net_my2sec"
-
-      
-  engine: #the sepa core
-    image: gregnet/sepablaze:dev2j-0.1
-    command: sh -c "java Dev2jConnector && java -jar engine-0-SNAPSHOT.jar"
-    restart: always
-    environment:
-      - host_name=db
-    depends_on:
-      - db
-    ports:
-      - "8000:8000" #query/update port
-      - "9000:9000" #subscription port
-    networks:
-      - "net_my2sec"
-
-
-  db: #endpoint
-    image: lyrasis/blazegraph:2.1.5
-    restart: always
-    environment:
-        JAVA_XMS: 512m
-        JAVA_XMX: 1g
-    volumes:
-      - rdf_my2sec:/var/lib/jetty
-    networks:
-      - "net_my2sec"
-
-
-</pre>
-  
-  
-  
- <h2>COMING SOON</h2> 
+<h2>COMING SOON</h2> 
 <p>
 - Keycloack user management<br>
 - UI and UX improvements<br>
@@ -200,9 +98,9 @@ aw_working_mapper: #activity watch mapper for working events
 </p> 
   
   
-  </div> 
 
 
-</div>
+
+
 
 
