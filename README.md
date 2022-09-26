@@ -1,34 +1,54 @@
 <div class="content-wrapper">
 
   <div align="center">
-  <h1>MY2SEC: ActivityWatch-ADAPTER</h1>
+  <h1>MY2SEC: ActivityWatch-PRODUCER</h1>
    BRING ACTIVITY WATCH INTO THE CLOUD!<br><br>
   <img src="img/awlovesepa.png"></img>
   </div>
   <hr>
   <br>
 
+<!--#############
+INTRODUCTION
+###############-->
   <div class="text-paragraph">
     <h2>INTRODUCTION</h2>
       <p>
-      Built on top of the Activity Watch tracking app, the AW ADAPTER allows to expand said app functionalities making it a "CLOUD-APP". <br><br>In general, an ADAPTER allows not only to upload data produced by a generic local app to a remote server, but also to "map" that data into "semantic data".<br>
+      Built on top of the Activity Watch tracking app, the AW Producer allows to expand said app functionalities making it a "CLOUD-APP". <br><br>In general, an    ADAPTER allows not only to upload data produced by a generic local app to a remote server, but also to "map" that data into "semantic data".<br>
       My2sec Servers run a semantic event processor, the SEPA, which allows to take all the advantages of a semantic based architecture, while maintaining speed and scalability of the system.<br><br> In practice, the adapter is composed by two modules: Aw-producer and Aw-mapper. The end-user needs to download the Aw-Producer on his host-machine, while the mapper needs to be deployed on the remote server. 
       </p>
   </div> 
 
   <br>
 
-  <div class="text-paragraph">
-    <h2>INSTALLATION</h2>
-      <p>
-      Follow this steps to download and use the Aw-Producer:</p>
+
+<!--#############
+INSTALLATION GUIDE
+###############-->
+<div class="text-paragraph">
+<h2>QUICK START</h2>
+<p>This guide will step you through download and installation of the ActivityWatch Producer application.</p>
+      
+<h3>Prerequisites</h3>
+<p>
+  To use the application, you need to have Node.js installed in your system.
+  <br>
+  To check that Node.js was installed correctly, type the following commands in your terminal client:
+  <br>
+  <pre>node -v<br>npm -v</pre>
+  If one of the commands returns an error, please install Node.js from the official website: <a>https://nodejs.org</a>
+</p>
+
+<h3>Installation</h3>
+<p>
+  After cloning this repository, move the "src" folder wherever you want. 
+  <br>
+  Open your terminal client and cd  into the "src" directory, es <pre>cd c/Users/User/.../AW-Producer/src</pre>.
+  
+</p>
+
+      
       <ol>
-        <li>
-        Download the latest release zip file: <br>
-        - Windows: <a href="https://github.com/vaimee/my2sec/raw/adapter/Aw-Adapter/AwProducer-0.9-RELEASES/awproducer-v0.9.1-win32-x64.zip" download>AwProducer-win32-x64</a><br>
-        - Mac: <a href="https://github.com/vaimee/my2sec/raw/adapter/Aw-Adapter/AwProducer-0.9-RELEASES/awproducer-v0.9.1-macos.zip" download>AwProducer-macos</a><br>
-        - Linux: <a href="https://github.com/vaimee/my2sec/raw/adapter/Aw-Adapter/AwProducer-0.9-RELEASES/awproducer-v0.9.1-linux-x64.tar.gz" download>AwProducer-linux-x64</a>
-        </li>
         <li>Extract the zip</li>
         <li>Launch the executable file inside the extracted folder: AwProducer.exe for Windows, electron for Linux, Electron.app for Macos</li>
         <li>Create a desktop shortcut for easy access to the executable</li>
