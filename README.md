@@ -54,14 +54,7 @@ INSTALLATION GUIDE
   After the installation procedure has been completed, from the src directory type the following command in your terminal to start the application: 
   <pre>npm start</pre>
 </p>
-
-<h3>Installation</h3>
-<p>
-  After cloning this repository, move the "src" folder wherever you want. 
-  <br>
-  Open your terminal client and cd  into the "src" directory, es <pre>cd c/Users/User/.../AW-Producer/src</pre>.
-  
-</p>
+<br>
  
  
 <h2>USAGE</h2> 
