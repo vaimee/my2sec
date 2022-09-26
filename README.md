@@ -43,16 +43,25 @@ INSTALLATION GUIDE
 <p>
   After cloning this repository, move the "src" folder wherever you want. 
   <br>
+  Open your terminal client and cd into the "src" directory, for example:
+  <pre>cd c/Users/User/.../AW-Producer/src</pre>
+  To install Electron on your system, in your terminal type:
+  <pre>npm install --save-dev electron</pre>
+</p>
+
+<h3>Running the Application</h3>
+<p>
+  After the installation procedure has been completed, from the src directory type the following command in your terminal to start the application: 
+  <pre>npm start</pre>
+</p>
+
+<h3>Installation</h3>
+<p>
+  After cloning this repository, move the "src" folder wherever you want. 
+  <br>
   Open your terminal client and cd  into the "src" directory, es <pre>cd c/Users/User/.../AW-Producer/src</pre>.
   
 </p>
-
-      
-      <ol>
-        <li>Extract the zip</li>
-        <li>Launch the executable file inside the extracted folder: AwProducer.exe for Windows, electron for Linux, Electron.app for Macos</li>
-        <li>Create a desktop shortcut for easy access to the executable</li>
-      </ol>
  
  
 <h2>USAGE</h2> 
