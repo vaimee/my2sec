@@ -30,7 +30,7 @@ INSTALLATION GUIDE
   To check that Node.js was installed correctly, type the following commands in your terminal client:
   <br>
   <pre>node -v<br>npm -v</pre>
-  If one of the commands returns an error, please install Node.js from the official website: <a>https://nodejs.org</a>
+  If one of the commands returns an error, please install Node.js from the official website: <a>https://www.nodejs.org</a>
 </p>
 
 <h3>Installation</h3>
