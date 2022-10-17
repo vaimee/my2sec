@@ -1,0 +1,8 @@
+{
+  "realm": "My2Sec - realm",
+  "auth-server-url": "https://keycloak.vaimee.org/auth/",
+  "ssl-required": "external",
+  "resource": "my2sec-producer",
+  "public-client": true,
+  "confidential-port": 0
+}

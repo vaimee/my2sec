@@ -32,7 +32,36 @@
 
 	<!--MAIN STYLE-->
 	<link rel="stylesheet" type="text/css" href="CSS/main.css">
-    <link rel="stylesheet" type="text/css" href="lib/gregnet-grid-plugin/gregnet-grid-style.css">   
+    <link rel="stylesheet" type="text/css" href="lib/gregnet-grid-plugin/gregnet-grid-style.css">  
+	
+	<!--
+	<script src="./keycloak.js"></script>
+    <script>
+		let initOptions = {
+  			url: 'https://keycloak.vaimee.org/auth',
+			realm: 'My2Sec - Realm',
+			clientId: 'my2sec-producer'
+		}
+		let keycloak = Keycloak(initOptions);
+
+        function initKeycloak() {
+
+            keycloak.init({
+				onLoad: 'login-required',
+				checkLoginIframe: false,
+  				redirectUri: 'http://localhost/keycloak-redirect'
+			}).then(function(authenticated) {
+                //alert(authenticated ? 'authenticated' : 'not authenticated');
+				//init()
+            }).catch(function() {
+                alert('failed to initialize');
+            });
+        }
+		initKeycloak();
+    </script>
+	-->
+
+
 </head>
 
 

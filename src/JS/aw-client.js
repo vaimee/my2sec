@@ -39,7 +39,7 @@ class AwClient {
 	}
 	//NOTES: this version works on any protocol
 	load_default_configuration(){
-		this.jsonObj=JSON.parse("{ \"nodeHost\": \"localhost\", \"port\": \"5600\"}") //1340
+		this.jsonObj=JSON.parse("{ \"nodeHost\": \"localhost\", \"port\": \"1340\"}") //5600
 		consoleLog(1,"awclient: parsed json (AW configuration file)")
 		consoleLog(0,JSON.stringify(this.jsonObj))
 	}

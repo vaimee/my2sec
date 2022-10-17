@@ -1,4 +1,5 @@
 // main.js
+
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
@@ -12,26 +13,12 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.js')
     }
   })
+
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
-
-  //---FILTER KEYCLOAK----------
-  const {session: {webRequest}} = mainWindow.webContents;
-  const filter = {
-    urls: [
-      'http://localhost/keycloak-redirect*'
-    ]
-  };
-  webRequest.onBeforeRequest(filter, async ({url}) => {
-    const params = url.slice(url.indexOf('#'));
-    mainWindow.loadURL('file://' + path.join(__dirname, 'index.html') + params);
-  });
-
-
-
 }
 
 // This method will be called when Electron has finished
@@ -91,7 +78,7 @@ const awApiRouter = express();
 //app.use(cors());
 awApiRouter.use(express.json());
 
-awApiRouter.get('/api/*', (request, response) => { //listen to all requests
+awApiRouter.get('/*', (request, response) => { //listen to all requests
     console.log(`received AW buckets api request: ${request.originalUrl}`)
     //console.log(get_time()+` [info] received AW API request: (${request.path})`);
 
@@ -108,7 +95,7 @@ awApiRouter.get('/api/*', (request, response) => { //listen to all requests
 });
 
 
-awApiRouter.post('/api/*', (request,response)=>{
+awApiRouter.post('/*', (request,response)=>{
     //CREATE HTTP REQUEST FOR THE API
     var host_name="localhost";
   var http_port=5600;
@@ -122,7 +109,7 @@ awApiRouter.post('/api/*', (request,response)=>{
 });
 
 
-awApiRouter.delete('/api/*', (request,response)=>{
+awApiRouter.delete('/*', (request,response)=>{
     //const data=request.body;
     consoleLog(0,"performing DELETE request to "+request.path)
     //CREATE HTTP REQUEST FOR THE API
