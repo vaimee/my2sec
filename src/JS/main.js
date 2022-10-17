@@ -20,7 +20,7 @@ var end_time="";
 let awclient= new AwClient();
 
 //SILENT UPDATE
-var silent_update=1;
+var silent_update=0;
 var OVERWRITE_START_TIME="2022-08-22T01:00:00.00Z";
 var OVERWRITE_END_TIME="2022-09-22T20:00:00.00Z";
 
