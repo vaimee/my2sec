@@ -92,8 +92,8 @@ async function init(){
 		EVENTS_JSON[key] = JSON.parse(EVENTS_RAWJSON[key]);
 		EVENTS_RAWJSON[key]=EVENTS_RAWJSON[key].replace(/\\/g,"\\\\");//BUGFIX
 	
-		var start=132150;
-		find_bastard(EVENTS_RAWJSON[key],start)
+		//var start=132150;
+		//find_bastard(EVENTS_RAWJSON[key],start)
 	
 	}
 
@@ -406,20 +406,19 @@ async function get_filtered_watchers_events(watchers_json){
 		events_rawjson[key]=JSON.stringify(events_json[key]);
 		//events_rawjson[key]=events_rawjson[key].replace(/\\/g,"\\");//BUGFIX
 		//console.log(events_rawjson[key])
-		var start=132150;
-		find_bastard(events_rawjson[key],start)
+		//var start=132150;
+		//find_bastard(events_rawjson[key],start)
 
 
 
 	}
 
-	
 
 	return events_rawjson
 
 }
 
-
+/*
 function find_bastard(raw_json_string,start){
 	console.log("Examining string with "+raw_json_string.length+" chars")
 	var section="";
@@ -427,9 +426,9 @@ function find_bastard(raw_json_string,start){
 	for(var i=0; i<100; i++){
 		section=section+raw_json_string[start+i];
 	}
-	console.log(section)
+	console.log(raw)
 }
-
+*/
 
 //=====================
 // UTILITIES FUNCTIONS

@@ -124,7 +124,7 @@ awApiRouter.post('/api/*', (request,response)=>{
 
 awApiRouter.delete('/api/*', (request,response)=>{
     //const data=request.body;
-    consoleLog(0,"performing DELETE request to "+request.path)
+    //consoleLog(0,"performing DELETE request to "+request.path)
     //CREATE HTTP REQUEST FOR THE API
     var host_name="localhost";
   var http_port=5600;
