@@ -356,8 +356,12 @@
 
 
 
-		"ALL_USERS_EVENTS":{
+		"ALL_USERS_EVENTS_OLD":{
 			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/my2sec/members> {?user_graph opo:username ?username_literal} GRAPH ?user_graph {?nodeid rdf:type sw:Event; sw:eventType ?event_type; sw:nameApp ?app; sw:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; sw:activityType ?activity_type; opo:taskTitle ?task}}"	
+		},
+
+		"ALL_USERS_EVENTS":{
+			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/my2sec/members> {?user_graph opo:username ?username_literal} GRAPH ?user_graph {?nodeid rdf:type sw:Event; rdf:type ?event_type; sw:nameApp ?app; sw:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; sw:activityType ?activity_type; sw:hasTimeInterval ?duration . OPTIONAL { ?nodeid opo:taskTitle ?task} FILTER (?event_type != sw:Event)   }}"	
 		},
 
 
