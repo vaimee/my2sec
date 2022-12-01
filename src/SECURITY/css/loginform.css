@@ -64,7 +64,26 @@ body{
             font-size:18px;
             background: orangered; 
         }
+        #new_user_button{
+            width: 70%;
+            height: 30px;
+            border: none;
+            font-family: Montserrat;
+            font-size:18px;  
+            border-radius: 5px;     
+        }
+        #new_user_button:hover{
+            width: 70%;
+            height: 30px;
+            border: none;
+            font-family: Montserrat;
+            font-size:18px;    
+            background: orangered;   
+        }
 
     .errorbox{
         color:red;
+    }
+    .successbox{
+        color:green;
     }

@@ -49,10 +49,13 @@ async function tryLogin(){
 
 
 
+
 //============
 //CREATE USER
 //createUser()
-async function createUser(){
+async function tryCreateUser(){
+    var errorbox=document.getElementById("createuser_error_message")
+    var successbox=document.getElementById("createuser_success_message")
     console.log("# CREATING ADMIN CLIENT #")
     var my2secCreateUserApp = new adminKeycloakClient(keycloak_createUserApp_adminConfig)
     //GET ADMIN ACCESS TOKEN
@@ -62,23 +65,41 @@ async function createUser(){
     //CREATE NEW USER
     console.log("# CREATING NEW USER #")
     var createUserForm=document.getElementById("createuserform");
-    var data={
-        firstName: createUserForm.firstName.value,
-        lastName: createUserForm.lastName.value,
-        email: createUserForm.userEmail.value,
-        enabled: "true",
-        username: createUserForm.create_username.value,
-        credentials:[{
-            type:"password",
-            value: createUserForm.create_password.value,
-            temporary:false
-        }],
+    
+    if(createUserForm.create_password.value==createUserForm.confirm_password.value){
+        //console.log(createUserForm.create_password.value+"|"+createUserForm.confirm_password.value)
+        
+        var data={
+            firstName: createUserForm.firstName.value,
+            lastName: createUserForm.lastName.value,
+            email: createUserForm.userEmail.value,
+            enabled: "true",
+            username: createUserForm.create_username.value,
+            credentials:[{
+                type:"password",
+                value: createUserForm.create_password.value,
+                temporary:false
+            }],
+        }
+        //data.firstName="gregtest"
+        //data.lastName="gregcognome"
+        //data.email="gregoriunibus@gmail.com"
+        //data.username="gg"
+        try{
+            await my2secCreateUserApp.post_new_user(data,keycloak_loginApp_config.realm)
+            successbox.innerHTML="User "+createUserForm.create_username.value+" created!"
+            switch_view()
+            errorbox.innerHTML=""
+        }catch(e){
+            console.log(e)
+            errorbox.innerHTML="Unexpected error occurred"
+        }    
+        
+        
+    }else{
+        errorbox.innerHTML="Passwords do not correspond"
     }
-    //data.firstName="gregtest"
-    //data.lastName="gregcognome"
-    //data.email="gregoriunibus@gmail.com"
-    //data.username="gg"
-    await my2secCreateUserApp.post_new_user(data,keycloak_loginApp_config.realm)
+
 
 }
 

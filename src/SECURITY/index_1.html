@@ -51,7 +51,9 @@
             <br>
             <button id="loginbutton" class="formbutton" onclick="tryLogin()">Login</button>
             <br>
-            <button onclick="switch_view()">New user? register here</button>
+            <br>
+            <button id="new_user_button" onclick="switch_view()">New user? register here</button>
+            <div id="createuser_success_message" class="successbox"><!--success body--></div>
         </div>
 
 
@@ -74,9 +76,14 @@
                 <br>
                 <!--<label for="password">Password:</label><br>-->
                 <input type="password" id="create_password" name="create_password" placeholder="Password"><br>
+                <br>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password"><br>
             </form>
+            <div id="createuser_error_message" class="errorbox"><!--error body--></div>
             <br>
-            <button id="createuserbutton" class="formbutton" onclick="createUser()">Register</button>
+            <br>
+            <button id="createuserbutton" class="formbutton" onclick="tryCreateUser()">Register</button>
+            
         </div>
 
 
