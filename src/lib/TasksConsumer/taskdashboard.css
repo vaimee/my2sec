@@ -1,0 +1,47 @@
+.task-container{
+	width: 20%;
+	background: red;
+    font-family: Arial, Helvetica, sans-serif;
+    resize: horizontal;
+    overflow: auto;
+}
+    #task-header{
+        background: blue;
+    }
+    #task-wrapper{
+        width: 96%;
+        padding: 2%;
+        overflow: scroll;
+        background: green;
+    }
+
+
+/*LOADING BAR*/
+.task-loading-wrapper{
+
+}
+.task-loading_box{
+	display:block;
+	position: relative;
+	width: 98%;
+	height:5px;
+	border: 1px solid var(--main_color);
+	border-radius: 10px;
+	padding:2px;
+}
+.task-loading_bar{
+	border-radius: 10px;
+	width:100px;
+	height: 5px;
+	background-color: var(--main_color);
+	/*animation: load 1s infinite linear;*/
+	animation: none;
+
+}
+@keyframes load{
+	from {
+		width: 0px;
+	}to{
+		width: 100px;
+	}
+}

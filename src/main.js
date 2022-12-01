@@ -2,43 +2,69 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+const {ipcMain} = require('electron')
 
+var user_login_json="";
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    show: false,
+    //fullscreen: true,
     width: 1920,
     height: 1080,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, './SECURITY/preload2.js')
     }
   })
+  ipcMain.handle('request_user_credentials', () => user_login_json)
+  mainWindow.setMenuBarVisibility(false)
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
-
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.maximize();
+    mainWindow.show();
+  })
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
-
-  //---FILTER KEYCLOAK----------
-  const {session: {webRequest}} = mainWindow.webContents;
-  const filter = {
-    urls: [
-      'http://localhost/keycloak-redirect*'
-    ]
-  };
-  webRequest.onBeforeRequest(filter, async ({url}) => {
-    const params = url.slice(url.indexOf('#'));
-    mainWindow.loadURL('file://' + path.join(__dirname, 'index.html') + params);
-  });
-
-
-
 }
+
+// Create the browser window.
+const createLoginWindow = () => {
+  loginWindow = new BrowserWindow({
+    show: false,
+    //frame: false,
+    width: 360,
+    height: 580,
+    webPreferences: {
+      preload: path.join(__dirname, './SECURITY/preload.js')
+    }
+  })
+  ipcMain.handle('loginsuccess', async (event, arg) => {
+    handleLoginSuccess(arg);
+  })
+  loginWindow.setMenuBarVisibility(false)
+  // and load the index.html of the app.
+  loginWindow.loadFile('./SECURITY/index_1.html')
+  loginWindow.once('ready-to-show', () => {
+    loginWindow.show()
+  })
+}
+
+
+function handleLoginSuccess(arg){
+  console.log(arg)
+  user_login_json=arg;
+  //delete login window
+  loginWindow.close();
+  createWindow();
+}
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  createWindow()
+  createLoginWindow()
 
   app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the

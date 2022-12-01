@@ -8,80 +8,10 @@
 	--main_color: var(--gianlu_black)
 
 }
-
 body{
 	margin: 0;
 	padding: 0;
 }
-
-
-
-
-
-/*==================
-	SUPERSET STYLE
-===================*/
-#superset-wrapper{
-	text-align: center;
-}
-#my-superset-container{
-
-}
-#my-superset-container iframe {
-	width:100%;
-	height: 87vh;
-	border-width: 0px;
-}
-
-#superset-header{
-	width:98%;
-	padding-left: 1%;
-	padding-right: 1%;
-	padding-top: 0.5%;
-	padding-bottom: 0.5%;
-	min-height: 20px;
-	height:6vh;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-
-}
-
-#welcome-board{
-	text-align: left;
-	font-family: Arial, Helvetica, sans-serif;
-}
-
-
-#update_status{
-	font-family: Arial, Helvetica, sans-serif;
-}
-#ready_status{
-
-}
-#success_status{
-	background:rgb(9, 225, 9);
-	color:white;
-	border-radius: 15px;
-	font-family: Arial, Helvetica, sans-serif;
-}
-#error_status{
-	background:red;
-	border-radius: 15px;
-	font-family: Arial, Helvetica, sans-serif;
-}
-
-#user_welcome{
-	font-size:27px;
-}
-
-
-
-
-
-
-
-
 
 
 
@@ -110,6 +40,49 @@ body{
 #user-menu-icon{
 	transform: rotate(180deg)
 }
+
+
+/*=============
+[1] HOMEPAGE LAYOUT
+==============*/
+/*USER HEADER*/
+#user_header{
+	width:98%;
+	padding-left: 1%;
+	padding-right: 1%;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+	min-height: 20px;
+	height:6vh;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+#welcome-board{
+	text-align: left;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#user_welcome{
+	font-size:27px;
+}
+#superset-wrapper{
+	text-align: center;
+}
+
+.dashboards-wrapper{
+	width: 100%;
+	padding:0px;
+	margin: 0px;
+
+	display: flex;
+	justify-content: space-between;
+}
+
+
+
+
+
+
 
 
 /*MENU*/
@@ -162,6 +135,24 @@ body{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*======================================================================================================*/
 /*=============
 	[1] ROW-ZERO
 ==============*/
@@ -353,117 +344,3 @@ body{
 
 
 
-
-/*=================----------------------------------------------------------------------------------------------------------------
-REUSABLE COMPONENTS
-===================*/
-/*BOTTONE GIANLU*/
-.default-button{
-	width: 200px;
-	height: 29px;
-	background:var(--gianlu_blue);
-
-	/*BORDER*/
-	border-width: 0px;
-	border-radius: 6px;
-	
-	/*TEXT*/
-	color:white;
-}
-.default-button:hover{
-	background: var(--gianlu_dark_blue);
-}
-
-
-/*LOADING BAR*/
-.loading_box{
-	display:none;
-	position: relative;
-	width: 100px;
-	height:5px;
-	border: 1px solid var(--main_color);
-	border-radius: 10px;
-	padding:2px;
-}
-.loading_bar{
-	border-radius: 10px;
-	width:100px;
-	height: 5px;
-	background-color: var(--main_color);
-	/*animation: load 1s infinite linear;*/
-	animation: none;
-
-}
-@keyframes load{
-	from {
-		width: 0px;
-	}to{
-		width: 100px;
-	}
-}
-
-
-
-.round_button{
-	color: white;
-	background: var(--main_color);
-	box-shadow: 2px 2px 4px grey;
-	width: 100px;
-	height: 100px;
-
-	
-	border-radius: 50%;
-
-	
-	border-width: 0px;
-	border-color: black;
-	border-style: solid;
-	/*
-	display: flex;
-	justify-content: space-between;	
-	align-items: center; 
-	*/
-
-	/*transform: translate(0,-60%);*/
-}
-.round_button:hover{
-	background: darkcyan;
-	box-shadow: 2px 2px 4px grey;
-	transform: translateY(10%);
-}
-
-
-
-.white-icon{
-	filter: invert(1);
-}
-
-.spinner{
-
-	/*CENTER ELEMENT*/
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-
-
-	width: 24px;
-	height: 24px;
-	border-radius: 50%;
-	background: conic-gradient(
-		#0000 10%,
-		#8f44fd
-	);
-	-webkit-mask:
-		radial-gradient(
-			farthest-side,
-			#0000 calc(100% - 4px),
-			#000
-			0
-		);
-	animation: spin 0.8s infinite linear;
-}
-@keyframes spin{
-	to {
-		transform: rotate(1turn);
-	}
-}

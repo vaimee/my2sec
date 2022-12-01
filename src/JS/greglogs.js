@@ -2,7 +2,57 @@
 + new Date();
 //LOG LEVELS
 var log_level=0; //debug=0, essential=1, error/warning=2
-console.log("-> Loaded external script: greglogs.js")
+
+
+class GregLogs{
+    constructor() {
+      this.loglevel=0;
+      //this.info("New Greglogs logger created!")
+    }
+    //=========
+    //[3] LOG
+    //logLevel(level){
+    //  this.loglevel=level;
+    //}
+  
+    debug(text){
+      if(this.loglevel<1){
+        console.log(this.get_current_timestamp()+" | [debug] "+text);
+      }
+    }
+    info(text){
+      if(this.loglevel<2){
+        console.log(this.get_current_timestamp()+" | [info] "+text);
+      }
+    }
+    warning(text){
+      if(this.loglevel<3){
+        console.log(this.get_current_timestamp()+" | [WARNING]"+text);
+      }
+    }
+    error(text){
+      console.log(this.get_current_timestamp()+" | [ERROR]"+text);
+    }
+
+    //----------------------
+    //NAME: GET CURRENT TIME
+    //DESCRIPTION: returns the current formatted time
+    get_current_timestamp(){
+        const date=new Date();
+        var string_timestamp=date.toISOString()
+        //console.log(stringa)
+        return string_timestamp
+    }//get_current_timestamp()
+}
+
+log = new GregLogs(0)
+
+
+
+
+
+
+//============================================
 
 function consoleLog(level,argument){
     if (level>=log_level){

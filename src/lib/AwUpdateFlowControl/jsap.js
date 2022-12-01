@@ -1,6 +1,6 @@
 console.log("-> Loaded external script: jsap.js")
 default_jsap={
-	"host": "dld.arces.unibo.it",
+	"host": "localhost",
 	"oauth": {
 		"enable": false,
 		"register": "https://localhost:8443/oauth/register",
@@ -8,7 +8,7 @@ default_jsap={
 	},
 	"sparql11protocol": {
 		"protocol": "http",
-		"port": 8500,
+		"port": 8666,
 		"query": {
 			"path": "/query",
 			"method": "POST",
@@ -25,7 +25,7 @@ default_jsap={
 		"protocol": "ws",
 		"availableProtocols": {
 			"ws": {
-				"port": 9500,
+				"port": 9666,
 				"path": "/subscribe"
 			},
 			"wss": {

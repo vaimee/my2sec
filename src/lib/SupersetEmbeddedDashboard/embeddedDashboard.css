@@ -1,0 +1,12 @@
+/*==================
+	SUPERSET STYLE
+===================*/
+#my-superset-container{
+	/*width: auto;*/
+	flex-grow: 1;
+}
+#my-superset-container iframe {
+	width:100%;
+	height: 87vh;
+	border-width: 0px;
+}

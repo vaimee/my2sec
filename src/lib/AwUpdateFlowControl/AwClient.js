@@ -5,13 +5,12 @@
 || 	DESCRIPTION: a collection of methods used to 
 ||     get and post data to the localhost Activity Watch API
 \\--------------------------------------------------------*/
-console.log("-> Loaded external script: aw_api_lib.js")
-
-
 class AwClient {
 
 	//CLASS CONSTRUCTOR, DOES NOTHING
-	constructor(){}
+	constructor(){
+		
+	}
 
 
 	//===========================
@@ -52,11 +51,12 @@ class AwClient {
 	//RETURNS: jsonObject jsonWatchers (the json object containing watchers info)
 	async get_watchers(){
 		//WAIT TO GET THE JSON
-		consoleLog(1,"get_watchers: fetching watchers...")
+		//consoleLog(1,"-------------------------------")
+		//consoleLog(1,"aw-client: fetching watchers...")
 		var jsonWatchers = await this.get("/api/0/buckets/")
 		//RETURN THE WATCHERS
 		return new Promise(resolve=>{
-  			consoleLog(1,"get_watchers: fetched watchers correctly!")
+  			//consoleLog(1,"aw-client: fetched watchers correctly!")
   			resolve(jsonWatchers)
 		});
 	}
@@ -69,12 +69,12 @@ class AwClient {
 	//RETURNS: jsonObject jsonEvents (the json object containing an array of events)
 	//NOTES: calling this metod fetches ALL events of a watcher in the aw server, so it could take some time
 	async get_events(watcher_id){
-		consoleLog(1,"get_events: fetching events of "+watcher_id+"...")
+		//consoleLog(1,"aw-client: fetching events of "+watcher_id+"...")
 		//WAIT TO GET THE JSON
 		var jsonEvents = await this.get("/api/0/buckets/"+watcher_id+"/events")
 		//RETURN THE WATCHERS
 		return new Promise(resolve=>{
-  			consoleLog(1,"get_events: fetched events correctly!")
+  			//consoleLog(1,"aw-client: fetched events correctly!")
   			resolve(jsonEvents)
 		});
 	}
@@ -86,16 +86,17 @@ class AwClient {
 	//ARGUMENT: String watcher_id (identifies the watcher), String end_time/start_time (formatted ISO timestamp)
 	//RETURNS: jsonObject jsonEvents (the json object containing an array of events in a certain period of time)
 	async query_events(watcher_id,end_time,start_time){
-		consoleLog(1,"get_events: fetching events of "+watcher_id+"...")
+		//consoleLog(1,"-----------------------------------------------")
+		//consoleLog(1,"aw-client: fetching events of "+watcher_id+"...")
 		//WAIT TO GET THE JSON, with query example: ?end=2022-07-17T15%3A23%3A55Z&start=2022-07-16T15%3A23%3A55Z
 		var path="/api/0/buckets/"+watcher_id+"/events?end="+end_time+"&start="+start_time;
 		path=path.replace(/:/g,"%3A"); //REPLACE : WITH %3A FOR A WELL FORMATTED REQUEST
-		consoleLog(0,"query_events: reqpath: "+path)
+		//consoleLog(0,"query_events: reqpath: "+path)
 		
 		var jsonEvents = await this.get(path) //path
 		//RETURN THE WATCHERS
 		return new Promise(resolve=>{
-  			consoleLog(1,"query_events: fetched events correctly!")
+  			//consoleLog(1,"aw-client: fetched events correctly!")
   			resolve(jsonEvents)
 		});
 	}
@@ -125,12 +126,12 @@ class AwClient {
 			req.onreadystatechange = function() {// Call a function when the state changes.
     			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         			// Request finished. Do processing here.
-        			consoleLog(1,"create_bucket: aw-producer bucket created, status "+this.status)
+        			//consoleLog(1,"create_bucket: aw-producer bucket created, status "+this.status)
         			resolve("ok")
     			}else{
 
     				if (this.readyState === XMLHttpRequest.DONE && this.status === 304) {
-    					consoleLog(1,"create_bucket: aw-producer bucket already existing, status "+this.status)
+    					//consoleLog(1,"create_bucket: aw-producer bucket already existing, status "+this.status)
     					resolve("ok")
     				}
     			}
@@ -173,7 +174,7 @@ class AwClient {
 			req.onreadystatechange = function() {// Call a function when the state changes.
     			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         			// Request finished. Do processing here.
-        			consoleLog(1,"create_event: aw-producer event created, status "+this.status)
+        			//consoleLog(1,"create_event: aw-producer event created, status "+this.status)
         			resolve("ok")
     			}
 			}
@@ -201,7 +202,7 @@ class AwClient {
 			req.onreadystatechange = function() {// Call a function when the state changes.
     			if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         			// Request finished. Do processing here.
-        			consoleLog(1,"remove_event: aw-producer event n."+event_ID+" deleted, status "+this.status)
+        			//consoleLog(1,"remove_event: aw-producer event n."+event_ID+" deleted, status "+this.status)
         			resolve("ok")
     			}
 			}
@@ -230,15 +231,15 @@ class AwClient {
 			var req= new XMLHttpRequest();
 			var reqtext="http://"+this.jsonObj.nodeHost+":"+this.jsonObj.port+path
 			var jsonResponse;
-			consoleLog(0,"api_get: getting "+reqtext)
+			consoleLog(0,"AwClient request: GET "+reqtext)
 
 			req.open("GET",reqtext);	
 			
 			req.onload = function(){
 				//jsonResponse = JSON.parse(req.responseText);
-				consoleLog(0,"api_GetJson: fetched data correctly from AW API")
+				//consoleLog(0,"api_GetJson: fetched data correctly from AW API")
 				//consoleLog(0,JSON.stringify(jsonResponse))
-				consoleLog(0,req.responseText)
+				//consoleLog(0,"API response: "+req.responseText)
 				//resolve(jsonResponse) //return json asynchronously   
 				resolve(req.responseText);
 			}

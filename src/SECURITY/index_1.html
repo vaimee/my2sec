@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<!---------------------------------------------------------
+|| index.html: MY2SEC LOGIN INTERFACE
+|| 	DATE: 1/11/2022
+|| 	AUTHOR: Gregorio Monari
+|| 	DESCRIPTION: login and create-user interface for my2sec
+\\-------------------------------------------------------->
+<head>
+<title>Login</title>
+<link rel="stylesheet" type="text/css" href="css/loginform.css">
+<!-- Font -->
+<link href='https://fonts.googleapis.com/css?family=Montserrat'
+	rel='stylesheet'
+> 
+</head>
+
+<body>
+
+    <div class="content-wrapper">
+        <!--============
+            1] LOGO HEADER
+            =========-->
+        <div class="header">
+            <img id="logo" src="assets/vaimeelogo.png">
+            <h1>MY2SEC</h1>
+        </div>
+        <br><br>
+
+
+        <!--=========
+            2] LOGIN FORM
+            ===========-->
+        <div id="loginform-wrapper" class="form-wrapper">
+            <form id="loginform">
+                <!--<label for="username">Username:</label><br>-->
+                <input type="text" id="username" name="username" placeholder="Username"><br>
+                <div id="login_error_message" class="errorbox"><!--error body--></div>
+                <br>
+                <!--<label for="password">Password:</label><br>-->
+                <input type="password" id="password" name="password" placeholder="Password"><br>
+            </form>
+            
+            <div>
+                <br>
+                <!--
+                <input type="checkbox">
+                <span>Remember me</span>
+                    -->
+            </div>
+            <br>
+            <button id="loginbutton" class="formbutton" onclick="tryLogin()">Login</button>
+            <br>
+            <button onclick="switch_view()">New user? register here</button>
+        </div>
+
+
+        <!--============================
+            3] CREATE USER FORM
+            firstName: "gsdasdt",
+            lastName: "gregasdacognome",
+            email: "ga@gmail.com",
+            =============================-->
+        <div id="createuserform-wrapper" class="form-wrapper" style="display:none;">
+            <form id="createuserform">
+                <input type="text" id="firstName" name="firstName" placeholder="First Name"><br>
+                <br>
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name"><br>
+                <br>
+                <input type="text" id="userEmail" name="userEmail" placeholder="Email"><br>
+                <br>
+                <!--<label for="username">Username:</label><br>-->
+                <input type="text" id="create_username" name="create_username" placeholder="Username"><br>
+                <br>
+                <!--<label for="password">Password:</label><br>-->
+                <input type="password" id="create_password" name="create_password" placeholder="Password"><br>
+            </form>
+            <br>
+            <button id="createuserbutton" class="formbutton" onclick="createUser()">Register</button>
+        </div>
+
+
+
+
+    </div>
+    <!--/CONTENT WRAPPER-->
+
+    
+    <script src="js/keycloak_client.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

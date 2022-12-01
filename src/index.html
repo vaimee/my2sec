@@ -11,6 +11,7 @@
 	<!--APP METADATA-->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--<meta http-equiv="Content-Security-Policy" content="">-->
 
 	<!--TITLE AND ICON-->
 	<title>AW PRODUCER</title>
@@ -26,48 +27,24 @@
 	<!--SUPERSET EMBEDDED SDK-->
 	<script src="https://unpkg.com/@superset-ui/embedded-sdk"></script>
 	<!--REACT-->
-    <!-- Nota: quando rilasci il codice in produzione, sostituisci "development.js" con "production.min.js". -->
+    <!-- Nota: quando rilasci il codice in produzione, sostituisci "development.js" con "production.min.js". 
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>-->
 
 	<!--MAIN STYLE-->
 	<link rel="stylesheet" type="text/css" href="CSS/main.css">
+	<link rel="stylesheet" type="text/css" href="lib/AwUpdateFlowControl/updateInterface.css">
+	<link rel="stylesheet" type="text/css" href="lib/ReusableComponents/reusableComponents.css">
+	<link rel="stylesheet" type="text/css" href="lib/SupersetEmbeddedDashboard/embeddedDashboard.css">
+	<link rel="stylesheet" type="text/css" href="lib/UserInfo/UserInterface.css">
+	<link rel="stylesheet" type="text/css" href="lib/TasksConsumer/taskdashboard.css">
     <link rel="stylesheet" type="text/css" href="lib/gregnet-grid-plugin/gregnet-grid-style.css">  
-	
-	<!--
-	<script src="./keycloak.js"></script>
-    <script>
-		let initOptions = {
-  			url: 'https://keycloak.vaimee.org/auth',
-			realm: 'My2Sec - Realm',
-			clientId: 'my2sec-producer'
-		}
-		let keycloak = Keycloak(initOptions);
-
-        function initKeycloak() {
-
-            keycloak.init({
-				onLoad: 'login-required',
-				checkLoginIframe: false,
-  				redirectUri: 'http://localhost/keycloak-redirect'
-			}).then(function(authenticated) {
-                //alert(authenticated ? 'authenticated' : 'not authenticated');
-				//init()
-            }).catch(function() {
-                alert('failed to initialize');
-            });
-        }
-		initKeycloak();
-    </script>
-	-->
-
 
 </head>
 
 
 
 <body>
-	
 	<!--============
 		[0] TOPBAR
 	==============-->
@@ -158,13 +135,13 @@
 
 <!------------------------------------------------------------------------------------------------------------------------------>
 	<!--=========================================
-		[1] CONTENITORE PER SUPERSET
+		[1] HOME SCREEN
 	=========================================-->
 	
-	<div align="center" id="superset-wrapper">
+	<div id="home_screen">
 
 		<!--USER HEADER-->
-		<div id="superset-header">
+		<div id="user_header">
 			
 			<div id="welcome-board">
 				<span id="user_welcome"><b>Welcome back, <span id="user_name_welcome">USER</span>!</b></span>
@@ -200,7 +177,23 @@
 		
 
 		<!--# EMBEDDED DASHBOARD! #-->
-		<div id="my-superset-container">LOADING</div>
+		<div class="dashboards-wrapper">
+			
+			<div class="task-container" style="display:none">
+				<div id="task-header">
+					<h3>TASKS</h3>
+				</div>
+				<div id="task-wrapper">
+					WP1 - IMPLEMENTAZIONE COMPONENTI
+				</div>
+			</div>
+
+			<div id="my-superset-container">
+				LOADING
+			</div>
+		
+		</div>
+
 
 	</div>	
 
@@ -347,13 +340,21 @@
 
 
 	<!--Load external scripts-->
-	<script type="text/javascript" src="JS/jsap.js"></script>
+	<!--JSAP-->
+	<script type="text/javascript" src="lib/my2sec-jena_251122.jsap.js"></script>
+	<!--UTILITY-->
 	<script type="text/javascript" src="JS/greglogs.js"></script>
 	<script type="text/javascript" src="JS/local_storage_menu.js"></script>
-	<script type="text/javascript" src="JS/superset-embed.js"></script>
-	<script type="text/javascript" src="JS/data_format.js"></script>
-	<script type="text/javascript" src="JS/aw-client.js"></script>
-	<script type="text/javascript" src="JS/sepa-client.js"></script>
+	<!--SUPERSET-->
+	<script type="text/javascript" src="lib/SupersetEmbeddedDashboard/superset-embed.js"></script>
+	<!--CONSUMER-->
+	<script type="text/javascript" src="lib/UserInfo/UserInfoConsumer.js"></script>
+	<script type="text/javascript" src="lib/TasksConsumer/tasksConsumer.js"></script>
+	<!--PRODUCER-->
+	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwClient.js"></script>
+	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwProducer.js"></script>
+	<script type="text/javascript" src="lib/AwUpdateFlowControl/EventsExplorer.js"></script>
+	<!--MAIN-->
 	<script type="text/javascript" src="JS/main.js"></script>
 </body>
 </html>

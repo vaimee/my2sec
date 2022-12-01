@@ -7,7 +7,6 @@
 
 
 
-
 //GET HTML ELEMENTS
 var allcontent=document.getElementById("content-wrapper") //SERVE PER L'OPACITA' QUANDO APRI IL MENU
 var menuwin=document.getElementById("menu_window"); //MENU LATERALE
@@ -18,7 +17,7 @@ var whitelistconfig=document.getElementById("whitelist-form"); //MENU LATERALE
 var default_options_json = {
 
     //NOME UTENTE DI DEFAULT
-    "jsap": default_jsap,
+    "jsap": default_jsap ? default_jsap : "{}",
 
     "user":"defaultuser@vaimee.it",
 
@@ -32,7 +31,7 @@ var default_options_json = {
 
 
 
-init_options()
+//init_options()
 //consoleLog(0,username)
 //alert(username)
 //alert("finish")
@@ -126,7 +125,7 @@ function menu_switch(){
 function get_localstorage(key){
     consoleLog(1,"GETTING OPTIONS")
     var string_options=localStorage.getItem("json_options");
-    consoleLog(0,string_options)
+    //consoleLog(0,string_options)
     var json_options=JSON.parse(string_options);
 	return json_options[key]
 }
@@ -137,7 +136,7 @@ function update_localstorage(key,value){
     var json_options=JSON.parse(string_options);
 	json_options[key]=value;
 	string_options=JSON.stringify(json_options);
-    consoleLog(0,string_options)
+    //consoleLog(0,string_options)
 	localStorage.setItem("json_options",string_options);
 }
 
