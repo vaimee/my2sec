@@ -16,7 +16,7 @@ class AwProducer extends AwClient{
 		super()
 		this.queryBenchClient= new Sepajs.SEPA(default_jsap)
 		this.sepaClient= new JsapApi(default_jsap)
-		this.whitelistedWatchers="aw-watcher-working"//"aw-watcher-working,aw-watcher-afk,aw-watcher-scan";
+		this.whitelistedWatchers="aw-watcher-working,aw-watcher-afk"//"aw-watcher-working,aw-watcher-afk,aw-watcher-scan";
 		this.watchersJson={};
 		this.eventsRawJson=[];
 		this.eventsJson=[];
