@@ -9,12 +9,12 @@ default_jsap={
 		"protocol": "http",
 		"port": 8551,
 		"query": {
-			"path": "/sparql",
+			"path": "/query",
 			"method": "POST",
 			"format": "JSON"
 		},
 		"update": {
-			"path": "/sparql",
+			"path": "/update",
 			"method": "POST",
 			"format": "JSON"
 		}
