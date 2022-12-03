@@ -1,7 +1,9 @@
 # API - Activity Watch and My2Sec
 
 
-Main link and port: http://127.0.0.1:5000/user
+Main link and port: http://127.0.0.1:5000/user<br>
+Installing all the requirements: ```python -m pip install -r requirements.txt```<br>
+Start the API: ```python main/API_my2sec.py```
 
 ## GET
 1. ```GetCurrentCSV```: get a json with all the Current Events (i.e. the events scanned during a start-stop procedure). You can use this method only if all the events are assigned, i.e. the working flag is assigned. Check if there aren't ```None``` value in the working flag, otherwise try to assign the events using ```GetWorkingEvents_AI_Filter```.<br>JSON:```{"watcher-api-request":{"getAction":"GetCurrentCSV"}}```
