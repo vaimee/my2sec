@@ -8,6 +8,7 @@ from threading import Thread
 from time import sleep
 from aw_ping import check
 import buckets_worker
+import pandas as pd
 
 # watcher used for scans
 class My2secWatcher:
