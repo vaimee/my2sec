@@ -42,41 +42,8 @@ class User(Resource):
     def get(self):
         #print(request.json)
         try:
-            result = json.loads(request.json)["watcher-api-request"]["getAction"]
+            pass
 
-            if "GetAWClient" == result:
-                return make_response(self.__watcher.GetAWClientName(), 200)
-
-            if "GetCurrentCSV" == result:
-                if CheckFile(self.path, '/apps_current.csv'):
-                    res = ReadCSV(self.path, "/apps_current.csv")
-                    if not res.empty:
-                        return make_response(res.to_json(), 200)
-                    raise Exception("impossible to open 'apps_current.csv'")
-                else: return make_response("'apps_current.csv' doesn't exist")
-
-            if "GetCurrentCSV-None" == result:
-                if CheckFile(self.path, '/apps_current.csv'):
-                    res = ReadCSV(self.path, "/apps_current.csv")
-                    if 'None' in list(set(res.working_selection)): return make_response(str(True), 200)
-                    else: return make_response(str(False), 200)
-                else: return make_response("'apps_current.csv' doesn't exist")
-
-            if "GetSelectionCSV" == result:
-                if CheckFile(self.path, '/apps_selection.csv'):
-                    res = ReadCSV(self.path, "/apps_selection.csv")
-                    if not res.empty:
-                        return make_response(res.to_json(), 200)
-                    raise Exception("impossible to open 'apps_selection.csv'")
-                else: return make_response("'apps_selection.csv' doesn't exist")
-
-            if "GetWorkingEvents-AI-Filter" == result:
-                if CheckFile(self.path, '/apps_current.csv'):
-                    res, err = WorkingEvents(self.path)
-                    if err:
-                        raise Exception(err)
-                    return make_response(res.to_json(), 200)
-                else: return make_response("'apps_current.csv' doesn't exist")
 
         except Exception as ex:
             print(ex)
@@ -84,12 +51,55 @@ class User(Resource):
 
 
     def post(self):
-        print(request.json)
+        #print(request.json)
         try:
             message = make_response("Bad Request (JSON error)", 400)
-            result = json.loads(request.json)
-
+            try: result = json.loads(request.json)
+            except:
+                print("Ho trovato un errore: maybe JAVA?")
+                result = dict(request.json)
+                print("PARSATO CON JAVA")
+            print(result)
             result = result["watcher-api-request"]
+
+            if "getAction" in list(result.keys()):
+                result = result["getAction"]
+                print(result)
+                if "GetAWClient" == result:
+                    return make_response(self.__watcher.GetAWClientName(), 200)
+
+                if "GetCurrentCSV" == result:
+                    if CheckFile(self.path, '/apps_current.csv'):
+                        res = ReadCSV(self.path, "/apps_current.csv")
+                        if not res.empty:
+                            return make_response(res.to_json(), 200)
+                        raise Exception("impossible to open 'apps_current.csv'")
+                    else: return make_response("'apps_current.csv' doesn't exist")
+
+                if "GetCurrentCSV-None" == result:
+                    if CheckFile(self.path, '/apps_current.csv'):
+                        res = ReadCSV(self.path, "/apps_current.csv")
+                        if 'None' in list(set(res.working_selection)): return make_response(str(True), 200)
+                        else: return make_response(str(False), 200)
+                    else: return make_response("'apps_current.csv' doesn't exist")
+
+                if "GetSelectionCSV" == result:
+                    if CheckFile(self.path, '/apps_selection.csv'):
+                        res = ReadCSV(self.path, "/apps_selection.csv")
+                        if not res.empty:
+                            return make_response(res.to_json(), 200)
+                        raise Exception("impossible to open 'apps_selection.csv'")
+                    else: return make_response("'apps_selection.csv' doesn't exist")
+
+                if "GetWorkingEvents-AI-Filter" == result:
+                    if CheckFile(self.path, '/apps_current.csv'):
+                        res, err = WorkingEvents(self.path)
+                        if err:
+                            raise Exception(err)
+                        return make_response(res.to_json(), 200)
+                    else: return make_response("'apps_current.csv' doesn't exist")
+                return make_response("Bad Request (JSON error)", 400)
+
 
             # change (and create) the AW client with the new name
             if "AWClient" in list(result.keys()):
