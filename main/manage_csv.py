@@ -107,9 +107,14 @@ def WorkingEvents(path):
             UpdateCurrentCSV(path)
             return pd.DataFrame(), False
 
+        elements = list(set(selection.working_selection))
+        elements.remove('None')
 
         if filter:
+            if len(elements) < 2:
+                return without_selection.assign(working_selection=elements[0]), False
             return Filter(selection, without_selection), False
+        UpdateCurrentCSV(path)
         return without_selection, False
     except Exception as ex:
         return ex, True
