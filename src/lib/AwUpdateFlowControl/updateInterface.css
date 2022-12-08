@@ -1,3 +1,8 @@
+#my2sec-api-buttons{
+}
+
+
+
 #update_status{
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -6,8 +11,11 @@
 }
 #success_status{
 	background:rgb(9, 225, 9);
+	display: flex;
+	align-items: center;
+	padding: 0.2%;
 	color:white;
-	border-radius: 15px;
+	border-radius: 8px;
 	font-family: Arial, Helvetica, sans-serif;
 }
 #error_status{
@@ -15,4 +23,3 @@
 	border-radius: 15px;
 	font-family: Arial, Helvetica, sans-serif;
 }
-

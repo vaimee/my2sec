@@ -63,6 +63,51 @@
 		</div>
 	</div>
 
+
+
+	<!--
+		OBSCURATION PANEL
+	-->
+	<div id="validation_obscurer" style="display: none;">
+	</div>
+
+	<!--
+		VALIDATION PANEL
+	-->
+	<div id="validation_wrapper" style="display: none;">
+		<div id="close-panel"><button onclick="abort_update_procedure()">x</button></div>
+		<div id="validation_sections">
+			<div class="validation_section-selected">
+				<b>1.Working Activities</b>
+			</div>
+			<div class="validation_section">
+				2.Activity Types
+			</div>
+			<div class="validation_section">
+				3.Tasks
+			</div>
+		</div>
+		<hr>
+		<div id="validation_body"></div>
+		<div id="validation_messages"></div>
+		<br>
+		<div id="validation_input">
+			<button id="confirm" class="default-button" onclick="confirm_and_upload()">
+				<span style="display:flex;align-items:center;justify-content:center;">	
+					Confirm and Upload&nbsp
+					<img class="white-icon" src="Assets/icons/upload.svg">
+				</span>
+			</button>	
+			&nbsp
+			<div id="success_status" style="display:none">Events uploaded successfully! You can now close this window</div>
+			<div id="error_status" style="display:none">Error: something went wrong...</div>
+			<div id="update_spinner" class="spinner" style="display:none"></div>		
+		</div>
+	</div>
+
+
+
+
 	<!--============
 		[0.1] MENU
 	==============-->
@@ -137,7 +182,6 @@
 	<!--=========================================
 		[1] HOME SCREEN
 	=========================================-->
-	
 	<div id="home_screen">
 
 		<!--USER HEADER-->
@@ -150,25 +194,31 @@
 			</div>
 			
 			<div id="events_control_panel">
-				<div id="superset-buttons">
-					<button class="default-button" onclick="button_press()">
-						<span style="display:flex;align-items:center;justify-content:center;">	
-							Update events&nbsp
-							<img class="white-icon" src="Assets/icons/upload.svg">
+				<div id="my2sec-api-buttons">
+					<button id="start-stop-button" class="default-button" onclick="start_button()">
+						<span id="start-stop-innertext" style="display:flex;align-items:center;justify-content:center;">	
+							Start Scan&nbsp
+							<img class="white-icon" src="Assets/icons/play-outline.svg">
 						</span>
 					</button>
-					<button class="default-button" onclick="switch_content()">
+
+					<button id="explorer-button" class="default-button" onclick="switch_content()">
 						<span style="display:flex;align-items:center;justify-content:center;">
 							Explorer&nbsp
 							<img class="white-icon" src="Assets/icons/table-rows.svg">
 						</span>
 					</button>
 				</div>
-				<div id="update_status" style="margin-top:5px;">
-					<div id="ready_status">Ready to upload <b><span id="ev_counter">0</span></b> new events from <b><span id="wc_counter">0</span></b> watchers</div>
-					<div id="success_status" style="display:none">Success! Events uploaded to SEPA</div>
-					<div id="error_status" style="display:none">Error: something went wrong...</div>
-					<div id="update_spinner" class="spinner" style="display:none"></div>
+				<div id="update_status" style="margin-top:5px;display:flex;align-items:center;justify-content:space-between;">
+					<div id="ready_status" align="center" style="width:50%;">Waiting for data...</div>
+
+
+					<button id="update-procedure-button" class="default-button" onclick="start_update_procedure()">
+						<span style="display:flex;align-items:center;justify-content:center;">	
+							Upload&nbsp
+							<img class="white-icon" src="Assets/icons/upload.svg">
+						</span>
+					</button>
 				</div>
 			</div>
 
@@ -234,15 +284,7 @@
 		<!--#ROW-ZERO-->
 
 
-
-
-
 		<br>
-
-
-
-
-
 		<div id="row-1">
 
 
@@ -281,58 +323,6 @@
 
 		</div>
 		<!--#row-1-->
-
-
-
-
-
-
-
-
-
-
-		<!--ALIGNS CONTENT TO CENTER-->
-		<div id="row-2">
-			
-				<div class="sepa_cp_wrapper">
-
-					<div align="center" class="sepa_cp_title">
-						READY TO UPLOAD DATA
-					</div>
-					
-					<div class="sepa_cp_row1" id="sepa_cp_row1">
-
-						<!--SEPA SEND BUTTON-->
-						<div id="send_button_wrapper">
-							<button id="send_button" onclick="fake_send()" align="center">
-								<img src="Assets/icons/cloud-upload.svg" class="white-icon" id="sepabutton_icon" width="25px">
-							</button>
-						</div>
-
-				
-						<!--OPERATION STATUS
-						<div id="operation-status">Loading...</div>-->
-	
-						<!--EVENTS COUNTER-->
-						<div id="events_counter_wrapper" align="center">
-							mapped events:
-							<textarea id="sub_counter_old" rows="1">0</textarea>
-						</div>
-						
-						<!--
-						<div class="loading_box" id="loading_box">
-							<div class="loading_bar" id="loading_bar"></div>
-						</div>
-						-->
-	
-					</div>
-					
-				</div>
-			
-		</div>
-
-
-
 	</div>
 	<!--#content-wrapper-->
 
@@ -353,7 +343,7 @@
 	<!--PRODUCER-->
 	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwClient.js"></script>
 	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwProducer.js"></script>
-	<script type="text/javascript" src="lib/AwUpdateFlowControl/EventsExplorer.js"></script>
+	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwManager.js"></script>
 	<!--MAIN-->
 	<script type="text/javascript" src="JS/main.js"></script>
 </body>

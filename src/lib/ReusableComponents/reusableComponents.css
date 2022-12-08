@@ -2,18 +2,35 @@
 /*=================----------------------------------------------------------------------------------------------------------------
 REUSABLE COMPONENTS
 ===================*/
+.no-data-panel{
+
+}
+
+
+
+
 /*BOTTONE GIANLU*/
 .default-button{
 	width: 200px;
 	height: 29px;
 	background:var(--gianlu_blue);
-
 	/*BORDER*/
 	border-width: 0px;
 	border-radius: 6px;
 	
 	/*TEXT*/
 	color:white;
+}
+.default-button-deactivated{
+	width: 200px;
+	height: 29px;
+	background:rgb(13, 46, 72);
+	/*BORDER*/
+	border-width: 0px;
+	border-radius: 6px;
+	
+	/*TEXT*/
+	color:white;	
 }
 .default-button:hover{
 	background: var(--gianlu_dark_blue);

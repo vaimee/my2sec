@@ -14,24 +14,47 @@ class GregLogs{
     //logLevel(level){
     //  this.loglevel=level;
     //}
-  
-    debug(text){
+
+    //TABLES
+    trace_table(table){
       if(this.loglevel<1){
+        console.table(table);
+      }      
+    }
+    debug_table(table){
+      if(this.loglevel<2){
+        console.table(table);
+      }   
+    }
+    info_table(table){
+      if(this.loglevel<3){
+        console.table(table);
+      }   
+    }
+
+    //TEXT
+    trace(text){
+      if(this.loglevel<1){
+        console.log(this.get_current_timestamp()+" | [trace] "+text);
+      }
+    }
+    debug(text){
+      if(this.loglevel<2){
         console.log(this.get_current_timestamp()+" | [debug] "+text);
       }
     }
     info(text){
-      if(this.loglevel<2){
+      if(this.loglevel<3){
         console.log(this.get_current_timestamp()+" | [info] "+text);
       }
     }
     warning(text){
-      if(this.loglevel<3){
-        console.log(this.get_current_timestamp()+" | [WARNING]"+text);
+      if(this.loglevel<4){
+        console.log(this.get_current_timestamp()+" | [warning] "+text);
       }
     }
     error(text){
-      console.log(this.get_current_timestamp()+" | [ERROR]"+text);
+      console.log(this.get_current_timestamp()+" | [error] "+text);
     }
 
     //----------------------

@@ -16,6 +16,7 @@ class AwManager extends AwProducer{
 	constructor(){
 		super()
 		this.current_watcher_index=0;
+		this.tm=new TableManager("validation_body")
 		/* AW PRODUCER DECLARES: 
 		this.watchersJson={};
 		this.eventsRawJson=[];
@@ -26,8 +27,59 @@ class AwManager extends AwProducer{
 	//====================
 	// PRINT WATCHERS INFO
 	//====================
-	//------------------------------------------
-	//PRINT WATCHER NAME AND FORMAT EVENTS TABLE
+	logspan_setTotalEvents(id){
+		var singleJ="";
+		var total_events=0;
+		for(var key in this.eventsJson){
+			singleJ=this.eventsJson[key];
+			total_events=total_events+singleJ.length;
+		}
+	
+		document.getElementById(id).textContent=total_events;
+	}
+
+	logspan_setTotalWatchers(id){
+		var nWatchers=0;
+		for(var key in this.watchersJson){
+			nWatchers++
+		}
+		document.getElementById(id).textContent=nWatchers
+	}
+
+
+	//===========================================
+	//VALIDATION
+	async initialize_validation_procedure(){
+		var res=await this.verifyQuery()
+		
+		console.log("AI FILTER RESULTS: "+res)
+		this.tm.injectTable(JSON.parse(res),"app,title,timestamp,working_selection")
+		if(!this._jsonEmpty(res)){
+			$(document).ready( function () {
+				var events_table=$("#wst").DataTable();
+			} );
+		}else{
+			console.log("skipping empty json")
+		}
+	}
+	_jsonEmpty(json){
+		json=JSON.parse(json)
+		if(Object.keys(json).length === 0){
+			return true
+		}else{
+			return false
+		}
+	}
+
+
+	//===========================================
+	//UPLOAD
+
+
+
+
+	//===========================================
+	//EXPLORER
 	update_watcher_view(n){
 		var counter=0;
 		for (var key in this.watchersJson){
@@ -45,7 +97,7 @@ class AwManager extends AwProducer{
 	
 		//FORMAT TABLE
 		$(document).ready( function () {
-			events_table=$('#events_table').DataTable();
+			var events_table=$('#events_table').DataTable();
 		} );
 	
 		
@@ -62,13 +114,6 @@ class AwManager extends AwProducer{
 	
 	
 	}
-
-
-
-
-
-
-
 
 
 	//=======================
@@ -229,15 +274,8 @@ class AwManager extends AwProducer{
 	
 		var title=document.getElementById("watcher-title");
 		title.innerHTML="id: <b>"+jsonWatcher["id"]+"<b>";
-	/*
-		var el=document.getElementById("watcher_info");
-		  var formattedString="";
-		  for (lilkey in jsonWatcher) {
-			  formattedString=formattedString+"<b>"+lilkey+"</b>: "+jsonWatcher[lilkey]+"<br>"
-		  }
-		  el.innerHTML=formattedString;
-		  consoleLog(1,"format_watcher_info: printed watchers into watcher_info")*/
 	}
+
 
 
 
@@ -246,11 +284,110 @@ class AwManager extends AwProducer{
 
 
 
+class TableManager{
+	constructor(id){
+		this.tableContainerId=id
+		this.logicalArray={}
+		this.tableClass="display"
+	}
 
 
+	on_selection_change(i){
+		var changed=document.getElementById(`workflag_${i}`)
+		console.log(`Changed working flag of row ${i}: ${changed.value}`)
+		var flag ;
+		if(changed.value=="working"){
+			flag=1
+		}else{
+			if(changed.value=="notworking"){
+				flag=0
+			}
+		}
+		this.logicalArray["working_selection"][i]=flag
+		console.log(this.logicalArray)
+	}
 
 
+	styleTable(id){
+		return new Promise(resolve=>{
+			$(document).ready( function () {
+				var events_table=$(id).DataTable();
+				resolve(events_table)
+			} );
+		})
+	}
 
+	injectTable(jsonCsv,whitelist){
+		this.logicalArray=jsonCsv
+		var table=this.newValidationTable(jsonCsv,whitelist)
+		document.getElementById(this.tableContainerId).innerHTML=table;
+	}
+
+
+	newExplorerTable(){
+
+	}
+
+	//fields: monodimensional array, array: bidimensional array
+	newValidationTable(jsonCsv,whitelist){
+		var head=""
+		for(var key in jsonCsv){
+			if(whitelist.includes(key)){
+				head=head+`<th>${key}</th>`
+			}
+		}
+		var body=""
+		for(var i in jsonCsv.app){
+			body=body+"<tr>"
+			for(var key in jsonCsv){
+				if(whitelist.includes(key)){
+					if(key!="working_selection"){
+						body=body+`<td>${jsonCsv[key][i]}</td>`
+					}else{
+						var workSelections='<option value="working">Working</option><option value="notworking">Not Working</option>'
+						var notworkSelections='<option value="notworking">Not Working</option><option value="working">Working</option>'
+						var nullSelections='<option disabled selected value> -- select an option -- </option><option value="working">Working</option><option value="notworking">Not Working</option>'
+						var selection=""
+						if(jsonCsv[key][i]=="0"){
+							selection=notworkSelections;
+						}else{
+							if(jsonCsv[key][i]=="1"){
+								selection=workSelections;
+							}else{
+								selection=nullSelections;
+							}
+						}
+						body=body+`<td>
+							<select name="workflag" id="workflag_${i}" onchange="on_selection_change(${i})">
+								${selection}
+							</select>
+						</td>`
+					}
+				}
+			}
+			body=body+"</tr>"
+		}
+		return `
+		<table id="wst" class=${this.tableClass}>
+			<thead>
+				<tr>${head}</tr>
+			</thead>
+			<tbody>
+				${body}
+			</tbody>
+		</table>`
+	}
+
+}
+
+/*
+var t=new TableManager("validation_body")
+var data=[
+	["urka","moa","no"],
+	["miao","bus","busone"]
+]
+t.injectTable(["App","Title","Work Flag"],data)
+*/
 
 
 

@@ -53,7 +53,7 @@ body{
 	padding-top: 0.5%;
 	padding-bottom: 0.5%;
 	min-height: 20px;
-	height:6vh;
+	height:7vh;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -132,6 +132,79 @@ body{
 	bottom: 0;
 	background:black;
 }
+
+
+
+/*VALIDATION PANEL*/
+#validation_obscurer{
+	position: absolute;
+	width: 100%;
+	height: 96vh;
+	opacity: 0.85;
+	background: white;
+}
+#validation_wrapper{
+	border-style: solid;
+	border-width: 1px;
+	position: absolute;
+	padding:0.75%;
+	width: 90%;
+	height: 85vh;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	/*box-shadow: 3px 3px 5px grey;*/
+	z-index: 150;
+	border-radius: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	background: whitesmoke;
+
+}
+	#close-panel{
+		position:absolute;
+		width:100%;
+		display:flex;
+		justify-content: right;
+	}
+		#close-panel button{
+			border-radius:50%;
+			transform:translate(-20px,-10px);
+			
+		}
+	#validation_sections{
+		font-size: 20px;
+		color:white;
+		display: flex;
+		justify-content: space-around;
+	}
+	.validation_section{
+		width: 30%;
+		background: var(--gianlu_dark_blue);
+		text-align: center;
+		padding:0.35%;
+		border-radius: 10px;
+	}
+	.validation_section-selected{
+		width: 30%;
+		background: var(--gianlu_blue);
+		box-shadow: 3px 3px 5px var(--gianlu_dark_blue);
+		text-align: center;
+		padding:0.35%;
+		border-radius: 10px;
+	}
+	#validation_body{
+		width:98%;
+		padding: 1%;
+		background: white;
+		height: 550px;
+	}
+	#validation_input{
+		/*position:absolute;*/
+		width: 100%;
+		display:flex;
+		justify-content: center;
+		/*bottom:15px;*/
+	}
 
 
 

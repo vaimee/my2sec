@@ -11,48 +11,81 @@
 const JsapApi = Sepajs.Jsap;
 //console.log(JSON.stringify(default_jsap))
 
-class AwProducer extends AwClient{
+class AwProducer extends AwMy2SecClient{
 	constructor(){
-		super()
+		super("localhost:5000")
+		//this.mc= new My2secClient()
 		this.queryBenchClient= new Sepajs.SEPA(default_jsap)
 		this.sepaClient= new JsapApi(default_jsap)
-		this.whitelistedWatchers="aw-watcher-working,aw-watcher-afk"//"aw-watcher-working,aw-watcher-afk,aw-watcher-scan";
+		this.whitelistedWatchers="aw-watcher-working,aw-watcher-afk,aw-watcher-notshutdown,aw-watcher-start-stop"//"aw-watcher-working,aw-watcher-afk,aw-watcher-scan";
 		this.watchersJson={};
 		this.eventsRawJson=[];
 		this.eventsJson=[];
 		this.start_time_json="";
 		this.nWatchers=0;
-		log.info("New AwProducer created!")
+		//log.info("New AwProducer created!")
 		//this.endTime="";
 	}
 
-
-	async start(){
-		this.load_default_configuration()
-		log.info("Trying to connect to SEPA host: "+default_jsap.host)
-		await this.testSepaConnection()
-	}
-
-
-	logspan_setTotalEvents(id){
-		var singleJ="";
-		var total_events=0;
-		for(var key in this.eventsJson){
-			singleJ=this.eventsJson[key];
-			total_events=total_events+singleJ.length;
+	async startTests(){
+		log.info("testing connections...")
+		log.debug("log_level set to error to avoid console cluttering")
+		var temp=log.loglevel
+		log.loglevel=1
+		var results={
+			"sepa":"",
+			"aw":"",
+			"my2sec":""
 		}
-	
-		document.getElementById(id).textContent=total_events;
-	}
-
-	logspan_setTotalWatchers(id){
-		var nWatchers=0;
-		for(var key in this.watchersJson){
-			nWatchers++
+		//test sepa
+		try{
+			await this.testSepaConnection()
+			results.sepa="passed"
+		}catch(e){
+			console.log(e)
+			results.sepa="not-passed"
 		}
-		document.getElementById(id).textContent=nWatchers
+		//test aw
+		try{
+			await this.testAwConnection()
+			results.aw="passed"
+		}catch(e){
+			console.log(e)
+			console.log("TEST NOT PASSED")
+			results.aw="not-passed"
+		}
+		//test my2sec
+		log.loglevel=temp
+		return results
 	}
 
+	async testAw(){
+		console.log("INITIAL CLEANING DB")
+		var rawr=await this.get_events("aw-producer")
+		rawr=JSON.parse(rawr)
+		for(var k in rawr){
+			await this.delete_event(rawr[k].id)
+		}
+		console.log(await this.get_events("aw-producer"))
+		
+		
+		console.log("-----------------------")
+		await this.update_event("{ \"timestamp\": \""+get_current_timestamp()+"\", \"duration\": 0, \"data\": {\"last_update\":\""+get_current_timestamp()+"\"} }")
+		console.log("--------------------------------")
+		await this.update_event("{ \"timestamp\": \""+get_current_timestamp()+"\", \"duration\": 0, \"data\": {\"last_update\":\""+get_current_timestamp()+"\"} }")
+		console.log(await this.get_events("aw-producer"))
+		console.log("------------------------")
+		
+		
+		console.log("CLEANING DB")
+		var rawr=await this.get_events("aw-producer")
+		rawr=JSON.parse(rawr)
+		for(var k in rawr){
+			await this.delete_event(rawr[k].id)
+		}
+		console.log(await this.get_events("aw-producer"))
+
+	}
 
 	testSepaConnection(){
 		var sepa_cbox=document.getElementById("sepa_connectionstatus_wrapper");
@@ -69,16 +102,25 @@ class AwProducer extends AwClient{
 	}
 
 	async testAwConnection(){
-
+		var res = await this.get_filtered_watchers_json(1);
+		return res
 	}
 
 
 
-	//=========================AW EVENTS=============
-	async loadEvents(){
+	//=========================AW EVENTS==============================================================
+	//VERIFY QUERY (DOES NOT MODIFY INTERNAL VARIABLES)
+	async verifyQuery(){
+		return await this.getFilteredCsv()
+	}
+	
+	
+	//UPLOAD QUERY
+	async uploadQuery(){
 		this.watchersJson = await this.get_filtered_watchers_json(1);
-		var start_time_jsonstring = await this.get_events("aw-producer");
-		this.start_time_json=JSON.parse(start_time_jsonstring);
+		//this.watchersJson[]
+		//var start_time_jsonstring = await this.get_events("aw-producer");
+		this.start_time_json=await this.get_producer_event("last_start")//JSON.parse(start_time_jsonstring);
 		this.eventsRawJson=await this.get_filtered_watchers_events()
 		for(var key in this.watchersJson){
 			
@@ -96,8 +138,71 @@ class AwProducer extends AwClient{
 		this.nWatchers=tempcount;
 	}
 
+
+	//QUERY FOR THE EXPLORER INTERFACE
+	async explorerQuery(){
+		//override whitelist, we will fetch aw-watcher-working from the IA
+		this.watchersJson = await this.get_filtered_watchers_json(1,
+			"aw-watcher-afk,aw-watcher-notshutdown,aw-watcher-start-stop");
+		//this.watchersJson[]
+		//var start_time_jsonstring = await this.get_events("aw-producer");
+		this.start_time_json=await this.get_producer_event("last_start")//JSON.parse(start_time_jsonstring);
+		this.eventsRawJson=await this.get_filtered_watchers_events()
+
+		//INTEROPERABILITY
+		try{
+			this.eventsRawJson["aw-watcher-working"]=await this.getWorkingEvents()
+			this.watchersJson["aw-watcher-working"]={id:"aw-watcher-working"}
+		}catch(e){
+			console.log("Found empty json")
+			console.log(e)
+			this.eventsRawJson["aw-watcher-working"]="[]"
+			this.watchersJson["aw-watcher-working"]={id:"aw-watcher-working"}
+		}
+		console.log(this.watchersJson)
+		for(var key in this.watchersJson){
+			
+			this.eventsJson[key] = JSON.parse(this.eventsRawJson[key]);
+			this.eventsRawJson[key]=this.eventsRawJson[key].replace(/\\/g,"\\\\");//BUGFIX	
+			this.eventsRawJson[key]=this.eventsRawJson[key].replace(/\"/g,"\\\"");//BUGFIX
+			this.eventsRawJson[key]=this.eventsRawJson[key].replace(/\'/g,"\\\'");//BUGFIX	
+			console.log(this.eventsRawJson[key])	
+		}
+		//CALCULATE NUMBER OF WATCHERS
+		var tempcount=0;
+		for(var key in this.watchersJson){
+			tempcount++
+		}
+		this.nWatchers=tempcount;
+	}
+	async getWorkingEvents(){
+		var res=await this.getAppsCsv()
+		console.log(res)
+		res=JSON.parse(res)
+		var jsonObj=[]
+		Object.keys(res.app).forEach(i=>{
+			var cell={}
+			cell["id"]=i
+			cell["timestamp"]=res.timestamp[i]
+			cell["duration"]=res.duration[i]
+			cell["data"]={
+				"app":res.app[i],
+				"title":res.title[i],
+				"url":res.url[i],
+				"working_selection":res.working_selection[i]
+			}
+			jsonObj.push(cell)
+		})
+		console.log(jsonObj)
+		return new Promise(resolve=>{resolve(JSON.stringify(jsonObj))})
+	}
+
+
+
+
+
 	//GET AW EVENTS REFINED FOR SEPA PRODUCTION
-	async get_filtered_watchers_json(filtering_active){
+	async get_filtered_watchers_json(filtering_active,override_whitelist){
 		//Get active watchers
 		var watchers_json = await this.get_watchers();
 		watchers_json = JSON.parse(watchers_json);//BUGFIX
@@ -111,7 +216,13 @@ class AwProducer extends AwClient{
 			}
 		}
 		//FILTER WHITELIST
-		var raw_whitelist=this.whitelistedWatchers;
+		if(override_whitelist==undefined){
+			log.info("Using default whitelist: "+this.whitelistedWatchers)
+			var raw_whitelist=this.whitelistedWatchers;
+		}else{
+			log.info("Override whitelist: "+override_whitelist)
+			var raw_whitelist=override_whitelist;
+		}
 		//alert(raw_whitelist.replace(/\s/g, ""));
 		var raw_whitelist_nospaces=raw_whitelist.replace(/\s/g, "")
 		//var tempwhite=raw_whitelist_nospaces.split(",")
@@ -162,12 +273,13 @@ class AwProducer extends AwClient{
 		var data_fetch_success_flag=1;
 
 		//IF START TIME EVENT EXISTS GET EVENTS SLICE, ELSE GET ALL EVENTS
-		if(this.start_time_json.length>0){
+		if(!(Object.keys(this.start_time_json).length===0)){
 	
 			//GET FETTA DI EVENTI BABY
 			if(silent_update==0){
-				start_time=this.start_time_json[0].data.last_update;
+				start_time=this.start_time_json.data.last_start;
 				end_time = get_current_timestamp();
+				console.log("FETCHING EVENTS FROM "+start_time+" TO "+end_time)
 			}else{
 				console.log("Fetching silent time")
 				start_time = OVERWRITE_START_TIME;//"2022-08-22T01:00:00.00Z";
@@ -235,19 +347,7 @@ class AwProducer extends AwClient{
 
 }
 
-//var ciao=new AwProducer;
-//ciao.start()
 
-//var jsap;
-/*
-function init_sepa_client(){
-	consoleLog(1,"sepaclient: parsed jsap (SEPAclient configuration file)")
-	consoleLog(0,JSON.stringify(default_jsap))
-	const SEPA = Sepajs.SEPA
-	client= new SEPA(default_jsap)
-	consoleLog(1,"sepaclient: Sepajs client created!")
-}
-*/
 
 //SEND MESSAGE TO SEPA
 function update_sepa_message(jsonMessage,watcher_client,watcher_hostname){
