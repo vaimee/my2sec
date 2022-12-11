@@ -1,0 +1,75 @@
+bindings={
+  graph: "http://www.vaimee.it/testing/multiple_bindings",
+  p: ["http://sepatest/hasValue"],
+  o: ["mao","maus"]
+}
+
+INSERT DATA{ GRAPH ?graph { _:bnode ?p ?o}}
+INSERT DATA{ GRAPH <http://www.vaimee.it/testing/multiple_bindings> { _:bnode <http://sepatest/hasValue> "mao"  } } (SINGLE BINDINGS)
+ |
+ |
+ v
+INSERT DATA{ GRAPH ?graph { _:bnode_1 ?p_1 ?o_1 . _:bnode_2 ?p_2 ?o_2}}
+
+
+##########################à
+INSERT DATA{ GRAPH <http://www.vaimee.it/testing/multiple_bindings> { _:bnode_1 <http://sepatest/hasValue> "mao" . _:bnode_2 <http://sepatest/hasNotValue> "maus"}}
+|
+|
+v
+INSERT DATA{ GRAPH <http://www.vaimee.it/testing/multiple_bindings> { _:bnode <http://sepatest/hasValue> "mao"  } } 
+INSERT DATA{ GRAPH <http://www.vaimee.it/testing/multiple_bindings> { _:bnode <http://sepatest/hasNotValue> "maus"  } } 
+
+###########################
+
+------------------
+POSSIBLE TEMPLATE
+
+bindings={
+	body:[],
+	vars:[],
+}
+
+//SOSTITUISCI SOLO I BINDINGS MULTIPLI, TIPO p e o, E LASCIA GRAPH FUORI
+DOPO AVER DUPLICATO
+- o usi il jsap api di chris per sostituire tutto normalmente, però devi creare un mega json con tutte le proprietà al primo livello, tipo:
+{
+  graph: "http://www.vaimee.it/testing/multiple_bindings",
+  p_1: "http://sepatest/hasValue",
+  p_2: "http://sepatest/hasNotValue",
+  o_1: "mao",
+  o_2: "maus"
+}
+- o sostituisci solo i duplicati e poi i bindings singoli li lasci a chris, quindi rimane solo in questo caso il grafo://SCELGO QUESTA!
+{
+  graph: "http://www.vaimee.it/testing/multiple_bindings"
+}
+
+//MA FORSE NON SERVE QUESTO PASSAGGIO INTERMEDIO
+puoi prelevare una riga e fare un ciclo for sostituendo i bindings e poi appendendola alla stringa
+
+
+
+//1- INDIVIDUA RIGHE DA DUPLICARE
+a. Se una riga contiene almeno un binding da duplicare, allora vanno duplicati anche gli altri, anche se sono singoli (al limite li sdoppi n volte)
+b. Per individuare una riga da duplicare, cicla i caratteri finchè non trovi parentesi aperta, se prima di trovare una chiusa trovi ALMENO un binding multiplo, allora duplica la riga
+   fino alla prossima graffa chiusa 
+c. Una volta individuata la riga da duplicare, salvala, sostituisci i bindings, incrementa il contatore, appendi nuova riga alla riga vecchia
+
+
+if(riga_da_duplicare){
+  riga=[valori splittati]
+}
+var str=""
+for (i=0; i<NbindingsArr; i++){
+   str=str+substituteBindings()
+}
+//ora puoi appendere la nuova riga al posto della precedente (PER ORA HO GESTITO SOLO DUPLICAZIONE, FACCIO IL MEGA JSON O SOSTITUISCO IO DA SOLO? SENNO' PROVO A USARE
+UNA FUNZIONE DI CHRIS PER FARMI LA SOSTITUZIONE IN AUTONOMIA)
+//ALLA FINE PUOI DARE IN PASTO LA STRINGA AL JSAP API DI CHRIS CHE SOSTITUISCE I BINDINGS SINGOLI RIMASTI
+
+
+SENNO' PRELEVA UNA RIGA, PRELEVA I PRIMI BINDINGS, APPLICA FUNZIONE CHRIS, APPENDI ALLA STRINGA, RIFAI MA CON I SECONDI BINDINGS, E COSI' VIA
+
+
+

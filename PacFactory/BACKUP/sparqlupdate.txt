@@ -1,0 +1,33 @@
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> PREFIX owl:<http://www.w3.org/2002/07/owl#> PREFIX time:<http://www.w3.org/2006/time#> PREFIX jsap:<http://www.vaimee.it/ontology/jsap#> PREFIX opo:<http://www.vaimee.it/ontology/opo#> PREFIX sw:<http://www.vaimee.it/ontology/sw#> PREFIX pac:<http://www.vaimee.it/ontology/pac#> DELETE{
+				GRAPH <http://www.vaimee.it/my2sec/defuser@vaimee.it> { ?bnode_0 rdf:type sw:Event;
+						rdf:type sw:windowEvent;
+						sw:nameApp 'chrome.exe';
+						sw:titleFile 'youtube';
+						time:inXSDDateTimeStamp '2022-08-10T15:33:42.50';
+						sw:activityType sw:researching;
+						opo:taskTitle 'WP2-IMPLEMENTAZIONE COMPONENTI';
+						sw:hasTimeInterval 16 . ?bnode_1 rdf:type sw:Event;
+						rdf:type sw:windowEvent;
+						sw:nameApp 'code.exe';
+						sw:titleFile 'main.js';
+						time:inXSDDateTimeStamp '2022-08-10T16:33:42.50';
+						sw:activityType sw:development;
+						opo:taskTitle 'WP2-IMPLEMENTAZIONE COMPONENTI';
+						sw:hasTimeInterval 20 .}
+			}WHERE{
+				GRAPH <http://www.vaimee.it/my2sec/defuser@vaimee.it> { ?bnode_0 rdf:type sw:Event;
+						rdf:type sw:windowEvent;
+						sw:nameApp 'chrome.exe';
+						sw:titleFile 'youtube';
+						time:inXSDDateTimeStamp '2022-08-10T15:33:42.50';
+						sw:activityType sw:researching;
+						opo:taskTitle 'WP2-IMPLEMENTAZIONE COMPONENTI';
+						sw:hasTimeInterval 16 . ?bnode_1 rdf:type sw:Event;
+						rdf:type sw:windowEvent;
+						sw:nameApp 'code.exe';
+						sw:titleFile 'main.js';
+						time:inXSDDateTimeStamp '2022-08-10T16:33:42.50';
+						sw:activityType sw:development;
+						opo:taskTitle 'WP2-IMPLEMENTAZIONE COMPONENTI';
+						sw:hasTimeInterval 20 .}
+			}

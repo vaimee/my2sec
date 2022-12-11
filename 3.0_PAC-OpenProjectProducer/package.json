@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@arces-wot/sepa-js": "^0.12.1",
-    "express": "^4.18.1",
-    "op-client": "^1.4.2"
-  }
-}

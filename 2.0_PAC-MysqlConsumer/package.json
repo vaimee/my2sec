@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@arces-wot/sepa-js": "^0.12.1",
-    "mysql": "^2.18.1"
-  }
-}
