@@ -16,7 +16,7 @@ The function takes a json as parameter composed by:<br>
 }
 ```
 
-## Future Step
+## Future Steps
 - Show to the user only the events that don't appear in the knowledge;
 - Add the validation phase;
 - Store the events in the CSV with only the useful columns (i.e. without duration, event type, etc);
