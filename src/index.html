@@ -72,18 +72,18 @@
 	</div>
 
 	<!--
-		VALIDATION PANEL
+		VALIDATION PANEL 
 	-->
 	<div id="validation_wrapper" style="display: none;">
 		<div id="close-panel"><button onclick="abort_update_procedure()">x</button></div>
 		<div id="validation_sections">
-			<div class="validation_section-selected">
+			<div id="vs1" class="validation_section-selected">
 				<b>1.Working Activities</b>
 			</div>
-			<div class="validation_section">
+			<div id="vs2" class="validation_section">
 				2.Activity Types
 			</div>
-			<div class="validation_section">
+			<div id="vs3" class="validation_section">
 				3.Tasks
 			</div>
 		</div>
@@ -92,14 +92,14 @@
 		<div id="validation_messages"></div>
 		<br>
 		<div id="validation_input">
-			<button id="confirm" class="default-button" onclick="confirm_and_upload()">
+			<button id="confirm" class="default-button" onclick="on_validation_button_pressed()">
 				<span style="display:flex;align-items:center;justify-content:center;">	
 					Confirm and Upload&nbsp
 					<img class="white-icon" src="Assets/icons/upload.svg">
 				</span>
 			</button>	
 			&nbsp
-			<div id="success_status" style="display:none">Events uploaded successfully! You can now close this window</div>
+			<div id="success_status" style="display:none">Events uploaded successfully</div>
 			<div id="error_status" style="display:none">Error: something went wrong...</div>
 			<div id="update_spinner" class="spinner" style="display:none"></div>		
 		</div>
@@ -331,7 +331,7 @@
 
 	<!--Load external scripts-->
 	<!--JSAP-->
-	<script type="text/javascript" src="lib/my2sec-jena_251122.jsap.js"></script>
+	<script type="text/javascript" src="lib/my2sec_19-1-2023.jsap.js"></script>
 	<!--UTILITY-->
 	<script type="text/javascript" src="JS/greglogs.js"></script>
 	<script type="text/javascript" src="JS/local_storage_menu.js"></script>

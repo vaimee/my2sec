@@ -121,6 +121,12 @@ class AwProducer extends AwMy2SecClient{
 		//this.watchersJson[]
 		//var start_time_jsonstring = await this.get_events("aw-producer");
 		this.start_time_json=await this.get_producer_event("last_start")//JSON.parse(start_time_jsonstring);
+		console.log("TEMPO DI INIZIO")
+		var tempdate=this.start_time_json.data.last_start
+		tempdate= new Date(tempdate);
+		tempdate.setSeconds(tempdate.getSeconds()-10);
+		this.start_time_json.data.last_start=tempdate.toISOString()
+		console.log(this.start_time_json)
 		this.eventsRawJson=await this.get_filtered_watchers_events()
 		for(var key in this.watchersJson){
 			
@@ -147,6 +153,12 @@ class AwProducer extends AwMy2SecClient{
 		//this.watchersJson[]
 		//var start_time_jsonstring = await this.get_events("aw-producer");
 		this.start_time_json=await this.get_producer_event("last_start")//JSON.parse(start_time_jsonstring);
+		console.log("TEMPO DI INIZIO")
+		var tempdate=this.start_time_json.data.last_start
+		tempdate= new Date(tempdate);
+		tempdate.setSeconds(tempdate.getSeconds()-10);
+		this.start_time_json.data.last_start=tempdate.toISOString()
+		console.log(this.start_time_json)
 		this.eventsRawJson=await this.get_filtered_watchers_events()
 
 		//INTEROPERABILITY

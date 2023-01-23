@@ -5,6 +5,7 @@
 || 	DESCRIPTION: initializes the application and defines 
 ||		some major functions
 \\---------------------------------------------------------*/
+var cache=[]
 //CLIENTS
 let awManager;
 let userInfoConsumer;
@@ -81,6 +82,76 @@ async function init(){
 	init_update_button()
 	test()
 
+	/*
+	let flagsub=awManager.sepaClient.GET_USER_SYNCHRONIZATION_FLAG({
+		flag_type:"http://www.vaimee.it/my2sec/trainingactivitiesflag",
+		usergraph:"http://www.vaimee.it/my2sec/"+userInfoConsumer.usermail
+	})
+	var firstTime=true
+	flagsub.on("notification",not=>{console.log(not)})
+	*/
+
+	
+	let trainingactivitiessub=awManager.sepaClient.USER_TRAINING_ACTIVITIES({
+		usergraph:"http://www.vaimee.it/my2sec/"+userInfoConsumer.usermail
+	}) 
+	let flagsub=awManager.sepaClient.GET_SYNCHRONIZATION_FLAG({
+		flag_type:"http://www.vaimee.it/my2sec/trainingactivitiesflag"
+		//usergraph:"http://www.vaimee.it/my2sec/"+userInfoConsumer.usermail
+	})
+	
+	var firstActivity=true;
+	trainingactivitiessub.on("notification",not=>{
+		if(firstActivity){
+			firstActivity=false;
+		}else{
+			console.log("ACTIVITIES RECEIVED!")
+			console.log(not)
+			if(not.removedResults.results.bindings.length==0){ //on added results
+				//trainingactivitiessub.unsubscribe();
+				var bindings=not.addedResults.results.bindings
+				for(var i in bindings){
+					for(var k in bindings[i]){
+						bindings[i][k]=bindings[i][k].value
+					}
+					cache.push(bindings[i])
+				}
+			}else{
+				console.log("ignored removed activities")
+			}
+		}
+	})
+	var firstTime=true
+	flagsub.on("notification",not=>{
+		console.log("FLAG NOTIFICATION: "+JSON.stringify(not))
+		if(firstTime){
+			console.log("first flag")
+			firstTime=false;
+		}else{
+		
+		try{
+			console.log("FLAG RECEIVED!")
+			console.log(not)
+			if(not.removedResults.results.bindings.length==0){
+				if(not.addedResults.results.bindings[0].usergraph.value=="http://www.vaimee.it/my2sec/"+userInfoConsumer.usermail){
+					var syncresponse=awManager.sepaClient.RESET_SYNCHRONIZATION_FLAG({
+						flag:not.addedResults.results.bindings[0].flag.value
+					})
+					//flagsub.unsubscribe()
+					console.log("calling on_received_training_activities, cache: "+JSON.stringify(cache))
+					on_received_training_activities(cache)
+					cache=[];
+					//console.log(e)
+				}else{
+					console.log("ignored flag")
+				}
+			}else{
+				console.log("ignored removed flag")
+			}
+		}catch(e){console.log(e)}
+		}
+		//}//END OF IF
+	})
 
 }
 
@@ -116,6 +187,8 @@ async function test(){
 //###################
 //# START-STOP SCAN #
 //###################
+//update ia knowledge
+var currentSection=0;
 var scan_started=false;
 var time_scanned=0;
 var updatebutton=document.getElementById("update-procedure-button")
@@ -124,6 +197,7 @@ var startbutton=document.getElementById("start-stop-innertext")
 async function start_button(){
 	try{
 		if(!scan_started){
+			currentSection=0;
 			console.log("Starting scan...")
 			var res= await awManager.startWatchers()
 			console.log(res)
@@ -134,6 +208,7 @@ async function start_button(){
 			scan_started=true
 			timer("ready_status")
 		}else{
+			currentSection=0;
 			console.log("stopping scan...")
 			var res=await awManager.stopWatchers()
 			console.log(res)
@@ -266,7 +341,15 @@ async function abort_update_procedure(){
 	opanel.style.display="none"
 }
 
-//update ia knowledge
+
+async function on_validation_button_pressed(){
+	if(currentSection==0){
+		confirm_and_upload()
+	}else{
+		send_validated_activities()
+	}
+	currentSection++
+}
 async function confirm_and_upload(){
 	if(!confirm("Are you sure?")){
 		throw new Error("UPLOAD ABORTED!")
@@ -310,6 +393,9 @@ async function confirm_and_upload(){
 }
 function on_selection_change(i){
 	awManager.tm.on_selection_change(i)	
+}
+function on_activity_selection_change(i){
+	awManager.atm.on_activity_selection_change(i)	
 }
 
 //update verfied data to sepa
@@ -360,14 +446,23 @@ async function send_messages_to_sepa(){
 	if(update_success_flag==1){
 
 		if(silent_update==0){
+			begin_activities_validation();
 			//WHEN ALL UPDATES ARE DONE, CREATE UPDATE EVENT
 			//UNCOMMENT TO RESUME UPDATE
+			var syncresponse=await awManager.sepaClient.SET_SYNCHRONIZATION_FLAG({
+				flag_type:"http://www.vaimee.it/my2sec/awproducerflag",
+				usergraph:"http://www.vaimee.it/my2sec/"+userInfoConsumer.usermail
+			  })
+			console.log("Sync flag response: "+JSON.stringify(syncresponse))
 			console.log("UPDATING TIMESTAMP")
 			await awManager.update_event("{ \"timestamp\": \""+get_current_timestamp()+"\", \"duration\": 0, \"data\": {\"last_update\":\""+get_current_timestamp()+"\"} }")
 			//alert("UPDATED!");
 			init_update_button()
 			console.log("SUCCESS!")
 			change_update_status(1)
+
+			
+
 			//var loadingbar=document.getElementById("loading_bar");
 			//loadingbar.style.animation="load 1s linear"
 		}else{
@@ -384,11 +479,155 @@ async function send_messages_to_sepa(){
 }
 
 
+var dt=[{
+	"usergraph": {
+		"type": "uri",
+		"value": "http://www.vaimee.it/defuser"
+	},
+	"event_type": {
+		"type": "uri",
+		"value": "my2sec:windowEvent"
+	},
+	"datetimestamp": {
+		"type": "literal",
+		"value": "2022-08-10T15:33:42.503000+00:00"
+	},
+	"app": {
+		"type": "literal",
+		"value": "chrome.exe"
+	},
+	"title": {
+		"type": "literal",
+		"value": "youtube"
+	},
+	"activity_type": {
+		"type": "uri",
+		"value": "my2sec:Developing"
+	},
+	"task": {
+		"type": "literal",
+		"value": "WP2-IMPLEMENTAZIONE COMPONENTI"
+	},
+	"duration": {
+		"type": "literal",
+		"value": "16.0"
+	}	
+},
+{
+	"usergraph": {
+		"type": "uri",
+		"value": "http://www.vaimee.it/defuser"
+	},
+	"event_type": {
+		"type": "uri",
+		"value": "my2sec:windowEvent"
+	},
+	"datetimestamp": {
+		"type": "literal",
+		"value": "2022-08-10T15:33:42.503000+00:00"
+	},
+	"app": {
+		"type": "literal",
+		"value": "chrome.exe"
+	},
+	"title": {
+		"type": "literal",
+		"value": "youtube"
+	},
+	"activity_type": {
+		"type": "uri",
+		"value": "my2sec:Developing"
+	},
+	"task": {
+		"type": "literal",
+		"value": "WP2-IMPLEMENTAZIONE COMPONENTI"
+	},
+	"duration": {
+		"type": "literal",
+		"value": "16.0"
+	}	
+}
+]
 
 
 
 
+//on_received_training_activities(dt)
+//ACTIVITIES VALIDATION
+function begin_activities_validation(){
+	document.getElementById("vs1").className="validation_section";
+	document.getElementById("vs2").className="validation_section_selected";
+	document.getElementById("validation_body").innerHTML="";
+	console.log("BEGINNING ACTIVITIES PROCEDURE")
+	change_update_status(0);
 
+}
+
+function on_received_training_activities(bindings){
+	console.log("Setting original bindings:")
+	console.log(bindings)
+	awManager.atm.originalBindings=bindings;
+	var known_categories="Developing,Meeting,Researching,Testing,Other,Email"
+	console.log("Injecting table")
+	awManager.atm.injectTable(bindings,"activity_type,app,title,duration,datetimestamp",known_categories)
+	if(!awManager._jsonEmpty(bindings)){
+		$(document).ready( function () {
+			var events_table=$("#wst").DataTable();
+		} );
+	}else{
+		console.log("ERROR: JSON CAN'T BE EMPTY")
+		change_update_status(2)
+	}
+	//on_validated_activities()
+}
+
+async function send_validated_activities(){
+	change_update_status(3);
+	var arr=awManager.atm.logicalArray//Json styled csv
+	console.log(arr)
+	//throw new Error("MAO")
+	var ok=0;
+	try{
+		for(var i in arr){
+			arr[i]["usergraph"]="http://www.vaimee.it/my2sec/"+userInfoConsumer.usermail
+			var syncresponse=await awManager.sepaClient.ADD_VALIDATED_ACTIVITY(arr[i])
+			console.log("Add validated activity response: "+JSON.stringify(syncresponse))	
+		}
+		
+		try{
+
+		
+		var toRemove=awManager.atm.originalBindings;
+		console.log("REMOVING: ")
+		console.log(toRemove)
+		for(var i in toRemove){
+			var syncresponse=await awManager.sepaClient.REMOVE_TRAINING_ACTIVITY({
+				activity: toRemove[i].nodeid
+			})
+			console.log("Remove training activity response: "+JSON.stringify(syncresponse))	
+		}
+
+		}catch(e){
+			console.log(e)
+		}
+		
+		var syncresponse=await awManager.sepaClient.SET_SYNCHRONIZATION_FLAG({
+			flag_type:"http://www.vaimee.it/my2sec/validatedactivitiesflag",
+			usergraph:"http://www.vaimee.it/my2sec/"+userInfoConsumer.usermail
+		  })
+		console.log("Sync flag response: "+JSON.stringify(syncresponse))	
+		ok=1;
+	}catch(e){
+		console.log(e)
+		ok=0;
+	}
+	if(ok==1){
+		change_update_status(1)
+	}else{
+		change_update_status(2)
+	}
+
+}
 
 
 
@@ -435,7 +674,7 @@ function change_update_status(type){
 	//0 ready, 1 success, 2 error, 3 spinner
 	switch (type) {
 		case 0:
-			console.log("case outdated")
+			console.log("status box removed")
 			//document.getElementById("ready_status").style.display="block";
 			break;
 		case 1:

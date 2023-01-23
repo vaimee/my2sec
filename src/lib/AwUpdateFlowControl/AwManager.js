@@ -17,6 +17,7 @@ class AwManager extends AwProducer{
 		super()
 		this.current_watcher_index=0;
 		this.tm=new TableManager("validation_body")
+		this.atm= new ActivityTableManager("validation_body")
 		/* AW PRODUCER DECLARES: 
 		this.watchersJson={};
 		this.eventsRawJson=[];
@@ -52,8 +53,15 @@ class AwManager extends AwProducer{
 	async initialize_validation_procedure(){
 		var res=await this.verifyQuery()
 		
+		try{
+			res=JSON.parse(res)
+		}catch(e){
+			console.log(e)
+			res=[]
+		}
+
 		console.log("AI FILTER RESULTS: "+res)
-		this.tm.injectTable(JSON.parse(res),"app,title,timestamp,working_selection")
+		this.tm.injectTable(res,"app,title,timestamp,working_selection")
 		if(!this._jsonEmpty(res)){
 			$(document).ready( function () {
 				var events_table=$("#wst").DataTable();
@@ -62,8 +70,9 @@ class AwManager extends AwProducer{
 			console.log("skipping empty json")
 		}
 	}
+	
 	_jsonEmpty(json){
-		json=JSON.parse(json)
+		//json=JSON.parse(json)
 		if(Object.keys(json).length === 0){
 			return true
 		}else{
@@ -379,6 +388,102 @@ class TableManager{
 	}
 
 }
+
+
+
+class ActivityTableManager{
+	constructor(id){
+		this.tableContainerId=id
+		this.logicalArray={}
+		this.originalBindings=[]
+		this.tableClass="display"
+	}
+
+
+	on_activity_selection_change(i){
+		var changed=document.getElementById(`activity_type_${i}`)
+		console.log(changed.innerHTML)
+		console.log(`Changed activity_type of row ${i}: ${changed.value}`)
+		this.logicalArray[i]["activity_type"]="my2sec:"+changed.value
+		console.log(this.logicalArray)
+	}
+
+
+	styleTable(id){
+		return new Promise(resolve=>{
+			$(document).ready( function () {
+				var events_table=$(id).DataTable();
+				resolve(events_table)
+			} );
+		})
+	}
+
+	injectTable(jsonCsv,whitelist,known_categories){
+		this.logicalArray=jsonCsv
+		var table=this.newValidationTable(jsonCsv,whitelist,known_categories)
+		//throw new Error("MAO")
+		document.getElementById(this.tableContainerId).innerHTML=table;
+	}
+
+
+	newExplorerTable(){
+
+	}
+
+	//fields: monodimensional array, array: bidimensional array
+	newValidationTable(bindings,whitelist,known_categories){
+		var head=""
+		for(var key in bindings[0]){
+			if(whitelist.includes(key)){
+				head=head+`<th>${key}</th>`
+			}
+		}
+		var body=""
+		for(var i in bindings){
+			body=body+"<tr>"
+			for(var key in bindings[i]){
+				if(whitelist.includes(key)){
+					if(key!="activity_type"){
+						body=body+`<td>${bindings[i][key]}</td>`
+					}else{
+						var category=bindings[i][key];
+						category=category.slice(category.lastIndexOf("#")+1);
+						console.log(category)
+						//if(known_categories.includes(category)){
+							var selection=`<option value="${category}">${category}</option>`
+							var catarr=known_categories.split(",");
+							for(var c in catarr){
+								var cat=catarr[c].trim();
+								if(cat!=category){
+									selection=selection+`<option value="${cat}">${cat}</option>`
+								}
+							}
+							body=body+`<td>
+								<select name="activity_type" id="activity_type_${i}" onchange="on_activity_selection_change(${i})">
+									${selection}
+								</select>
+							</td>`
+						//}else{
+						//	console.log("unknown category")
+						//}
+					}
+				}
+			}
+			body=body+"</tr>"
+		}
+		return `
+		<table id="wst" class=${this.tableClass}>
+			<thead>
+				<tr>${head}</tr>
+			</thead>
+			<tbody>
+				${body}
+			</tbody>
+		</table>`
+	}
+
+}
+
 
 /*
 var t=new TableManager("validation_body")

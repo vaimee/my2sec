@@ -81,7 +81,7 @@ class UserInfoConsumer {
 
     sepa_getUserName(){
 		return new Promise(resolve=>{
-            this.sepaConsumer.query("select ?username where { graph <http://www.vaimee.it/my2sec/members> { <http://www.vaimee.it/my2sec/"+this.usermail+"> <http://www.vaimee.it/ontology/opo#username> ?username }}")
+            this.sepaConsumer.query("select ?username where { graph <http://www.vaimee.it/my2sec/members> { <http://www.vaimee.it/my2sec/"+this.usermail+"> <http://www.vaimee.it/ontology/my2sec#username> ?username }}")
             .then((data)=>{
                 //console.log("");
                 var bindings=this.extract_query_bindings(data);
