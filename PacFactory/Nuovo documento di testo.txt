@@ -1,0 +1,3 @@
+In una riga TUTTO va duplicato, quindi se ci sono delle variabili che non sono single bindings vanno chiamate con l'indice.
+Queste variabili non presenti nei bindings nè singoli ne multipli si chiamano shadow bindings.
+Gli shadow bindings sono tricky perchè tra una graffa e l'altra nessuno mi dice se ho trovato in precedenza degli shadow bindings 

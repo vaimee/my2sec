@@ -1,0 +1,1 @@
+[{"usergraph": "http://www.vaimee.it/my2sec/gregorio.monari@vaimee.it", "event_type": "http://www.vaimee.it/ontology/my2sec#windowEvent", "app": "Discord.exe", "title": "meeting-room-a | VAIMEE - Discord", "duration": "86.738", "task": "WP2-IMPLEMENTAZIONE COMPONENTI", "datetimestamp": "2022-12-20T10:10:00+00:00", "real_duration": "120.0"}]

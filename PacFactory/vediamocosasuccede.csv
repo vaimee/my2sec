@@ -1,0 +1,34 @@
+,user_graph,event_type,app,title,duration,task,datetimestamp
+0,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#afkEvent,none,none,6351.009,none,2023-01-23 15:06:21.193000+00:00
+1,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#startEvent,none,none,0,none,2023-01-23 15:06:31.140000+00:00
+23,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Eclipse,SEPAProject - tools/src/main/java/it/vaimee/sepa/consumers/my2sec/ActivityConsumer.java - Eclipse IDE,5.552,none,2023-01-23 16:50:19.545000+00:00
+24,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Eclipse,SEPAProject - tools/src/main/java/it/vaimee/tools/my2sec/TaskAI.java - Eclipse IDE,810.862,none,2023-01-23 16:50:25.096000+00:00
+26,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#afkEvent,none,none,621.139094,none,2023-01-23 16:52:12.199000+00:00
+27,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#afkEvent,none,none,699.697,none,2023-01-23 16:52:12.199000+00:00
+28,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#afkEvent,none,none,636.168294,none,2023-01-23 16:52:12.199000+00:00
+29,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#afkEvent,none,none,631.157382,none,2023-01-23 16:52:12.199000+00:00
+32,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#afkEvent,none,none,660.727,none,2023-01-23 17:03:51.897000+00:00
+34,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Eclipse,SEPAProject - tools/src/main/java/it/vaimee/tools/my2sec/TaskAI.java - Eclipse IDE,21.861,none,2023-01-23 17:07:00.790000+00:00
+35,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Eclipse,SEPAProject - tools/src/main/java/it/vaimee/sepa/consumers/my2sec/TaskConsumer.java - Eclipse IDE,68.86,none,2023-01-23 17:07:22.649000+00:00
+36,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Eclipse,SEPAProject - tools/src/main/java/it/vaimee/sepa/consumers/my2sec/ActivityConsumer.java - Eclipse IDE,7.565,none,2023-01-23 17:08:31.507000+00:00
+37,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Eclipse,SEPAProject - tools/src/main/java/it/vaimee/tools/my2sec/TaskAI.java - Eclipse IDE,89.834,none,2023-01-23 17:08:39.060000+00:00
+38,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,VaimeeTools/tools/src/main/resources at greg Â· vaimee/VaimeeTools,2.453,none,2023-01-23 17:10:08.894000+00:00
+39,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Panoramica,4.923,none,2023-01-23 17:10:11.347000+00:00
+40,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,â€Ždld.arces.unibo.it:8078/projects/your-scrum-project/,0.276,none,2023-01-23 17:10:16.231000+00:00
+41,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,My2sec | OpenProject,0.064,none,2023-01-23 17:10:16.507000+00:00
+42,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Panoramica,74.08,none,2023-01-23 17:10:16.571000+00:00
+43,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,â€Ždld.arces.unibo.it:8078/?first_time_user=true,0.11,none,2023-01-23 17:11:31.272000+00:00
+44,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,OpenProject,0,none,2023-01-23 17:11:31.382000+00:00
+45,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,OpenProject,8.483,none,2023-01-23 17:11:31.423000+00:00
+46,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,OpenProject,0,none,2023-01-23 17:11:31.423000+00:00
+48,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,â€Ždld.arces.unibo.it:8078/projects/2?jump=,0.165,none,2023-01-23 17:11:39.906000+00:00
+49,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Panoramica,3.494,none,2023-01-23 17:11:40.036000+00:00
+50,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,â€Ždld.arces.unibo.it:8078/projects/your-scrum-project/work_packages,0.09,none,2023-01-23 17:11:43.530000+00:00
+51,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Macro-attivitÃ  | My2sec | OpenProject,0.536,none,2023-01-23 17:11:43.620000+00:00
+52,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Apri tutto | My2sec | OpenProject,6.941,none,2023-01-23 17:11:44.118000+00:00
+53,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Task: http://www.vaimee... (#152) | My2sec | OpenProject,0,none,2023-01-23 17:11:51.059000+00:00
+54,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Task: http://www.vaimee... (#152) | My2sec | OpenProject,18.435,none,2023-01-23 17:11:51.100000+00:00
+55,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Task: http://www.vaimee... (#152) | My2sec | OpenProject,0,none,2023-01-23 17:11:51.100000+00:00
+56,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Eclipse,SEPAProject - tools/src/main/java/it/vaimee/tools/my2sec/TaskAI.java - Eclipse IDE,5.986,none,2023-01-23 17:12:09.535000+00:00
+57,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#windowEvent,Safari,Task: http://www.vaimee... (#152) | My2sec | OpenProject,1.417,none,2023-01-23 17:12:15.521000+00:00
+58,http://www.vaimee.it/my2sec/defuser@vaimee.it,http://www.vaimee.it/ontology/my2sec#stopEvent,none,none,0,none,2023-01-23 17:12:20.265000+00:00

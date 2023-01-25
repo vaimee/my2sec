@@ -8,24 +8,29 @@ class GregLogs{
     //logLevel(level){
     //  this.loglevel=level;
     //}
-  
-    debug(text){
+    trace(text){
       if(this.loglevel<1){
-        console.log(get_current_timestamp()+" | [debug] "+text);
+        console.log(get_current_timestamp()+" [trace] "+text);
+      }      
+    }
+    debug(text){
+      if(this.loglevel<2){
+        console.log(get_current_timestamp()+" [debug] "+text);
       }
     }
     info(text){
-      if(this.loglevel<2){
-        console.log(get_current_timestamp()+" | [info] "+text);
+      //var string=this.info.caller.name
+      if(this.loglevel<3){
+        console.log(get_current_timestamp()+" [info] "+text);
       }
     }
     warning(text){
-      if(this.loglevel<3){
-        console.log(get_current_timestamp()+" | [WARNING]"+text);
+      if(this.loglevel<4){
+        console.log(get_current_timestamp()+" [WARNING] "+text);
       }
     }
     error(text){
-      console.log(get_current_timestamp()+" | [ERROR]"+text);
+      console.log(get_current_timestamp()+" [ERROR] "+text);
     }
   }
   

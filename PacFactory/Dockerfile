@@ -1,19 +1,13 @@
 # specify the node base image with your desired version node:<version>
-FROM nikolaik/python-nodejs:latest
+FROM node
 
 #SPECIFY WORKDIR BEFORE ANYTHING!!!!!!!!!!!! THERE IS A PROBLEM FROM NODE:16 IF YO
 #DON'T DO THIS
-USER pn
-WORKDIR /home/pn/app
+WORKDIR /home/node/myapp
 
 
 #COPY FILES
-COPY . /home/pn/app
-
-#PIP INSTALL
-RUN pip install pandas
-#RUN pip install collections
-RUN pip install numpy
+COPY . /home/node/myapp
 
 #INSTALL SEPA CLIENT API
 #RUN npm i @arces-wot/sepa-js #already installed locally, test if it works anyways

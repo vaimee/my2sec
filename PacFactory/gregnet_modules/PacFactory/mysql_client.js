@@ -4,6 +4,7 @@ var mysql= require('mysql');
 class MysqlClient {
     constructor(){
         this.log= new GregLogs();
+        this.log.loglevel=0;
         this.sqlClient;
         this.tableSchema;
         this.schemaDimensions;
@@ -38,8 +39,13 @@ class MysqlClient {
     }
     
     async createTable(name){
-        var sql = "CREATE TABLE "+name+" ( "+this.tableSchema+" )";
-        console.log("COMMAND: "+sql)
+        try{
+            var sql = "CREATE TABLE "+name+" ( "+this.tableSchema+" )";
+            this.log.debug("COMMAND: "+sql)
+            await this.rawSqlQuery(sql);
+        }catch(e){
+            //console.log(e);
+        }
     }
 
     async inject(name,variables){
@@ -56,7 +62,9 @@ class MysqlClient {
         values=values.slice(0,lastValuesComma)
 
         var sql = `INSERT INTO ${name} ( ${fields} ) VALUES ( ${values} )`;
-        console.log("COMMAND: "+sql)
+        this.log.trace("COMMAND: "+sql)
+        var res=await this.rawSqlQuery(sql);
+        return res;
     }
 
 
@@ -90,20 +98,24 @@ class MysqlClient {
         console.log(res)
     }
 
-    //QUERIES
+
+    
     rawSqlQuery(querytext){
         return new Promise(resolve=>{
           this.sqlClient.query(querytext, function (err, result) {
-            if (err) throw err;
+            if (err){
+                console.log(err)
+            } 
             resolve(result);
           });
         });
     }
 
+
 }
 
-testClass()
-
+//testClass()
+/*
 async function testClass(){
     var client= new MysqlClient()
     await client.connect({
@@ -126,7 +138,7 @@ async function testClass(){
         duration:"0"
     })
 }
-
+*/
 
 
 module.exports = MysqlClient;

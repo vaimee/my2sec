@@ -19,12 +19,9 @@ module.exports = class PacFactory extends JsapApi {
   constructor(jsap) {
     //TITLE
     //console.log("||============================||");
-    console.log("║║ >> Connected to: "+jsap.host);
-    console.log("║║ >> Http Update/Query port: "+jsap.sparql11protocol.port);
-    console.log("╚╣ >> Ws Subscribe port: "+jsap.sparql11seprotocol.availableProtocols.ws.port);
-    console.log("_____________")
-    console.log("[ APP LOGS: ]")
     super(jsap);
+    //SUBSCRIPTIONS ARRAY
+    this._SUBARR=[]
     //INIT CLIENTS
     this.queryBenchClient=new SEPA(jsap);//querybench client, for static queries
     this.app = express(); //RECEIVE REQUESTS
@@ -33,10 +30,19 @@ module.exports = class PacFactory extends JsapApi {
     //FINISH
     this.log= new GregLogs();
     this.testingGraphName="";
-    this.log.info("New Pac module created!");
+    //this.log.info("New Pac module created!");
   }
 
+  exit(){
+    //process.exit()
+    for(var i in this._SUBARR){
+      this._SUBARR[i].unsubscribe()
+    }
+  }
 
+  getSubArr(){
+    return this._SUBARR
+  }
 
   //==================EXPRESS ROUTERS======================
   newGetRouter(path,callback){
@@ -70,6 +76,7 @@ module.exports = class PacFactory extends JsapApi {
 
 
   //=============MYSQL CLIENT=============
+  /*
   sqlConnect(configuration){
     return new Promise(resolve=>{
       //TRY TO CONNECT TO MYSQL DATABASE
@@ -100,7 +107,7 @@ module.exports = class PacFactory extends JsapApi {
       });
     });
   }
-
+  */
 
   //=============SEPA CLIENT=============
   async testSepaSource(){
@@ -129,18 +136,64 @@ module.exports = class PacFactory extends JsapApi {
       });
     })
   }
+
   
+  
+  subscribeAndNotify(queryname,data,added,first,removed,error){
+    var firstResults=true;
+    var sub = this[queryname](data);
+    sub.on("subscription",console.log)
+    sub.on("notification",not=>{
+      //console.log("NOTIFICATION RECEIVED")
+      if(!firstResults){
+        if(!this._isRemovedResults(not)){
+          //console.log(not)
+          var bindings=this.extractAddedResultsBindings(not);
+          this.log.trace(`### ${queryname}: added results received (${bindings.length}) ###`)
+          for(var i=0;i<bindings.length;i++){
+            this[added](bindings[i]);
+          }
+        }else{
+          var bindings=this.extractRemovedResultsBindings(not);
+          this.log.trace(`### ${queryname}: removed results received (${bindings.length}) ###`)
+          for(var i=0;i<bindings.length;i++){
+            try{
+              this[removed](bindings[i]);
+            }catch(e){console.log(e)}
+          }
+        }
+      }else{
+        firstResults=false;
+        var bindings=this.extractAddedResultsBindings(not);
+        //this.saveUpdateTemplate(JSON.stringify(not))
+        this.log.trace(`### ${queryname}: first results received (${bindings.length}) ###`)
+        for(var i=0;i<bindings.length;i++){
+          try{
+            this[first](bindings[i]);
+          }catch(e){console.log(e)}
+        }
+      }
+    });
+    sub.on("error",err=>{
+      this[error](err);
+    });
+    this._SUBARR.push(sub)
+    this.log.info("Sub and Notify Router initialized ("+queryname+")")
+  }
+
+
   newSubRouter(queryname,data,callback){
     var firstResults=true;
     //var firstResults=true;
     var sub = this[queryname](data);
     sub.on("subscription",console.log)
     sub.on("notification",not=>{
+      //console.log("ORCODIO")
       if(!firstResults){
         if(!this._isRemovedResults(not)){
           //console.log(not)
           var bindings=this.extractAddedResultsBindings(not);
-          this.log.info(`### ${queryname}: added results received (${bindings.length}) ###`)
+          this.log.trace(`### ${queryname}: added results received (${bindings.length}) ###`)
           for(var i=0;i<bindings.length;i++){
             this[callback](bindings[i]);
           }
@@ -152,12 +205,13 @@ module.exports = class PacFactory extends JsapApi {
         
         var bindings=this.extractAddedResultsBindings(not);
         //this.saveUpdateTemplate(JSON.stringify(not))
-        this.log.info(`### ${queryname}: first results received (${bindings.length}) ###`)
+        this.log.trace(`### ${queryname}: first results received (${bindings.length}) ###`)
         for(var i=0;i<bindings.length;i++){
           this[callback](bindings[i]);
         }
       }
     });
+    this._SUBARR.push(sub)
     this.log.info("Sub Router initialized ("+queryname+")")
   }
   saveUpdateTemplate(template){
@@ -234,6 +288,7 @@ module.exports = class PacFactory extends JsapApi {
   }
 
   rawUpdate(updatetext){
+    //console.log(updatetext)
     
     return new Promise(resolve=>{
       this.queryBenchClient.update(updatetext)

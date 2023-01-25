@@ -1,0 +1,1 @@
+[{\"id\":88810,\"timestamp\":\"2023-01-23T17:12:20.265000+00:00\",\"duration\":0,\"data\":{\"start-stop\":\"stop\"}},{\"id\":88552,\"timestamp\":\"2023-01-23T15:06:31.140000+00:00\",\"duration\":0,\"data\":{\"start-stop\":\"start\"}}]

@@ -1,0 +1,43 @@
+//WORKING
+
+DELETE{
+  GRAPH <http://www.vaimee.it/my2sec/flags>{
+    <http://www.vaimee.it/my2sec/production_flag> rdf:value ?value
+  }
+}
+INSERT{
+  GRAPH <http://www.vaimee.it/my2sec/flags>{
+    <http://www.vaimee.it/my2sec/production_flag> rdf:value "true"
+  }
+}
+WHERE{
+  GRAPH <http://www.vaimee.it/my2sec/flags>{
+    OPTIONAL{
+      <http://www.vaimee.it/my2sec/production_flag> rdf:value ?value   
+    }  
+  }
+}
+
+
+
+
+
+//NOT WORKING
+
+DELETE {
+  GRAPH <http://www.vaimee.it/my2sec/flags> {
+    ?flag_uri rdf:value ?old_flag_value
+  }
+}
+INSERT {
+  GRAPH <http://www.vaimee.it/my2sec/flags> {
+    ?flag_uri rdf:value ?flag_value .
+  }
+}
+WHERE{
+  GRAPH <http://www.vaimee.it/my2sec/flags> {
+    OPTIONAL {
+      ?flag_uri rdf:value ?old_flag_value .
+    }
+  }
+}
