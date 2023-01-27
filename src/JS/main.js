@@ -9,6 +9,8 @@ var cache=[]
 //CLIENTS
 let awManager;
 let userInfoConsumer;
+//GLOBAL
+//var _SCAN_STARTED=false;
 //TIMESTAMP FOR SYNCHRONIZATION, MUST REMAIN UNTOUCHED
 var start_time="";
 var end_time="";
@@ -41,6 +43,12 @@ async function init(){
 	})
 	log.info("-------TEST COMPLETE------------------------")
 	console.log(" ")
+
+	//TRY TO STOP WATCHERS AT STARTUP TO AVOID BUGS
+	console.log("PROVO A SPEGNERE I WATCHERS")
+	awManager.stopWatchers()
+
+
 
 	//THIS SECTION MUST ALSO NOT FAIL, SO I WILL NOT CATCH ANY ERROR
 	log.info("# KEYCLOAK #")
@@ -80,7 +88,7 @@ async function init(){
 
 	//INIT THE CLASS OF THE UPDATE BUTTON
 	init_update_button()
-	test()
+	//test()
 
 	/*
 	let flagsub=awManager.sepaClient.GET_USER_SYNCHRONIZATION_FLAG({
@@ -163,6 +171,7 @@ async function init(){
 
 
 async function test(){
+	console.log("TESTING")
 	var start_event=await awManager.get_producer_event("last_start")
 	var status=""
 	if(Object.keys(start_event).length===0){
@@ -222,12 +231,14 @@ async function start_button(){
 	}
 }
 async function init_update_button(){
+	console.log("INIT UPDATE BUTTON")
 	var start_event=await awManager.get_producer_event("last_start")
-	if(Object.keys(start_event).length===0){
+	if(Object.keys(start_event).length===0){ //SE NON ESISTE UNO START EVENT NON ESISTE NEANCHE UNO STOP EVENT -> inizia scansione
 		console.log("Start event does not exist")
 		updatebutton.className="default-button-deactivated"
 		explorerbutton.className="default-button-deactivated"
 		startbutton.innerHTML=`Start Scan&nbsp <img class="white-icon" src="Assets/icons/play-outline.svg">`
+		//_SCAN_STARTED=false;
 	}else{
 		console.log("Fetched Start Event: "+start_event.data.last_start)
 		var update_event=await awManager.get_producer_event("last_update")
@@ -444,7 +455,7 @@ async function send_messages_to_sepa(){
 	} 
 
 	if(update_success_flag==1){
-
+		change_update_status(1)
 		if(silent_update==0){
 			begin_activities_validation();
 			//WHEN ALL UPDATES ARE DONE, CREATE UPDATE EVENT
@@ -459,7 +470,7 @@ async function send_messages_to_sepa(){
 			//alert("UPDATED!");
 			init_update_button()
 			console.log("SUCCESS!")
-			change_update_status(1)
+			
 
 			
 
@@ -550,13 +561,11 @@ var dt=[{
 ]
 
 
-
-
 //on_received_training_activities(dt)
 //ACTIVITIES VALIDATION
 function begin_activities_validation(){
 	document.getElementById("vs1").className="validation_section";
-	document.getElementById("vs2").className="validation_section_selected";
+	document.getElementById("vs2").className="validation_section-selected";
 	document.getElementById("validation_body").innerHTML="";
 	console.log("BEGINNING ACTIVITIES PROCEDURE")
 	change_update_status(0);
@@ -590,6 +599,12 @@ async function send_validated_activities(){
 	try{
 		for(var i in arr){
 			arr[i]["usergraph"]="http://www.vaimee.it/my2sec/"+userInfoConsumer.usermail
+
+			var title=arr[i]["title"].replace(/\\/g,"\\\\");//PRIMA LE DOPPIE SBARRE
+			title=title.replace(/\'/g,"\\\'"); //POI GLI ASTERISCHI
+			arr[i]["title"]=title;
+			console.log(arr[i])
+
 			var syncresponse=await awManager.sepaClient.ADD_VALIDATED_ACTIVITY(arr[i])
 			console.log("Add validated activity response: "+JSON.stringify(syncresponse))	
 		}
@@ -623,6 +638,7 @@ async function send_validated_activities(){
 	}
 	if(ok==1){
 		change_update_status(1)
+		document.getElementById("success_status").innerHTML="Success! You can view your tasks on OpenProject"
 	}else{
 		change_update_status(2)
 	}

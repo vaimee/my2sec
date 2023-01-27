@@ -67,7 +67,15 @@ class AwManager extends AwProducer{
 				var events_table=$("#wst").DataTable();
 			} );
 		}else{
-			console.log("skipping empty json")
+			console.log("Received empty json")
+			var _corpo=document.getElementById("validation_body")
+			_corpo.innerHTML=`
+			<br><br>
+			<div width="100%" align="center">
+				Events are already classified
+				<br>and ready to be sent!
+			</div>
+				`
 		}
 	}
 	
