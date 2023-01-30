@@ -26,6 +26,11 @@ template :sw {
 }
 where{}
 
+template :my2sec {
+	st:call-template(:main, "http://vaimee.com/My2Sec#")
+}
+where{}
+
 template :main(?ns) {
     format {
 """
@@ -93,8 +98,8 @@ template :editor(?o) {
     "}" ; separator = ","
 } where {
 	VALUES (?name ?company ?url)
-    {("Elisa Riforgiato" "VAIMEE" "https://vaimee.it")
-    ("Luca Roffia" "VAIMEE" "https://vaimee.it")}
+    {("Chiara Del Vecchio" "VAIMEE" "https://vaimee.com")
+    ("Luca Roffia" "VAIMEE" "https://vaimee.com")}
 }
 
 #{ ?o dct:creator ?ed } union { ?o dct:contributor ?ed }

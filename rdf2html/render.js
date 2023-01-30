@@ -1,8 +1,9 @@
 const ontologies = [
-    {'../Ontologies/OWL/opo.ttl':"http://vaimee.it/template#opo"},
-    {'../Ontologies/OWL/jsap.ttl':"http://vaimee.it/template#jsap"},
-    {'../Ontologies/OWL/pac.ttl':"http://vaimee.it/template#pac"},
-    {'../Ontologies/OWL/sw.ttl':"http://vaimee.it/template#sw"}];
+    {'../Ontologies/owl/opo.ttl':"http://vaimee.it/template#opo"},
+    {'../Ontologies/owl/jsap.ttl':"http://vaimee.it/template#jsap"},
+    {'../Ontologies/owl/pac.ttl':"http://vaimee.it/template#pac"},
+    {'../Ontologies/owl/sw.ttl':"http://vaimee.it/template#sw"},
+    {'../Ontologies/owl/my2sec.ttl':"http://vaimee.it/template#my2sec"}];
     
 let fs = require('fs');
 let sttl = require('sttl');
