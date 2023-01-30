@@ -1,8 +1,14 @@
+const ontologies = [
+    {'../Ontologies/OWL/opo.ttl':"http://vaimee.it/template#opo"},
+    {'../Ontologies/OWL/jsap.ttl':"http://vaimee.it/template#jsap"},
+    {'../Ontologies/OWL/pac.ttl':"http://vaimee.it/template#pac"},
+    {'../Ontologies/OWL/sw.ttl':"http://vaimee.it/template#sw"}];
+    
 let fs = require('fs');
 let sttl = require('sttl');
 let urdf = require('urdf');
 
-const tpl = fs.readFileSync('templates.rq', 'utf-8');
+const tpl = fs.readFileSync('vaimee.rq', 'utf-8');
 
 sttl.register(tpl);
 sttl.connect(q => {
@@ -14,15 +20,9 @@ sttl.connect(q => {
     }));
 });
 
-const ontologies = [
-    'opo.ttl','jsap.ttl','pac.ttl','sw.ttl'];
-
-
 console.log("Rendering ontology documentation...");
 const promiseChain = ontologies.reduce((p, src) => {
-    const ontologyFile = src
-    const templateURI = 'http://vaimee.it/template#main' 
-    return p.then( _ => render(ontologyFile,templateURI,ontologyFile.replace('.ttl', '.html'))).then(() => urdf.clear())
+    return p.then( _ => render(Object.keys(src)[0],Object.values(src)[0],Object.keys(src)[0].replace('.ttl', '.html'))).then(() => urdf.clear())
 }, Promise.resolve());
 
 

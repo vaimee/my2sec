@@ -2,11 +2,29 @@ prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix owl: <http://www.w3.org/2002/07/owl#>
 prefix st: <http://ns.inria.fr/sparql-template/>
-prefix schema: <http://schema.org/>
 prefix xsd: <http://www.w3.org/2001/XMLSchema#>
-prefix vann: <http://purl.org/vocab/vann/>
 prefix dct: <http://purl.org/dc/terms/>
 prefix : <http://vaimee.it/template#>
+
+template :opo {
+	st:call-template(:main, "http://www.vaimee.it/my2sec/ontologies/opo#")
+}
+where{}
+
+template :jsap {
+	st:call-template(:main, "http://www.vaimee.it/ontology/1.0/jsap#")
+}
+where{}
+
+template :pac {
+	st:call-template(:main, "http://www.vaimee.it/ontology/pac/1.0#")
+}
+where{}
+
+template :sw {
+	st:call-template(:main, "http://www.vaimee.it/my2sec/ontologies/sw#")
+}
+where{}
 
 template :main(?ns) {
     format {
@@ -38,16 +56,7 @@ template :main(?ns) {
         <section>
             <h2>Introduction</h2>
 
-<p> 
- <strong>NOTE</strong><br>
- 1. Che differenza c'è da rdfs:range e rdfs:domanin e quelli di schema? schema:domainIncludes schema:rangeIncludes <br>
- 2. Io userei tutti i nomi delle classi in maiuscolo. cambiati<br>
- 3. Aggiungere una class ENUM per i vari tipi di attività (dev, meeting, ...).vedi se ti torna<br>
- 4. Ho cambiato alcuni URI tipo questo: http://www.vaimee.it/ontology/1.0/sw#Activity in http://www.vaimee.it/ontology/1.0/opo#Activity non so se era typo o andava così<br>
- 5. Scrivi un abstract come annotazione delle ontologie usando dct:abstract<br>
- 6. Scriverei delle brevi guidelines su come scrivere le ontologie in modo che vengano visualizzate bene (basta seguire tutti i where delle query per capire cosa serve)<br>
- 7. Fatto tutto rimuovi questa parte! :-)
- 
+<p>  
 </p>
 <p>%s</p>
 </section>
@@ -60,14 +69,16 @@ template :main(?ns) {
         ?title
         ?desc
         st:call-template(:intro, ?o)
-        st:call-template(:axioms, ?o, ?prefix)
+        st:call-template(:axioms, ?o, ?ns)
     }
 } where {
     ?o a owl:Ontology ;
     owl:title ?title ;
-    dct:abstract ?desc ;
-    owl:versionIRI ?prefix
+    dct:abstract ?desc
+    
 }
+
+#BIND(IRI("http://www.vaimee.it/my2sec/ontologies/opo#") as ?prefix)
 
 ## Introduction can be taken from ontology description
 template :intro(?o) {?intro} where {?o a owl:Ontology ; dct:description ?intro}
@@ -81,10 +92,14 @@ template :editor(?o) {
     "companyURL:" ?url
     "}" ; separator = ","
 } where {
-    { ?o dct:creator ?ed } union { ?o dct:contributor ?ed }
-    ?ed schema:name ?name ; schema:affiliation ?org .
-    ?org schema:name ?company ; schema:url ?url .
+	VALUES (?name ?company ?url)
+    {("Elisa Riforgiato" "VAIMEE" "https://vaimee.it")
+    ("Luca Roffia" "VAIMEE" "https://vaimee.it")}
 }
+
+#{ ?o dct:creator ?ed } union { ?o dct:contributor ?ed }
+#    ?ed schema:name ?name ; schema:affiliation ?org .
+#    ?org schema:name ?company ; schema:url ?url .
 
 ### Basic structure
 template :axioms(?ns ?prefix) {
