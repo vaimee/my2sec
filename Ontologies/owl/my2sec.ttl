@@ -1,0 +1,545 @@
+@prefix : <https://ontologies.vaimee.com/my2sec#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix my2sec: <http://vaimee.com/My2Sec#> .
+@base <https://ontologies.vaimee.com/my2sec> .
+
+<https://ontologies.vaimee.com/my2sec> rdf:type owl:Ontology ;
+                                        owl:versionIRI <http://vaimee.it/2022/12/my2sec> ;
+                                        rdfs:comment "This ontology describe the application My2Sec. It works as a solution for smart-workers want to track their activity and manage remote work."@en ;
+                                        rdfs:label "My2Sec"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+<http://www.w3.org/2004/02/skos/core#definition> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#editorialNote
+<http://www.w3.org/2004/02/skos/core#editorialNote> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#duration
+xsd:duration rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://vaimee.com/My2Sec#attachedTo
+my2sec:attachedTo rdf:type owl:ObjectProperty ;
+                  rdfs:domain my2sec:Task ;
+                  rdfs:range my2sec:Member ;
+                  rdfs:comment "Be attach to something."@en ;
+                  rdfs:label "attachedTo"@en .
+
+
+###  http://vaimee.com/My2Sec#composedBy
+my2sec:composedBy rdf:type owl:ObjectProperty ;
+                  rdfs:domain my2sec:Project ;
+                  rdfs:range my2sec:Task ;
+                  rdfs:comment "Every project is composed by some tasks."@en ;
+                  rdfs:label "composedBy"@en .
+
+
+###  http://vaimee.com/My2Sec#hasActivity
+my2sec:hasActivity rdf:type owl:ObjectProperty ;
+                   owl:inverseOf my2sec:hasLogTime ;
+                   rdfs:domain my2sec:LogTime ;
+                   rdfs:range my2sec:Activity ;
+                   rdfs:comment "Every LogTime refers to an activity."@en ;
+                   rdfs:label "hasActivity"@en .
+
+
+###  http://vaimee.com/My2Sec#hasActivityType
+my2sec:hasActivityType rdf:type owl:ObjectProperty ;
+                       rdfs:domain my2sec:Activity ,
+                                   my2sec:SubTask ,
+                                   my2sec:TrainingEvent ;
+                       rdfs:range my2sec:ActivityType ;
+                       rdfs:comment "Every actvity is associated with an activitytype."@en ;
+                       rdfs:label "hasActivityType"@en .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource my2sec:hasActivityType ;
+   owl:annotatedProperty rdfs:comment ;
+   owl:annotatedTarget "Every actvity is associated with an activitytype."@en ;
+   rdfs:comment "This property link also the subtask with his own activity type define by Project Manager."@en ,
+                "This property match also the training event with the right activitytype."@en
+ ] .
+
+
+###  http://vaimee.com/My2Sec#hasEvent
+my2sec:hasEvent rdf:type owl:ObjectProperty ;
+                rdfs:domain my2sec:TrainingData ;
+                rdfs:range my2sec:Event ;
+                rdfs:comment "Every TrainingEvent refers to a specific event"@en ;
+                rdfs:label "hasEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#hasLogTime
+my2sec:hasLogTime rdf:type owl:ObjectProperty ;
+                  rdfs:domain my2sec:Activity ;
+                  rdfs:range my2sec:LogTime ;
+                  rdfs:comment "Every activity has his own logtime."@en ;
+                  rdfs:label "hasLogTime"@en .
+
+
+###  http://vaimee.com/My2Sec#hasMember
+my2sec:hasMember rdf:type owl:ObjectProperty ;
+                 rdfs:domain my2sec:Activity ,
+                             my2sec:Event ,
+                             my2sec:Message ;
+                 rdfs:range my2sec:Member ;
+                 rdfs:comment "Every Event has an URI reference to the member who raised it."@en ;
+                 rdfs:label "hasURI"@en .
+
+
+###  http://vaimee.com/My2Sec#hasTask
+my2sec:hasTask rdf:type owl:ObjectProperty ;
+               rdfs:domain my2sec:Activity ;
+               rdfs:range my2sec:Task ;
+               rdfs:comment "Has a task. This property make possible the association between task and activity."@en ;
+               rdfs:label "hasTask"@en .
+
+
+###  http://vaimee.com/My2Sec#partOf
+my2sec:partOf rdf:type owl:ObjectProperty ;
+              rdfs:domain my2sec:SubTask ;
+              rdfs:range my2sec:Task ;
+              rdfs:comment "Every subtask is part of Task."@en ;
+              rdfs:label "partOf"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://vaimee.com/My2Sec#hasAPPTitle
+my2sec:hasAPPTitle rdf:type owl:DatatypeProperty ;
+                   rdfs:domain my2sec:Event ;
+                   rdfs:range rdfs:Literal ;
+                   rdfs:comment "Every event has APP title."@en ;
+                   rdfs:label "hasAPPTitle"@en .
+
+
+###  http://vaimee.com/My2Sec#hasMeetingName
+my2sec:hasMeetingName rdf:type owl:DatatypeProperty ;
+                      rdfs:domain my2sec:MeetingEvent ;
+                      rdfs:range rdfs:Literal ;
+                      rdfs:comment "Every Meeting has a name."@en ;
+                      rdfs:label "hasMeetingName"@en .
+
+
+###  http://vaimee.com/My2Sec#hasTitle
+my2sec:hasTitle rdf:type owl:DatatypeProperty ;
+                rdfs:domain my2sec:Event ;
+                rdfs:range rdfs:Literal ;
+                rdfs:comment "Every event has a Title."@en ;
+                rdfs:label "hasTitle"@en .
+
+
+###  http://vaimee.com/My2Sec#hasType
+my2sec:hasType rdf:type owl:DatatypeProperty ;
+               rdfs:domain my2sec:MeetingEvent ;
+               rdfs:range xsd:boolean ;
+               rdfs:comment "Every meeting event haas a type (start/stop)"@en ;
+               rdfs:label "hasType"@en .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource my2sec:hasType ;
+   owl:annotatedProperty rdfs:comment ;
+   owl:annotatedTarget "Every meeting event haas a type (start/stop)"@en ;
+   rdfs:comment """1 = start
+0 = stop"""@en
+ ] .
+
+
+###  http://vaimee.com/My2Sec#hasURL
+my2sec:hasURL rdf:type owl:DatatypeProperty ;
+              rdfs:domain my2sec:Event ;
+              rdfs:range xsd:anyURI ;
+              rdfs:comment "Every event has URL."@en ;
+              rdfs:label "hasURL"@en .
+
+
+###  http://vaimee.com/My2Sec#idTask
+my2sec:idTask rdf:type owl:DatatypeProperty ;
+              rdfs:domain my2sec:Task ;
+              rdfs:range xsd:anyURI ;
+              rdfs:comment "Every task has an ID."@en ;
+              rdfs:label "idTask"@en .
+
+
+###  http://vaimee.com/My2Sec#projectName
+my2sec:projectName rdf:type owl:DatatypeProperty ;
+                   rdfs:domain my2sec:Project ;
+                   rdfs:range rdfs:Literal ;
+                   rdfs:comment "Every project has a name."@en ;
+                   rdfs:label "projectName"@en .
+
+
+###  http://vaimee.com/My2Sec#username
+my2sec:username rdf:type owl:DatatypeProperty ;
+                rdfs:domain my2sec:Member ;
+                rdfs:range xsd:string ;
+                rdfs:comment "The username used to identify the user within the system" ;
+                rdfs:label "username" .
+
+
+###  http://www.w3.org/2006/time#hasXSDDuration
+time:hasXSDDuration rdf:type owl:DatatypeProperty ;
+                    rdfs:domain time:TemporalEntity ;
+                    rdfs:range xsd:duration ;
+                    rdfs:comment "Extensión de una entidad temporal, expresada utilizando xsd:duration."@es ,
+                                 "Extent of a temporal entity, expressed using xsd:duration"@en ;
+                    rdfs:label "has XSD duration"@en ,
+                               "tiene duración XSD"@es ;
+                    <http://www.w3.org/2004/02/skos/core#definition> "Extensión de una entidad temporal, expresada utilizando xsd:duration."@es ,
+                                                                     "Extent of a temporal entity, expressed using xsd:duration"@en ;
+                    <http://www.w3.org/2004/02/skos/core#editorialNote> "Característica arriesgada - añadida en la revisión de 2017, y todavía no ampliamente utilizada."@es ,
+                                                                        "Feature at risk - added in 2017 revision, and not yet widely used. "@en .
+
+
+###  http://www.w3.org/2006/time#inXSDDateTimeStamp
+time:inXSDDateTimeStamp rdf:type owl:DatatypeProperty ;
+                        rdfs:domain time:Instant ;
+                        rdfs:range xsd:dateTimeStamp ;
+                        rdfs:comment "Posición de un instante, expresado utilizando xsd:dateTimeStamp."@es ,
+                                     "Position of an instant, expressed using xsd:dateTimeStamp"@en ;
+                        rdfs:label "en fecha-sello de tiempo XSD"@es ,
+                                   "in XSD Date-Time-Stamp"@en ;
+                        <http://www.w3.org/2004/02/skos/core#definition> "Posición de un instante, expresado utilizando xsd:dateTimeStamp."@es ,
+                                                                         "Position of an instant, expressed using xsd:dateTimeStamp"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://vaimee.com/My2Sec#AWEvent
+my2sec:AWEvent rdf:type owl:Class ;
+               rdfs:subClassOf my2sec:Event ;
+               rdfs:comment "This class contain Event generated by Activity Watch."@en ;
+               rdfs:label "AWEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#Activity
+my2sec:Activity rdf:type owl:Class ;
+                rdfs:subClassOf time:TemporalEntity ;
+                rdfs:comment "Duration of time meanwile members doing one specific activity."@en ;
+                rdfs:label "Activity"@en .
+
+
+###  http://vaimee.com/My2Sec#ActivityType
+my2sec:ActivityType rdf:type owl:Class ;
+                    rdfs:comment "The type of working activity."@en ;
+                    rdfs:label "ActivityType"@en .
+
+
+###  http://vaimee.com/My2Sec#AfkEvent
+my2sec:AfkEvent rdf:type owl:Class ;
+                rdfs:subClassOf my2sec:AWEvent ;
+                rdfs:comment "An Afk event."@en ;
+                rdfs:label "AfkEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#ControlEvent
+my2sec:ControlEvent rdf:type owl:Class ;
+                    rdfs:subClassOf my2sec:Event ;
+                    rdfs:comment "This class contain Event generated by sistem control."@en ;
+                    rdfs:label "ControlEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#Developer
+my2sec:Developer rdf:type owl:Class ;
+                 rdfs:subClassOf my2sec:ActivityType ;
+                 rdfs:comment "Specific activity types of a developer (e.g., developing, testing, documenting)" ;
+                 rdfs:label "Developer" .
+
+
+###  http://vaimee.com/My2Sec#Event
+my2sec:Event rdf:type owl:Class ;
+             owl:equivalentClass time:Instant ;
+             rdfs:subClassOf time:TemporalEntity ;
+             rdfs:comment """An event is something that happen in one moment and has no temporal duration.
+It is characterized by timestamp, apptitle and activitytype."""@en ;
+             rdfs:label "Event"@en .
+
+[ rdf:type owl:Axiom ;
+   owl:annotatedSource my2sec:Event ;
+   owl:annotatedProperty rdfs:comment ;
+   owl:annotatedTarget """An event is something that happen in one moment and has no temporal duration.
+It is characterized by timestamp, apptitle and activitytype."""@en ;
+   rdfs:comment "Specifically it should be characterized by an eventtype (which must coincide with the activitytype)"@en
+ ] .
+
+
+###  http://vaimee.com/My2Sec#LogTime
+my2sec:LogTime rdf:type owl:Class ;
+               rdfs:subClassOf time:TemporalEntity ;
+               rdfs:comment "Duration of time spent on a specific activity by one member. It is characterized by date, hours ad an activity."@en ;
+               rdfs:label "LogTime"@en .
+
+
+###  http://vaimee.com/My2Sec#MeetingEvent
+my2sec:MeetingEvent rdf:type owl:Class ;
+                    rdfs:subClassOf my2sec:AWEvent ;
+                    rdfs:comment "A meeting Event"@en ;
+                    rdfs:label "MeetingEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#Member
+my2sec:Member rdf:type owl:Class ;
+              rdfs:comment "A member is a generic Worker."@en ;
+              rdfs:isDefinedBy "http://xmlns.com/foaf/0.1/"@en ;
+              rdfs:label "Member"@en .
+
+
+###  http://vaimee.com/My2Sec#Message
+my2sec:Message rdf:type owl:Class ;
+               rdfs:subClassOf time:TemporalEntity ;
+               rdfs:comment "Raw message sent by Activity Watch" ;
+               rdfs:label "Message" .
+
+
+###  http://vaimee.com/My2Sec#NotShutdownEvent
+my2sec:NotShutdownEvent rdf:type owl:Class ;
+                        rdfs:subClassOf my2sec:ControlEvent ;
+                        rdfs:comment "A Not Shutdown Event."@en ;
+                        rdfs:label "NotShutdownEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#Project
+my2sec:Project rdf:type owl:Class ;
+               rdfs:comment "A project (a collective endeavour of some kind)."@en ;
+               rdfs:label "Project"@en .
+
+
+###  http://vaimee.com/My2Sec#StartEvent
+my2sec:StartEvent rdf:type owl:Class ;
+                  rdfs:subClassOf my2sec:ControlEvent ;
+                  rdfs:comment "An event that marks the beginning of a working day."@en ;
+                  rdfs:label "StartEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#StopEvent
+my2sec:StopEvent rdf:type owl:Class ;
+                 rdfs:subClassOf my2sec:ControlEvent ;
+                 rdfs:comment "an event that marks the end of a working day"@en ;
+                 rdfs:label "StopEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#SubTask
+my2sec:SubTask rdf:type owl:Class ;
+               rdfs:comment "Every Task is composed by different subtasks. They have a specific type."@en ;
+               rdfs:label "SubTask"@en .
+
+
+###  http://vaimee.com/My2Sec#Task
+my2sec:Task rdf:type owl:Class ;
+            rdfs:comment "A task is an assignment given to members."@en ;
+            rdfs:label "Task"@en .
+
+
+###  http://vaimee.com/My2Sec#TrainingData
+my2sec:TrainingData rdf:type owl:Class ;
+                    rdfs:comment "This class contain dataset used for train AI or something like that."@en ;
+                    rdfs:label "TrainingData"@en .
+
+
+###  http://vaimee.com/My2Sec#TrainingEvent
+my2sec:TrainingEvent rdf:type owl:Class ;
+                     rdfs:subClassOf my2sec:Event ,
+                                     my2sec:TrainingData ,
+                                     time:TemporalEntity ;
+                     rdfs:comment "This class contains Events linked to a specific task."@en ;
+                     rdfs:label "TrainingEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#UploadEvent
+my2sec:UploadEvent rdf:type owl:Class ;
+                   rdfs:subClassOf my2sec:ControlEvent ;
+                   rdfs:comment "An event signals the dispatch of events to the aggregator."@en ;
+                   rdfs:label "UploadEvent"@en .
+
+
+###  http://vaimee.com/My2Sec#WindowsEvent
+my2sec:WindowsEvent rdf:type owl:Class ;
+                    rdfs:subClassOf my2sec:AWEvent ;
+                    rdfs:comment "A window event is a particular event visualized as a window."@en ;
+                    rdfs:label "WindowsEvent"@en .
+
+
+###  http://www.w3.org/2006/time#Instant
+time:Instant rdf:type owl:Class ;
+             rdfs:subClassOf time:TemporalEntity ;
+             rdfs:comment "Temporal Instant"@en ;
+             rdfs:label "Time Instant"@en .
+
+
+###  http://www.w3.org/2006/time#TemporalEntity
+time:TemporalEntity rdf:type owl:Class ;
+                    rdfs:comment "A temporal Instant or Interval"@en ;
+                    rdfs:label "TemporalEntity"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://vaimee.com/My2Sec#Developing
+my2sec:Developing rdf:type owl:NamedIndividual ,
+                           my2sec:Developer .
+
+
+###  http://vaimee.com/My2Sec#Email
+my2sec:Email rdf:type owl:NamedIndividual ,
+                      my2sec:ActivityType .
+
+
+###  http://vaimee.com/My2Sec#Meeting
+my2sec:Meeting rdf:type owl:NamedIndividual ,
+                        my2sec:ActivityType .
+
+
+###  http://vaimee.com/My2Sec#Reporting
+my2sec:Reporting rdf:type owl:NamedIndividual ,
+                          my2sec:ActivityType .
+
+
+###  http://vaimee.com/My2Sec#Researching
+my2sec:Researching rdf:type owl:NamedIndividual ,
+                            my2sec:ActivityType .
+
+
+###  http://vaimee.com/My2Sec#Testing
+my2sec:Testing rdf:type owl:NamedIndividual ,
+                        my2sec:Developer .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( my2sec:Developing
+                        my2sec:Email
+                        my2sec:Meeting
+                        my2sec:Reporting
+                        my2sec:Researching
+                        my2sec:Testing
+                      )
+] .
+
+
+#################################################################
+#    Rules
+#################################################################
+
+<http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#T> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#M> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#S> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#AV> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#AT> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "This rule associates each activity with its task."^^xsd:string ;
+   rdfs:label "Activity to Task"^^xsd:string ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> my2sec:attachedTo ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#T> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#M>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#classPredicate> my2sec:Member ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#M>
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> my2sec:partOf ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#S> ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#T>
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#propertyPredicate> my2sec:hasActivityType ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#AV> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#AT>
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> my2sec:hasActivityType ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#S> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#AT>
+                                                                                                 ] ;
+                                                                                       rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                  rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#propertyPredicate> my2sec:hasMember ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#AV> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#M>
+                                                                                                            ] ;
+                                                                                                  rdf:rest rdf:nil
+                                                                                                ]
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#builtin> <http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#select> ;
+                                                       <http://www.w3.org/2003/11/swrl#arguments> ( <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#M>
+                                                                                                    <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#AV>
+                                                                                                    <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#T>
+                                                                                                  )
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> my2sec:hasTask ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#AV> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <http://www.semanticweb.org/chiar/ontologies/2022/10/My2Sec#T>
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#builtin> <http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#columnNames> ;
+                                                                             <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                          rdf:first "Member"^^xsd:string ;
+                                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first "Activity"^^xsd:string ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first "Task"^^xsd:string ;
+                                                                                                                                                rdf:rest rdf:nil
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                                                        ]
+                                                                           ] ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ]
+ ] .
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
