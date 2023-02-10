@@ -79,39 +79,5 @@ This messages are stored in the sepa database, and every time a new message is c
 Any support is appreciated!
 
 
-## Reference technologies
-
-SEPA
-
-ActivityWatch
-
-SuperSet
-
-OpenProject
-
-Keycloak
-
-Drools
-
-Jena
-
-OpenLink Virtuoso
-
-...
-
-## ActivityWatch
-
-Forked. Adding new Watchers like a MeetingWatcher.
-
-New watchers:
-- Detecting meetings (Jitsi, Google Meet, Teams, Zoom)
-
-## AI tools
-
-Under evaluation. Drools can be an option in first instance.
-
-## Blockchain
-
-
 
 
