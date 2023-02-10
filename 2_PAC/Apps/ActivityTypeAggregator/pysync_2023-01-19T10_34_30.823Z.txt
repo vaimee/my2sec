@@ -1,0 +1,1 @@
+{"nodeid":"urn:uuid:3ad75721-61d5-4d9e-b914-b51241a17028","usergraph":"http://www.vaimee.it/my2sec/gregorio.monari@vaimee.it","event_type":"http://www.vaimee.it/ontology/my2sec#notShutdown","app":"none","title":"none","datetimestamp":"2022-12-20T10:01:00.000000+00:00","duration":"0","task":"none"}

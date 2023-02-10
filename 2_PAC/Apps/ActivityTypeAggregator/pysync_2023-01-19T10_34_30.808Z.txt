@@ -1,0 +1,1 @@
+{"nodeid":"urn:uuid:2e7e9a32-65ee-4dcc-bbc5-e866c65875b4","usergraph":"http://www.vaimee.it/my2sec/defuser@vaimee.it","event_type":"http://www.vaimee.it/ontology/my2sec#notShutdown","app":"none","title":"none","datetimestamp":"2022-12-20T10:16:00.000000+00:00","duration":"0","task":"none"}

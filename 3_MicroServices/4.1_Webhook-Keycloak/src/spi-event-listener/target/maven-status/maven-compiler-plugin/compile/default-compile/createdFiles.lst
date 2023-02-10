@@ -1,0 +1,4 @@
+com/zonaut/keycloak/extensions/events/logging/UserUuidDto.class
+com/zonaut/keycloak/extensions/events/logging/UserVerifiedTransaction.class
+com/zonaut/keycloak/extensions/events/logging/PlaceholderEventListenerProvider.class
+com/zonaut/keycloak/extensions/events/logging/PlaceholderEventListenerProviderFactory.class

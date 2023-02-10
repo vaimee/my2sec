@@ -1,0 +1,1 @@
+[{"id": 188796, "timestamp": "2023-01-27T09:52:59.189000+00:00", "duration": 0.0, "data": {"start-stop": "stop"}}, {"id": 188678, "timestamp": "2023-01-27T08:52:26.848000+00:00", "duration": 0.0, "data": {"start-stop": "start"}}]
