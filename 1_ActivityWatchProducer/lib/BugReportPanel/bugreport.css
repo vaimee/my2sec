@@ -1,0 +1,63 @@
+#bug-report-button{
+    background-color: rgb(42,45,46);
+    color:white;
+    border-width:0px;
+    margin-left:5px;
+
+    display:flex;
+    align-items:center;
+}
+
+#bug-report-panel{
+    position:absolute;
+    z-index:200;
+
+    width:50vw;
+    height:50vh;
+    top:25vh;
+    left:25vw;
+
+    background-color: white;
+    border-width: 2px;
+    border-style:solid;
+    border-color:black;
+
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+    #bug-report-topbar{
+        display:flex;
+        justify-content:space-between;
+        background-color:rgb(42,45,46);
+        color:white;
+        height:3vh;
+        padding:0.5%;
+    }
+        #bug-report-topbar h2{
+            margin:0;
+            padding:0;
+        }
+        #bug-report-topbar button{
+            margin:0;
+            padding:0;
+        }
+    #bug-report-info{
+        width:95%;
+        height:5vh;
+        margin:auto;
+    }
+    #bug-report-form-wrapper{
+            width:95%;
+            height:30vh;
+            margin:auto;
+    }
+        #Message{
+            width:100%;
+            height:20vh;
+        }
+    .bug-report-button-wrapper{
+        width:100%;
+        display:flex;
+        justify-content: center;
+        align-items:center;
+    }

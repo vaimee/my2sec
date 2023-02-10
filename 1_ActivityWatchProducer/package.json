@@ -1,0 +1,21 @@
+{
+  "name": "awproducer",
+  "version": "1.0.0",
+  "description": "produces data for SEPA engine",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Greg",
+  "license": "MIT",
+  "devDependencies": {
+    "electron-rebuild": "^3.2.9"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "keycloak-js": "^19.0.3"
+  }
+}

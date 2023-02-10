@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<!---------------------------------------------------------
+|| index.html: AW-PRODUCER
+|| 	DATE: 18/7/2022
+|| 	AUTHOR: Gregorio Monari
+|| 	DESCRIPTION: main html file, contains the structure of
+||				 the web app
+\\-------------------------------------------------------->
+<head>
+	<!--APP METADATA-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--<meta http-equiv="Content-Security-Policy" content="">-->
+
+	<!--TITLE AND ICON-->
+	<title>AW PRODUCER</title>
+	<link rel="icon" type="image/x-icon" href="Assets/vaimeelogo.jpg">
+
+	<!--JQUERY-->
+    <script src="lib/jquery-3.6.0.min.js"></script>
+    <!--SEPA CLIENT-->
+    <script src="https://cdn.jsdelivr.net/npm/@arces-wot/sepa-js/web/sepa.js"></script>
+    <!--DATATABLES.NET-->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+	<!--SUPERSET EMBEDDED SDK-->
+	<script src="https://unpkg.com/@superset-ui/embedded-sdk"></script>
+	<!--REACT-->
+    <!-- Nota: quando rilasci il codice in produzione, sostituisci "development.js" con "production.min.js". 
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>-->
+
+	<!--MAIN STYLE-->
+	<link rel="stylesheet" type="text/css" href="CSS/main.css">
+	<link rel="stylesheet" type="text/css" href="lib/AwUpdateFlowControl/updateInterface.css">
+	<link rel="stylesheet" type="text/css" href="lib/ReusableComponents/reusableComponents.css">
+	<link rel="stylesheet" type="text/css" href="lib/SupersetEmbeddedDashboard/embeddedDashboard.css">
+	<link rel="stylesheet" type="text/css" href="lib/UserInfo/UserInterface.css">
+	<link rel="stylesheet" type="text/css" href="lib/TasksConsumer/taskdashboard.css">
+    <link rel="stylesheet" type="text/css" href="lib/gregnet-grid-plugin/gregnet-grid-style.css">  
+	<link rel="stylesheet" type="text/css" href="lib/BugReportPanel/bugreport.css">  
+
+</head>
+
+
+
+<body>
+	<!--============
+		[0] TOPBAR
+	==============-->
+	<div id="topbar">
+		<img onclick="menu_switch()" class="white-icon" src="Assets/icons/menu.svg"> 
+
+		<div id="middle-topbar-wrapper" style="display:flex;align-items: center;">
+			<div id="sepa_connectionstatus_wrapper" class="mini-wrapper">
+				Not Connected
+				<!--<img class="white-icon" src="Assets/icons/wifi.svg"> -->
+			</div>
+			&nbsp
+			<button style="border-width:2px;border-color:white;border-style:solid;border-radius:5px;" id="bug-report-button"  onclick="onBugReportClick()">
+				report bug
+				<img style="transform: rotate(0deg);" id="user-menu-icon" class="white-icon" src="Assets/icons/message-alert.svg" width="24px">
+			</button>
+		</div>
+
+		<div id="user_info_wrapper" class="mini-wrapper">
+			<img id="user-menu-icon" class="white-icon" src="Assets/icons/triangle.svg" width="15px" onclick="switch_user_menu()"> 
+			<span id="user_name">User</span>
+			<img id="user-icon" class="white-icon" src="Assets/icons/user.svg"> 
+		</div>
+	</div>
+
+	<div id="bug-report-panel" style="display:none;">
+		<div id="bug-report-topbar">
+			<h2>BUG REPORT PANEL</h2>
+			<button id="bug-report-close-button" onclick="onBugReportClick()">close</button>
+		</div>
+		<div id="bug-report-info">
+			<p>
+				Here you can send messages 
+				directly to the Server Administrator
+			</p>
+		</div>
+		<div id="bug-report-form-wrapper">
+			<form id="bug-report-form">
+				<div class="bug-report-form-group">
+					<label for="bug-type">Type of Issue</label> 
+					<select class="bug-report-form-control" name="bug-type" id="bug-type">
+						<option value="bugreport">Bug report (an issue which blocks non-vital components of the application)</option>
+						<option value="fatalissue">Fatal issue (an issue which blocks the normal flow of the application)</option>
+						<option value="enhancement">Enhancement (a new feature/design you would like to see implemented)</option>
+						<option value="generic">Generic message (send a message to the administrator)</option>
+					  </select>
+				</div>
+
+				<div class="bug-report-form-group">
+					<label for="Message">
+						<h3>Message</h3></label> <textarea
+						class="form-control" name="Message" id="Message" required
+					></textarea>
+				</div>
+				<div class="bug-report-form-group">
+					<label for="bug-report-include-email">Include your email in the report?</label> <input type="checkbox"
+						class="form-control-bug-report-include-email" name="bug-report-include-email" id="bug-report-include-email"
+					>
+				</div>
+
+			</form>
+			<div class="bug-report-button-wrapper">
+				<button onclick="send_bug_report()">Send report</button>
+			</div>
+		</div>
+		
+	</div>
+
+
+
+	<!--
+		OBSCURATION PANEL
+	-->
+	<div id="validation_obscurer" style="display: none;">
+	</div>
+
+	<!--
+		VALIDATION PANEL 
+	-->
+	<div id="validation_wrapper" style="display: none;">
+		<div id="close-panel"><button onclick="abort_update_procedure()">x</button></div>
+		<div id="validation_sections">
+			<div id="vs1" class="validation_section-selected">
+				<b>1.Working Activities</b>
+			</div>
+			<div id="vs2" class="validation_section">
+				2.Activity Types
+			</div>
+			<div id="vs3" class="validation_section">
+				3.Log Times
+			</div>
+		</div>
+		<hr>
+		<button id="select_all_rows" onclick="select_all()">SELECT ALL</button>
+		<button id="set_all_rows_to_working" onclick="set_all_rows_to_value('working')" style="display:none">WORKING</button>
+		<button id="set_all_rows_to_notworking" onclick="set_all_rows_to_value('notworking')" style="display:none">NOT WORKING</button>
+		<div id="validation_body"></div>
+		<div id="validation_messages">
+		</div>
+		<br>
+		<div id="validation_input">
+			<button id="confirm" class="default-button" onclick="on_validation_button_pressed()">
+				<span style="display:flex;align-items:center;justify-content:center;">	
+					Confirm and Upload&nbsp
+					<img class="white-icon" src="Assets/icons/upload.svg">
+				</span>
+			</button>	
+			&nbsp
+			<div id="success_status" style="display:none">Events uploaded successfully</div>
+			<div id="error_status" style="display:none">Error: something went wrong...</div>
+			<div id="update_spinner" class="spinner" style="display:none"></div>		
+		</div>
+	</div>
+
+
+
+
+	<!--============
+		[0.1] MENU
+	==============-->
+	<div id="menu_window">
+		<div class="menu_title">
+			<b>AW-PRODUCER Configuration</b>
+		</div>
+		<br>
+		<div id="sepa-config-wrapper" class="menu_form_wrapper">
+			SEPA CONFIGURATION
+			<hr>
+			<form id="sepa-config-form">
+				<label for="hostname_options">HostName:</label><br>
+				<input type="text" id="hostname_options" name="hostname_options" value="dld.arces.unibo.it"><br>
+
+				<label for="http_port_options">http_port:</label><br>
+				<input type="text" id="http_port_options" name="http_port_options" value="8500"><br>
+
+				<label for="ws_port_options">ws_port:</label><br>
+				<input type="text" id="ws_port_options" name="ws_port_options" value="9500"><br>
+
+				<label for="tls_options">tls:</label><br>
+				<input type="text" id="tls_options" name="tls_options" value="false"><br>
+
+			</form>
+
+		</div>
+
+		<br>
+
+		<div id="whitelist-config" class="menu_form_wrapper">
+			WATCHERS WHITELIST
+			<hr>
+			<form id="whitelist-form">
+				<label for="whitelist_options">Insert watchers clientname separated by comma:</label><br>
+				<textarea rows="4" id="whitelist_options" name="whitelist_options">aw-watcher-window</textarea><br>
+			</form>
+
+		</div>
+
+			<br>
+
+		<div id="app-config" class="menu_form_wrapper">
+			USER CONFIGURATION
+			<hr>
+			<form id="username-form">
+				<label for="username_options">Username:</label><br>
+				<input type="text" id="username_options" name="username_options" value="greg" contenteditable="true"><br>
+			</form>
+
+		</div>
+
+			<br>
+		
+		<div id="save-options-wrapper" class="menu_save_button_wrapper">
+			SAVE OPTIONS AND RESTART
+			<hr>
+			<button id="save_options_button" onclick="save_options_button()"><img src="Assets/icons/save-action-floppy.svg"></button>
+		</div>
+
+		<div id="menu_bottombar">
+			<a href="">GitHub<img class="white-icon" src="Assets/icons/github.svg"></a>
+		</div>
+
+	</div>
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------------------>
+	<!--=========================================
+		[1] HOME SCREEN
+	=========================================-->
+	<div id="home_screen">
+
+		<!--USER HEADER-->
+		<div id="user_header">
+			
+			<div id="welcome-board">
+				<span id="user_welcome"><b>Welcome back, <span id="user_name_welcome">USER</span>!</b></span>
+				<br>
+				<span>You have collected a total of <b><span id="sub_counter">0</span></b> events</span>
+			</div>
+			
+			<div id="events_control_panel">
+				<div id="my2sec-api-buttons">
+					<button id="start-stop-button" class="default-button" onclick="start_button()">
+						<span id="start-stop-innertext" style="display:flex;align-items:center;justify-content:center;">	
+							Start Scan&nbsp
+							<img class="white-icon" src="Assets/icons/play-outline.svg">
+						</span>
+					</button>
+
+					<button id="explorer-button" class="default-button" onclick="switch_content()">
+						<span style="display:flex;align-items:center;justify-content:center;">
+							Explorer&nbsp
+							<img class="white-icon" src="Assets/icons/table-rows.svg">
+						</span>
+					</button>
+				</div>
+				<div id="update_status" style="margin-top:5px;display:flex;align-items:center;justify-content:space-between;">
+					<div id="ready_status" align="center" style="width:50%;">Waiting for data...</div>
+
+
+					<button id="update-procedure-button" class="default-button" onclick="start_update_procedure()">
+						<span style="display:flex;align-items:center;justify-content:center;">	
+							Upload&nbsp
+							<img class="white-icon" src="Assets/icons/upload.svg">
+						</span>
+					</button>
+				</div>
+			</div>
+
+		
+		</div>
+		
+
+		<!--# EMBEDDED DASHBOARD! #-->
+		<div class="dashboards-wrapper">
+			
+			<div class="task-container">
+				<div id="task-header">
+					<h3>Your Tasks &nbsp</h3>
+					<img class="white-icon" src="Assets/icons/clipboard-check.svg">
+				</div>
+				
+				<div id="task-wrapper">
+					loading...
+				</div>
+
+				<div id="task-info" align="center">
+					<p>Tasks fetched from OpenProject</p>
+				</div>
+			</div>
+
+			<div id="my-superset-container">
+				LOADING
+			</div>
+		
+		</div>
+
+
+	</div>	
+
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------------------------------>
+	<!--=========================================
+		[2] CONTENITORE PER IL WATCHER VIEW PANEL
+	=========================================-->
+	
+	<div id="content-wrapper">
+		<br>
+		<button class="default-button" onclick="switch_content()">back to home</button>
+
+		<div id="row-0">
+
+
+			<div id="nav-points-wrapper">
+
+				<!--
+				<div class="nav-point"></div>
+				<div class="nav-point"></div>
+				<div class="nav-point"></div>
+				<div class="nav-point"></div>
+				-->
+
+			</div>
+
+			<div id="watcher-title">
+				<h2>AW-WATCHER-WINDOW [1/4]</h2>
+			</div>
+
+
+		</div>
+		<!--#ROW-ZERO-->
+
+
+		<br>
+		<div id="row-1">
+
+
+			<button class="round_button" onclick="change_watcher('l')" align="center">
+				<img src="Assets/icons/arrow-left.svg" class="white-icon" id="sepabutton_icon" width="36px">
+			</button>
+
+			<!--TABLE CARD-->
+			<div id="table-card">
+				<span id="events-title">Loading events...</span>
+				<br><br>
+
+				<!--CONTAINS THE TABLE-->
+				<div id="table_wrapper">
+					<div class="spinner"></div>
+					<div id="content_obscurer">
+						<table id="events_table" class="display">
+							<thead>
+  								<tr id="cols_header">     					
+								</tr>
+							</thead>
+   							<tbody id="table_rows">
+   							</tbody>
+						</table>
+					</div>
+				</div>
+				<!--#table_wrapper-->
+			</div>
+			<!--#table-card-->
+
+
+			<button class="round_button" onclick="change_watcher('r')" align="center">
+				<img src="Assets/icons/arrow-right.svg" class="white-icon" id="sepabutton_icon" width="36px">
+			</button>
+
+
+		</div>
+		<!--#row-1-->
+	</div>
+	<!--#content-wrapper-->
+
+
+
+
+	<!--Load external scripts-->
+	<!--JSAP-->
+	<script type="text/javascript" src="lib/my2sec_19-1-2023.jsap.js"></script>
+
+	<!--PACFACTORY-->
+	<script type="text/javascript" src="lib/PacFactoryJs/GregLogs.js"></script>
+	<script type="text/javascript" src="lib/PacFactoryJs/PacFactory.js"></script>
+	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/Consumer.js"></script>
+	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/Producer.js"></script>
+	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/SynchronousConsumer.js"></script>
+	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/SynchronousProducer.js"></script>
+	
+	<!--UTILITY-->
+	<script type="text/javascript" src="JS/greglogs.js"></script>
+	<script type="text/javascript" src="JS/local_storage_menu.js"></script>
+	<!--SUPERSET-->
+	<script type="text/javascript" src="lib/SupersetEmbeddedDashboard/superset-embed.js"></script>
+	<!--CONSUMER-->
+	<script type="text/javascript" src="lib/UserInfo/UserInfoConsumer.js"></script>
+	<script type="text/javascript" src="lib/TasksConsumer/tasksConsumer.js"></script>
+	<!--PRODUCER-->
+	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwClient.js"></script>
+	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwProducer.js"></script>
+	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwManager.js"></script>
+
+	<script type="text/javascript" src="lib/BugReportPanel/BugReport.js"></script>
+
+	<!--MODULES-->
+	<script type="text/javascript" src="JS/Modules/AwApiUpdateManager.js"></script>
+
+	<!--MAIN-->
+	<script type="text/javascript" src="JS/main.js"></script>
+</body>
+</html>
