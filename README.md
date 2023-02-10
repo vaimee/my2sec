@@ -6,7 +6,7 @@ The objective is to create an open source and GDPR compliant suite to support re
 
 
 ## MY2SEC INSTALLATION
-This guide will step you through download and installation the My2Sec Application on your system. 
+This guide will step you through download and installation of the My2Sec Application on your system. 
 ### Prerequisites
 - Node.js installed<br>
   To check if Node.js is installed on your local machine, type the following commands in your terminal:
