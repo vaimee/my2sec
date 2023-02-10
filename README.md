@@ -47,7 +47,6 @@ Once the application is started, a popup login window will appear, prompting the
 ### 0.1-homepage
 If login is successful, the homepage of the application will load
 ![Architecture](img/producerHOME.png?raw=true)
-
 The interface has 4 main components:
 - activities dashboard (right side of the screen)<br>
   View history of your activities
@@ -57,11 +56,27 @@ The interface has 4 main components:
   Start/stop tracking evnts, upload events, explore events
 - bug report button (top of the screen)<br>
   Send a bug report to the administrator
+  
 ### 1-manage start/stop scan
+Pressing the 'start scan' button in the control panel will activate the ActivityWatch watchers, which will begin collecting data about your activities. Press the start button again to stop the scan. The explorer button in the control panel opens the explorer panel, which allows to take a look at the currently collected data before uploading it.
 ### 2-upload events
+Once a scan has been started and stopped, the upload button becomes active. Pressing it will initiate the Upload and Validation Procedure, and will open a popup window in the producer (the "validation panel").
 ![Architecture](img/producerVALIDATION.png?raw=true)
+The validation panel will help you validate your collected events before storing them into the SEPA database in three steps:
+- Validate events: select if an event is related to work (working) or not (not working), confirm to upload events to SEPA
+- Validate activities: select the correct category for the specified activity, confirm to upload categorized activities to SEPA
+- Show log times: no user input is needed here, in this panel after a while the aggregation results will be shown, showing the exact time logged on Open Project.
+
+The validation procedure is now complete, and the validation panel can be closed.<br>
+You can refresh the dashboards to see your activities added to the charts.
+
 ### 3-report issues
+Pressing the bug report button on the top of the screen will open the bug report window:
 ![Architecture](img/bugREPORT.png?raw=true)
+Here you can send messages directly to the administrator to report bugs, issues, enhancements, or general messages.<br>
+This messages are stored in the sepa database, and every time a new message is consumed, various actions can be triggered, like automatically posting the issue on Github, sending a mail to the administrator, sending a discord message, etc...
+<br>
+Any support is appreciated!
 
 
 ## Reference technologies
