@@ -45,7 +45,10 @@ Once the application is started, a popup login window will appear, prompting the
 ![Architecture](img/producerLOGIN.png?raw=true)
 
 ### 0.1-homepage
-If login is successful, the homepage of the application will load and you will be presented with 4 main components:
+If login is successful, the homepage of the application will load
+![Architecture](img/producerHOME.png?raw=true)
+
+The interface has 4 main components:
 - activities dashboard (right side of the screen)<br>
   View history of your activities
 - open project tasks (left side of the screen)<br>
@@ -56,7 +59,9 @@ If login is successful, the homepage of the application will load and you will b
   Send a bug report to the administrator
 ### 1-manage start/stop scan
 ### 2-upload events
+![Architecture](img/producerVALIDATION.png?raw=true)
 ### 3-report issues
+![Architecture](img/bugREPORT.png?raw=true)
 
 
 ## Reference technologies
