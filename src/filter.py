@@ -13,17 +13,19 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from sklearn import svm
+import sys
 
 configurations = {
     'node':'nodeid',
     'user_graph':'user_graph',
+    'user':'username_literal',
     'value':'value',
     'datetimestamp':'datetimestamp',
     'duration':'real_duration',
     'not_afk':'',
-    'afk':'http://www.vaimee.it/ontology/sw#afkEvent',
-    'not_shutdown':'http://www.vaimee.it/ontology/sw#notShutdown',
-    'window_event':'http://www.vaimee.it/ontology/sw#windowEvent',
+    'afk':'http://www.vaimee.it/ontology/my2sec#afkEvent',
+    'not_shutdown':'http://www.vaimee.it/ontology/my2sec#notShutdown',
+    'window_event':'http://www.vaimee.it/ontology/my2sec#windowEvent',
     'window_event_columns':['app','title'],
     'no_words':["firefox", "mozilla", "edge", "exe", "chrome", "safari", "opera", "google", "youtube", "http", "www", "https", "msedg","com","microsoft"],
     'languages':['english', 'italian'],
@@ -125,7 +127,9 @@ def resample_not_shutdown(dataframe,
         shutdown = ["T"]*(len(events)-1)
         shutdown.append(None)
         tmp = pd.DataFrame(data={"Timestamp":events, "Not_Shutdown":shutdown}, dtype='datetime64[ns, UTC]').set_index('Timestamp').resample('5min', label='right').first()
+        #tmp.to_csv("resample.csv")
         shutdown_false = tmp[tmp.Not_Shutdown!="T"]
+        #shutdown_false.to_csv("resample_bello.csv")
         last = shutdown_false.index[0]
         df = pd.concat([df, pd.DataFrame({datetimestamp:[last]})])
         for i in range(1, shutdown_false.shape[0]):
@@ -133,6 +137,7 @@ def resample_not_shutdown(dataframe,
                 df = pd.concat([df, pd.DataFrame({datetimestamp:[shutdown_false.index[i]]})])
                 pass
             last = shutdown_false.index[i]
+        #df.to_csv('resample_df.csv')
         return df
     except Exception as ex:
         print(ex)
@@ -145,6 +150,7 @@ It takes the list of events (i.e. the list of jsons) and all the column names
 '''
 def AddDuration(json_events,
                 user_graph=configurations['user_graph'],
+                username_literal=configurations['user'],
                 nodeid=configurations['node'],
                 datetimestamp=configurations['datetimestamp'],
                 duration=configurations['duration'],
@@ -152,13 +158,15 @@ def AddDuration(json_events,
                 afk=configurations['afk'],
                 not_shutdow=configurations['not_shutdown']):
     try:
+        print("Adding durations...")
         if not json_events: raise Exception('ERROR DURING JSON PARSE: no events in the json.')
         dict_events, predicates = graph2dict(json_events)
         df = dict2pandas(dict_events)
-
         final = pd.DataFrame(columns=df.columns)
         tmp = df.copy()
-        tmp = pd.concat([tmp, resample_not_shutdown(tmp, not_shutdow, datetimestamp)])
+        tmp2 = tmp[tmp.event_type != not_shutdow]
+
+        tmp = pd.concat([tmp2, resample_not_shutdown(tmp, not_shutdow, datetimestamp)])
         tmp = DropDuplicates_and_sort(tmp, datetimestamp)
         durations = []
         for i in range(tmp.shape[0]):
@@ -168,6 +176,7 @@ def AddDuration(json_events,
                 durations.append((next_dt - current_dt).total_seconds())
             except:
                 durations.append(0)
+
         tmp[duration]=durations.copy()
         tmp = tmp.dropna(subset=[user_graph])
         final = pd.concat([final, tmp])
@@ -189,25 +198,30 @@ def RemoveLowDuration(dataframe,
                       duration=configurations['duration'],
                       events_columns=configurations['window_event_columns'],
                       higher=True):
+    print("Removing low durations...")
     threshold_minutes = round(dataframe[duration].sum()/60*0.1,2)
     if threshold_minutes > 15:
         threshold_minutes=15
+
     print('10% Threshold on total duration: {0}m'.format(threshold_minutes))
     tmp = dataframe.groupby(by=events_columns).sum().reset_index()
     duration_threshold = 0
     for i in range(10,1000,2):
         tmp2 = tmp[(tmp[duration]<i)].reset_index()
         if tmp2[duration].sum()/60 > threshold_minutes:
-            duration_threshold = i
-            print("Total minutes under Threshold: {0}m".format(round(tmp[(tmp[duration]<i)].reset_index()[duration].sum()/60,2)))
+            duration_threshold = i - 3
+            print("Total minutes under Threshold: {0}m".format(round(tmp[(tmp[duration]<duration_threshold)].reset_index()[duration].sum()/60,2)))
             break
+
     print("Threshold: {0}s".format(duration_threshold))
     if higher: tmp = tmp[tmp[duration]>duration_threshold]
     else: tmp = tmp[tmp[duration]<duration_threshold]
+
     df = pd.merge(dataframe, tmp, on=events_columns, how='left')
     df = df[df[duration+'_y'].notna()]
     df[duration]=df[duration+'_x']
     df = df.drop(columns=[duration+'_y', duration+'_x'])
+
     return df
 
 
@@ -226,7 +240,10 @@ def GetTrainActivityEvents(json_events,
         df = DropDuplicates_and_sort(AddDuration(json_events), datetimestamp, drop_duplicates=True)
         df = df.copy()
         df = df[df.event_type==windowEvent]
-
+        if df.shape[0]==1:
+            df = df.astype("string")
+            df[datetimestamp] = df[datetimestamp].apply(lambda x: x.replace(" ", "T"))
+            return df.to_dict('records')
         candidates = RemoveLowDuration(df, datetimestamp, duration, events_columns, higher=True)
         candidates = DropDuplicates_and_sort(candidates, datetimestamp)
         candidates = candidates.drop_duplicates(subset=events_columns, keep='last')
@@ -246,13 +263,19 @@ def GetTrainActivityEvents(json_events,
         if candidates.shape[0]==3: train_size = 0.7
         print('Train size: ', train_size)
 
-        train, test = train_test_split(candidates, train_size=train_size)
-        print('Train shape: {0}, Test shape: {1}'.format(train.shape, test.shape))
-        train = train.astype("string")
-        train[datetimestamp] = train[datetimestamp].apply(lambda x: x.replace(" ", "T"))
+        # if there more than one event, the code asks it to the user
+        if candidates.shape[0]!=1:
+            train, test = train_test_split(candidates, train_size=train_size)
+            print('Train shape: {0}, Test shape: {1}'.format(train.shape, test.shape))
+            train = train.astype("string")
+            train[datetimestamp] = train[datetimestamp].apply(lambda x: x.replace(" ", "T"))
+            return train.to_dict('records')
 
+        # if there is only an event, the code asks it to the user
+        candidates = candidates.astype("string")
+        candidates[datetimestamp] = candidates[datetimestamp].apply(lambda x: x.replace(" ", "T"))
+        return candidates.to_dict('records')
 
-        return train.to_dict('records')
     except Exception as ex:
         print(ex)
         return []
@@ -263,9 +286,6 @@ def apply_preprocessing(dataframe, train=False):
     target = []
     tmp2 = dataframe.copy()
     for i in range(dataframe.shape[0]):
-        #if "google search" in dataframe.iloc[i]["title"].lower(): continue
-        #if "cerca con google" in dataframe.iloc[i]["title"].lower(): continue
-        #if "nuova scheda - google chrome" in dataframe.iloc[i]["title"].lower(): continue
         # creation of the string
         original_text = str(dataframe.iloc[i]["app"] +' ') +" " +str(dataframe.iloc[i]["title"])
 
@@ -294,11 +314,9 @@ def apply_preprocessing(dataframe, train=False):
 
         # save data
         if train:
-            #data = {"X":[original_text],"X_clean":[text],"Y":[dataframe.iloc[i]["activity_type"].split("#")[1]], 'datetimestamp':[dataframe.iloc[i]['datetimestamp']]}
             tmp.append(text)
             target.append(dataframe.iloc[i]["activity_type"])
         else:
-            #data = {"X":[original_text],"X_clean":[text], 'datetimestamp':[dataframe.iloc[i]['datetimestamp']]}
             tmp.append(text)
     if target:
         tmp2['y']=target
@@ -306,9 +324,18 @@ def apply_preprocessing(dataframe, train=False):
     return tmp2
 
 
+def CheckCSV(name_of_file):
+    return True if os.path.isfile(name_of_file) else False
+
+def CreateCSV(json_file):
+    dict_events, predicates = graph2dict(json_file)
+    csv = dict2pandas(dict_events)
+    if CheckCSV(configurations['csv_name_ai']):
+        csv = pd.concat([csv, pd.read_csv(configurations['csv_name_ai'])])
+    csv.to_csv(configurations['csv_name_ai'], index=False)
+
 def GetTestActivityEvents(json_events,
-                          duration_name='real_duration',
-                          windowEvent_name = 'http://www.vaimee.it/ontology/sw#windowEvent',
+                          windowEvent_name = configurations['window_event'],
                           user_graph=configurations['user_graph'],
                           knwoledge=configurations['csv_name_ai'],
                           duration=configurations['duration'],
@@ -316,45 +343,59 @@ def GetTestActivityEvents(json_events,
                           events_columns=configurations['window_event_columns'],
                           activity_type=configurations['activity_type']):
     try:
+
+
+        """
+        json={
+            "train_events":[], --> sono gli eventi dell'utente con l'attività
+            "events":[] -> sono tutti gli eventi
+        }
+
+        train_events=json["train]
+
+        """
+
         cv = TfidfVectorizer(ngram_range=(1, 1))
-        train = AddDuration(json_events['train_events'])
-        test = AddDuration(json_events['events'])
+        print('TRAIN EVENTS:')
+        train = AddDuration(json_events["train_events"])
 
+        print()
+        print('TEST EVENTS')
+        test = AddDuration(json_events["events"])
 
-        # useless events   ---> magari appendere con un altro metodo????
+        # useless events ---> magari appendere con un altro metodo????
+        print('Removing non Window Events...')
         useless_test = test[test.event_type!=windowEvent_name]
 
-
         # store useful events
-
-        test = test[test.event_type==windowEvent_name]
         train = train[train.event_type==windowEvent_name]
-
-
+        test = test[test.event_type==windowEvent_name]
         user = train.user_graph.iloc[0]
-
 
         # load knowledge
         if CheckCSV(knwoledge):
+            print('Loading knowledge...')
             csv = pd.read_csv(knwoledge)
             csv = csv[(csv.user_graph==user)&(csv.event_type==windowEvent_name)]
             train = pd.concat([train, csv])
 
-
         # OTHER events
+        print('Genereting Other events...')
         other_events = RemoveLowDuration(test, higher=False)
         other_events = DropDuplicates_and_sort(other_events, datetimestamp)
         #other_events = other_events.drop_duplicates(subset=events_columns, keep='last')
-        other_events['predicted']=windowEvent_name.split('#')[0]+'#Other'
+        other_events[configurations['activity_type']]=windowEvent_name.split('#')[0]+'#Other'
 
         # VALID events
+        print('Genereting valid events...')
         test = RemoveLowDuration(test, higher=True)
         test = DropDuplicates_and_sort(test, datetimestamp)
 
+        print('Applying AI Filter...')
         # if there's only 1 activity
         if len(list(set(train.activity_type)))==1:
             activity = list(set(train.activity_type))[0]
-            test['predicted']=activity
+            test[configurations['activity_type']]=activity
 
         else:
             # preprocessing and TF-IDF
@@ -366,30 +407,14 @@ def GetTestActivityEvents(json_events,
             X_test = cv.transform(test['X_clean']).toarray()
             classifier.fit(X_train, y_train)
             y_pred = classifier.predict(X_test)
-            test['predicted']=y_pred
+            test[configurations['activity_type']]=y_pred
             test = test.drop(columns='X_clean')
-        test = pd.concat([test, other_events])
-        test = pd.concat([test, useless_test]).fillna('None')
+        test = pd.concat([test, other_events]).fillna('AAAAAA')
+        test = pd.concat([test, useless_test])
         test = test.astype("string")
         test[datetimestamp] = test[datetimestamp].apply(lambda x: x.replace(" ", "T"))
-
+        return test
         return test.to_dict('records')
     except Exception as ex:
         print(ex)
         return []
-
-def CheckCSV(name_of_file):
-    return True if os.path.isfile(name_of_file) else False
-
-def CreateCSV(json_file):
-    try:
-        dict_events, predicates = graph2dict(json_file)
-        csv = dict2pandas(dict_events)
-        if CheckCSV(configurations['csv_name_ai']):
-            csv = pd.concat([csv, pd.read_csv(configurations['csv_name_ai'])])
-        csv.to_csv(configurations['csv_name_ai'], index=False)
-        print('csv created successfully')
-        return True
-    except Exception as ex:
-        print(ex)
-        return False
