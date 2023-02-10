@@ -44,17 +44,17 @@ Start the application by typing: <pre>npm start</pre> from inside the Producer D
 Once the application is started, a popup login window will appear, prompting the user to either: a.login or b.create a new user. If it's the first time you are accessing the platform, please create a new user, then login from the same window.
 ### 0.1-homepage
 If login is successful, the homepage of the application will load and you will be presented with 4 main components:
-- activities dashboard (right side of the screen)
+- activities dashboard (right side of the screen)<br>
   View history of your activities
-- open project tasks (left side of the screen)
+- open project tasks (left side of the screen)<br>
   View current tasks and spent time
-- control panel (top-right side of the screen)
+- control panel (top-right side of the screen)<br>
   Start/stop tracking evnts, upload events, explore events
-- bug report button (top of the screen)
+- bug report button (top of the screen)<br>
   Send a bug report to the administrator
-
 ### 1-manage start/stop scan
 ### 2-upload events
+### 3-report issues
 
 
 ## Reference technologies
