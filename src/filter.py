@@ -413,7 +413,6 @@ def GetTestActivityEvents(json_events,
         test = pd.concat([test, useless_test])
         test = test.astype("string")
         test[datetimestamp] = test[datetimestamp].apply(lambda x: x.replace(" ", "T"))
-        return test
         return test.to_dict('records')
     except Exception as ex:
         print(ex)
