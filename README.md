@@ -35,7 +35,7 @@ Clone this repository on your local machine and move it anywhere in your system.
 ## STARTING THE APPLICATION
 Open a terminal in the folder '.../1_ActivityWatchProducer/PY/my2sec/main' and type the following command:
 <pre>python ./API_my2sec.py</pre>
-This will start the api needed to run My2sec Working Events Ai Filter.
+This will start the api needed to run My2sec Working Events Ai Filter.<br>
 Now that all requirements have been fullfilled, you can start the Producer Application: open a new terminal and type <pre>cd C://Users/User/.../my2sec/1_ActivityWatchProducer</pre> to move into the Producer Directory.
 Start the application by typing: <pre>npm start</pre> from inside the Producer Directory.
 
