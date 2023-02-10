@@ -8,15 +8,15 @@ The objective is to create an open source and GDPR compliant suite to support re
 ## MY2SEC INSTALLATION
 This guide will step you through download and installation of the My2Sec Application on your system. 
 ### Prerequisites
-- Node.js installed<br>
+- <b>Node.js</b> installed<br>
   To check if Node.js is installed on your local machine, type the following commands in your terminal:
   <pre>node -v<br>npm -v</pre>
   If one of the commands returns an error, please install Node.js from the official website: [https://www.nodejs.org](https://www.nodejs.org)
-- Python installed<br>
+- <b>Python</b> installed<br>
   To check if Python is installed on your local machine, type the following commands in your terminal:
   <pre>python --version</pre>
   If one of the commands returns an error, please install Python from the official website: [https://www.python.org/](https://www.python.org/)
-- ActvityWatch installed<br>
+- <b>ActvityWatch</b> installed<br>
   If your PC does not have ActivityWatch installed, please install it from the official website: [https://activitywatch.net/](https://activitywatch.net/)
 ### Download
 Clone this repository on your local machine and move it anywhere in your system.
