@@ -42,6 +42,8 @@ Start the application by typing: <pre>npm start</pre> from inside the Producer D
 ## USAGE
 ### 0-login
 Once the application is started, a popup login window will appear, prompting the user to either: a.login or b.create a new user. If it's the first time you are accessing the platform, please create a new user, then login from the same window.
+![Architecture](img/producerLOGIN.png?raw=true)
+
 ### 0.1-homepage
 If login is successful, the homepage of the application will load and you will be presented with 4 main components:
 - activities dashboard (right side of the screen)<br>
