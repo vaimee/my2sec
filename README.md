@@ -29,7 +29,7 @@ Clone this repository on your local machine and move it anywhere in your system.
 - Once finished, from the current directory cd into the following directory:
   <pre>cd ./PY/my2sec</pre>
   and install the required files for My2sec Working Events Ai Filter:
-  <pre>python -m pip install -r requirements.txtt</pre>
+  <pre>python -m pip install -r requirements.txt</pre>
 
 
 ## STARTING THE APPLICATION
