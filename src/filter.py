@@ -384,7 +384,7 @@ def GetTestActivityEvents(json_events,
         other_events = RemoveLowDuration(test, higher=False)
         other_events = DropDuplicates_and_sort(other_events, datetimestamp)
         #other_events = other_events.drop_duplicates(subset=events_columns, keep='last')
-        other_events[configurations['activity_type']]=windowEvent_name.split('#')[0]+'#Other'
+        other_events[configurations['activity_type']]='Other'#windowEvent_name.split('#')[0]+'#Other'
 
         # VALID events
         print('Genereting valid events...')
