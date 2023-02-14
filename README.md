@@ -34,10 +34,10 @@ This guide will step you through download and installation of the My2Sec Applica
 
 
 ## STARTING THE APPLICATION
-Open a terminal in the folder '.../1_ActivityWatchProducer/PY/my2sec/main' and type the following command:
+Open a terminal in the folder '.../ActivityWatchProducer/PY/my2sec/main' and type the following command:
 <pre>python ./API_my2sec.py</pre>
 This will start the api needed to run My2sec Working Events Ai Filter.<br>
-Now that all requirements have been fullfilled, you can start the Producer Application: open a new terminal and type <pre>cd C://Users/User/.../my2sec/1_ActivityWatchProducer</pre> to move into the Producer Directory.
+Now that all requirements have been fullfilled, you can start the Producer Application: open a new terminal and type <pre>cd C://Users/User/.../ActivityWatchProducer</pre> to move into the Producer Directory.
 Start the application by typing: <pre>npm start</pre> from inside the Producer Directory.
 
 ## USAGE
@@ -54,7 +54,7 @@ The interface has 4 main components:
 - open project tasks (left side of the screen)<br>
   View current tasks and spent time
 - control panel (top-right side of the screen)<br>
-  Start/stop tracking evnts, upload events, explore events
+  Start/stop tracking events, upload events, explore events
 - bug report button (top of the screen)<br>
   Send a bug report to the administrator
   
