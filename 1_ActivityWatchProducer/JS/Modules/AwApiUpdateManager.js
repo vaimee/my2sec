@@ -251,7 +251,7 @@ class AwApiUpdateManager {
         console.log("Setting original bindings:")
         console.log(bindings)
         this.awManager.atm.originalBindings=bindings;
-        var known_categories="Developing,Meeting,Researching,Testing,Other,Email"
+        var known_categories="Developing,Meeting,Reporting,Researching,Testing,Email,Other"
         console.log("Injecting table")
         this.awManager.atm.injectTable(bindings,"activity_type,app,title,duration,datetimestamp",known_categories)
         if(!this.awManager._jsonEmpty(bindings)){
