@@ -19,10 +19,11 @@ This guide will step you through download and installation of the My2Sec Applica
 - <b>ActvityWatch</b><br>
   If your PC does not have ActivityWatch installed, please install it from the official website: [https://activitywatch.net/](https://activitywatch.net/)
 ### Download
-Clone this repository on your local machine and move it anywhere in your system.
+- Download the latest My2sec release from this link: [https://github.com/vaimee/my2sec/releases/download/v1.0-beta/ActivityWatchProducer.zip](https://github.com/vaimee/my2sec/releases/download/v1.0-beta/ActivityWatchProducer.zip)
+- Unzip the archive and move it anywhere in your system.
 ### Installation
-- Open a terminal into the downloaded folder and move into the ActivityWatch Producer directory:
-  <pre>cd C://Users/User/.../my2sec/1_ActivityWatchProducer</pre>
+- Open a terminal and move into the unzipped folder:
+  <pre>cd C://Users/User/.../ActivityWatchProducer</pre>
   This is the main interface you will be using to interact with My2sec services, like publishing and aggregating your activities.
 - The interface is built with the Electron framework, to install it type the following command in your terminal:
   <pre>npm install --save-dev electron</pre>
