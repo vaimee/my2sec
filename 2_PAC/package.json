@@ -1,4 +1,9 @@
 {
+
+  "scripts": {
+    "test": "node runPacApp TestMaster"
+  },
+
   "dependencies": {
     "@arces-wot/sepa-js": "^0.12.1",
     "body-parser": "^1.20.1",

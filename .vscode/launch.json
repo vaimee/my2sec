@@ -1,0 +1,47 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Start AwTester",
+            "request": "launch",
+            "runtimeArgs": [
+                "test"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "cwd":"${workspaceFolder}\\2_PAC"
+        },
+
+        {
+            "name": "Start AwProducer",
+            "request": "launch",
+            "runtimeArgs": [
+                "start"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "cwd":"${workspaceFolder}\\1_ActivityWatchProducer"
+        },
+
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch PacFactory module",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\2_PAC\\runPacApp.js",
+            "args":["TestMaster"],
+            "cwd": "${workspaceFolder}\\2_PAC"
+        }
+    ]
+}
