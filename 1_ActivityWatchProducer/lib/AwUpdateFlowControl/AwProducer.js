@@ -13,7 +13,7 @@ const JsapApi = Sepajs.Jsap;
 
 class AwProducer extends AwMy2SecClient{
 	constructor(){
-		super("127.0.0.1:5000")
+		super("localhost:5000")
 		//this.mc= new My2secClient()
 		this.queryBenchClient= new Sepajs.SEPA(default_jsap)
 		this.sepaClient= new JsapApi(default_jsap)
