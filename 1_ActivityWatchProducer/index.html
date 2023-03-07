@@ -33,13 +33,12 @@
 
 	<!--MAIN STYLE-->
 	<link rel="stylesheet" type="text/css" href="CSS/main.css">
-	<link rel="stylesheet" type="text/css" href="lib/AwUpdateFlowControl/updateInterface.css">
-	<link rel="stylesheet" type="text/css" href="lib/ReusableComponents/reusableComponents.css">
-	<link rel="stylesheet" type="text/css" href="lib/SupersetEmbeddedDashboard/embeddedDashboard.css">
-	<link rel="stylesheet" type="text/css" href="lib/UserInfo/UserInterface.css">
-	<link rel="stylesheet" type="text/css" href="lib/TasksConsumer/taskdashboard.css">
-    <link rel="stylesheet" type="text/css" href="lib/gregnet-grid-plugin/gregnet-grid-style.css">  
-	<link rel="stylesheet" type="text/css" href="lib/BugReportPanel/bugreport.css">  
+	<link rel="stylesheet" type="text/css" href="CSS/reusableComponents.css">
+	<link rel="stylesheet" type="text/css" href="CSS/updateInterface.css">
+	<link rel="stylesheet" type="text/css" href="CSS/embeddedDashboard.css">
+	<link rel="stylesheet" type="text/css" href="CSS/UserInterface.css">
+	<link rel="stylesheet" type="text/css" href="CSS/taskdashboard.css">
+	<link rel="stylesheet" type="text/css" href="CSS/bugreport.css">  
 
 </head>
 
@@ -65,7 +64,7 @@
 		</div>
 
 		<div id="user_info_wrapper" class="mini-wrapper">
-			<img id="user-menu-icon" class="white-icon" src="Assets/icons/triangle.svg" width="15px" onclick="switch_user_menu()"> 
+			<img id="user-menu-icon" class="white-icon" src="Assets/icons/triangle.svg" width="15px"> <!--onclick="switch_user_menu()"> -->
 			<span id="user_name">User</span>
 			<img id="user-icon" class="white-icon" src="Assets/icons/user.svg"> 
 		</div>
@@ -391,9 +390,8 @@
 
 
 	<!--Load external scripts-->
-	<!--JSAP-->
-	<script type="text/javascript" src="lib/my2sec_19-1-2023.jsap.js"></script>
-
+	<!--JSAP
+	<script type="text/javascript" src="Resources/my2sec_19-1-2023.jsap.js"></script>-->
 	<!--PACFACTORY-->
 	<script type="text/javascript" src="lib/PacFactoryJs/GregLogs.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/PacFactory.js"></script>
@@ -401,25 +399,22 @@
 	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/Producer.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/SynchronousConsumer.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/SynchronousProducer.js"></script>
-	
-	<!--UTILITY-->
-	<script type="text/javascript" src="JS/greglogs.js"></script>
-	<script type="text/javascript" src="JS/local_storage_menu.js"></script>
+	<!--Remove outdated local_storage_menu
+	<script type="text/javascript" src="JS/local_storage_menu.js"></script>-->
+	<!--CLIENTS-->
+	<script type="text/javascript" src="lib/AwClient.js"></script>
 	<!--SUPERSET-->
-	<script type="text/javascript" src="lib/SupersetEmbeddedDashboard/superset-embed.js"></script>
-	<!--CONSUMER-->
-	<script type="text/javascript" src="lib/UserInfo/UserInfoConsumer.js"></script>
-	<script type="text/javascript" src="lib/TasksConsumer/tasksConsumer.js"></script>
-	<!--PRODUCER-->
-	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwClient.js"></script>
-	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwProducer.js"></script>
-	<script type="text/javascript" src="lib/AwUpdateFlowControl/AwManager.js"></script>
+	<script type="text/javascript" src="lib/superset-embed.js"></script>
 
-	<script type="text/javascript" src="lib/BugReportPanel/BugReport.js"></script>
-
+	<!--PAC MODULES-->
+	<script type="text/javascript" src="JS/PacModules/tasksConsumer.js"></script>
+	<script type="text/javascript" src="JS/PacModules/AwProducer.js"></script>
+	<script type="text/javascript" src="JS/PacModules/AwManager.js"></script>
 	<!--MODULES-->
-	<script type="text/javascript" src="JS/Modules/AwApiUpdateManager.js"></script>
-
+	<script type="text/javascript" src="JS/UserInfo/UserInfoConsumer.js"></script>
+	<script type="text/javascript" src="JS/ControlPanel/AwApiUpdateManager.js"></script>
+	<script type="text/javascript" src="JS/ControlPanel/ScanManager.js"></script>
+	<script type="text/javascript" src="JS/BugReportPanel/BugReport.js"></script>
 	<!--MAIN-->
 	<script type="text/javascript" src="JS/main.js"></script>
 </body>

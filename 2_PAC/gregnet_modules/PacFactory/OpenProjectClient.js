@@ -86,6 +86,12 @@ class OpenProjectClient {
 
 
     async get_tasks(whitelisted_projects){
+
+        var res=await this.get_auth_resource("/api/v3/work_packages");
+        res=JSON.parse(res);
+        console.log(res)
+        throw new Error("MAUS")
+
         console.log("Getting Work Packages ids...");
         const work_packages_json = await this.em.getMany(WP);
         const work_packages_ids= this.get_work_packages_ids(work_packages_json);
@@ -122,6 +128,10 @@ class OpenProjectClient {
 
     async get_tasks_old(whitelisted_projects){
         console.log(1,"Getting Work Packages ids...");
+        
+        
+        
+        
         const work_packages_json = await this.em.getMany(WP);
         const work_packages_ids= this.get_work_packages_ids(work_packages_json);
         

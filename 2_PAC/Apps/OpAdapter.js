@@ -18,12 +18,20 @@ class OpAdapter extends PacFactory{
     super(jsap_file);
     
     //LOCALHOST
-    this.opClient=new OpClient({
+    /*this.opClient=new OpClient({
       host:"localhost",
       port:889,
       clientId:"n3d2NUpnrMU5HenPac3lRh5nE38AZAViekVOIDbnzGk",
       clientSecret:"xS2Ao-MPUmkLP3cT1Jyzhj4fgjLugSOiTxrGzLayAQc",
       apiKey:"37fdc215964b5f21fc99fde4e59a83d1c1c363eb2b818db2ff9a2af65e7f2d12"
+    });*/
+    //REMOTE
+    this.opClient=new OpClient({
+      host:"dld.arces.unibo.it",//"localhost",//
+      port:8078,//889,//
+      clientId:"pIuaMa7WY4xwkkVNobDjQpp_OSjzsUrMXEKnjCVkWQA",
+      clientSecret:"nNFyLa7MRSJ2Pnq9ju8_f3Lg4FxRW4Gs1EdFgfIAHr4",
+      apiKey:"bcc95e391fc9f7eee77aa7cb3bbc8cd126108d6a6623c944a72d56f09e3bd633"
     });
     //PORTAINER
     /*this.opClient=new OpClient({
@@ -61,6 +69,7 @@ class OpAdapter extends PacFactory{
   async update_tasks(){
     var string_messages=await this.opClient.get_tasks("My2sec");
     console.log("MAO")
+    throw new Error("MAO")
     //console.log(string_messages)
     for(var i in string_messages){
       var msg=string_messages[i];

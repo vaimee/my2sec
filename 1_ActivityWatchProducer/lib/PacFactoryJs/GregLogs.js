@@ -1,6 +1,6 @@
 class Greglogs{
     constructor() {
-      this.loglevel=0;
+      this.loglevel=1;
       //this.info("New Greglogs logger created!")
     }
     //=========
@@ -8,6 +8,21 @@ class Greglogs{
     //logLevel(level){
     //  this.loglevel=level;
     //}
+    trace_table(text){
+      if(this.loglevel<1){
+        console.table(text);
+      }      
+    }    
+    debug_table(text){
+      if(this.loglevel<2){
+        console.table(text);
+      }      
+    }    
+    info_table(text){
+      if(this.loglevel<3){
+        console.table(text);
+      }      
+    }    
     trace(text){
       if(this.loglevel<1){
         console.log(get_current_timestamp()+" [trace] "+text);
