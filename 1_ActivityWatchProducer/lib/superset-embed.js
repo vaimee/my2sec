@@ -1,4 +1,5 @@
 var log=new Greglogs();
+var _embed;
 async function createDashboard(dash_id,superset_host,container_id){
     var embed= await supersetEmbeddedSdk.embedDashboard({
 		id: dash_id, // given by the Superset embedding UI
@@ -14,9 +15,38 @@ async function createDashboard(dash_id,superset_host,container_id){
 			hideChartControls: true
 		}, // dashboard UI config: hideTitle, hideTab, hideChartControls (optional)
 	});
-    return embed;
+    //return embed;
+	_embed=embed;
 }
 
+
+async function refreshSupersetDashboard(container_id){
+	//var elementToRefresh=document.getElementById(container_id).getElementsByTagName('iframe');
+	var elementToRefresh=document.querySelector("#my-superset-container")
+	elementToRefresh.innerHTML=""
+	log.info("----------< Init SUPERSET dashboard >----------")
+	var superset_host="http://dld.arces.unibo.it:8087";
+	var container_id="my-superset-container";
+	try{
+		var dash_id=await userInfoConsumer.sepa_getUserDashboard();//"755f0434-6ac6-4d4f-8415-3b2b80c571e9";
+		log.info("Fetched dashboard_id of "+userInfoConsumer.userName+" :"+dash_id)
+		if(!dash_id){
+			log.error("Error: invalid dashboard id, showing error message to the user")
+			document.getElementById(container_id).innerHTML=`
+				<div class="missing_dashboard_error">
+					<div style="width:100%" align="center">
+						<h2>WARNING, missing events dashboard.</h2>
+						Contact your server administrator (discord/email) to activate it for you.
+					<div>
+				<div>
+				`
+		}else{
+			createDashboard(dash_id,superset_host,container_id)
+		}
+	}catch(e){
+		console.log(e)
+	}
+}
 
 
 

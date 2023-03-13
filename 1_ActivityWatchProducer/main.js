@@ -2,10 +2,16 @@
 // ELECTRON: main.js
 // Controls the main node process
 //================================
+//DETECT IF APP IS RUNNING IN DEVELOPMENT OR PRODUCTION
+
+//var runMode = process.env.NODE_ENV;
+//console.log(runMode)
+
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const {ipcMain} = require('electron')
+const isDev = require('electron-is-dev');
 //Custom modules
 const AwApiRouter = require("./electron_main_modules/AwApiRouter");
 const PythonApiRunner = require("./electron_main_modules/PythonApiRunner");
@@ -16,7 +22,7 @@ const JsapConfigurationManager = require("./electron_main_modules/JsapConfigurat
 ## APP WINDOWS
 ===============*/
 //GLOBAL VARIABLES
-var user_login_json="";
+//var user_login_json="";
 //var my2sec_jsap;
 var json_package={};
 // Create the browser window.
@@ -78,9 +84,24 @@ function handleLoginSuccess(arg){
 app.whenReady().then(async () => {
   
   console.log("--------------------<My2secProducer logs>--------------------")
+  console.log("Running in dev mode: "+isDev)
+  console.log("NODE_ENV: "+process.env.NODE_ENV)
   //INITIALIZE CONFIGURATION MANAGER
   //This will detect if the host machine uses ipv6 or is windows/darwin and change the requests urls accordingly.
-  let jsapConfigurationManager = new JsapConfigurationManager("./Resources/my2sec_7-3-2023.jsap");
+  //FIND JSAP
+  var relativePath="";
+  if(isDev){
+    relativePath="./Resources/my2sec_7-3-2023.jsap"
+  }else{
+    if (process.platform == 'darwin'){
+      relativePath="./Content/Resources/app/Resources/my2sec_7-3-2023.jsap"
+    }else{
+      relativePath="./resources/app/Resources/my2sec_7-3-2023.jsap"
+    }
+  }
+
+  var jsapPath=path.resolve(relativePath);
+  let jsapConfigurationManager = new JsapConfigurationManager(jsapPath,isDev);//"./Resources/my2sec_7-3-2023.jsap");
   var my2sec_jsap=await jsapConfigurationManager.getConfiguredJsap();
   json_package["my2sec_jsap"]=my2sec_jsap;
   //INITIALIZE REST OF THE MODULES
@@ -114,6 +135,7 @@ async function initMainElectronModules(){
   //Connection close headers are added to requests in order to fix an aw bug
   var activitywatch_url=json_package["my2sec_jsap"].extended.AwProducer.endpoints.ActivityWatch;
   var arr=split_url(activitywatch_url);
+  //console.log(arr)
   var aw_host=arr[0];//"localhost";
   var aw_port=arr[1];//5600;
   var aw_router_port=1340;
@@ -121,7 +143,7 @@ async function initMainElectronModules(){
   awApiRouter.start();
   console.log("- AwApiRouter started")   
 
-  let pythonApiRunner = new PythonApiRunner('./PY/my2sec/main/API_my2sec.py');
+  let pythonApiRunner = new PythonApiRunner();
   pythonApiRunner.start();
   console.log("- Python api started")   
 

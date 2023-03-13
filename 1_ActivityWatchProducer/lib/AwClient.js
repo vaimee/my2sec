@@ -311,7 +311,6 @@ class AwClient {
 
 
 
-
 class AwMy2SecClient extends AwClient{
 	constructor(jsap){
 		super(jsap);

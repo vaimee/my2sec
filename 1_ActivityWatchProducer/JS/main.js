@@ -75,16 +75,30 @@ async function init(){
 	console.log(" ")
 
 	log.info("----------< Init SUPERSET dashboard >----------")
+	var superset_host="http://dld.arces.unibo.it:8087";
+	var container_id="my-superset-container";
 	try{
 		var dash_id=await userInfoConsumer.sepa_getUserDashboard();//"755f0434-6ac6-4d4f-8415-3b2b80c571e9";
 		log.info("Fetched dashboard_id of "+userInfoConsumer.userName+" :"+dash_id)
-		var superset_host="http://dld.arces.unibo.it:8087";
-		var container_id="my-superset-container";
-		var embed = createDashboard(dash_id,superset_host,container_id)
+		if(!dash_id){
+			log.error("Error: invalid dashboard id, showing error message to the user")
+			document.getElementById(container_id).innerHTML=`
+				<div class="missing_dashboard_error">
+					<div style="width:100%" align="center">
+						<h2>WARNING, missing events dashboard.</h2>
+						Contact your server administrator (discord/email) to activate it for you.
+					<div>
+				<div>
+				`
+		}else{
+			createDashboard(dash_id,superset_host,container_id)
+		}
 	}catch(e){
 		console.log(e)
 	}
 	console.log(" ")
+	
+	
 
 	
 	log.info("----------< Init TASKS dashboard >----------")
@@ -297,6 +311,7 @@ async function start_update_procedure(){
 async function abort_update_procedure(){
 	awApiUpdateManager.abort_update_procedure();
 	awApiUpdateManager.stop();
+	refreshSupersetDashboard('my-superset-container')
 }
 //when user presses the validation button in any of the three sections
 async function on_validation_button_pressed(){

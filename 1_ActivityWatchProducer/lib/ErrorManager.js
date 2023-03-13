@@ -1,0 +1,10 @@
+class ErrorManager {
+    constructor(){
+
+    }
+
+    injectHtmlStandardError(){
+        
+    }
+
+}

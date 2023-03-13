@@ -21,16 +21,18 @@ class JsapConfigurationManager {
                 console.log("- modifying endpoint: "+k)
                 endpointUrl=endpointUrl.replace("localhost",loopbackAddress);
                 jsapObj.extended.AwProducer.endpoints[k]=endpointUrl;
-            }
-            if(endpointUrl.includes("127.0.0.1")){
-                console.log("- modifying endpoint: "+k)
-                endpointUrl=endpointUrl.replace("127.0.0.1",loopbackAddress);
-                jsapObj.extended.AwProducer.endpoints[k]=endpointUrl;
-            }
-            if(endpointUrl.includes("[::1]")){
-                console.log("- modifying endpoint: "+k)
-                endpointUrl=endpointUrl.replace("[::1]",loopbackAddress);
-                jsapObj.extended.AwProducer.endpoints[k]=endpointUrl;
+            }else{
+                if(endpointUrl.includes("127.0.0.1")){
+                    console.log("- modifying endpoint: "+k)
+                    endpointUrl=endpointUrl.replace("127.0.0.1",loopbackAddress);
+                    jsapObj.extended.AwProducer.endpoints[k]=endpointUrl;
+                }else{
+                    if(endpointUrl.includes("[::1]")){
+                        console.log("- modifying endpoint: "+k)
+                        endpointUrl=endpointUrl.replace("[::1]",loopbackAddress);
+                        jsapObj.extended.AwProducer.endpoints[k]=endpointUrl;
+                    }
+                }
             }
         })
         console.log(jsapObj.extended)
@@ -52,6 +54,7 @@ class JsapConfigurationManager {
             }else{
                 console.log("- Running on windows/linux")
                 return "localhost" //WINDOWS
+                //return "127.0.0.1"
             }
         }else{
             console.log("- Device is using IPV6")
