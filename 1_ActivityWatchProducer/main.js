@@ -167,10 +167,11 @@ function split_url(url){
     var splitArr=[];
     splitArr[0]=tempArr[0]+"]"
     if(dirtyport.startsWith(":")){
+      console.log(dirtyport)
       if(dirtyport.endsWith("/")){
-        splitArr[1]=dirtyport.slice(1,dirtyport.length-2)
-      }else{
         splitArr[1]=dirtyport.slice(1,dirtyport.length-1)
+      }else{
+        splitArr[1]=dirtyport.slice(1,dirtyport.length)
       }
       return splitArr
     }else{

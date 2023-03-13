@@ -1,0 +1,9 @@
+{
+  "name": "environmentdetector",
+  "version": "1.0.0",
+  "description": "produces data for SEPA engine",
+  "main": "main.js",
+  "dependencies": {
+    "electron-is-dev": "^2.0.0"
+  }
+}

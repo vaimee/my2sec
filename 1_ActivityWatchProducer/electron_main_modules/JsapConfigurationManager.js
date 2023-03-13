@@ -55,6 +55,7 @@ class JsapConfigurationManager {
                 console.log("- Running on windows/linux")
                 return "localhost" //WINDOWS
                 //return "127.0.0.1"
+                //return "[::1]" //IPV6
             }
         }else{
             console.log("- Device is using IPV6")
