@@ -49,16 +49,18 @@ class PythonApiRunner{
     }
 
     start_dev(){
+      var executablePath="./PY/my2sec/main";
+      var cwd=path.resolve(executablePath);
+      console.log(cwd)
       try{
-        var executablePath="./PY/my2sec/main/API_my2sec.py";
-        console.log("Spawning python: "+executablePath)
-        this.pyProcess=spawn("python",[executablePath]);
+        
+        console.log("Spawning python: "+cwd)
+        this.pyProcess=spawn("python",["API_my2sec.py"],{cwd});
       }catch(e){
         console.log(e)
         console.log("TRYING WITH PYTHON 3")
-        var executablePath="./PY/my2sec/main/API_my2sec.py";
-        console.log("Spawning python3: "+executablePath)
-        this.pyProcess=spawn("python3",[executablePath]);       
+        console.log("Spawning python3: "+cwd)
+        this.pyProcess=spawn("python3",["API_my2sec.py"],{cwd});       
       }
 
       console.log("started python api")
