@@ -51,11 +51,13 @@ class PythonApiRunner{
     start_dev(){
       try{
         var executablePath="./PY/my2sec/main/API_my2sec.py";
+        console.log("Spawning python: "+executablePath)
         this.pyProcess=spawn("python",[executablePath]);
       }catch(e){
         console.log(e)
         console.log("TRYING WITH PYTHON 3")
         var executablePath="./PY/my2sec/main/API_my2sec.py";
+        console.log("Spawning python3: "+executablePath)
         this.pyProcess=spawn("python3",[executablePath]);       
       }
 
