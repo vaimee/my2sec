@@ -1,0 +1,132 @@
+
+/*=================----------------------------------------------------------------------------------------------------------------
+REUSABLE COMPONENTS
+===================*/
+.no-data-panel{
+
+}
+
+
+
+
+/*BOTTONE GIANLU*/
+.default-button{
+	width: 200px;
+	height: 29px;
+	background:var(--gianlu_blue);
+	/*BORDER*/
+	border-width: 0px;
+	border-radius: 6px;
+	
+	/*TEXT*/
+	color:white;
+}
+.default-button-deactivated{
+	width: 200px;
+	height: 29px;
+	background:rgb(13, 46, 72);
+	/*BORDER*/
+	border-width: 0px;
+	border-radius: 6px;
+	
+	/*TEXT*/
+	color:white;	
+}
+.default-button:hover{
+	background: var(--gianlu_dark_blue);
+}
+
+
+/*LOADING BAR*/
+.loading_box{
+	display:none;
+	position: relative;
+	width: 100px;
+	height:5px;
+	border: 1px solid var(--main_color);
+	border-radius: 10px;
+	padding:2px;
+}
+.loading_bar{
+	border-radius: 10px;
+	width:100px;
+	height: 5px;
+	background-color: var(--main_color);
+	/*animation: load 1s infinite linear;*/
+	animation: none;
+
+}
+@keyframes load{
+	from {
+		width: 0px;
+	}to{
+		width: 100px;
+	}
+}
+
+
+
+.round_button{
+	color: white;
+	background: var(--main_color);
+	box-shadow: 2px 2px 4px grey;
+	width: 100px;
+	height: 100px;
+
+	
+	border-radius: 50%;
+
+	
+	border-width: 0px;
+	border-color: black;
+	border-style: solid;
+	/*
+	display: flex;
+	justify-content: space-between;	
+	align-items: center; 
+	*/
+
+	/*transform: translate(0,-60%);*/
+}
+
+.round_button:hover{
+	background: darkcyan;
+	box-shadow: 2px 2px 4px grey;
+	transform: translateY(10%);
+}
+
+
+
+.white-icon{
+	filter: invert(1);
+}
+
+.spinner{
+
+	/*CENTER ELEMENT*/
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+
+
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: conic-gradient(
+		#0000 10%,
+		#8f44fd
+	);
+	-webkit-mask:
+		radial-gradient(
+			farthest-side,
+			#0000 calc(100% - 4px),
+			#000
+			0
+		);
+	animation: spin 0.8s infinite linear;
+}
+@keyframes spin{
+	to {
+		transform: rotate(1turn);
+	}
+}

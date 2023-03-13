@@ -1,0 +1,32 @@
+{
+
+  "scripts": {
+
+    "test": "node runPacApp TestMaster"
+
+  },
+
+  "dependencies": {
+
+    "@arces-wot/sepa-js": "^0.12.1",
+
+    "body-parser": "^1.20.1",
+
+    "express": "^4.18.2",
+
+    "mongodb": "^5.0.1",
+
+    "mysql": "^2.18.1",
+
+    "mysql2": "^2.3.3",
+
+    "node-fetch": "^3.3.0",
+
+    "op-client": "^1.4.2",
+
+    "request": "^2.88.2"
+
+  }
+
+}
+

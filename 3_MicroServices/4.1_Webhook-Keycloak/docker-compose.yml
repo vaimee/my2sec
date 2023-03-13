@@ -1,0 +1,67 @@
+version: "3.4"
+
+
+networks:
+  keycloak: #keycloak internal network and dns
+  traefik:
+    external: true
+volumes:
+  keycloak_data:
+
+
+
+services:
+  keycloak_db: #secure permanent db
+    image: postgres:11.2-alpine
+    restart: always
+    environment:
+        - POSTGRES_DB=keycloak
+        - POSTGRES_USER=keycloak
+	#changeme-postgres
+        - POSTGRES_PASSWORD=vQP3cG96^Jf%
+	#changeme-rootpw
+        - POSTGRES_ROOT_PASSWORD=zY3R61$$Ee93
+    networks:
+      - "keycloak"
+    volumes:
+      - keycloak_data:/var/lib/postgresql/data
+    labels:
+      - "traefik.enable=false"
+
+  keycloak: #frontend
+    image: jboss/keycloak:latest
+    command: ["-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled"]
+    restart: always
+    hostname: keycloak
+    environment:
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=keycloak_db
+      - DB_DATABASE=keycloak
+      - DB_PORT=5432
+      - DB_USER=keycloak
+      - DB_SCHEMA=public
+      - DB_PASSWORD=vQP3cG96^Jf%
+      - PROXY_ADDRESS_FORWARDING=true
+      - KEYCLOAK_LOGLEVEL=INFO
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=Gregnet/99
+    networks:
+      - "keycloak"
+      - "traefik"
+    labels:
+      # Frontend
+      - "traefik.enable=true"
+      - "traefik.http.routers.keycloak.rule=Host(`keycloak.vaimee.org`)"
+      - "traefik.http.routers.keycloak.entrypoints=websecure"
+      - "traefik.http.routers.keycloak.service=keycloak_svc"
+      - "traefik.http.services.keycloak_svc.loadbalancer.server.port=8443"
+      - "traefik.http.routers.keycloak.tls=true" #ABILITALAAAAAAAAAAA SENNO' NON FUNZIONA NULLA E TI DA'404!!!!!!!!!!!!!!!!!!!!!!!!!!
+      - "traefik.http.routers.keycloak.tls.certresolver=le" 
+
+    #labels:
+    #  - traefik.port=8443
+    #  - traefik.frontend.rule=Host:auth.idocker.hacking-lab.com
+    #  - traefik.protocol=https
+    
+
+

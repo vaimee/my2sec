@@ -1,0 +1,1 @@
+{"nodeid":"urn:uuid:2dcb5a3c-9c17-4c70-9222-29aba8f2ebbd","usergraph":"http://www.vaimee.it/my2sec/gregorio.monari@vaimee.it","event_type":"http://www.vaimee.it/ontology/my2sec#windowEvent","app":"Discord.exe","title":"meeting-room-a | VAIMEE - Discord","datetimestamp":"2022-12-20T10:10:00.000000+00:00","duration":"86.738","task":"WP2-IMPLEMENTAZIONE COMPONENTI"}

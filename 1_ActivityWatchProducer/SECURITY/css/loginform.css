@@ -1,0 +1,89 @@
+body{
+    margin:0;
+    padding:0;
+
+}
+.content-wrapper{
+    margin:0;
+    position:absolute;
+    text-align: center;
+    font-family: Montserrat;
+    width:100%;
+    top:45%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+}
+    /*FRONT LOGO AND TITLE*/
+    .header{
+    }
+        #logo{
+            width: 90px;
+        }
+        .header h1{
+            margin:0;
+            font-size:35px;
+        }
+    
+    /*LOGIN FORM*/
+    .form-wrapper{
+        width:100%;
+    }
+        .form-wrapper input{
+            width:60%;
+            font-size:18px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+
+            border-bottom: solid;
+            border-bottom-color: orangered;
+            border-bottom-width: 2.75px;
+        }
+        .formbutton{
+            width: 60%;
+            height: 30px;
+            border: none;
+            font-family: Montserrat;
+            font-size:18px;
+            border-radius: 5px;
+        }
+        .formbutton:hover{
+            width: 60%;
+            height: 30px;
+            border: none;
+            font-family: Montserrat;
+            font-size:18px;
+            background: orangered;  
+        }
+        .formbutton_selected{/*Utility class to change button via js*/
+            width: 60%;
+            height: 30px;
+            border: none;
+            font-family: Montserrat;
+            font-size:18px;
+            background: orangered; 
+        }
+        #new_user_button{
+            width: 70%;
+            height: 30px;
+            border: none;
+            font-family: Montserrat;
+            font-size:18px;  
+            border-radius: 5px;     
+        }
+        #new_user_button:hover{
+            width: 70%;
+            height: 30px;
+            border: none;
+            font-family: Montserrat;
+            font-size:18px;    
+            background: orangered;   
+        }
+
+    .errorbox{
+        color:red;
+    }
+    .successbox{
+        color:green;
+    }
