@@ -60,7 +60,7 @@ Any support is appreciated!
 # DEVELOPMENT
 If you are a developer, or you have trouble using the official release of My2sec, this guide will guide you through the steps necessary to run My2sec application in Development mode.
 **WARNING**: there is a known issue with Python3. 
-### Prerequisites
+## Prerequisites
 - <b>Node.js</b><br>
   To check if Node.js is installed on your local machine, type the following commands in your terminal:
   <pre>node -v<br>npm -v</pre>
@@ -71,9 +71,9 @@ If you are a developer, or you have trouble using the official release of My2sec
   If one of the commands returns an error, please install Python from the official website: [https://www.python.org/](https://www.python.org/)
 - <b>ActivityWatch</b><br>
   If your PC does not have ActivityWatch installed, please install it from the official website: [https://activitywatch.net/](https://activitywatch.net/)
-### Download
+## Download
 - Clone this repository
-### Installation
+## Installation
 - Open a terminal and move into the unzipped folder:
   <pre>cd C://Users/User/.../1_ActivityWatchProducer</pre>
   This is the main interface you will be using to interact with My2sec services, like publishing and aggregating your activities.
@@ -83,13 +83,8 @@ If you are a developer, or you have trouble using the official release of My2sec
   <pre>cd ./PY/my2sec</pre>
   and install the required files for My2sec Working Events Ai Filter:
   <pre>python -m pip install -r requirements.txt</pre>
-
-
-## STARTING THE APPLICATION
-Open a terminal in the folder '.../ActivityWatchProducer/PY/my2sec/main' and type the following command:
-<pre>python ./API_my2sec.py</pre>
-This will start the api needed to run My2sec Working Events Ai Filter.<br>
-Now that all requirements have been fullfilled, you can start the Producer Application: open a new terminal and type <pre>cd C://Users/User/.../ActivityWatchProducer</pre> to move into the Producer Directory.
+## Starting the application
+Now that all requirements have been fullfilled, you can start the Producer Application: open a new terminal and type <pre>cd C://Users/User/.../1_ActivityWatchProducer</pre> to move into the Producer Directory.
 Start the application by typing: <pre>npm start</pre> from inside the Producer Directory.
 
 
