@@ -1,0 +1,54 @@
+[2023-03-14 16:15:54.020] [info]  [ My2secProducer logs ]
+[2023-03-14 16:15:54.027] [info]  # JSAP CONFIGURATOR STARTED #
+[2023-03-14 16:15:54.028] [info]  ------------------------< DETECTING RUNTIME ENVIRONMENT >------------------------
+[2023-03-14 16:15:54.030] [info]  - Running environment: windows/linux
+[2023-03-14 16:15:54.032] [info]  - Run mode: development (NODE_ENV=dev )
+[2023-03-14 16:15:54.034] [info]   
+[2023-03-14 16:15:54.036] [info]  ------------------------< GET LOOPBACK ADDRESS >------------------------
+[2023-03-14 16:15:54.037] [info]  ===============================
+[2023-03-14 16:15:54.038] [info]  ** Request 0: localhost **
+[2023-03-14 16:15:54.322] [info]  Response status: 200
+[2023-03-14 16:15:54.323] [info]  Response DATA: {"aw-watcher-afk_LAPTOP-A3FDT9J3":{"id":"aw-watcher-afk_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.646448+00:00","name":null,"type":"afkstatus","client":"aw-watcher-afk","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-14T15:15:51.776000+00:00"},"aw-watcher-window_LAPTOP-A3FDT9J3":{"id":"aw-watcher-window_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.737074+00:00","name":null,"type":"currentwindow","client":"aw-watcher-window","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-14T15:15:50.742000+00:00"},"aw-producer":{"id":"aw-producer","created":"2022-08-05T13:09:01.586327+00:00","name":null,"type":"sepaconnector","client":"aw-producer","hostname":"unknown","last_updated":"2023-03-09T10:05:38.644000+00:00"},"aw-watcher-scan_LAPTOP-A3FDT9J3":{"id":"aw-watcher-scan_LAPTOP-A3FDT9J3","created":"2022-10-17T14:34:37.689112+00:00","name":null,"type":"scan","client":"aw-my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2022-12-05T09:23:36.384000+00:00"},"aw-watcher-working_LAPTOP-A3FDT9J3":{"id":"aw-watcher-working_LAPTOP-A3FDT9J3","created":"2022-10-17T14:36:22.826305+00:00","name":null,"type":"working","client":"aw-watcher-working","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-08T12:41:45.211000+00:00"},"aw-watcher-start-stop_LAPTOP-A3FDT9J3":{"id":"aw-watcher-start-stop_LAPTOP-A3FDT9J3","created":"2022-12-05T12:35:53.528196+00:00","name":null,"type":"start-stop","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-13T14:24:07.021000+00:00"},"aw-watcher-notshutdown_LAPTOP-A3FDT9J3":{"id":"aw-watcher-notshutdown_LAPTOP-A3FDT9J3","created":"2022-12-05T12:52:48.080634+00:00","name":null,"type":"not_shutdown","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-09T17:40:27.413000+00:00"}}
+[2023-03-14 16:15:54.325] [info]  Request to localhost executed
+[2023-03-14 16:15:54.326] [info]  ===============================
+[2023-03-14 16:15:54.328] [info]  ** Request 1: 127.0.0.1 **
+[2023-03-14 16:15:54.552] [info]  Response status: 200
+[2023-03-14 16:15:54.553] [info]  Response DATA: {"aw-watcher-afk_LAPTOP-A3FDT9J3":{"id":"aw-watcher-afk_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.646448+00:00","name":null,"type":"afkstatus","client":"aw-watcher-afk","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-14T15:15:51.776000+00:00"},"aw-watcher-window_LAPTOP-A3FDT9J3":{"id":"aw-watcher-window_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.737074+00:00","name":null,"type":"currentwindow","client":"aw-watcher-window","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-14T15:15:53.019000+00:00"},"aw-producer":{"id":"aw-producer","created":"2022-08-05T13:09:01.586327+00:00","name":null,"type":"sepaconnector","client":"aw-producer","hostname":"unknown","last_updated":"2023-03-09T10:05:38.644000+00:00"},"aw-watcher-scan_LAPTOP-A3FDT9J3":{"id":"aw-watcher-scan_LAPTOP-A3FDT9J3","created":"2022-10-17T14:34:37.689112+00:00","name":null,"type":"scan","client":"aw-my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2022-12-05T09:23:36.384000+00:00"},"aw-watcher-working_LAPTOP-A3FDT9J3":{"id":"aw-watcher-working_LAPTOP-A3FDT9J3","created":"2022-10-17T14:36:22.826305+00:00","name":null,"type":"working","client":"aw-watcher-working","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-08T12:41:45.211000+00:00"},"aw-watcher-start-stop_LAPTOP-A3FDT9J3":{"id":"aw-watcher-start-stop_LAPTOP-A3FDT9J3","created":"2022-12-05T12:35:53.528196+00:00","name":null,"type":"start-stop","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-13T14:24:07.021000+00:00"},"aw-watcher-notshutdown_LAPTOP-A3FDT9J3":{"id":"aw-watcher-notshutdown_LAPTOP-A3FDT9J3","created":"2022-12-05T12:52:48.080634+00:00","name":null,"type":"not_shutdown","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-03-09T17:40:27.413000+00:00"}}
+[2023-03-14 16:15:54.556] [info]  Request to 127.0.0.1 executed
+[2023-03-14 16:15:54.557] [info]  ===============================
+[2023-03-14 16:15:54.558] [info]  ** Request 2: [::1] **
+[2023-03-14 16:15:54.563] [error] Error: connect ECONNREFUSED ::1:5600
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1157:16)
+[2023-03-14 16:15:54.564] [info]  Request to [::1] executed
+[2023-03-14 16:15:54.566] [info]   
+[2023-03-14 16:15:54.566] [info]  ------------------------< CONFIGURE JSAP >------------------------
+[2023-03-14 16:15:54.569] [info]  - modifying endpoint: ActivityWatch
+[2023-03-14 16:15:54.570] [info]  - modifying endpoint: AwApiRouter
+[2023-03-14 16:15:54.573] [info]  - modifying endpoint: My2secApi
+[2023-03-14 16:15:54.574] [info]  - modifying endpoint: MongoDbRouter
+[2023-03-14 16:15:54.575] [info]  {
+  AwProducer: {
+    endpoints: {
+      Keycloak: 'https://keycloak.vaimee.org',
+      ActivityWatch: 'http://127.0.0.1:5600',
+      AwApiRouter: 'http://127.0.0.1:1340',
+      My2secApi: 'http://127.0.0.1:5000',
+      MongoDb: 'mongodb://root:Gregnet-99@dld.arces.unibo.it:27017/',
+      MongoDbRouter: 'http://127.0.0.1:1341'
+    },
+    loglevel: 0
+  }
+}
+[2023-03-14 16:15:54.580] [info]  127.0.0.1:5600
+[2023-03-14 16:15:54.583] [info]  Preflight: testing ActivityWatch connection
+[2023-03-14 16:15:54.588] [info]  - AwApiRouter started
+[2023-03-14 16:15:54.589] [info]  STARTING PYTHON API IN DEV MODE
+[2023-03-14 16:15:54.590] [info]  Spawning python: C:\Users\Utente\git\my2sec\1_ActivityWatchProducer\PY\my2sec\main
+[2023-03-14 16:15:54.621] [info]  ** started python api
+[2023-03-14 16:15:54.622] [info]  - Python api started
+[2023-03-14 16:15:54.625] [info]  - MongoDbClient started
+[2023-03-14 16:15:54.677] [info]  aw api is listening on port 1340
+[2023-03-14 16:15:55.037] [info]  {"aw-watcher-afk_LAPTOP-A3FDT9J3": {"id": "aw-watcher-afk_LAPTOP-A3FDT9J3", "created": "2022-08-04T17:47:01.646448+00:00", "name": null, "type": "afkstatus", "client": "aw-watcher-afk", "hostname": "LAPTOP-A3FDT9J3", "last_updated": "2023-03-14T15:15:51.776000+00:00"}, "aw-watcher-window_LAPTOP-A3FDT9J3": {"id": "aw-watcher-window_LAPTOP-A3FDT9J3", "created": "2022-08-04T17:47:01.737074+00:00", "name": null, "type": "currentwindow", "client": "aw-watcher-window", "hostname": "LAPTOP-A3FDT9J3", "last_updated": "2023-03-14T15:15:53.019000+00:00"}, "aw-producer": {"id": "aw-producer", "created": "2022-08-05T13:09:01.586327+00:00", "name": null, "type": "sepaconnector", "client": "aw-producer", "hostname": "unknown", "last_updated": "2023-03-09T10:05:38.644000+00:00"}, "aw-watcher-scan_LAPTOP-A3FDT9J3": {"id": "aw-watcher-scan_LAPTOP-A3FDT9J3", "created": "2022-10-17T14:34:37.689112+00:00", "name": null, "type": "scan", "client": "aw-my2sec", "hostname": "LAPTOP-A3FDT9J3", "last_updated": "2022-12-05T09:23:36.384000+00:00"}, "aw-watcher-working_LAPTOP-A3FDT9J3": {"id": "aw-watcher-working_LAPTOP-A3FDT9J3", "created": "2022-10-17T14:36:22.826305+00:00", "name": null, "type": "working", "client": "aw-watcher-working", "hostname": "LAPTOP-A3FDT9J3", "last_updated": "2023-03-08T12:41:45.211000+00:00"}, "aw-watcher-start-stop_LAPTOP-A3FDT9J3": {"id": "aw-watcher-start-stop_LAPTOP-A3FDT9J3", "created": "2022-12-05T12:35:53.528196+00:00", "name": null, "type": "start-stop", "client": "aw_my2sec", "hostname": "LAPTOP-A3FDT9J3", "last_updated": "2023-03-13T14:24:07.021000+00:00"}, "aw-watcher-notshutdown_LAPTOP-A3FDT9J3": {"id": "aw-watcher-notshutdown_LAPTOP-A3FDT9J3", "created": "2022-12-05T12:52:48.080634+00:00", "name": null, "type": "not_shutdown", "client": "aw_my2sec", "hostname": "LAPTOP-A3FDT9J3", "last_updated": "2023-03-09T17:40:27.413000+00:00"}}
+
+[2023-03-14 16:15:55.039] [info]  DATASOURCE: OK!
+

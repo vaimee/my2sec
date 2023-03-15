@@ -53,33 +53,6 @@ class OpenProjectClient {
             }
         }
         this.patch_auth_resource("/api/v3/time_entries",data);
-
-
-
-        /*
-        wp.subject="mao"
-        console.log(wp.subject)
-        var data={
-            lockVersion:wp.body.lockVersion,
-            //subject:"maous",
-            //estimatedTime:new Duration({days: 24, hours: 15})
-
-            spentTime: new Duration({hours:1})
-        }
-        //wp["spentTime"] = new Duration({hours: 1});
-        //console.log(wp)
-        //wp=JSON.stringify(wp);
-        */
-        
-
-        //const wp = await this.em.get(WP, 0)
-        // modify Work package
-        //wp.subject = 'Quick start Demo'
-        //wp.type = new Type(TypeEnum.Epic)
-        //wp.subject = 'Quick start Demo'
-        //wp.estimatedTime = new Duration({days: 24, hours: 15})
-        //wp.startDate = new Date()
-        //await em.patch(wp, false);
     }
 
 

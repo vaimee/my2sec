@@ -1,9 +1,0 @@
-{
-  "name": "environmentdetector",
-  "version": "1.0.0",
-  "description": "scans environment",
-  "main": "EnvironmentD.js",
-  "dependencies": {
-    "electron-is-dev": "^2.0.0"
-  }
-}

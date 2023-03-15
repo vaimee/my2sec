@@ -2,7 +2,8 @@ const http = require('http');
 const express = require('express');
 
 class AwApiRouter {
-    constructor(host,port,router_port){
+    constructor(host,port,router_port,logger){
+      this.log=logger;
       this.routerPort=router_port;
         this.awHost=host;
         this.awPort=port;
@@ -66,13 +67,13 @@ class AwApiRouter {
         this.test_datasource()
         //LISTEN TO REQUESTS
         this.awApiRouter.listen(this.routerPort, () => {
-            console.log('aw api is listening on port 1340');
+            this.log.info('aw api is listening on port 1340');
         });
 
     }
 
     test_datasource(){
-        console.log("Preflight: testing ActivityWatch connection")
+        this.log.info("Preflight: testing ActivityWatch connection")
         //var host_name="127.0.0.1";
         //var http_port=5600;
         var host_name=this.awHost;
@@ -82,8 +83,8 @@ class AwApiRouter {
         //console.log("sending get request")
         //var response=await get(host_name,http_port,reqpath);
         this.get(host_name,http_port,reqpath).then((data)=>{
-          console.log(data)
-          console.log("DATASOURCE: OK!\n")    
+          this.log.info(data)
+          this.log.info("DATASOURCE: OK!\n")    
         });
         //console.log(String(response))
     }

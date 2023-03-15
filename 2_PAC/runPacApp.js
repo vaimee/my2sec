@@ -3,6 +3,7 @@ var AwMapper = require("./Apps/AwMapper.js")
 //var KeycloakMapper = require("./Apps/KeycloakMapper.js")
 var KeycloakAdapter = require("./Apps/KeycloakAdapter.js")
 var SupersetUsersConsumer = require("./Apps/SupersetUsersConsumer.js")
+var OpUsersConsumer = require("./Apps/OpUsersConsumer.js")
 var testClient = require("./Apps/testClient/testClient.js")
 var My2secTester = require("./Apps/testClient/My2secTester.js")
 var AwMapperTester = require("./Apps/testClient/AwMapperTester.js")
@@ -91,6 +92,9 @@ switch (arguments[0]) {
     case "SqlActivitiesConsumer":
         initSqlActivitiesConsumer(arguments.slice(1))
         break;
+    case "OpUsersConsumer":
+        initOpUsersConsumer(arguments.slice(1))
+        break;    
     case "help":
         showHelp()
         break;
@@ -100,6 +104,13 @@ switch (arguments[0]) {
 }
 }
 
+
+
+function initOpUsersConsumer(args){
+    var consumer=new OpUsersConsumer(jsap,args)
+    //tester.log.loglevel=0;
+    consumer.start()      
+}
 function initSqlActivitiesConsumer(args){
     var consumer=new SqlActivitiesConsumer(jsap,args)
     //tester.log.loglevel=0;
