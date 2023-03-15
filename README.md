@@ -73,8 +73,8 @@ If you are a developer, or you have trouble using the official release of My2sec
   If your PC does not have ActivityWatch installed, please install it from the official website: [https://activitywatch.net/](https://activitywatch.net/)
 ## Download
 - Clone this repository
-## Installation
-- Open a terminal and move into the unzipped folder:
+## Dependencies Installation
+- Open a terminal and move into the ActivityWatchProducer folder in the cloned repository:
   <pre>cd C://Users/User/.../1_ActivityWatchProducer</pre>
   This is the main interface you will be using to interact with My2sec services, like publishing and aggregating your activities.
 - The interface is built with the Electron framework, to install it type the following command in your terminal:
