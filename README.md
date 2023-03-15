@@ -67,7 +67,7 @@ If you are a developer, or you have trouble using the official release of My2sec
   If one of the commands returns an error, please install Node.js from the official website: [https://www.nodejs.org](https://www.nodejs.org)
 - <b>Python</b><br>
   To check if Python is installed on your local machine, type the following commands in your terminal:
-  <pre>python --version</pre>
+  <pre>python --version<br>pip --version</pre>
   If one of the commands returns an error, please install Python from the official website: [https://www.python.org/](https://www.python.org/)
 - <b>ActivityWatch</b><br>
   If your PC does not have ActivityWatch installed, please install it from the official website: [https://activitywatch.net/](https://activitywatch.net/)
