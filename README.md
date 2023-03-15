@@ -58,7 +58,8 @@ Any support is appreciated!
 <br>
 
 # DEVELOPMENT
-This guide will step you through download and installation of the My2Sec Application on your system. 
+If you are a developer, or you have trouble using the official release of My2sec, this guide will guide you through the steps necessary to run My2sec application in Development mode.
+**WARNING**: there is a known issue with Python3. 
 ### Prerequisites
 - <b>Node.js</b><br>
   To check if Node.js is installed on your local machine, type the following commands in your terminal:
