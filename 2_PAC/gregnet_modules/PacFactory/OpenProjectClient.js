@@ -25,6 +25,69 @@ class OpenProjectClient {
 
     }
 
+    async get_projects(){
+        var projects=await this.get_auth_resource('/api/v3/projects')
+        return JSON.parse(projects)
+    }
+
+    async add_task(subject,user_href,project_link){
+        var newWorkPackageData={
+            "subject":subject,//"nuovataskpertestuser!!!!!",
+            "_links":{
+                "assignee":{
+                    "href": user_href//"/api/v3/users/12"
+                },
+                "project":project_link
+                /*"project": { 
+                    "href": project_href//"/api/v3/projects/2",
+                    //"title": "My2sec" 
+                }*/
+            }
+        }
+        var res=await this.patch_auth_resource('/api/v3/work_packages',newWorkPackageData)
+        return res
+    }
+
+    async add_membership(user_href,project_link){
+        var newMembershipData={
+            "_links":{
+                "principal": {
+                    "href": user_href//"/api/v3/users/12"
+                },
+                "project":project_link,
+                /*
+                "project": { 
+                    "href": project_href//"/api/v3/projects/2",
+                    //"title": "My2sec" 
+                },*/
+                "roles": [
+                    { 
+                        "href": "/api/v3/roles/4", 
+                        "title": "Member" 
+                    }
+                ]
+            }
+      
+        }
+        var res=await this.patch_auth_resource('/api/v3/memberships',newMembershipData)
+        return res
+    }
+
+    async create_user(login,email,firstName,lastName,password){
+        //ERROR:  non mettere name, PASSWORD MUST BE MORE THAN 10 CHARACTERS
+        var newUserData={
+            login: login,
+            email: email,//"testuser1@example.com",
+            //name: "testuserName",
+            firstName: firstName,//"none",
+            lastName: lastName,//"none",
+            status: "active",
+            password: password//"testuser02"//MUST BE MORE THAN 10 CHARS
+  
+        }
+        var res=await this.patch_auth_resource('/api/v3/users',newUserData)
+        return res
+    }
 
     async update_wp(_TASK,_LOG_TIME){
         console.log("TROVATA TASK!")
@@ -59,16 +122,15 @@ class OpenProjectClient {
 
 
     async get_tasks(whitelisted_projects){
-
-        var res=await this.get_auth_resource("/api/v3/work_packages");
-        res=JSON.parse(res);
-        console.log(res)
-        throw new Error("MAUS")
-
+        // TODO: FIND A SCALABLE WAY TO QUERY WORK PACKAGES
         console.log("Getting Work Packages ids...");
-        const work_packages_json = await this.em.getMany(WP);
-        const work_packages_ids= this.get_work_packages_ids(work_packages_json);
-        
+        //const work_packages_json = await this.em.getMany(WP);
+        var res=await this.get_auth_resource("/api/v3/work_packages?pageSize=1000");
+        res=JSON.parse(res);
+        //console.log(work_packages_json.length)
+        const work_packages_ids= this.get_work_packages_ids(res._embedded.elements);
+        //throw new Error("MAUS")
+
         var string_messages=[];
         var counter=0;
         for(var i in work_packages_ids){
@@ -145,54 +207,58 @@ class OpenProjectClient {
     }
 
     get_work_packages_ids(work_packages_json){
+        //console.log(work_packages_json)
         var work_packages_ids=[];
         var counter=0;
         for(var key in work_packages_json){
-            work_packages_ids[counter]=work_packages_json[key].body.id;
+            work_packages_ids[counter]=work_packages_json[key].id;
             counter++
         }
         return work_packages_ids
     }
 
     patch_auth_resource(path,update){
-        var username="apikey"
-        var password=this.apiKey//"bcc95e391fc9f7eee77aa7cb3bbc8cd126108d6a6623c944a72d56f09e3bd633"//"37fdc215964b5f21fc99fde4e59a83d1c1c363eb2b818db2ff9a2af65e7f2d12"
-        var auth="Basic " + new Buffer(username + ":" + password).toString("base64");
-        const http = require('http');        
-        const options = {
-            hostname: this.host,//"openproject",//'host.docker.internal',
-            port: this.port,//80,//889,
-            path: path,
-            method: 'POST',
-            headers: {
-                "Content-Type": 'application/json',
-                'Authorization': auth
+        return new Promise(resolve=>{
+            var username="apikey"
+            var password=this.apiKey//"bcc95e391fc9f7eee77aa7cb3bbc8cd126108d6a6623c944a72d56f09e3bd633"//"37fdc215964b5f21fc99fde4e59a83d1c1c363eb2b818db2ff9a2af65e7f2d12"
+            var auth="Basic " + new Buffer(username + ":" + password).toString("base64");
+            const http = require('http');        
+            const options = {
+                hostname: this.host,//"openproject",//'host.docker.internal',
+                port: this.port,//80,//889,
+                path: path,
+                method: 'POST',
+                headers: {
+                    "Content-Type": 'application/json',
+                    'Authorization': auth
+                }
             }
-        }
-        
-        const req = http.request(options, res => {
-        
-            let data = '';
-        
-            console.log('Status: ', res.statusCode);
-            //console.log('Headers: ', JSON.stringify(res.headers));
-        
-            res.setEncoding('utf8');
-        
-            res.on('data', chunk => {
-                data += chunk;
+            
+            const req = http.request(options, res => {
+            
+                let data = '';
+            
+                console.log('Status: ', res.statusCode);
+                //console.log('Headers: ', JSON.stringify(res.headers));
+            
+                res.setEncoding('utf8');
+            
+                res.on('data', chunk => {
+                    data += chunk;
+                });
+            
+                res.on('end', () => {
+                    //console.log('Body: ', JSON.parse(data));
+                    resolve(JSON.parse(data))
+                });
+            
+            }).on('error', e => {
+                console.error(e);
             });
-        
-            res.on('end', () => {
-                //console.log('Body: ', JSON.parse(data));
-            });
-        
-        }).on('error', e => {
-            console.error(e);
-        });
-        
-        req.write(JSON.stringify(update));
-        req.end();
+            
+            req.write(JSON.stringify(update));
+            req.end();
+        })
     }
     
     get_auth_resource(path){

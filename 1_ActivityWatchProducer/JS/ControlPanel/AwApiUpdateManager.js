@@ -75,6 +75,7 @@ class AwApiUpdateManager {
     //-------------------------------
     //MANAGE BUTTONS EVENTS
     on_update_button_pressed(){
+        
         this.log.info("Update button pressed! Starting validation procedure")
         //show validation panel
         this.vpanel.style.display="block"

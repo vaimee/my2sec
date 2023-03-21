@@ -1,5 +1,5 @@
 {
-	"host": "localhost",
+	"host": "dld.arces.unibo.it",
 	"oauth": {
 		"enable": false,
 		"register": "https://localhost:8443/oauth/register",
@@ -7,7 +7,7 @@
 	},
 	"sparql11protocol": {
 		"protocol": "http",
-		"port": 8667,
+		"port": 8551,
 		"query": {
 			"path": "/query",
 			"method": "POST",
@@ -23,7 +23,7 @@
 		"protocol": "ws",
 		"availableProtocols": {
 			"ws": {
-				"port": 9667,
+				"port": 9551,
 				"path": "/subscribe"
 			},
 			"wss": {
@@ -44,7 +44,26 @@
 		"my2sec": "http://www.vaimee.it/ontology/my2sec#"
 	},
 	"extended": {
-		
+
+	"AwProducer": {
+			"endpoints":{
+				"Keycloak": "https://keycloak.vaimee.org",
+				"ActivityWatch": "http://localhost:5600",
+				"AwApiRouter": "http://localhost:1340",
+				"My2secApi": "http://localhost:5000",
+				"MongoDb": "mongodb://root:Gregnet-99@dld.arces.unibo.it:27017/",
+				"MongoDbRouter": "http://localhost:1341"
+			},
+			"loglevel":0
+		},
+
+		"OpenProjectClientConfiguration":{
+        	"host": "dld.arces.unibo.it",
+        	"port": 8078,
+        	"clientId": "96CwxvbDL7gfJ0IJdGXA0Z62ZQIYJCfHN520D5Majn4",
+        	"clientSecret": "l0pKp2SRaBwCSrysdY3aggRr1KnrTovqJjojwApP1Z0",
+        	"apiKey": "d8f31b5a597d11be8f2037fbc3d7da3689a5c79dde45adc3fc12a457e0d76b94"
+      	}
 	},
 	"updates": {
 		"CREATE_USERNAMES_GRAPH":{

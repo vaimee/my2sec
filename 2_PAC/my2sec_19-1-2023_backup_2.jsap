@@ -1,5 +1,5 @@
-default_jsap={
-	"host": "dld.arces.unibo.it",
+{
+	"host": "localhost",
 	"oauth": {
 		"enable": false,
 		"register": "https://localhost:8443/oauth/register",
@@ -7,7 +7,7 @@ default_jsap={
 	},
 	"sparql11protocol": {
 		"protocol": "http",
-		"port": 8551,
+		"port": 8667,
 		"query": {
 			"path": "/query",
 			"method": "POST",
@@ -23,7 +23,7 @@ default_jsap={
 		"protocol": "ws",
 		"availableProtocols": {
 			"ws": {
-				"port": 9551,
+				"port": 9667,
 				"path": "/subscribe"
 			},
 			"wss": {
@@ -44,17 +44,13 @@ default_jsap={
 		"my2sec": "http://www.vaimee.it/ontology/my2sec#"
 	},
 	"extended": {
-		
-		"AwProducer": {
-			"endpoints":{
-				"Keycloak": "https://keycloak.vaimee.org",
-				"ActivityWatch": "http://localhost:5000",
-				"My2secApi": "http://localhost:5600",
-				"MongoDb": "mongodb://root:Gregnet-99@dld.arces.unibo.it:27017/"
-			},
-			"loglevel":0
-		}
-
+		"OpenProjectClientConfiguration":{
+        	"host": "dld.arces.unibo.it",
+        	"port": 8078,
+        	"clientId": "pIuaMa7WY4xwkkVNobDjQpp_OSjzsUrMXEKnjCVkWQA",
+        	"clientSecret": "nNFyLa7MRSJ2Pnq9ju8_f3Lg4FxRW4Gs1EdFgfIAHr4",
+        	"apiKey": "bcc95e391fc9f7eee77aa7cb3bbc8cd126108d6a6623c944a72d56f09e3bd633"
+      	}
 	},
 	"updates": {
 		"CREATE_USERNAMES_GRAPH":{
@@ -86,7 +82,13 @@ default_jsap={
 			}
 		},
 		"REMOVE_USER":{
-			"sparql":"DELETE {?s ?p ?o} WHERE { GRAPH <http://www.vaimee.it/my2sec/members> { <http://www.vaimee.it/my2sec/defuser@vaimee.it> ?p ?o }}"
+			"sparql":"DELETE {GRAPH <http://www.vaimee.it/my2sec/members> { ?usergraph ?p ?o }} WHERE { GRAPH <http://www.vaimee.it/my2sec/members> { ?usergraph ?p ?o }}",
+			"forcedBindings": {
+				"usergraph": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/defuser@vaimee.it"
+				}
+			}
 		},
 		"DELETE_USER_PRIVATE_GRAPH":{
 			"sparql":"DROP GRAPH <http://www.vaimee.it/my2sec/defuser@vaimee.it>"
@@ -140,7 +142,7 @@ default_jsap={
 			}
 		},	
 		"ADD_TRAINING_EVENT":{
-			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/events> { ?b rdf:type my2sec:TrainingEvent ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:hasActivityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }}  WHERE {BIND(UUID() AS ?b )}",
+			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/events> { ?b rdf:type my2sec:TrainingEvent ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:hasActivityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }}  WHERE {BIND(UUID() AS ?b) BIND(UUID() AS ?timenode) }",
 			"forcedBindings": {
 				"usergraph": {
 					"type": "uri",
@@ -211,7 +213,7 @@ default_jsap={
 			}
 		},
 		"REMOVE_TRAINING_EVENT":{
-			"sparql":"DELETE {GRAPH <http://vaimee.it/my2sec/events> {?event ?p ?o ; my2sec:hasTimeInterval ?d . ?d ?p1 ?o1} } WHERE{ GRAPH <http://vaimee.it/my2sec/events> {?event ?p ?o ; my2sec:hasTimeInterval ?d . ?d ?p1 ?o1}}",
+			"sparql":"DELETE {GRAPH <http://vaimee.it/my2sec/events> {?event ?p ?o ;my2sec:hasTimeInterval ?d .?d ?p1 ?o1 } } WHERE{GRAPH <http://vaimee.it/my2sec/events> {?event ?p ?o ; my2sec:hasTimeInterval ?d . ?d ?p1 ?o1 }}",
 			"forcedBindings": {
 				"event": {
 					"type": "uri",
@@ -220,7 +222,7 @@ default_jsap={
 			}
 		},
 		"ADD_ACTIVITY":{
-			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/activities> {?b rdf:type my2sec:Activity ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }} WHERE {BIND(UUID() AS ?b)}",
+			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/activities> {?b rdf:type my2sec:Activity ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }} WHERE {BIND(UUID() AS ?b) BIND(UUID() AS ?timenode)}",
 			"forcedBindings": {
 				"usergraph": {
 					"type": "uri",
@@ -257,7 +259,7 @@ default_jsap={
 			}
 		},
 		"ADD_VALIDATED_ACTIVITY":{
-			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/activities> {?b rdf:type my2sec:ValidatedActivity ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }} WHERE {BIND(UUID() AS ?b)}",
+			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/activities> {?b rdf:type my2sec:ValidatedActivity ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }} WHERE {BIND(UUID() AS ?b) BIND(UUID() AS ?timenode) }",
 			"forcedBindings": {
 				"usergraph": {
 					"type": "uri",
@@ -294,7 +296,7 @@ default_jsap={
 			}
 		},
 		"ADD_TRAINING_ACTIVITY":{
-			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/activities> {?b rdf:type my2sec:TrainingActivity ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }} WHERE {BIND(UUID() AS ?b)}",
+			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/activities> {?b rdf:type my2sec:TrainingActivity ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }} WHERE {BIND(UUID() AS ?b) BIND(UUID() AS ?timenode)}",
 			"forcedBindings": {
 				"usergraph": {
 					"type": "uri",
@@ -350,7 +352,7 @@ default_jsap={
 					"value": "urn:uuid:ActivityX"
 				}
 			}
-		},
+		},		
 		"REMOVE_VALIDATED_ACTIVITY":{
 			"sparql":"DELETE {GRAPH <http://vaimee.it/my2sec/activities> {?activity ?p ?o ; my2sec:hasTimeInterval ?d . ?d ?p1 ?o1} } WHERE{ GRAPH <http://vaimee.it/my2sec/activities> {?activity ?p ?o ; my2sec:hasTimeInterval ?d . ?d ?p1 ?o1}}",
 			"forcedBindings": {
@@ -359,8 +361,8 @@ default_jsap={
 					"value": "urn:uuid:ActivityX"
 				}
 			}
-		},				
-		
+		},		
+				
 		"OLD_REMOVE_ACTIVITY":{
 			"sparql":"DELETE{ GRAPH <http://vaimee.it/my2sec/activities> { ?bnode rdf:type my2sec:Activity; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval ?d . ?d rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }} WHERE{ GRAPH <http://vaimee.it/my2sec/activities> { ?bnode rdf:type my2sec:Activity; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval ?d . ?d rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }}",
 			"forcedBindings": {
@@ -441,12 +443,8 @@ default_jsap={
 			}
 		},
 		"ADD_TASK":{
-			"sparql":"INSERT { GRAPH ?graph { ?b rdf:type my2sec:Task ; my2sec:hasProject ?projecturi ; my2sec:taskId ?task_id; my2sec:taskTitle ?task_title; my2sec:hasMember ?assignee; my2sec:spentTime _:timenode . _:timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?spent_time }} WHERE {BIND(UUID() AS ?b)}",
-			"forcedBindings": {
-				"graph": {
-					"type": "uri",
-					"value": "http://www.vaimee.it/projects#"
-				},				
+			"sparql":"INSERT { GRAPH <http://www.vaimee.it/projects#> { ?b rdf:type my2sec:Task ; my2sec:hasProject ?projecturi ; my2sec:taskId ?task_id ; my2sec:taskTitle ?task_title ; my2sec:hasMember ?assignee ; my2sec:spentTime ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?spent_time }} WHERE {BIND(UUID() AS ?b) BIND(UUID() AS ?timenode)}",
+			"forcedBindings": {		
 				"projecturi": {
 					"type": "uri",
 					"value": "http://www.vaimee.it/projects#demo-project"
@@ -472,7 +470,7 @@ default_jsap={
 			}
 		},
 		"UPDATE_TASK":{
-			"sparql":"DELETE { GRAPH ?graph { ?old_bnode rdf:type my2sec:Task; my2sec:hasProject ?old_project; my2sec:taskId ?task_id; my2sec:taskTitle ?old_task_title ; my2sec:hasMember ?old_member; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value}} INSERT { GRAPH ?graph { _:bnode rdf:type my2sec:Task ; my2sec:hasProject ?projecturi ; my2sec:taskId ?task_id; my2sec:taskTitle ?task_title; my2sec:hasMember ?assignee; my2sec:spentTime _:timenode . _:timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value }} WHERE { GRAPH ?graph { OPTIONAL { ?old_bnode rdf:type my2sec:Task; my2sec:hasProject ?old_project; my2sec:taskId ?task_id; my2sec:taskTitle ?old_task_title ; my2sec:Member ?old_member; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value }}}",
+			"sparql":"DELETE { GRAPH ?graph { ?old_bnode rdf:type my2sec:Task; my2sec:hasProject ?old_project; my2sec:taskId ?task_id; my2sec:taskTitle ?old_task_title ; my2sec:hasMember ?old_member; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value}} INSERT { GRAPH ?graph { _:bnode rdf:type my2sec:Task ; my2sec:hasProject ?projecturi ; my2sec:taskId ?task_id; my2sec:taskTitle ?task_title; my2sec:hasMember ?assignee; my2sec:spentTime ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value }} WHERE { GRAPH ?graph { OPTIONAL { ?old_bnode rdf:type my2sec:Task; my2sec:hasProject ?old_project; my2sec:taskId ?task_id; my2sec:taskTitle ?old_task_title ; my2sec:Member ?old_member; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value }} BIND(UUID() AS ?timenode)}",
 			"forcedBindings": {
 				"graph": {
 					"type": "uri",
@@ -639,15 +637,6 @@ default_jsap={
 		"ALL_USERS_TRAINING_ACTIVITIES":{
 			"sparql":"SELECT * WHERE { GRAPH <http://vaimee.it/my2sec/activities> {?nodeid rdf:type my2sec:TrainingActivity; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration . OPTIONAL { ?nodeid my2sec:taskTitle ?task} FILTER (?event_type != my2sec:TrainingActivity)   }}"	
 		},
-		"USER_TRAINING_ACTIVITIES":{
-			"sparql":"SELECT * WHERE { GRAPH <http://vaimee.it/my2sec/activities> {?nodeid rdf:type my2sec:TrainingActivity; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration . OPTIONAL { ?nodeid my2sec:taskTitle ?task} FILTER (?event_type != my2sec:TrainingActivity) VALUES ?usergraph {?forceUserGraph} }}",
-			"forcedBindings": {
-				"forceUserGraph": {
-					"type": "uri",
-					"value": "http://www.vaimee.it/my2sec/admin@vaimee.it"
-				}
-			}
-		},
 
 		"ALL_OP_MESSAGES":{
 			"sparql":"SELECT * WHERE{ GRAPH ?usergraph { _:b my2sec:messageValue ?msgvalue; my2sec:messageSource ?source ;  time:inXSDDateTimeStamp ?msgtimestamp . }}",
@@ -680,15 +669,6 @@ default_jsap={
 		"ALL_LOG_TIMES":{
 			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/my2sec/logtime> { ?b rdf:type my2sec:Logtime; my2sec:hasMember ?usergraph; my2sec:hasTask ?task_uri; time:inXSDDateTimeStamp ?now; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType ?unit_type ; time:numericDuration ?log_time }}"
 		},
-		"USER_LOG_TIMES":{
-			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/my2sec/logtime> { ?b rdf:type my2sec:Logtime; my2sec:hasMember ?usergraph; my2sec:hasTask ?task_uri; time:inXSDDateTimeStamp ?now; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType ?unit_type ; time:numericDuration ?log_time }}",
-			"forcedBindings": {
-				"usergraph": {
-					"type": "uri",
-					"value": "http://www.vaimee.it/my2sec/admin@vaimee.it"
-				}
-			}
-		},
 		"GET_SYNCHRONIZATION_FLAG":{
 			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/my2sec/flags> {?flag rdf:type ?flag_type ; my2sec:hasMember ?usergraph ; time:inXSDDateTimeStamp ?timestamp}}",
 			"forcedBindings": {
@@ -698,18 +678,8 @@ default_jsap={
 				}
 			}
 		},
-		"GET_USER_SYNCHRONIZATION_FLAG":{
-			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/my2sec/flags> {?flag rdf:type ?flag_type ; my2sec:hasMember ?usergraph ; time:inXSDDateTimeStamp ?timestamp}}",
-			"forcedBindings": {
-				"flag_type": {
-					"type": "uri",
-					"value": "http://www.vaimee.it/my2sec/production_finished_flag"
-				},
-				"usergraph": {
-					"type": "uri",
-					"value": "http://www.vaimee.it/my2sec/defuser@vaimee.it"
-				}
-			}
+		"GET_ALL_GRAPHS_COUNT":{
+			"sparql":"SELECT ?g (COUNT(?s) AS ?ntriples) WHERE {GRAPH ?g { ?s ?p ?o }}GROUP BY ?g"
 		}
 	}
 }

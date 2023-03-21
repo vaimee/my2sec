@@ -138,10 +138,24 @@
 			</div>
 		</div>
 		<hr>
-		<button id="select_all_rows" onclick="select_all()">SELECT ALL</button>
-		<button id="set_all_rows_to_working" onclick="set_all_rows_to_value('working')" style="display:none">WORKING</button>
-		<button id="set_all_rows_to_notworking" onclick="set_all_rows_to_value('notworking')" style="display:none">NOT WORKING</button>
-		<div id="validation_body"></div>
+		<!--<div id="validation_info_panel">
+			Welcome to the <b>validation panel!</b> Here events collected with the scan feature can be
+			validated and uploaded: in this first section the Working/notworking AI 
+			filtered events are shown.
+			<br>
+			To correct a prediction, change the value inside the corresponding
+			input box. Once all the corrections have been made, press the 'confirm and upload'
+			button to upload your data. 
+		</div>-->
+		<div id="validation_selection_buttons">
+			<button id="select_all_rows" onclick="select_all()">SELECT ALL</button>
+			<button id="set_all_rows_to_working" onclick="set_all_rows_to_value('working')" style="display:none">WORKING</button>
+			<button id="set_all_rows_to_notworking" onclick="set_all_rows_to_value('notworking')" style="display:none">NOT WORKING</button>
+		</div>
+		
+		<div id="validation_body">
+			<!--CONTAINS THE TABLE-->
+		</div>
 		<div id="validation_messages">
 		</div>
 		<br>

@@ -80,7 +80,7 @@ class PythonApiRunner{
       //console.log("started python api")
       //on new data chunk
       this.pyProcess.stdout.on("data",(data)=>{
-          console.log(data)
+          this.log.info(data)
       })
       //on new error
       this.pyProcess.stderr.on('data', (data) => {

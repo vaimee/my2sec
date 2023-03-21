@@ -53,8 +53,8 @@ async function init(){
 	
 
 	//TRY TO STOP WATCHERS AT STARTUP TO AVOID BUGS
-	console.log("PROVO A SPEGNERE I WATCHERS")
-	awManager.stopWatchers()
+	//console.log("PROVO A SPEGNERE I WATCHERS")
+	//awManager.stopWatchers()
 
 	console.log(" ")
 
@@ -130,6 +130,7 @@ async function init(){
 	awApiUpdateManager=new AwApiUpdateManager(json_package["my2sec_jsap"],awManager,userInfoConsumer,tasksConsumer)
 
 	//test()
+	//start_update_procedure()
 
 }
 
