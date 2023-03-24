@@ -96,7 +96,7 @@ class My2secWatcher:
         if self.watcher_running == True:
             print("watcher already started")
             return "Watcher already started", 400
-        print("watcher started")
+        print("Watcher started")
         self.watcher_running = True
         self.SetDatatime()
         self.watcher_thread = Thread(target=self.WatcherThread, args=())

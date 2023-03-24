@@ -67,6 +67,14 @@ class keycloakClient {
                     if(this.readyState === XMLHttpRequest.DONE && this.status === 201){
                         console.log("keycloak-client: auth post completed, status 201")
                         resolve(req.responseText);  
+                    }else{
+                        if(this.status === 409){
+                            console.log("error: user already exists")
+                            document.getElementById("createuser_error_message").innerHTML="Error: user already exists"
+                            throw new Error("Error: user already exists")
+                            
+                            //resolve(req.responseText);
+                        }
                     }
                 }
             }

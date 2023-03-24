@@ -85,15 +85,19 @@ async function tryCreateUser(){
         //data.lastName="gregcognome"
         //data.email="gregoriunibus@gmail.com"
         //data.username="gg"
+        var success=false;
         try{
             await my2secCreateUserApp.post_new_user(data,keycloak_loginApp_config.realm)
             successbox.innerHTML="User "+createUserForm.create_username.value+" created!"
             switch_view()
             errorbox.innerHTML=""
+            success=true;
         }catch(e){
             console.log(e)
-            errorbox.innerHTML="Unexpected error occurred"
         }    
+        if(!success){
+            errorbox.innerHTML="Error creating user: already exists"
+        }
         
         
     }else{
