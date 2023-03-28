@@ -7,12 +7,17 @@ import pandas as pd
 import json
 import aw_my2sec
 import os
+import io
+import sys
 import socket
 from manage_csv import CheckFile, ReadCSV, EventsToCSV, WorkingEvents, UpdateSelectionCSV, UpdateCurrentCSV
 import numpy as np
 import logging
 import builtins
 import datetime
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 
 app = Flask(__name__)

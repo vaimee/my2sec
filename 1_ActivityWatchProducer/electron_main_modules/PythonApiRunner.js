@@ -68,14 +68,18 @@ class PythonApiRunner{
       try{
         
         this.log.info("Spawning python: "+cwd)
-        this.pyProcess=spawn("python",["API_my2sec.py"],{cwd});
+        this.pyProcess=spawn("python",["API_my2sec.py"],{
+          cwd:cwd,
+          stdio: ['pipe', 'pipe', 'pipe'],
+          encoding: 'utf-8'
+        });
         this.log.info("** started python api")
       }catch(e){
         console.log(e)
-        console.log("TRYING WITH PYTHON 3")
-        console.log("Spawning python3: "+cwd)
-        this.pyProcess=spawn("python3",["API_my2sec.py"],{cwd});    
-        this.log.info("** started python api")   
+        //console.log("TRYING WITH PYTHON 3")
+        //console.log("Spawning python3: "+cwd)
+        //this.pyProcess=spawn("python3",["API_my2sec.py"],{cwd});    
+        //this.log.info("** started python api")   
       }
 
       //console.log("started python api")
