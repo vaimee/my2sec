@@ -2,4 +2,6 @@
 /.vscode
 /4_UTILS
 /5_RELEASES
-/6_API_my2sec_executable
+/6_API_my2sec_executable_OLD
+/6_API_my2sec
+/1_ActivityWatchProducer/PY/my2sec_OLD

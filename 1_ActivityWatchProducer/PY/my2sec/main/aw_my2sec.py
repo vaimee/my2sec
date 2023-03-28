@@ -9,6 +9,15 @@ from time import sleep
 from aw_ping import check
 import buckets_worker
 import pandas as pd
+import builtins
+
+def custom_print(*args, **kwargs):
+    now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    prefix = "127.0.0.1 -- [{}] ".format(now)
+    sep = kwargs.get("sep", " ")
+    end = kwargs.get("end", "\n")
+    builtins.print(prefix, end="")
+    builtins.print(*args, sep=sep, end=end)
 
 # watcher used for scans
 class My2secWatcher:
@@ -85,36 +94,37 @@ class My2secWatcher:
             self.__client.insert_event("{}_{}".format(bucket_name, self.__client.client_hostname), event)
             return True
         except Exception as ex:
-            print(ex)
+            custom_print(ex)
             return False"""
 
 
     def Start(self):
         if self.AWserver_running == False:
-            print("AWServer is offline")
-            return 'ActivityWatch Server offline', 400
+            custom_print("ERROR: ActivityWatch Server offline")
+            return 'ERROR: ActivityWatch Server offline', 400
         if self.watcher_running == True:
-            print("watcher already started")
-            return "Watcher already started", 400
-        print("Watcher started")
+            custom_print("WARNING: watcher already started")
+            return "WARNING: watcher already started", 400
+
         self.watcher_running = True
         self.SetDatatime()
         self.watcher_thread = Thread(target=self.WatcherThread, args=())
         self.watcher_thread.start()
+
         bucket = "{}_{}".format("aw-watcher-start-stop", self.__client.client_hostname)
         self.__client.create_bucket(bucket, event_type="start-stop")
         not_shutdown_event = Event(timestamp=datetime.now(timezone.utc), data={"start-stop":"start"})
         self.__client.insert_event(bucket, not_shutdown_event)
+        custom_print('WATCHER: Scan started')
         return "watcher started", 200
 
 
     def Stop(self):
         if self.AWserver_running == False and self.__datetime_start_watcher == None:
-            print("ActivityWatch Server offline")
-            return "ActivityWatch Server offline", 400
+            custom_print("ERROR: ActivityWatch Server offline")
+            return "ERROR: ActivityWatch Server offline", 400
         if self.AWserver_running == False:
-            print("ActivityWatch Server offline")
-        print("watcher stopped")
+            custom_print("ERROR: ActivityWatch Server offline")
         self.watcher_running = False
         message, error = self.SetDatatime(start=False)
         self.watcher_thread = None
@@ -139,10 +149,8 @@ class My2secWatcher:
                 with open(self.__path+'/datetime.txt', 'w') as f:
                     f.writelines("{0};{1}".format(self.__datetime_start_watcher, datetime.now(timezone.utc)))
                 #self.__datetime_start_watcher = None
-                #print(self.QueryAWCurrentWindow())
                 return None, False
             except Exception as ex:
-                print(ex)
                 return ex, True
 
 
@@ -150,7 +158,7 @@ class My2secWatcher:
         while self.watcher_running:
             self.NotShutdown()
             self.SetDatatime(start=False)
-            print("backup created")
+            custom_print("API: backup created")
             sleep(300)
 
 
@@ -160,13 +168,13 @@ class My2secWatcher:
             AWStatus = check(self.__server_params[0],self.__server_params[1])
 
             if not AWStatus and previous_AWStatus:
-                print("Stop della scansione")
+                #custom_print("APIStop della scansione")
                 self.AWserver_running = False
                 previous_AWStatus = False
                 self.Stop() # return su stop
 
             if AWStatus and not previous_AWStatus:
-                print("server nuovamente online")
+                custom_print("API: AWServer online")
                 self.AWserver_running = True
                 previous_AWStatus = True
 
@@ -181,7 +189,7 @@ class My2secWatcher:
             not_shutdown_event = Event(timestamp=datetime.now(timezone.utc), data={"not_shutdown":"T"})
             self.__client.insert_event(bucket, not_shutdown_event)
         except Exception as ex:
-            print(ex)
+            custom_print('ERROR:', ex)
 
 
     def QueryAWCurrentWindow(self):
@@ -200,15 +208,15 @@ class My2secWatcher:
             query = self.__client.query(query, timeperiods=[(self.__datetime_start_watcher - timedelta(seconds = 1),
                                                             self.__datetime_end_watcher + timedelta(seconds = 1))])
             if self.RemoveDatetimeFile():
-                print("datetime rimosso con successo")
+                custom_print("WARNING: datetime (i.e. backup) file removed")
             self.__datetime_start_watcher = None
             self.__datetime_end_watcher = None
-            #print(query)
-            #print(json.load(open(self.__path+'/blacklist_watcher.json'))["black_app"])
+            #custom_print(query)
+            #custom_print(json.load(open(self.__path+'/blacklist_watcher.json'))["black_app"])
             return buckets_worker.DictToDataset(buckets_worker.QueryCurrentWindow(query, json.load(open(self.__path+'/blacklist_watcher.json'))))
 
         except Exception as ex:
-            print(ex)
+            custom_print('ERROR:', ex)
             return pd.DataFrame()
 
 
@@ -235,5 +243,5 @@ class My2secWatcher:
                 inserted_event = self.__client.insert_event(bucket_id, working_event)
             return None, False
         except Exception as ex:
-            print(ex)
+            custom_print('ERROR:', ex)
             return ex, True

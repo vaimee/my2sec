@@ -2,7 +2,16 @@ import pandas as pd
 import os
 from cryptography.fernet import Fernet
 from AIFilter import Filter
+import datetime
+import builtins
 
+def custom_print(*args, **kwargs):
+    now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    prefix = "127.0.0.1 -- [{}] ".format(now)
+    sep = kwargs.get("sep", " ")
+    end = kwargs.get("end", "\n")
+    builtins.print(prefix, end="")
+    builtins.print(*args, sep=sep, end=end)
 
 def CheckFile(path, name_of_file):
     return True if os.path.isfile(path+name_of_file) else False
@@ -55,11 +64,11 @@ def EventsToCSV(path, query_res):
         message = None
         if CheckFile(path, "/apps_current.csv"):
             pd.concat([ReadCSV(path,"/apps_current.csv"), query_res], ignore_index=False).to_csv(path+'/apps_current.csv', index=False)
-            print("'apps_current.csv' updated")
+            custom_print("'apps_current.csv' updated")
             message = "'apps_current.csv' updated"
         else:
             query_res.to_csv(path+"/apps_current.csv", index=False)
-            print("'apps_current.csv' created")
+            custom_print("'apps_current.csv' created")
             message = "'apps_current.csv' created"
         Encrypt(path, path+"/apps_current.csv")
         return message, False
@@ -101,7 +110,7 @@ def WorkingEvents(path):
         # try to get the working selection for the events without flag
         # apps_without_selection_dataset --> the dataset with the app without activity_type and working_selection
         without_selection = selection[selection['working_selection'] == 'None']
-        print(without_selection)
+
         # tutte le attività lavorative sono già state assegnate
         if without_selection.empty:
             UpdateCurrentCSV(path)
@@ -129,7 +138,7 @@ def UpdateSelectionCSV(dataframe, path):
         tmp = pd.concat([selection, dataframe])
         tmp = tmp.drop_duplicates(subset=['app','title','url'], keep='last').reset_index().drop(columns='index')
         print(tmp)
-        tmp.to_csv('apps_selection.csv', index=False)
+        tmp.to_csv(path+'/apps_selection.csv', index=False)
         return None, False
     except Exception as ex:
         print(ex)
@@ -150,7 +159,7 @@ def UpdateCurrentCSV(path):
         merge['working_selection'] = merge['working_selection_y']
         merge = merge.drop(columns=['working_selection_y', 'working_selection_x'])
         merge = merge.fillna('None')
-        merge.to_csv('apps_current.csv', index=False)
+        merge.to_csv(path+'/apps_current.csv', index=False)
         Encrypt(path, path+"/apps_current.csv")
         return None, False
     except Exception as ex:

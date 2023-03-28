@@ -34,7 +34,7 @@ def QueryCurrentWindow(json_results, blacklist):
 
         for element in json_results:
             for item in element:
-                print(item["data"])
+                #print(item["data"])
                 # if the title or url is missing, add to the json with a 'None' value
                 if "title" not in item["data"]: continue
                 if item["data"]["title"] == "": continue

@@ -4,3 +4,10 @@ numpy
 pandas
 cryptography
 scikit-learn
+requests
+persist-queue
+appdirs
+deprecation
+tomlkit
+iso8601
+nltk

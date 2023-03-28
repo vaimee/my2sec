@@ -1,0 +1,25 @@
+SEPA JENA -> LIVE DATA
+BLAZEGRAPH -> HYSTORICAL DATA
+
+Iconcina smart worker su AW
+
+- DUE MAPPE DIVERSE
+- awmapper è un aggregatore
+CASI D'USO (3 utenti coi loro 3 applicativi)
+- togli query dalla legenda perchè non la usiamo
+- la parte di aggregazione mettila a destra del sepa
+- il computerino va tolto, metti my2sec col simbolino di vaimee e
+pac interna
+- aw ha un suo piccolo database, segnalo
+
+My2sec client upload events
+
+
+- ARTICOLO CON FIGURA
+- DASHBOARD
+- CESENA 
+- 21 VAIMEE TESTIMONIALS: io presentazione generale my2sec + docker
+- adelina grafana
+- 
+
+<- SUPPONIAMO CHE LE TRIPLE TE LE DA'
