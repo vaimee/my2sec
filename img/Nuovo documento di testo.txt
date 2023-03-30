@@ -23,3 +23,7 @@ My2sec client upload events
 - 
 
 <- SUPPONIAMO CHE LE TRIPLE TE LE DA'
+
+
+PREFIX my2sec: <http://www.vaimee.it/ontology/my2sec#>
+SELECT (COUNT(?s) AS ?nusers) WHERE { GRAPH <http://www.vaimee.it/my2sec/members> { ?s my2sec:username ?o }}

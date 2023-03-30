@@ -41,12 +41,14 @@ class PythonApiRunner{
         relativePath="./resources/app/PY/install"
       }
     
-      //var relativePath="./PY/my2sec/main"
       var cwd=path.resolve(relativePath);
       this.log.info("Pyexecutable path: "+cwd)
 
-      this.pyProcess=spawn("./API_my2sec",[],{cwd});
-      //this.pyProcess=spawn("python",["./API_my2sec.py"],{cwd});
+      this.pyProcess=spawn("./API_my2sec",[],{
+        cwd:cwd,
+        stdio: ['pipe', 'pipe', 'pipe'],
+        encoding: 'utf-8'
+      });
       this.log.info("** started python api")
       //on new data chunk
       this.pyProcess.stdout.on("data",(data)=>{
