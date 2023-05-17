@@ -3,6 +3,7 @@ var AwMapper = require("./Apps/AwMapper.js")
 //var KeycloakMapper = require("./Apps/KeycloakMapper.js")
 var KeycloakAdapter = require("./Apps/KeycloakAdapter.js")
 var SupersetUsersConsumer = require("./Apps/SupersetUsersConsumer.js")
+var OpUsersConsumer = require("./Apps/OpUsersConsumer.js")
 var testClient = require("./Apps/testClient/testClient.js")
 var My2secTester = require("./Apps/testClient/My2secTester.js")
 var AwMapperTester = require("./Apps/testClient/AwMapperTester.js")
@@ -15,30 +16,70 @@ var OpAdapter= require("./Apps/OpAdapter.js")
 var OpConsumer= require("./Apps/OpConsumer.js")
 var SqlActivitiesConsumer= require("./Apps/SqlActivitiesConsumer.js")
 var My2secFormConsumer= require("./Apps/My2secFormConsumer.js")
+var WeatherForecastAdapter= require("./Apps/WeatherForecastAdapter/WeatherForecastAdapter.js")
 jsap={};//GLOBAL
 /*##############################################################
 # MAIN INTERFACE OF PAC FACTORY RELOADED, CALL START METHOD HERE
 ###############################################################*/
+/*
+  TODO: better title and readability, handle help case if no app is specified by accident
+*/
 init()
 async function init(){
 console.clear();
-console.log("╔═════════════════════════════╗");
+/*console.log("╔═════════════════════════════╗");
 console.log("║    PAC FACTORY INTERFACE    ║");
 console.log("║ ___________________________ ║")
-console.log("║ @Author: Gregorio Monari    ║");
-console.log("╚═════════════════════════════╝");
+console.log("║ @Author: Gregorio Monari    ║");=============
+console.log("╚═════════════════════════════╝");.██▓███...▄▄▄*/
+console.log(
+`============================================================================================
+.██▓███...▄▄▄.......▄████▄.......█████▒▄▄▄.......▄████▄..▄▄▄█████▓.▒█████...██▀███.▓██...██▓
+▓██░..██▒▒████▄....▒██▀.▀█.....▓██...▒▒████▄....▒██▀.▀█..▓..██▒.▓▒▒██▒..██▒▓██.▒.██▒▒██..██▒
+▓██░.██▓▒▒██..▀█▄..▒▓█....▄....▒████.░▒██..▀█▄..▒▓█....▄.▒.▓██░.▒░▒██░..██▒▓██.░▄█.▒.▒██.██░
+▒██▄█▓▒.▒░██▄▄▄▄██.▒▓▓▄.▄██▒...░▓█▒..░░██▄▄▄▄██.▒▓▓▄.▄██▒░.▓██▓.░.▒██...██░▒██▀▀█▄...░.▐██▓░
+▒██▒.░..░.▓█...▓██▒▒.▓███▀.░...░▒█░....▓█...▓██▒▒.▓███▀.░..▒██▒.░.░.████▓▒░░██▓.▒██▒.░.██▒▓░
+▒▓▒░.░..░.▒▒...▓▒█░░.░▒.▒..░....▒.░....▒▒...▓▒█░░.░▒.▒..░..▒.░░...░.▒░▒░▒░.░.▒▓.░▒▓░..██▒▒▒.
+░▒.░.......▒...▒▒.░..░..▒.......░.......▒...▒▒.░..░..▒.......░......░.▒.▒░...░▒.░.▒░▓██.░▒░.
+░░.........░...▒...░............░.░.....░...▒...░..........░......░.░.░.▒....░░...░.▒.▒.░░..
+...............░..░░.░......................░..░░.░...................░.░.....░.....░.░.....
+.. Version 0.6.7 ..░............................░...................................░.░.....
+.. Author: Gregorio Monari .................................................................
+============================================================================================`
+);
 
-jsap=await load_jsap("./my2sec_19-1-2023.jsap")
-
-
-console.log("║ Connected to: "+jsap.host);
-console.log("║ Http Update/Query port: "+jsap.sparql11protocol.port);
-console.log("║ Ws Subscribe port: "+jsap.sparql11seprotocol.availableProtocols.ws.port);
-console.log("╚══════════════════════════════");
-
+console.log("[Preflight]")
 //get command line arguments
 var arguments=process.argv.slice(2);
+//console.log("Launching Pac module: "+arguments[0])
+//console.log(arguments)
+if(arguments.length>1){
+    if(arguments[1].includes("-jsap")){
+        console.log("- Getting jsap from: "+arguments[2])
+        jsap=await load_and_override_jsap(arguments[2])
+        temp=arguments.slice(3) //leva il jsap dagli argomenti
+        temp.unshift(arguments[0])
+        arguments=temp
+        //console.log(arguments)
+    }else{
+        console.log("No jsap argument found, loading default jsap")
+        jsap=await load_and_override_jsap("./my2sec_4-4-2023.jsap")
+        //console.log(arguments)
+    }
+}else{
+    console.log("No jsap argument found, loading default jsap")
+    jsap=await load_and_override_jsap("./my2sec_4-4-2023.jsap")
+    //console.log(arguments)
+}
 
+
+
+
+console.log("- Host:       "+jsap.host);
+console.log("- Http port:  "+jsap.sparql11protocol.port);
+console.log("- Ws port:    "+jsap.sparql11seprotocol.availableProtocols.ws.port);
+
+console.log("[Launching Pac module: "+arguments[0]+"]")
 switch (arguments[0]) {
     case "AwMapper":
         initAwMapper(arguments.slice(1))
@@ -91,15 +132,33 @@ switch (arguments[0]) {
     case "SqlActivitiesConsumer":
         initSqlActivitiesConsumer(arguments.slice(1))
         break;
+    case "OpUsersConsumer":
+        initOpUsersConsumer(arguments.slice(1))
+        break;    
+    case "WeatherForecastAdapter":
+        initWeatherForecastAdapter(arguments.slice(1))
+        break;    
     case "help":
         showHelp()
         break;
 
     default:
+        showHelp()
         break;
 }
 }
 
+
+function initWeatherForecastAdapter(args){
+    var adapter=new WeatherForecastAdapter(jsap,args)
+    //tester.log.loglevel=0;
+    adapter.start()      
+}
+function initOpUsersConsumer(args){
+    var consumer=new OpUsersConsumer(jsap,args)
+    //tester.log.loglevel=0;
+    consumer.start()      
+}
 function initSqlActivitiesConsumer(args){
     var consumer=new SqlActivitiesConsumer(jsap,args)
     //tester.log.loglevel=0;
@@ -243,7 +302,7 @@ function showHelp(){
 
 //====================================0
 //PARSE JSAP
-async function load_jsap(file){
+async function load_and_override_jsap(file){
     var text=await readFile(file);
     var tempjsap=JSON.parse(text);
 

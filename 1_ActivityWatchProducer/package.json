@@ -7,9 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "start": "electron .",
-    "start:local-windows": "set NODE_ENV=local && electron .",
-    "start:local-posix": "export NODE_ENV=local && electron ."
+    "start:windows": "set NODE_ENV=dev && electron .",
+    "start:posix": "export NODE_ENV=dev && electron ."
   },
   "author": "Greg",
   "license": "MIT",
@@ -17,7 +16,9 @@
     "electron-rebuild": "^3.2.9"
   },
   "dependencies": {
+    "axios": "^1.3.4",
     "electron-is-dev": "^2.0.0",
+    "electron-log": "^5.0.0-beta.16",
     "express": "^4.18.1",
     "keycloak-js": "^19.0.3",
     "mongodb": "^5.1.0"

@@ -7,6 +7,9 @@ var GregLogs = require("../gregnet_modules/GregLogs.js")
 || DATE: 4/11/2022
 || NOTES: Maps Aw messages into Events
 ############################################*/
+/*
+  TODO: MAKE SMART WORKER CONFIGURABLE, update to different graphs
+*/
 class AwMapper{
   constructor(jsap_file){
     //TITLE

@@ -14,14 +14,9 @@ class OpConsumer extends PacFactory{
     console.log("║║ ###########################");
     super(jsap_file);
     this.tasksCache=[];
-    this.opClient=new OpClient({
-      host:"openproject",//"localhost",//
-      port:80,//889,//
-      clientId:"pIuaMa7WY4xwkkVNobDjQpp_OSjzsUrMXEKnjCVkWQA",
-      clientSecret:"nNFyLa7MRSJ2Pnq9ju8_f3Lg4FxRW4Gs1EdFgfIAHr4",
-      apiKey:"bcc95e391fc9f7eee77aa7cb3bbc8cd126108d6a6623c944a72d56f09e3bd633"
-    });
+    this.opClient=new OpClient(jsap_file.extended.OpenProjectClientConfiguration);
   }
+  
 
   //============ CALL TO START LISTENING TO MESSAGES ===============
   async start(){

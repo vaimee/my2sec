@@ -1,0 +1,868 @@
+{
+	"host": "localhost",
+	"oauth": {
+		"enable": false,
+		"register": "https://localhost:8443/oauth/register",
+		"tokenRequest": "https://localhost:8443/oauth/token"
+	},
+	"sparql11protocol": {
+		"protocol": "http",
+		"port": 8646,
+		"query": {
+			"path": "/query",
+			"method": "POST",
+			"format": "JSON"
+		},
+		"update": {
+			"path": "/update",
+			"method": "POST",
+			"format": "JSON"
+		}
+	},
+	"sparql11seprotocol": {
+		"reconnect": true,
+		"protocol": "ws",
+		"availableProtocols": {
+			"ws": {
+				"port": 9646,
+				"path": "/subscribe"
+			},
+			"wss": {
+				"port": 9443,
+				"path": "/secure/subscribe"
+			}
+		}
+	},
+	"graphs": {
+		
+	},
+	"namespaces": {
+		"schema": "http://schema.org/",
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+		"sosa": "http://www.w3.org/ns/sosa/",
+		"qudt": "http://qudt.org/schema/qudt#",
+		"unit": "http://qudt.org/vocab/unit#",
+		"mqtt": "http://wot.arces.unibo.it/mqtt#",
+		"time": "http://www.w3.org/2006/time#",
+		"wgs84_pos": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+		"gn": "http://www.geonames.org/ontology#",
+		"weather": "https://vaimee.com/meter/weather/",
+		"criteria": "https://vaimee.com/meter/criteria/",
+		"criteriaProperty": "https://vaimee.com/meter/criteria/property#",
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"meter": "https://vaimee.com/meter#",
+		"meterSensor": "https://vaimee.com/meter/sensors#"
+	},
+	"extended": {
+		"sqlMapping": {
+			"UNITS": {
+				"baseDBPath": "../data",
+				"dbName" : "units.db",
+				"tableName": "computational_units",
+				"fields": "ID_CASE,ID_CROP,ID_METEO,ID_SOIL,numerical_solution,water_retention_fitting",
+				"vars": "id,crop,meteo,soil,numerical,fitting"
+			},
+			"METEO_LOCATION": {
+				"baseDBPath": "../data",
+				"dbName" : "weather.db",
+				"tableName": "meteo_locations",
+				"fields": "id_meteo,table_name,meteo_name,longitude,latitude,height",
+				"vars": "id,table,label,long,lat,height"
+			},
+			"FORECAST_METEO_LOCATION": {
+				"baseDBPath": "../data",
+				"dbName" : "forecast.db",
+				"tableName": "meteo_locations",
+				"fields": "id_meteo,table_name,meteo_name,longitude,latitude,height",
+				"vars": "id,table,label,long,lat,height"
+			}
+			
+		},
+		"weather_old": [
+			{
+				"temperatureProperty": "weather:temperature",
+				"precipitationProperty": "weather:precipitation",
+				"station": "meter:place",
+				"table": "T00909",
+				"useWaterTable": false
+			}
+		],
+		"weather": {
+			"NODE_ENV": "production",
+			"PORT": 3001,
+			"FORECAST_API": "https://api.openweathermap.org/data/2.5/",
+			"FORECAST_API_TOKEN": "2816dcff80ba0ec69714c2f5dfdbbb6d",
+			"LAT": 42.608751,
+			"LONG": -111.745561,
+			"TIME": "00:30",
+			"TIME_SPACE": 2,
+			"MODE": "d",
+			"DELAY": 30000,
+			"MINUTE": 45,
+			"FEATURE": "https://vaimee.com/meter#Place",
+			"AGENT_VOCABULARY": {
+				"feature": "meter:place",
+				"minTemp": "weather:minTemperature",
+				"maxTemp": "weather:maxTemperature",
+				"temp": "weather:temperature",
+				"rainFall": "weather:rainFall",
+				"snow": "weather:snow"
+			}
+		},
+		"web": {
+			"TIME": "14:15",
+			"SECRET": "criteria4zentra@_2022",
+			"AGENT_VOCABULARY": {
+				"minTemp": "https://vaimee.com/meter/weather/minTemperature",
+				"maxTemp": "https://vaimee.com/meter/weather/maxTemperature",
+				"temp": "https://vaimee.com/meter/weather/temperature",
+				"preciptation": "https://vaimee.com/meter/weather/precipitation",
+				"snow": "https://vaimee.com/meter/weather/snow"
+			},
+			"DESCRIPTIONS": {
+				"IrrigationNeeds": "Irrigation water determined by CRITERIA",
+				"LeafAreaIndex": "Leaf area index determined for the chosen crop",
+				"Precipitation": "Preciptation events",
+				"WaterContent": "Water content in the first layer of soil",
+				"SurfaceWaterContent": "Surface water content",
+				"AvailableWater": "Available water storage in the soil",
+				"ReadilyAvailableWater": "Readily available storage in the soil",
+				"FractionAvailableWater": "Fraction of the available water",
+				"Deficit": "Water deficit",
+				"Deficit25": "Water deficit at 25",
+				"Drainage": "Drained amount of water",
+				"Runoff": "Runoff amount of water",
+				"Et0": "Reference evapotranspiration",
+				"TranspirationMax": "Maximum transpiration",
+				"Transpiration": "Transpiration",
+				"EvaporationMax": "Maximum evaporation",
+				"Evaporation": "Evaporation",
+				"RootDepth": "Root Depth",
+				"SoilWaterContent15": "Soil water content at 15  centimeters horizon",
+				"SoilWaterContent30": "Soil water content at 30 centimeters horizon",
+				"SoilWaterContent50": "Soil water content at 50 centimeters horizon",
+				"WaterPotential15": "Water potential at 15 centimeters horizon",
+				"WaterPotential30": "Water potential at 30 centimeters horizon",
+				"WaterPotential50": "Water potential at 50 centimeters horizon"
+			},
+			"BASE_URL": "/v1"
+		},
+		"places": {
+			"meter:place": "Place"
+		},
+		"outputs": {
+			"IRRIGATION": {
+				"property": "criteriaProperty:IrrigationNeeds",
+				"unit": "unit:Millimeter"
+			},
+			"LAI": {
+				"property": "criteriaProperty:LeafAreaIndex",
+				"unit": "unit:Number"
+			},
+			"PREC": {
+				"property": "criteriaProperty:Precipitation",
+				"unit": "unit:Millimeter"
+			},
+			"WATER_CONTENT": {
+				"property": "criteriaProperty:WaterContent",
+				"unit": "unit:Millimeter"
+			},
+			"SURFACE_WC": {
+				"property": "criteriaProperty:SurfaceWaterContent",
+				"unit": "unit:Millimeter"
+			},
+			"AVAILABLE_WATER": {
+				"property": "criteriaProperty:AvailableWater",
+				"unit": "unit:Millimeter"
+			},
+			"READILY_AW": {
+				"property": "criteriaProperty:ReadilyAvailableWater",
+				"unit": "unit:Millimeter"
+			},
+			"FRACTION_AW": {
+				"property": "criteriaProperty:FractionAvailableWater",
+				"unit": "unit:Millimeter"
+			},
+			"DRAINAGE": {
+				"property": "criteriaProperty:Drainage",
+				"unit": "unit:Millimeter"
+			},
+			"RUNOFF": {
+				"property": "criteriaProperty:Runoff",
+				"unit": "unit:Millimeter"
+			},
+			"ET0": {
+				"property": "criteriaProperty:Et0",
+				"unit": "unit:Millimeter"
+			},
+			"TRANSP_MAX": {
+				"property": "criteriaProperty:TranspirationMax",
+				"unit": "unit:Millimeter"
+			},
+			"TRANSP": {
+				"property": "criteriaProperty:Transpiration",
+				"unit": "unit:Millimeter"
+			},
+			"EVAP_MAX": {
+				"property": "criteriaProperty:EvaporationMax",
+				"unit": "unit:Millimeter"
+			},
+			"EVAP": {
+				"property": "criteriaProperty:Evaporation",
+				"unit": "unit:Millimeter"
+			},
+			"ROOT_DEPTH": {
+				"property": "criteriaProperty:RootDepth",
+				"unit": "unit:Meter"
+			},
+			"SWC_15": {
+				"property": "criteriaProperty:SoilWaterContent15",
+				"unit": "unit:Meter"
+			},
+			"SWC_20": {
+				"property": "criteriaProperty:SoilWaterContent20",
+				"unit": "unit:Meter"
+			},
+			"SWC_23": {
+				"property": "criteriaProperty:SoilWaterContent23",
+				"unit": "unit:Meter"
+			},
+			"SWC_25": {
+				"property": "criteriaProperty:SoilWaterContent25",
+				"unit": "unit:Meter"
+			},
+			"SWC_30": {
+				"property": "criteriaProperty:SoilWaterContent30",
+				"unit": "unit:Meter"
+			},
+			"SWC_45": {
+				"property": "criteriaProperty:SoilWaterContent45",
+				"unit": "unit:Meter"
+			},
+			"SWC_50": {
+				"property": "criteriaProperty:SoilWaterContent50",
+				"unit": "unit:Meter"
+			},
+			"SWC_75": {
+				"property": "criteriaProperty:SoilWaterContent75",
+				"unit": "unit:Meter"
+			},
+			"WP_15": {
+				"property": "criteriaProperty:WaterPotential15",
+				"unit": "unit:Meter"
+			},
+			"WP_20": {
+				"property": "criteriaProperty:WaterPotential20",
+				"unit": "unit:Meter"
+			},
+			"WP_23": {
+				"property": "criteriaProperty:WaterPotential23",
+				"unit": "unit:Meter"
+			},
+			"WP_25": {
+				"property": "criteriaProperty:WaterPotential25",
+				"unit": "unit:Meter"
+			},
+			"WP_30": {
+				"property": "criteriaProperty:WaterPotential30",
+				"unit": "unit:Meter"
+			},
+			"WP_45": {
+				"property": "criteriaProperty:WaterPotential45",
+				"unit": "unit:Meter"
+			},
+			"WP_50": {
+				"property": "criteriaProperty:WaterPotential50",
+				"unit": "unit:Meter"
+			},
+			"WP_75": {
+				"property": "criteriaProperty:WaterPotential75",
+				"unit": "unit:Meter"
+			}
+		}
+	},
+	"queries": {
+		"forecast": {
+			"sparql": "SELECT * WHERE {   GRAPH weather:forecast {    ?observation rdf:type sosa:Observation ;      sosa:hasFeatureOfInterest ?feature ;      sosa:observedProperty ?property ;      sosa:resultTime ?time ;      sosa:phenomenonTime ?ptime ;      sosa:hasResult ?result .    ?result rdf:type qudt:QuantityValue ;      rdf:type sosa:Result;      sosa:isResultOf  ?observation;      qudt:unit ?unit ;      qudt:numericValue ?value .  } }",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri"
+				},
+				"property": {
+					"type": "uri"
+				}
+			}
+		},
+		"history": {
+			"sparql": "SELECT * WHERE {   GRAPH weather:history {    ?observation rdf:type sosa:Observation ;      sosa:hasFeatureOfInterest ?feature ;      sosa:observedProperty ?property ;      sosa:resultTime ?time ;      sosa:hasResult ?result .    ?result rdf:type qudt:QuantityValue ;      rdf:type sosa:Result;      sosa:isResultOf  ?observation;      qudt:unit ?unit ;      qudt:numericValue ?value .  } }",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri"
+				},
+				"property": {
+					"type": "uri"
+				}
+			}
+		},
+		"getProps": {
+			"sparql": "SELECT DISTINCT ?property WHERE { ?observation sosa:observedProperty ?property }"
+		},
+		"getForecast": {
+			"sparql": "SELECT * WHERE {   GRAPH weather:forecast {    ?observation rdf:type sosa:Observation ;      sosa:hasFeatureOfInterest ?feature ;      sosa:observedProperty ?property ;      sosa:resultTime ?time ;      sosa:phenomenonTime ?ptime ;      sosa:hasResult ?result .    ?result rdf:type qudt:QuantityValue ;      rdf:type sosa:Result;      sosa:isResultOf  ?observation;      qudt:unit ?unit ;      qudt:numericValue ?value .  } }",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri"
+				},
+				"property": {
+					"type": "uri"
+				}
+			}
+		},
+		"getHistory": {
+			"sparql": "SELECT * WHERE {   GRAPH weather:history {    ?observation rdf:type sosa:Observation ;      sosa:hasFeatureOfInterest ?feature ;      sosa:observedProperty ?property ;      sosa:resultTime ?time ;      sosa:hasResult ?result .    ?result rdf:type qudt:QuantityValue ;      rdf:type sosa:Result;      sosa:isResultOf  ?observation;      qudt:unit ?unit ;      qudt:numericValue ?value .     } }",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri"
+				},
+				"property": {
+					"type": "uri"
+				}
+			}
+		},
+		"getCriteriaForecast": {
+			"sparql": "SELECT DISTINCT ?feature ?property ?ptime ?value WHERE { GRAPH criteria:forecast { ?observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?property ; sosa:resultTime ?time ;sosa:phenomenonTime ?ptime ;sosa:hasResult ?result .?result rdf:type qudt:QuantityValue ;rdf:type sosa:Result;sosa:isResultOf ?observation;qudt:unit ?unit ;qudt:numericValue ?value } bind( xsd:dateTime(concat(strbefore(str(now()),'T'),'T00:00:00.000Z')) as ?today) filter(?time >= ?today) }ORDER BY DESC(?ptime) ?feature ?property",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri"
+				}
+			}
+		},
+		"getCriteriaHistory": {
+			"sparql": "SELECT * WHERE { GRAPH criteria:history { ?observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?property ; sosa:resultTime ?time ; sosa:phenomenonTime ?ptime ; sosa:hasResult ?result . ?result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf ?observation; qudt:unit ?unit ; qudt:numericValue ?value } filter(?time >= ?ptime) }ORDER BY DESC(?time)",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri"
+				},
+				"property": {
+					"type": "uri"
+				},
+				"time": {
+					"type": "literal",
+					"datatype": "xsd:DateTime"
+				}
+			}
+		},
+		"WATER_TABLE": {
+			"sparql": "SELECT ?wt WHERE {GRAPH <http://wot.arces.unibo.it/observation/history> {?result sosa:isResultOf ?observation ; qudt:numericValue ?wt; time:inXSDDateTimeStamp ?timestamp} FILTER (xsd:dateTime(?timestamp) > ?from && xsd:dateTime(?timestamp) < ?to)}",
+			"forcedBindings": {
+				"from": {
+					"datatype": "xsd:dateTime",
+					"type": "literal",
+					"value": "2019-06-02T00:00:00Z"
+				},
+				"to": {
+					"datatype": "xsd:dateTime",
+					"type": "literal",
+					"value": "2019-06-02T23:59:59Z"
+				},
+				"observation": {
+					"type": "uri",
+					"value": "swamp:Current_Weather_Bertacchini_WaterTable"
+				}
+			}
+		},
+		"FORECAST_N_DAYS": {
+			"sparql": "SELECT * WHERE {OPTIONAL {?unit qudt:symbol ?symbol} graph <http://wot.arces.unibo.it/forecast> {?obs sosa:hasFeatureOfInterest ?place ; sosa:resultTime ?resultTime ; sosa:phenomenonTime ?timestamp ; sosa:observedProperty ?property ; sosa:hasResult ?res . ?res qudt:numericValue ?value ; qudt:unit ?unit BIND((xsd:dateTime(substr(xsd:string(?timestamp),1,10)) - xsd:dateTime(substr(xsd:string(?resultTime),1,10)))/86400 AS ?diff) FILTER (xsd:dateTime(?resultTime) >= xsd:dateTime(concat(?from,'T00:00:00Z')) && xsd:dateTime(?resultTime) <= xsd:dateTime(concat(?to,'T23:59:59Z')) && (?diff = xsd:integer(?n)) )}} ORDER BY ?timestamp",
+			"forcedBindings": {
+				"from": {
+					"type": "literal",
+					"value": "2019-07-30"
+				},
+				"to": {
+					"type": "literal",
+					"value": "2019-08-03"
+				},
+				"n": {
+					"type": "literal",
+					"value": "0"
+				},
+				"place": {
+					"type": "uri",
+					"value": "swamp:Bertacchini"
+				},
+				"property": {
+					"type": "uri",
+					"value": "swamp:LeafAreaIndex"
+				}
+			}
+		},
+		"WEATHER_TEMPERATURE": {
+			"sparql": "SELECT (MAX(xsd:decimal(?value)) AS ?max) (AVG(xsd:decimal(?value)) AS ?avg) (MIN(xsd:decimal(?value)) AS ?min) WHERE { GRAPH weather:history { ?observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?property ; sosa:resultTime ?timestamp ; sosa:hasResult ?result . ?result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf ?observation; qudt:unit ?unit ; qudt:numericValue ?value . } FILTER (xsd:dateTime(?timestamp) > ?from && xsd:dateTime(?timestamp) < ?to ) }",
+			"forcedBindings": {
+				"from": {
+					"datatype": "xsd:dateTime",
+					"type": "literal",
+					"value": "2019-06-02T00:00:00Z"
+				},
+				"to": {
+					"datatype": "xsd:dateTime",
+					"type": "literal",
+					"value": "2019-06-02T23:59:59Z"
+				},
+				"feature": {
+					"type": "uri",
+					"value": "arces-monitor:Current_Weather_Bertacchini_Temperature"
+				},
+				"property": {
+					"type": "uri",
+					"value": "weather:temperature"
+				}
+			}
+		},
+		"WEATHER_PRECIPITATION": {
+			"sparql": "SELECT (SUM(xsd:decimal(?value)) AS ?sum) WHERE { GRAPH weather:history { ?observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?property ; sosa:resultTime ?timestamp ; sosa:hasResult ?result . ?result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf ?observation; qudt:unit ?unit ; qudt:numericValue ?value . FILTER (xsd:dateTime(?timestamp) > ?from && xsd:dateTime(?timestamp) < ?to ) } }",
+			"forcedBindings": {
+				"from": {
+					"datatype": "xsd:dateTime",
+					"type": "literal",
+					"value": "2019-07-15T00:00:00Z"
+				},
+				"to": {
+					"datatype": "xsd:dateTime",
+					"type": "literal",
+					"value": "2019-07-15T23:59:59Z"
+				},
+				"feature": {
+					"type": "uri",
+					"value": "arces-monitor:Current_Weather_Bertacchini_Temperature"
+				},
+				"property": {
+					"type": "uri",
+					"value": "weather:precipitation"
+				}
+			}
+		},
+		"WEATHER_TEMPERATURE_FORECAST": {
+			"sparql": "SELECT ?p ( MAX(xsd:decimal(?value)) AS ?max) (MIN(xsd:decimal(?value)) AS ?min) (AVG(xsd:decimal(?value)) AS ?avg) WHERE { graph weather:forecast { ?observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?p ; sosa:resultTime ?resultTime ; sosa:phenomenonTime ?prediction ; sosa:hasResult ?result . ?result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf ?observation; qudt:unit ?unit ; qudt:numericValue ?value . } FILTER (xsd:dateTime(?resultTime) >= xsd:dateTime(concat( ?day ,'T00:00:00Z')) && xsd:dateTime(?resultTime) <= xsd:dateTime(concat( ?day ,'T23:59:59Z')) && xsd:dateTime(?prediction) >= xsd:dateTime(concat( ?forecast ,'T00:00:00Z')) && xsd:dateTime(?prediction) <= xsd:dateTime(concat( ?forecast ,'T23:59:59Z'))) }GROUP BY (?p) VALUES (?p) { (weather:maxTemperature) (weather:minTemperature) }",
+			"forcedBindings": {
+				"day": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"forecast": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"feature": {
+					"type": "uri",
+					"value": "swamp:Bertacchini"
+				}
+			}
+		},
+		"WEATHER_PRECIPITATION_FORECAST": {
+			"sparql": "SELECT (SUM(xsd:decimal(?value)) AS ?sum) WHERE { graph weather:forecast { ?observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty weather:precipitation ; sosa:resultTime ?resultTime ; sosa:phenomenonTime ?prediction ; sosa:hasResult ?result . ?result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf ?observation; qudt:unit ?unit ; qudt:numericValue ?value . } FILTER (xsd:dateTime(?resultTime) >= xsd:dateTime(concat(?day,'T00:00:00Z')) && xsd:dateTime(?resultTime) < xsd:dateTime(concat(?day,'T23:59:59Z')) && xsd:dateTime(?prediction) >= xsd:dateTime(concat(?forecast,'T00:00:00Z')) && xsd:dateTime(?prediction) <= xsd:dateTime(concat(?forecast,'T23:59:59Z'))) }",
+			"forcedBindings": {
+				"day": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"forecast": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"feature": {
+					"type": "uri",
+					"value": "swamp:Bertacchini"
+				}
+			}
+		},
+		"WEATHER_SNOW_FORECAST": {
+			"sparql": "SELECT (SUM(xsd:decimal(?value)) AS ?sum) WHERE { graph weather:forecast { ?observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty weather:snow ; sosa:resultTime ?resultTime ; sosa:phenomenonTime ?prediction ; sosa:hasResult ?result . ?result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf ?observation; qudt:unit ?unit ; qudt:numericValue ?value . } FILTER (xsd:dateTime(?resultTime) >= xsd:dateTime(concat(?day,'T00:00:00Z')) && xsd:dateTime(?resultTime) <= xsd:dateTime(concat(?day,'T23:59:59Z')) && xsd:dateTime(?prediction) >= xsd:dateTime(concat(?forecast,'T00:00:00Z')) && xsd:dateTime(?prediction) <= xsd:dateTime(concat(?forecast,'T23:59:59Z'))) }",
+			"forcedBindings": {
+				"day": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"forecast": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"feature": {
+					"type": "uri",
+					"value": "swamp:Bertacchini"
+				}
+			}
+		},
+		"DATA_GRAPH": {
+			"sparql": "SELECT * WHERE { GRAPH ?graph { ?observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?property; sosa:resultTime ?time ; sosa:hasResult ?result . OPTIONAL { ?observation sosa:phenomenonTime ?ptime }. ?result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf  ?observation; qudt:unit ?unit ; qudt:numericValue ?value}}",
+			"forcedBindings": {
+				"graph": {
+					"type": "uri",
+					"value": "weather:forecast"
+				}
+			}
+		},
+		
+		
+		"GET_SENSOR_DATA" : {
+			"sparql": "SELECT * WHERE {   GRAPH meter:sensors {    ?observation rdf:type sosa:Observation ;      criteria:layerNumber ?layer; meter:sensorId ?sensorId ;      sosa:observedProperty \"waterContent\" ;      sosa:resultTime ?date ;     sosa:hasResult ?result .    ?result rdf:type qudt:QuantityValue ;      rdf:type sosa:Result;      sosa:isResultOf  ?observation;      qudt:unit ?unit ;      qudt:numericValue ?value .  } }"
+		},		
+		"GET_SENSORS" : {
+			"sparql": "SELECT * WHERE { GRAPH criteria:units { ?unit rdf:type criteria:Unit ; criteria:hasIdUnit ?id ; OPTIONAL { ?unit schema:startTime ?startTime}. OPTIONAL {?unit meter:isSensorActive ?isSensorActive}.  OPTIONAL {?unit meter:sensorId ?sensorId }. }}"
+		},		
+		"GET_FLAG": {
+			"sparql": "SELECT * WHERE { graph criteria:flag { ?flag criteria:table ?meteo ; schema:dateReceived ?timestamp}}"
+		},
+		"UNITS": {
+			"sparql": "SELECT * WHERE { GRAPH criteria:units { ?unit rdf:type criteria:Unit ; criteria:hasIdCrop ?crop ; criteria:hasIdSoil ?soil ; criteria:hasIdMeteo ?meteo ; criteria:hasIdUnit ?id ; criteria:useNumericalSolution ?numerical ; criteria:useWaterRetentionFitting ?fitting . OPTIONAL {?unit meter:isSensorActive ?isSensorActive}.  OPTIONAL {?unit meter:sensorId ?sensorId }.  }}"
+		},
+		"METEO_LOCATION": {
+			"sparql": "SELECT ?id ?table ?label ?lat ?long ?height ?time WHERE { GRAPH criteria:meteo_location { ?id rdf:type criteria:Meteo_location ; rdfs:label ?label ; schema:latitude ?lat ; schema:longitude ?long ; schema:elevation ?height ; criteria:waterTableAlpha ?alpha ; criteria:waterTbaleH0 ?h0 ; criteria:waterTableDays ?days . OPTIONAL    { ?id    schema:startTime ?time} } BIND (concat(STR(?id),\"_table\") AS ?table)}"
+		},
+		"FORECAST_METEO_LOCATION": {
+			"sparql": "SELECT ?id ?table ?label ?lat ?long ?height ?time WHERE { GRAPH criteria:meteo_location { ?id rdf:type criteria:Meteo_location ; rdfs:label ?label ; schema:latitude ?lat ; schema:longitude ?long ; schema:elevation ?height ; criteria:waterTableAlpha ?alpha ; criteria:waterTbaleH0 ?h0 ; criteria:waterTableDays ?days . OPTIONAL    { ?id    schema:startTime ?time} } BIND (concat(STR(?id),\"_table\") AS ?table)}"
+		},
+		
+		"GET_FEATURE_TABLE_TIME_BAD": {
+			"sparql": "SELECT DISTINCT ?feature_S ?id ?time WHERE { GRAPH weather:forecast { ?obs rdf:type sosa:Observation; sosa:hasFeatureOfInterest ?feature_str }BIND(STR(?feature_str) as ?feature_S)GRAPH criteria:units { ?unit rdf:type criteria:Unit; criteria:hasIdMeteo ?meteo; criteria:hasIdUnit ?id} GRAPH ?graph {weather:currentTime schema:dateReceived ?time}}",
+			"forcedBindings": {
+				"graph": {
+					"type": "uri",
+					"value": "weather:forecast"
+				}
+			}
+		},
+		"GET_FEATURE_TABLE_TIME": {
+			"sparql": "SELECT * WHERE { GRAPH criteria:units { ?unit rdf:type criteria:Unit; criteria:hasIdMeteo ?meteo; criteria:hasIdUnit ?id} GRAPH criteria:meteo_location {?meteo criteria:table ?table} GRAPH criteria:flag {?x schema:dateReceived ?time ; criteria:table ?table}}"
+		}
+	},
+	"updates": {
+		"uploadMeterSensorData" : {
+			"sparql" : "INSERT DATA { GRAPH meter:sensors { _:observation rdf:type sosa:Observation ; meter:sensorId ?sensorId;  meter:portNumber ?portNumber; sosa:observedProperty \"waterContent\" ; sosa:resultTime ?date; criteria:layerNumber  ?layerNumber; sosa:hasResult _:result . _:result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf _:observation; qudt:unit \"m3/m3*mm\" ; qudt:numericValue ?value}}",
+			"forcedBindings": {
+				"sensorId": {
+					"type": "uri",
+					"value" : "meter:Place"
+				},
+				"time": {
+					"type": "literal",
+					"datatype": "xsd:DateTime",
+					"value" : "2021-10-15T03:03:00Z"
+				},
+				"value": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 38.5
+				},
+				"portNumber": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 1
+				},
+				"layerNumber": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 15
+				}
+
+
+
+			}
+		},	
+				
+		"preUploadForecast": {
+			"sparql": "CLEAR GRAPH weather:forecast"
+		},
+		"preUploadHistory": {
+			"sparql": "CLEAR GRAPH weather:history"
+		},
+		"uploadForecast": {
+			"sparql": "INSERT DATA {GRAPH weather:forecast { _:observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?property ; sosa:resultTime ?time ; sosa:phenomenonTime ?ptime ; sosa:hasResult _:result . _:result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf _:observation ; qudt:unit ?unit ; qudt:numericValue ?value}}",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri",
+					"value" : "meter:Place"
+				},
+				"property": {
+					"type": "uri",
+					"value" : "weather:temperature"
+				},
+				"time": {
+					"type": "literal",
+					"datatype": "xsd:DateTime",
+					"value" : "2021-10-15T03:03:00Z"
+				},
+				"ptime": {
+					"type": "literal",
+					"datatype": "xsd:DateTime",
+					"value" : "2021-10-13T03:03:00Z"
+				},
+				"unit": {
+					"type": "uri",
+					"value": "unit:DegreeCelsius"
+				},
+				"value": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 38.5
+				}
+			}
+		},
+		"uploadHistory": {
+			"sparql": "INSERT DATA {GRAPH weather:history { _:observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?property ; sosa:resultTime ?time ;  sosa:hasResult _:result . _:result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf _:observation ; qudt:unit ?unit ; qudt:numericValue ?value}}",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri",
+					"value" : "meter:Place"
+				},
+				"property": {
+					"type": "uri",
+					"value" : "weather:temperature"
+				},
+				"time": {
+					"type": "literal",
+					"datatype": "xsd:DateTime",
+					"value" : "2021-10-15T03:03:00Z"
+				},
+				"unit": {
+					"type": "uri",
+					"value": "unit:DegreeCelsius"
+				},
+				"value": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 38.5
+				}
+			}
+		},
+		"DATA_GRAPH": {
+			"sparql": "INSERT { GRAPH ?graph { _:observation rdf:type sosa:Observation ; sosa:hasFeatureOfInterest _:feature ; sosa:observedProperty _:property; sosa:resultTime ?time ; sosa:hasResult _:result . _:result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf _:observation; qudt:unit _:unit ; qudt:numericValue ?value}} WHERE {OPTIONAL{GRAPH ?graph {}} BIND(now() AS ?time)}",
+			"forcedBindings": {
+				"value": {
+					"type": "literal",
+					"value": "0.0"
+				},
+				"graph": {
+					"type": "uri",
+					"value": "weather:forecast"
+				}
+			}
+		},
+		"ADD_OBSERVATION_FORECAST": {
+			"sparql": "INSERT DATA { GRAPH criteria:forecast { _:observation rdf:type sosa:Observation ;  sosa:hasFeatureOfInterest ?feature ; sosa:observedProperty ?property; sosa:resultTime ?time; sosa:phenomenonTime ?ptime; sosa:hasResult _:result . _:result rdf:type qudt:QuantityValue ; rdf:type sosa:Result; sosa:isResultOf _:observation; qudt:unit ?unit ; qudt:numericValue ?value}}",
+			"forcedBindings": {
+				"feature": {
+					"type": "uri",
+					"value" : "criteria:Place"
+				},
+				"property": {
+					"type": "uri",
+					"value" : "criteria:Property"
+				},
+				"time": {
+					"type": "literal",
+					"datatype": "xsd:DateTime",
+					"value" : "2021-10-13"
+				},
+				"ptime": {
+					"type": "literal",
+					"datatype": "xsd:DateTime",
+					"value" : "2021-10-15"
+				},
+				"unit": {
+					"type": "uri",
+					"value": "unit:DegreeCelsius"
+				},
+				"value": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 123.45
+				}
+			}
+		},
+		"SET_WEATHER_FLAG_OLD": {
+			"sparql": "DELETE { GRAPH weather:flag { weather:currentTime schema:dateReceived ?Otimestamp }} INSERT { graph weather:flag { weather:currentTime schema:dateReceived ?timestamp }} WHERE { OPTIONAL{ GRAPH weather:flag {weather:currentTime schema:dateReceived ?Otimestamp}}.BIND(now() AS ?timestamp)}"
+		},
+		"SET_FLAG": {
+			"sparql": "INSERT {graph criteria:flag {_:flag criteria:table ?meteo ; schema:dateReceived ?timestamp }} WHERE {BIND(now() AS ?timestamp)}",
+			"forcedBindings": {
+				"meteo": {
+					"type": "literal",
+					"value": "meter:Place"
+				}
+			}
+		},
+		"ADD_UNIT": {
+			"sparql": "INSERT DATA { GRAPH criteria:units { _:unit rdf:type criteria:Unit ; criteria:hasIdCrop ?crop ; criteria:hasIdSoil ?soil ; criteria:hasIdMeteo ?meteo ; criteria:hasIdUnit ?id ; criteria:useNumericalSolution ?numerical ; criteria:useWaterRetentionFitting ?fitting ; meter:isSensorActive ?isSensorActive ; meter:sensorId ?sensorId }}",
+			"forcedBindings": {
+				"crop": {
+					"type": "literal",
+					"value": "TOMATO"
+				},
+				"meteo": {
+					"type": "uri",
+					"value": "https://vaimee.com/meter#Place"
+				},
+				"soil": {
+					"type": "literal",
+					"datatype": "xsd:integer",
+					"value": 1
+				},
+				"id": {
+					"type": "uri",
+					"value": "https://vaimee.com/meter#Place"
+				},
+				"numerical": {
+					"type": "literal",
+					"datatype": "xsd:integer",
+					"value": 0
+				},
+				"fitting": {
+					"type": "literal",
+					"datatype": "xsd:integer",
+					"value": 0
+				},
+				"isSensorActive": {
+					"type": "literal",
+					"datatype": "xsd:boolean",
+					"value": false
+				},
+				"sensorId": {
+					"type": "uri",
+					"value": "https://vaimee.com/meter/sensors#Place"
+				}
+			}
+		},
+		"DELETE_UNIT": {
+			"sparql": "DELETE WHERE {  GRAPH criteria:units {?unit rdf:type criteria:Unit ; criteria:hasIdUnit ?id ; ?p ?o }}",
+			"forcedBindings": {
+				"id": {
+					"type": "uri"
+				}
+			}
+		},
+		"ADD_METEO_LOCATION": {
+			"sparql": "INSERT { GRAPH criteria:meteo_location { ?id rdf:type criteria:Meteo_location ; rdfs:label ?label ; schema:startTime ?time ; schema:latitude ?lat ; schema:longitude ?long ; schema:elevation ?height ; criteria:waterTableAlpha ?alpha ; criteria:waterTbaleH0 ?h0 ; criteria:waterTableDays ?days ; criteria:table ?table}} WHERE {BIND(concat(STR(?id),\"_table\") AS ?table)}",
+			"forcedBindings": {
+				"id": {
+					"type": "uri",
+					"value": "https://vaimee.com/meter#Place"
+				},
+				"label": {
+					"type": "literal",
+					"value": "Test place"
+				},
+				"long": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 11.33875
+				},
+				"lat": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 44.49381
+				},
+				"height": {
+					"type": "literal",
+					"datatype": "xsd:decimal",
+					"value": 0
+				},
+				"alpha": {
+					"type": "literal"
+				},
+				"h0": {
+					"type": "literal"
+				},
+				"days": {
+					"type": "literal",
+					"datatype": "xsd:integer",
+					"value": 0
+				},
+				"time": {
+					"type": "literal",
+					"datatype": "xsd:dateTime",
+					"value": "00:00"
+				}				
+			}
+		},
+		"DELETE_METEO_LOCATION": {
+			"sparql": "DELETE { GRAPH criteria:meteo_location { ?id rdf:type criteria:Meteo_location ; ?p ?o}} WHERE { GRAPH criteria:meteo_location { ?id rdf:type criteria:Meteo_location ; ?p ?o}}",
+			"forcedBindings": {
+				"id": {
+					"type": "uri"
+				}
+			}
+		}
+	},
+	"backup": {
+		"IRRIGATION_FORECAST": {
+			"sparql": "SELECT ?value ?prediction WHERE {graph <http://wot.arces.unibo.it/forecast> {?obs sosa:hasFeatureOfInterest ?place ;  sosa:resultTime ?resultTime ; sosa:phenomenonTime ?prediction ; sosa:observedProperty swamp:IrrigationNeeds ; sosa:hasResult ?res . ?res qudt:numericValue ?value ; qudt:unit ?unit FILTER (xsd:dateTime(?resultTime) = xsd:dateTime(concat(?day,'T00:00:00Z')) && xsd:dateTime(?prediction) = xsd:dateTime(concat(?forecast,'T00:00:00Z')))}}",
+			"forcedBindings": {
+				"day": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"forecast": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"place": {
+					"type": "uri",
+					"value": "swamp:Bertacchini"
+				}
+			}
+		},
+		"LAI_FORECAST": {
+			"sparql": "SELECT ?value ?prediction WHERE {graph <http://wot.arces.unibo.it/forecast> {?obs sosa:hasFeatureOfInterest ?place ;  sosa:resultTime ?resultTime ; sosa:phenomenonTime ?prediction ; sosa:observedProperty swamp:LeafAreaIndex ; sosa:hasResult ?res . ?res qudt:numericValue ?value ; qudt:unit ?unit FILTER (xsd:dateTime(?resultTime) = xsd:dateTime(concat(?day,'T00:00:00Z')) && xsd:dateTime(?prediction) = xsd:dateTime(concat(?forecast,'T00:00:00Z')))}}",
+			"forcedBindings": {
+				"day": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"forecast": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"place": {
+					"type": "uri",
+					"value": "swamp:Bertacchini"
+				}
+			}
+		},
+		"COUNT_FORECASTS": {
+			"sparql": "SELECT (COUNT(?observation) AS ?count) WHERE {GRAPH <http://wot.arces.unibo.it/forecast> {?observation rdf:type sosa:Observation}}"
+		},
+		"DAILY_FORECAST": {
+			"sparql": "SELECT ?value ?timestamp WHERE {graph <http://wot.arces.unibo.it/forecast> {?obs sosa:hasFeatureOfInterest ?place ;  sosa:resultTime ?resultTime ; sosa:phenomenonTime ?timestamp ; sosa:observedProperty ?property ; sosa:hasResult ?res . ?res qudt:numericValue ?value ; qudt:unit ?unit FILTER (xsd:dateTime(?timestamp) >= xsd:dateTime(concat(?from,'T00:00:00Z')) && xsd:dateTime(?timestamp) <= xsd:dateTime(concat(?to,'T00:00:00Z')) && xsd:dateTime(?timestamp) = xsd:dateTime(?resultTime))}}",
+			"forcedBindings": {
+				"from": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"to": {
+					"type": "literal",
+					"value": "2019-07-17"
+				},
+				"place": {
+					"type": "uri",
+					"value": "swamp:Bertacchini"
+				},
+				"property": {
+					"type": "uri",
+					"value": "swamp:LeafAreaIndex"
+				}
+			}
+		},
+		"LAST_FORECASTS": {
+			"sparql": "SELECT ?place ?name ?property ?label ?value ?symbol ?prediction WHERE {graph <http://wot.arces.unibo.it/forecast> {?obs sosa:hasFeatureOfInterest ?place ;  sosa:resultTime ?resultTime ; sosa:phenomenonTime ?prediction ; sosa:observedProperty ?property ; sosa:hasResult ?res . ?res qudt:numericValue ?value ; qudt:unit ?unit OPTIONAL {?property rdfs:label ?label}} . OPTIONAL {?unit qudt:symbol ?symbol} . ?place schema:name ?name .  FILTER (xsd:dateTime(?prediction) = xsd:dateTime(?resultTime) && ?prediction >= xsd:dateTime(?day))} ORDER BY DESC(?prediction) ?place",
+			"forcedBindings": {
+				"day": {
+					"type": "literal",
+					"value": "2019-07-23T00:00:00Z",
+					"datatype": "xsd:dateTime"
+				}
+			}
+		}
+	}
+}

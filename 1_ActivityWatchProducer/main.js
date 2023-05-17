@@ -11,7 +11,10 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const {ipcMain} = require('electron')
-const isDev = require('electron-is-dev');
+log=require('electron-log');
+log.transports.file.level = 'info';
+log.transports.file.resolvePathFn = () => __dirname + "/log.log";
+//const isDev = require('electron-is-dev');
 //Custom modules
 const AwApiRouter = require("./electron_main_modules/AwApiRouter");
 const PythonApiRunner = require("./electron_main_modules/PythonApiRunner");
@@ -22,8 +25,6 @@ const JsapConfigurationManager = require("./electron_main_modules/JsapConfigurat
 ## APP WINDOWS
 ===============*/
 //GLOBAL VARIABLES
-//var user_login_json="";
-//var my2sec_jsap;
 var json_package={};
 // Create the browser window.
 const createWindow = () => {
@@ -36,7 +37,6 @@ const createWindow = () => {
       preload: path.join(__dirname, './SECURITY/preload2.js')
     }
   })
-  //ipcMain.handle('request_user_credentials', () => user_login_json)
   ipcMain.handle('request_user_credentials', () => JSON.stringify(json_package))
   mainWindow.setMenuBarVisibility(false)
   // and load the index.html of the app.
@@ -83,13 +83,20 @@ function handleLoginSuccess(arg){
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
   
-  console.log("--------------------<My2secProducer logs>--------------------")
-  console.log("Running in dev mode: "+isDev)
-  console.log("NODE_ENV: "+process.env.NODE_ENV)
+  try{
+    console.log("CLEANING OLD LOG FILE")
+    await saveToFile( __dirname +"/log.log","")
+    console.log("FILE CLEANED")
+  }catch(e){
+    console.log("FILE DOES NOT EXIST. THIS IS NOT AN ERROR AND IS INTENDED")
+    console.log(e)
+  }
+
+  log.info("[ My2secProducer logs ]")
   //INITIALIZE CONFIGURATION MANAGER
   //This will detect if the host machine uses ipv6 or is windows/darwin and change the requests urls accordingly.
   //FIND JSAP
-  var relativePath="";
+  /*var relativePath="";
   if(isDev){
     relativePath="./Resources/my2sec_7-3-2023.jsap"
   }else{
@@ -98,10 +105,11 @@ app.whenReady().then(async () => {
     }else{
       relativePath="./resources/app/Resources/my2sec_7-3-2023.jsap"
     }
-  }
+  }*/
 
-  var jsapPath=path.resolve(relativePath);
-  let jsapConfigurationManager = new JsapConfigurationManager(jsapPath,isDev);//"./Resources/my2sec_7-3-2023.jsap");
+  var jsapPath= __dirname + "/Resources/my2sec_7-3-2023.jsap"
+  //var jsapPath=path.resolve(relativePath);
+  let jsapConfigurationManager = new JsapConfigurationManager(jsapPath,log);//"./Resources/my2sec_7-3-2023.jsap");
   var my2sec_jsap=await jsapConfigurationManager.getConfiguredJsap();
   json_package["my2sec_jsap"]=my2sec_jsap;
   //INITIALIZE REST OF THE MODULES
@@ -126,6 +134,9 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
 
+
+
+
 //-------------------------------------------------------------------------------------------------------------
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
@@ -139,13 +150,13 @@ async function initMainElectronModules(){
   var aw_host=arr[0];//"localhost";
   var aw_port=arr[1];//5600;
   var aw_router_port=1340;
-  let awApiRouter = new AwApiRouter(aw_host,aw_port,aw_router_port);
+  let awApiRouter = new AwApiRouter(aw_host,aw_port,aw_router_port,log);
   awApiRouter.start();
-  console.log("- AwApiRouter started")   
+  log.info("- AwApiRouter started")   
 
-  let pythonApiRunner = new PythonApiRunner();
+  let pythonApiRunner = new PythonApiRunner(log);
   pythonApiRunner.start();
-  console.log("- Python api started")   
+  log.info("- Python api started")   
 
 
   var mongodb_uri=json_package["my2sec_jsap"].extended.AwProducer.endpoints.MongoDb;//"mongodb://root:Gregnet-99@dld.arces.unibo.it:27017/"
@@ -154,23 +165,24 @@ async function initMainElectronModules(){
   var mongodb_router_port=1341
   let mongoDbRouter = new MongoDbRouter(mongodb_uri,database,collection,mongodb_router_port)
   mongoDbRouter.start();
-  console.log("- MongoDbClient started")  
+  log.info("- MongoDbClient started")  
 }
 
 
 function split_url(url){
   var string=url.split("//")[1]
-  console.log(string)
+  log.info(string)
   if(string.includes("[") && string.includes("]")){
     var tempArr=string.split("]");
     var dirtyport=tempArr[1];
     var splitArr=[];
     splitArr[0]=tempArr[0]+"]"
     if(dirtyport.startsWith(":")){
+      log.info(dirtyport)
       if(dirtyport.endsWith("/")){
-        splitArr[1]=dirtyport.slice(1,dirtyport.length-2)
-      }else{
         splitArr[1]=dirtyport.slice(1,dirtyport.length-1)
+      }else{
+        splitArr[1]=dirtyport.slice(1,dirtyport.length)
       }
       return splitArr
     }else{
@@ -180,4 +192,17 @@ function split_url(url){
     var splitArr=string.split(":");
     return splitArr
   }
+}
+
+
+
+function saveToFile(filename,string){
+  var fs = require('fs');
+  return new Promise(resolve=>{
+    fs.writeFile(filename, string, function (err) {
+      if (err) return console.log(err);
+      //console.log('FILE SAVED');
+      resolve("FILE SAVED")
+    });
+  })
 }

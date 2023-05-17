@@ -3,6 +3,7 @@ class GregLogs{
       this.loglevel=0;
       //this.info("New Greglogs logger created!")
     }
+    //TODO: get loglevel from jsap and env
     //=========
     //[3] LOG
     //logLevel(level){
@@ -42,8 +43,9 @@ class GregLogs{
   function get_current_timestamp(){
       const date=new Date();
       var string_timestamp=date.toISOString()
+      string_timestamp=string_timestamp.split("T");
       //console.log(stringa)
-      return string_timestamp
+      return string_timestamp[0]+" "+string_timestamp[1].slice(0,string_timestamp[1].length-1)+"|"
   }//get_current_timestamp()
 
 

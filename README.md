@@ -6,39 +6,15 @@ The objective is to create an open source and GDPR compliant suite to support re
 
 
 ## MY2SEC INSTALLATION
-This guide will step you through download and installation of the My2Sec Application on your system. 
 ### Prerequisites
-- <b>Node.js</b><br>
-  To check if Node.js is installed on your local machine, type the following commands in your terminal:
-  <pre>node -v<br>npm -v</pre>
-  If one of the commands returns an error, please install Node.js from the official website: [https://www.nodejs.org](https://www.nodejs.org)
-- <b>Python</b><br>
-  To check if Python is installed on your local machine, type the following commands in your terminal:
-  <pre>python --version</pre>
-  If one of the commands returns an error, please install Python from the official website: [https://www.python.org/](https://www.python.org/)
-- <b>ActvityWatch</b><br>
-  If your PC does not have ActivityWatch installed, please install it from the official website: [https://activitywatch.net/](https://activitywatch.net/)
-### Download
-- Download the latest My2sec release from this link: [https://github.com/vaimee/my2sec/releases/download/v1.0-beta/ActivityWatchProducer.zip](https://github.com/vaimee/my2sec/releases/download/v1.0-beta/ActivityWatchProducer.zip)
-- Unzip the archive and move it anywhere in your system.
+- <b>ActivityWatch</b><br>
+  My2sec requires the ActivityWatch software to be installed on your computer.
+  If your computer does not have ActivityWatch installed, please install it from the official website: [https://activitywatch.net/](https://activitywatch.net/)
 ### Installation
-- Open a terminal and move into the unzipped folder:
-  <pre>cd C://Users/User/.../ActivityWatchProducer</pre>
-  This is the main interface you will be using to interact with My2sec services, like publishing and aggregating your activities.
-- The interface is built with the Electron framework, to install it type the following command in your terminal:
-  <pre>npm install --save-dev electron</pre>
-- Once finished, from the current directory cd into the following directory:
-  <pre>cd ./PY/my2sec</pre>
-  and install the required files for My2sec Working Events Ai Filter:
-  <pre>python -m pip install -r requirements.txt</pre>
-
-
-## STARTING THE APPLICATION
-Open a terminal in the folder '.../ActivityWatchProducer/PY/my2sec/main' and type the following command:
-<pre>python ./API_my2sec.py</pre>
-This will start the api needed to run My2sec Working Events Ai Filter.<br>
-Now that all requirements have been fullfilled, you can start the Producer Application: open a new terminal and type <pre>cd C://Users/User/.../ActivityWatchProducer</pre> to move into the Producer Directory.
-Start the application by typing: <pre>npm start</pre> from inside the Producer Directory.
+- Download the latest release from [https://github.com/vaimee/my2sec/releases](https://github.com/vaimee/my2sec/releases).
+- Unzip the downloaded archive
+- Go into the unzipped folder and double click "electron.exe": after some seconds the application will start, showing the login screen.
+>> Optionally, you can create a desktop link to the .exe file: click with the right mouse button on the electron.exe file and select "add desktop link". Then, copy the link onto your desktop. Double click the link to start the application
 
 ## USAGE
 ### 0-login
@@ -79,6 +55,37 @@ This messages are stored in the sepa database, and every time a new message is c
 <br>
 Any support is appreciated!
 
+<br>
+
+# DEVELOPMENT
+If you are a developer, or you have trouble using the official release of My2sec, this guide will guide you through the steps necessary to run My2sec application in Development mode.
+**WARNING**: there is a known issue with Python3. 
+## Prerequisites
+- <b>Node.js</b><br>
+  To check if Node.js is installed on your local machine, type the following commands in your terminal:
+  <pre>node -v<br>npm -v</pre>
+  If one of the commands returns an error, please install Node.js from the official website: [https://www.nodejs.org](https://www.nodejs.org)
+- <b>Python</b><br>
+  To check if Python is installed on your local machine, type the following commands in your terminal:
+  <pre>python --version<br>pip --version</pre>
+  If one of the commands returns an error, please install Python from the official website: [https://www.python.org/](https://www.python.org/)
+- <b>ActivityWatch</b><br>
+  If your PC does not have ActivityWatch installed, please install it from the official website: [https://activitywatch.net/](https://activitywatch.net/)
+## Download
+- Clone this repository
+## Dependencies Installation
+- Open a terminal and move into the ActivityWatchProducer folder in the cloned repository:
+  <pre>cd C://Users/User/.../1_ActivityWatchProducer</pre>
+  This is the main interface you will be using to interact with My2sec services, like publishing and aggregating your activities.
+- The interface is built with the Electron framework, to install it type the following command in your terminal:
+  <pre>npm install --save-dev electron</pre>
+- Once finished, from the current directory cd into the following directory:
+  <pre>cd ./PY/my2sec</pre>
+  and install the required files for My2sec Working Events Ai Filter:
+  <pre>python -m pip install -r requirements.txt</pre>
+## Starting the application
+Now that all requirements have been fullfilled, you can start the Producer Application: open a new terminal and type <pre>cd C://Users/User/.../1_ActivityWatchProducer</pre> to move into the Producer Directory.
+Start the application by typing: <pre>npm start</pre> from inside the Producer Directory.
 
 
 

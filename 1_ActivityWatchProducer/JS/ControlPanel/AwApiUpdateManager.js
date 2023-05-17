@@ -67,6 +67,8 @@ class AwApiUpdateManager {
         this.log.info("AwApiUpdateManager started!")
     }
     async stop(){
+        this.trainingActivitiesConsumer.cachedGraphs=[];
+        console.log("CLEANED CACHED GRAPHS")
         this.trainingActivitiesConsumer.exit();
         this.logTimesSub.unsubscribe();
         this.log.info("AwApiUpdateManager stopped!")
@@ -75,6 +77,7 @@ class AwApiUpdateManager {
     //-------------------------------
     //MANAGE BUTTONS EVENTS
     on_update_button_pressed(){
+        
         this.log.info("Update button pressed! Starting validation procedure")
         //show validation panel
         this.vpanel.style.display="block"
@@ -106,6 +109,7 @@ class AwApiUpdateManager {
         this.opanel.style.display="none"
         this.currentSection=0;
         //dovresti anche pulire tutti gli oggetti e cache
+
     }
 
     async on_validation_button_pressed(){
@@ -149,7 +153,10 @@ class AwApiUpdateManager {
             var success=await this.awManager.getCsvNone()
             console.log(success)
             if(success=="True"){
-                throw new Error("None events are present in Csv")
+                document.getElementById("error_status").innerHTML="Error: unclassified events found: please change the input box with 'none' to a valid value, then press update again "
+                this.change_update_status(2)
+                //console.log("NONE EVENTS ARE PRESENT IN CSV")
+                //throw new Error("None events are present in Csv")
             }
         }else{
             console.log("NOTHING TO SHOW, PROCEEDING WITH SENDING EVENTS")
@@ -325,7 +332,8 @@ class AwApiUpdateManager {
         }else{
             this.change_update_status(2)
         }
-    
+        this.trainingActivitiesConsumer.cachedGraphs=[]
+        console.log("CLEANED TRAINING ACTIVITIES CONSUMER CACHED GRAPHS")
     }
 
 

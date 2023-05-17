@@ -1,8 +1,10 @@
 const os = require('os');
+const axios = require('axios');
 
 class JsapConfigurationManager {
-    constructor(path){
+    constructor(path,logger){
         this.jsapPath=path;
+        this.log=logger;
     }
 
     async getConfiguredJsap(){
@@ -11,31 +13,46 @@ class JsapConfigurationManager {
     }
 
     async configureJsap(){
-        console.log("Configuration Manager: initializing jsap")
-        var loopbackAddress= this.getLoopbackAddress();
+        this.log.info("# JSAP CONFIGURATOR STARTED #")
+        this.log.info("------------------------< DETECTING RUNTIME ENVIRONMENT >------------------------")
+        if(this._isDarwin()){
+            this.log.info("- Running environment: darwin")
+        }else{
+            this.log.info("- Running environment: windows/linux")
+        }
+        if(this._isDev()){
+            this.log.info(`- Run mode: development (NODE_ENV=${process.env.NODE_ENV})`)
+        }else{
+            this.log.info(`- Run mode: production (NODE_ENV=${process.env.NODE_ENV})`)
+        }
+        this.log.info(" ")
+        this.log.info("------------------------< GET LOOPBACK ADDRESS >------------------------")
+        var loopbackAddress= await this.getLoopbackAddress();
+        this.log.info(" ")
+        this.log.info("------------------------< CONFIGURE JSAP >------------------------")
         var jsapObj= await this.getJsap();
         //console.log(jsapObj.extended)
         Object.keys(jsapObj.extended.AwProducer.endpoints).forEach(k=>{
             var endpointUrl=jsapObj.extended.AwProducer.endpoints[k];
             if(endpointUrl.includes("localhost")){
-                console.log("- modifying endpoint: "+k)
+                this.log.info("- modifying endpoint: "+k)
                 endpointUrl=endpointUrl.replace("localhost",loopbackAddress);
                 jsapObj.extended.AwProducer.endpoints[k]=endpointUrl;
             }else{
                 if(endpointUrl.includes("127.0.0.1")){
-                    console.log("- modifying endpoint: "+k)
+                    this.log.info("- modifying endpoint: "+k)
                     endpointUrl=endpointUrl.replace("127.0.0.1",loopbackAddress);
                     jsapObj.extended.AwProducer.endpoints[k]=endpointUrl;
                 }else{
                     if(endpointUrl.includes("[::1]")){
-                        console.log("- modifying endpoint: "+k)
+                        this.log.info("- modifying endpoint: "+k)
                         endpointUrl=endpointUrl.replace("[::1]",loopbackAddress);
                         jsapObj.extended.AwProducer.endpoints[k]=endpointUrl;
                     }
                 }
             }
         })
-        console.log(jsapObj.extended)
+        this.log.info(jsapObj.extended)
         return jsapObj;
     }
 
@@ -45,48 +62,57 @@ class JsapConfigurationManager {
         return JSON.parse(file);
     }
 
-    getLoopbackAddress(){
-        console.log("Detecting loopback address")
-        if(!this._ipv6IsOn()){
-            if(this._isDarwin()){
-                console.log("- Running on darwin")
-                return "127.0.0.1" //MAC
-            }else{
-                console.log("- Running on windows/linux")
-                return "localhost" //WINDOWS
-                //return "127.0.0.1"
-            }
-        }else{
-            console.log("- Device is using IPV6")
-            return "[::1]" //IPV6
-        }
-    }
-
-
-    //----------------------------UTILITY---------------------------------
-    _ipv6IsOn(){
-        const networkInterfaces = os.networkInterfaces();
-        // Loop through all available network interfaces
-        Object.keys(networkInterfaces).forEach((iface) => {
-          // Loop through all addresses of the current interface
-          networkInterfaces[iface].forEach((address) => {
-            // Check if the address is an IPv6 address
-            if (address.family === 'IPv6' && address.address !== '::1') {
-              // Use the IPv6 address instead of localhost
-              //apiURL = `http://[${address.address}]:333/api`;
-              return true;
-            }
-          });
-        });
-        return false;
-    }
-
     _isDarwin(){
+        //CHECK SYSTEM
         if (process.platform == 'darwin'){
             return true;
         }else {
             return false;
         }
+    }
+
+    async getLoopbackAddress(){
+        //TEST DATASOURCES
+        var loopbacks=["localhost","127.0.0.1","[::1]"]
+        var workingLoopbackAddress="";
+        for(var i in loopbacks){
+            var currHost= loopbacks[i]
+            //[1] LOCALHOST
+            try{
+                this.log.info("===============================")
+                this.log.info(`** Request ${i}: ${currHost} **`)
+                var res= await axios.get(`http://${currHost}:5600/api/0/buckets/`)
+                this.log.info("Response status: "+res.status)
+                this.log.info("Response DATA: "+JSON.stringify(res.data))
+                workingLoopbackAddress=currHost
+            }catch(e){
+                this.log.error(e.cause)
+            }finally{
+                this.log.info(`Request to ${currHost} executed`)
+            }
+        }
+        return workingLoopbackAddress
+    }
+
+    _isDev(){
+        //this.log.info(process.env.NODE_ENV)
+        try{
+            var mode=process.env.NODE_ENV;
+            //if(process.env.NODE_ENV != null || !process.env.NODE_ENV || process.env.NODE_ENV != "dev"){
+            if(!mode){
+                return false
+            }else{
+                if(mode.includes("dev")){
+                    return true
+                }else{
+                    return false
+                }            
+            }
+        }catch(e){
+            console.log(e)
+            return false
+        }
+
     }
 
 

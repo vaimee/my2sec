@@ -70,10 +70,16 @@ class AwManager extends AwProducer{
 			console.log("Received empty json")
 			var _corpo=document.getElementById("validation_body")
 			_corpo.innerHTML=`
-			<br><br>
-			<div width="100%" align="center">
-				Events are already classified
-				<br>and ready to be sent!
+			<div 
+				width="100%" 
+				align="center"
+				style="margin-top:auto;margin-bottom:auto;height:100%;display:flex;align-items:center;justify-content:center"
+			>
+				Events are already classified and ready to be sent!
+				<br>
+				This message appeared because all the scanned events have alredy previously been categorized by the IA.  
+				<br>
+				Press the 'confirm and upload' button to automatically upload your events and proceed to the next section
 			</div>
 				`
 		}

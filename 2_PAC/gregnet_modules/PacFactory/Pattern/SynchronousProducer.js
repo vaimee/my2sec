@@ -14,7 +14,9 @@ class SynchronousProducer extends Producer{
     this.genericFlagProducer.log.loglevel=this.log.loglevel;
   }
 
+  //TODO: split updateSepa and updateFlag in two separate functions
   async updateSepa(bindings,usergraph){
+    console.log("WARNING: updateSepa is deprecated and will soon be removed.")
     var res=await super.updateSepa(bindings)
     console.log("sending flag: "+this.flagname)
     var flag_res=await this.genericFlagProducer.updateSepa({

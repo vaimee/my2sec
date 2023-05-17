@@ -55,8 +55,14 @@
 				"MongoDbRouter": "http://localhost:1341"
 			},
 			"loglevel":0
-		}
-
+		},
+		"OpenProjectClientConfiguration":{
+        	"host": "dld.arces.unibo.it",
+        	"port": 8078,
+        	"clientId": "96CwxvbDL7gfJ0IJdGXA0Z62ZQIYJCfHN520D5Majn4",
+        	"clientSecret": "l0pKp2SRaBwCSrysdY3aggRr1KnrTovqJjojwApP1Z0",
+        	"apiKey": "d8f31b5a597d11be8f2037fbc3d7da3689a5c79dde45adc3fc12a457e0d76b94"
+      	}
 	},
 	"updates": {
 		"CREATE_USERNAMES_GRAPH":{
@@ -88,7 +94,13 @@
 			}
 		},
 		"REMOVE_USER":{
-			"sparql":"DELETE {?s ?p ?o} WHERE { GRAPH <http://www.vaimee.it/my2sec/members> { <http://www.vaimee.it/my2sec/defuser@vaimee.it> ?p ?o }}"
+			"sparql":"DELETE {GRAPH <http://www.vaimee.it/my2sec/members> { ?usergraph ?p ?o }} WHERE { GRAPH <http://www.vaimee.it/my2sec/members> { ?usergraph ?p ?o }}",
+			"forcedBindings": {
+				"usergraph": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/defuser@vaimee.it"
+				}
+			}		
 		},
 		"DELETE_USER_PRIVATE_GRAPH":{
 			"sparql":"DROP GRAPH <http://www.vaimee.it/my2sec/defuser@vaimee.it>"
@@ -142,7 +154,7 @@
 			}
 		},	
 		"ADD_TRAINING_EVENT":{
-			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/events> { ?b rdf:type my2sec:TrainingEvent ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:hasActivityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }}  WHERE {BIND(UUID() AS ?b )}",
+			"sparql":"INSERT {GRAPH <http://vaimee.it/my2sec/events> { ?b rdf:type my2sec:TrainingEvent ; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:hasActivityType ?activity_type; my2sec:taskTitle ?task; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration }}  WHERE {BIND(UUID() AS ?b) BIND(UUID() AS ?timenode) }",
 			"forcedBindings": {
 				"usergraph": {
 					"type": "uri",
