@@ -28,7 +28,7 @@ The interface has 4 main components:
 - activities dashboard (right side of the screen)<br>
   View history of your activities
 - open project tasks (left side of the screen)<br>
-  View current tasks and spent time
+  View current tasks, spent time and history of previous log times
 - control panel (top-right side of the screen)<br>
   Start/stop tracking events, upload events, explore events
 - bug report button (top of the screen)<br>
