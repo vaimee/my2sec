@@ -1,5 +1,6 @@
 const http = require('http');
 const express = require('express');
+const axios = require('axios')
 
 class AwApiRouter {
     constructor(host,port,router_port,logger){
@@ -9,10 +10,88 @@ class AwApiRouter {
         this.awPort=port;
         this.awApiRouter = express();
         this.awApiRouter.use(express.json()); 
-        this.setup();    
+        //this.setup();
+        this.axiosSetup()    
     }
 
-    setup(){
+    async axiosSetup(){
+
+      const rootUrl="http://"+this.awHost+":"+this.awPort
+
+      const config = {
+        headers:{
+            'Content-Type': 'application/json',
+            'Connection': 'close'
+        }
+      };
+
+      //Define Get Router
+      this.awApiRouter.get('/api/*', (request, response) => { //listen to all requests
+        console.log(`received AW api GET request: ${request.originalUrl}`)
+        axios.get(rootUrl+request.originalUrl,config)
+          .then(function (res) {
+            // handle success
+            console.log(res.data);
+            response.status(res.status).json(res.data);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+            if(error.hasOwnProperty("response")){
+              response.status(error.response.status).json(error.response.data);
+            }else{
+              response.status(500).json(error);
+            }
+            
+          })
+          .finally(function () {
+            console.log("Served api GET request")
+          });
+      });
+
+      this.awApiRouter.post('/api/*', (request,response)=>{
+        console.log(`received AW api POST request: ${request.originalUrl}`)
+        
+        axios.post(rootUrl+request.originalUrl,request.body,config)
+          .then(function (res) {
+            // handle success
+            console.log(res.data);
+            response.status(res.status).json(res.data);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+            response.status(error.response.status).json(error.response.data);
+          })
+          .finally(function () {
+            console.log("Served api POST request")
+          });
+
+      });
+
+      this.awApiRouter.delete('/api/*', (request,response)=>{
+        console.log(`received AW api DELETE request: ${request.originalUrl}`)
+        
+        axios.delete(rootUrl+request.originalUrl,request.body,config)
+          .then(function (res) {
+            // handle success
+            console.log(res.data);
+            response.status(res.status).json(res.data);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log(error);
+            response.status(error.response.status).json(error.response.data);
+          })
+          .finally(function () {
+            console.log("Served api DELETE request")
+          });
+
+      });
+    }
+
+    //!OUTDATED
+    setup_OLD(){
         this.awApiRouter.get('/api/*', (request, response) => { //listen to all requests
             console.log(`received AW buckets api request: ${request.originalUrl}`)
             //console.log(get_time()+` [info] received AW API request: (${request.path})`);
@@ -74,22 +153,34 @@ class AwApiRouter {
 
     test_datasource(){
         this.log.info("Preflight: testing ActivityWatch connection")
-        //var host_name="127.0.0.1";
-        //var http_port=5600;
-        var host_name=this.awHost;
-        var http_port=this.awPort;
-        //console.log(host_name+":"+http_port)
-        var reqpath="/api/0/buckets/"
+        const url="http://"+this.awHost+":"+this.routerPort+"/api/0/buckets/";
+        const testconfig = {
+          headers:{
+              'Content-Type': 'application/json'
+          }
+        }
         //console.log("sending get request")
         //var response=await get(host_name,http_port,reqpath);
-        this.get(host_name,http_port,reqpath).then((data)=>{
-          this.log.info(data)
-          this.log.info("DATASOURCE: OK!\n")    
-        });
-        //console.log(String(response))
+        axios.get(url,testconfig)
+          .then(function (res) {
+            // handle success
+            console.log("SUCCESS: "+res.status);
+            //response.status(res.status).json(res.data);
+          })
+          .catch(function (error) {
+            // handle error
+            console.log("ACTIVITY WATCH API IS OFFLINE");
+            throw new Error(error)
+            //response.status(error.response.status).json(error.response.data);
+          })
+          .finally(function () {
+            console.log("Served api GET request")
+          });
+
+
     }
 
-    //HTTP CLIENT
+    //!OUDATED HTTP CLIENTS
     http_delete(host_name,http_port,reqpath){
         //CREATE HTTP REQUEST FOR THE API
         const options = {

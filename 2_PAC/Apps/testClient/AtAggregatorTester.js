@@ -96,10 +96,9 @@ class AtAggregatorTester extends TestFactory{
     }
     
     async on_training_activities(flagbind){
-        console.log("Received training activities")
         //GET RESULTS
         var activities=this.awTrainingActivitiesConsumer.get_cache_by_user(flagbind.usergraph)
-        console.log(activities)
+        console.log("(AtAggregatorTester) Received "+activities.length+" training activities")
         /*
         var prefixes=""
         Object.keys(jsap.namespaces).forEach(k=>{prefixes=prefixes+` PREFIX ${k}:<${jsap.namespaces[k]}>`})
@@ -158,7 +157,8 @@ class AtAggregatorTester extends TestFactory{
 
             validated={};
         }
-    
+        
+        
         var activitiesresponse=await this.SET_SYNCHRONIZATION_FLAG({
             flag_type:"http://www.vaimee.it/my2sec/validatedactivitiesflag",
             usergraph:flagbind.usergraph
@@ -177,7 +177,7 @@ class AtAggregatorTester extends TestFactory{
         //console.log(prefixes+" "+jsap.queries.ALL_USERS_EVENTS.sparql)
         var res=await this.rawQuery(prefixes+" "+jsap.queries.ALL_USERS_ACTIVITIES.sparql)
         res=this.extractResultsBindings(res)
-        console.log(res)         
+        //console.log(res)         
         
         if(res.length==0){
             throw new Error("TEST FAILED")

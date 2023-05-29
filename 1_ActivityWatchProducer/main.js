@@ -107,7 +107,7 @@ app.whenReady().then(async () => {
     }
   }*/
 
-  var jsapPath= __dirname + "/Resources/my2sec_7-3-2023.jsap"
+  var jsapPath= __dirname + "/Resources/my2sec_26-5-2023.jsap"
   //var jsapPath=path.resolve(relativePath);
   let jsapConfigurationManager = new JsapConfigurationManager(jsapPath,log);//"./Resources/my2sec_7-3-2023.jsap");
   var my2sec_jsap=await jsapConfigurationManager.getConfiguredJsap();

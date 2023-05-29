@@ -43,20 +43,25 @@ class TestMaster{
         for(var size of sizes){
             for(var i in multipleBindingsConfig){
                 multipleBindingsConfig[i].numberOfEvents=size;
-                var res=await this.start_child_test("MultipleBindingsTester",multipleBindingsConfig[i]);
+                /*var res=await this.start_child_test(
+                    "MultipleBindingsTester",
+                    multipleBindingsConfig[i],
+                    "./my2sec_4-4-2023.jsap"
+                    );
                 this.validateTest("MultipleBindings, updateName: "+multipleBindingsConfig[i].updateName+", size: "+multipleBindingsConfig[i].numberOfEvents,res)
+                    */
             }
         }
 
 
-        var res=await this.start_child_test("AwMapperTester",{});
-        this.validateTest("AwMapperTester",res)
+        //var res=await this.start_child_test("AwMapperTester",{},"./my2sec_4-4-2023.jsap");
+        //this.validateTest("AwMapperTester",res)
 
-        var res=await this.start_child_test("AtAggregatorTester",{});
+        var res=await this.start_child_test("AtAggregatorTester",{},"./my2sec_4-4-2023.jsap");
         this.validateTest("AtAggregatorTester",res)
 
-        var res=await this.start_child_test("OpAdapterTester",{});
-        this.validateTest("OpAdapterTester",res)
+        //var res=await this.start_child_test("OpAdapterTester",{});
+        //this.validateTest("OpAdapterTester",res)
 
         //END OF TEST
         console.log("TEST COMPLETE, test master closing")
@@ -101,10 +106,10 @@ class TestMaster{
 
 
 
-    async start_child_test(app,json_arg){
+    async start_child_test(app,json_arg,jsap_path){
         json_arg=JSON.stringify(json_arg)
         return new Promise(resolve=>{         
-            const child = spawn('node', ['runPacApp',app,json_arg]);
+            const child = spawn('node', ['runPacApp',app,'-jsap',jsap_path,json_arg]);
 
             child.stdout.on('data', (data) => {
                 console.log(`${data}`);

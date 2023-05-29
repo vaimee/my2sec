@@ -1,0 +1,21 @@
+#account_panel{
+    display: none;
+    width: 35vw;
+    height: 15vh;
+    background:rgb(42,45,46);
+    position:absolute;
+    top:4vh;
+    right:0px;
+    z-index: 500;
+    color:white;
+    padding:1%;
+    text-align: left;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#account_panel_topbar{
+
+}
+#account_panel_topbar h3{
+    margin:0;
+    padding:0;
+}

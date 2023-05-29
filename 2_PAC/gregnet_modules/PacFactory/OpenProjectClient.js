@@ -119,6 +119,22 @@ class OpenProjectClient {
     }
 
 
+    async get_task_by_id(id){
+        var wp = await this.get_auth_resource("/api/v3/work_packages/"+id)//await this.em.get(WP, id)
+        wp=JSON.parse(wp)
+        console.log(wp.spentTime)
+        //get project info
+        var embedded=wp._embedded
+        var project=embedded.project //PROJECT INFO!!!
+        var pname=project.name
+
+        //console.log("Including "+pname)
+        //var user = await em.get(User, wp.body._embedded.assignee.id);
+        var user=await this.get_auth_resource("/api/v3/users/"+wp._embedded.assignee.id)
+        //console.log(JSON.parse(user).email)
+        var msg=this.construct_standard_message(wp,user)
+        return msg
+    }
 
 
     async get_tasks(whitelisted_projects){

@@ -23,7 +23,7 @@ class SynchronousConsumer extends Consumer{
   }
   //EMIT SYNCH EVENT
   onSyncFlag(bind){
-    this.log.debug("Flag received, user: "+bind.usergraph)
+    this.log.debug("Flag "+this.flagname+" received, user: "+bind.usergraph)
     this.em.emit("newsyncflag",bind);
     this.RESET_SYNCHRONIZATION_FLAG({flag:bind.flag})
   }
