@@ -6,11 +6,13 @@
 || DATE: 4/11/2022
 ############################################*/
 class SynchronousConsumer extends Consumer{
-  constructor(jsap_file,queryname,sub_bindings,flagname,ignore_first_results){
+  constructor(jsap_file,queryname,sub_bindings,flagname,ignore_first_results,reset_synch_flag){
     super(jsap_file,queryname,sub_bindings);
     this.flagname=flagname; //trigger flag
     this.cachedGraphs=[]; //internal cache
     this.ignore_first_results=ignore_first_results;
+    if(reset_synch_flag==undefined||reset_synch_flag==null){reset_synch_flag=true}; //default: true(retrocompatible)
+    this.reset_synch_flag=reset_synch_flag
     this.em=new SyncFlagEvent()//EventEmitter();
   }
   async subscribeToSepa(){
@@ -25,7 +27,13 @@ class SynchronousConsumer extends Consumer{
   onSyncFlag(bind){
     this.log.debug("Flag received, user: "+bind.usergraph)
     this.em.emit()//("newsyncflag",bind);
-    this.RESET_SYNCHRONIZATION_FLAG({flag:bind.flag})
+    if(this.reset_synch_flag){
+      this.log.debug("Auto Reset synch flag")
+      this.RESET_SYNCHRONIZATION_FLAG({flag:bind.flag})
+    }else{
+      this.log.debug("Did not Auto reset synch flag as specified from config")
+    }
+
   }
 
   //MANAGE NOTIFICATIONS
@@ -53,7 +61,8 @@ class SynchronousConsumer extends Consumer{
 
   //MANAGE CACHE
   get_cache_by_user(usergraph){
-    console.log("Cache returned")
+    if(usergraph==null||usergraph==undefined){throw new Error("Usergraph cannot be null")}
+    this.log.trace("Cache returned")
     return this.cachedGraphs[usergraph]
   }
   async add_binding_to_cache(binding){

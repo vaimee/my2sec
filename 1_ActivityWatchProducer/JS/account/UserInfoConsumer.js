@@ -1,6 +1,6 @@
 class UserInfoConsumer {
     constructor(jsap,usermail){
-        var log=new Greglogs();
+        var log=new GregLogs();
         this.sepaConsumer= new Sepajs.SEPA(jsap)
         this.userName="";
         this.usermail=usermail;
@@ -35,52 +35,53 @@ class UserInfoConsumer {
         sub.on("error",console.error)	
     }
 
-	sepa_getUserDashboard(){
-		return new Promise(resolve=>{
-            var override_host={
-                "host":"dld.arces.unibo.it",
-                "sparql11protocol": {
-                    "protocol": "http",
-                    "port": 8550,
-                    "query": {
-                        "path": "/query",
-                        "method": "POST",
-                        "format": "JSON"
-                    },
-                    "update": {
-                        "path": "/update",
-                        "method": "POST",
-                        "format": "JSON"
-                    }
-                },
-                "sparql11seprotocol": {
-                    "protocol": "ws",
-                    "availableProtocols": {
-                        "ws": {
-                            "port": 9550,
-                            "path": "/subscribe"
-                        },
-                        "wss": {
-                            "port": 9443,
-                            "path": "/secure/subscribe"
-                        }
-                    }
-                }                
-            }
-            this.sepaConsumer.query("select ?dash_id where { graph <http://www.vaimee.it/my2sec/dashboards> { <http://www.vaimee.it/my2sec/"+this.usermail+"> <http://www.vaimee.it/my2sec/superset/dashID> ?dash_id;  }}",override_host)
-            .then((data)=>{
-                //console.log("");
-                var bindings=extract_query_bindings(data);
+	async sepa_getUserDashboard(){
 
-                if(bindings.length!=0){
-                    var dash_id=bindings[0].dash_id.value;
-                    console.log(dash_id)
-                }else{
-                    dash_id="";
+        var override_host={
+            "host":"dld.arces.unibo.it",
+            "sparql11protocol": {
+                "protocol": "http",
+                "port": 8550,
+                "query": {
+                    "path": "/query",
+                    "method": "POST",
+                    "format": "JSON"
+                },
+                "update": {
+                    "path": "/update",
+                    "method": "POST",
+                    "format": "JSON"
                 }
-                resolve(dash_id);
-            });
-		});	
+            },
+            "sparql11seprotocol": {
+                "protocol": "ws",
+                "availableProtocols": {
+                    "ws": {
+                        "port": 9550,
+                        "path": "/subscribe"
+                    },
+                    "wss": {
+                        "port": 9443,
+                        "path": "/secure/subscribe"
+                    }
+                }
+            }                
+        }
+        
+        var data=await this.sepaConsumer.query("select ?dash_id where { graph <http://www.vaimee.it/my2sec/dashboards> { <http://www.vaimee.it/my2sec/"+this.usermail+"> <http://www.vaimee.it/my2sec/superset/dashID> ?dash_id;  }}",override_host)
+        
+        //console.log("");
+        var bindings=this.extract_query_bindings(data);
+
+        if(bindings.length!=0){
+            var dash_id=bindings[0].dash_id.value;
+            console.log(dash_id)
+        }else{
+            dash_id="";
+        }
+        return dash_id;
+            
+
 	}
 
     sepa_getUserName(){

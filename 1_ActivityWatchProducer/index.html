@@ -17,6 +17,8 @@
 	<title>My2Sec</title>
 	<link rel="icon" type="image/x-icon" href="Assets/vaimeelogo.jpg">
 
+	<!--AXIOS-->
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<!--JQUERY-->
     <script src="lib/jquery-3.6.0.min.js"></script>
     <!--SEPA CLIENT-->
@@ -33,12 +35,14 @@
 
 	<!--MAIN STYLE-->
 	<link rel="stylesheet" type="text/css" href="CSS/main.css">
+	<link rel="stylesheet" type="text/css" href="CSS/errorPanel.css">
 	<link rel="stylesheet" type="text/css" href="CSS/reusableComponents.css">
 	<link rel="stylesheet" type="text/css" href="CSS/updateInterface.css">
 	<link rel="stylesheet" type="text/css" href="CSS/embeddedDashboard.css">
 	<link rel="stylesheet" type="text/css" href="CSS/UserInterface.css">
 	<link rel="stylesheet" type="text/css" href="CSS/taskdashboard.css">
 	<link rel="stylesheet" type="text/css" href="CSS/bugreport.css">  
+	<link rel="stylesheet" type="text/css" href="CSS/account_panel.css">  
 
 </head>
 
@@ -46,10 +50,10 @@
 
 <body>
 	<!--============
-		[0] TOPBAR
-	==============-->
+		TOPBAR
+	==============----------------------------------------------------------------------------------->
 	<div id="topbar">
-		<img onclick="menu_switch()" class="white-icon" src="Assets/icons/menu.svg"> 
+		<!--<img onclick="menu_switch()" class="white-icon" src="Assets/icons/menu.svg"> -->
 
 		<div id="middle-topbar-wrapper" style="display:flex;align-items: center;">
 			<div id="sepa_connectionstatus_wrapper" class="mini-wrapper">
@@ -57,16 +61,62 @@
 				<!--<img class="white-icon" src="Assets/icons/wifi.svg"> -->
 			</div>
 			&nbsp
-			<button style="border-width:2px;border-color:white;border-style:solid;border-radius:5px;" id="bug-report-button"  onclick="onBugReportClick()">
-				report bug
-				<img style="transform: rotate(0deg);" id="user-menu-icon" class="white-icon" src="Assets/icons/message-alert.svg" width="24px">
-			</button>
-		</div>
 
-		<div id="user_info_wrapper" class="mini-wrapper">
-			<img id="user-menu-icon" class="white-icon" src="Assets/icons/triangle.svg" width="15px"> <!--onclick="switch_user_menu()"> -->
+		</div>
+		<button style="border-width:2px;border-color:white;border-style:solid;border-radius:5px;" id="bug-report-button"  onclick="onBugReportClick()">
+			report bug
+			<img style="transform: rotate(0deg);" id="user-menu-icon" class="white-icon" src="Assets/icons/message-alert.svg" width="24px">
+		</button>
+		<div id="user_info_wrapper" class="mini-wrapper" onclick="switch_account_panel()">
+			<img id="user-account-menu-icon" style="transform:rotate(90deg);" class="white-icon" src="Assets/icons/triangle.svg" width="15px"> <!--onclick="switch_user_menu()"> -->
+			&nbsp
 			<span id="user_name">User</span>
 			<img id="user-icon" class="white-icon" src="Assets/icons/user.svg"> 
+		</div>
+	</div>
+
+
+
+
+
+
+	<!--============
+		PANELS
+	==============----------------------------------------------------------------------------------->
+	<div id="account_panel">
+		<div id="account_panel_topbar">
+			<h3>Account Information</h3>
+		</div>
+		<hr>
+		<div id="account_panel_body">
+
+		</div>
+	</div>
+
+	
+	<div id="error-panel" style="display:none">
+		<div id="error-panel-topbar">
+			<div id="error-panel-topbar-title">
+				<img src="Assets/icons/warning-triangle-outline.svg" width="24px">
+				&nbsp;
+				<b>An exception occurred during the application execution</b>
+			</div>
+
+			<button id="error-panel-close-button" onclick="close_error_panel()">x</button>
+		</div>
+		<div id="error-content-wrapper">
+			<br>
+			<h2 id="error-title">
+				Generic error
+			</h2>
+			<hr>
+			<b>Description:</b><br>
+			<div id="error-description">
+				Generic error description
+			</div>
+		</div>
+		<div id="error-comment">
+			Please report this bug to the server administrator
 		</div>
 	</div>
 
@@ -112,9 +162,6 @@
 		</div>
 		
 	</div>
-
-
-
 	<!--
 		OBSCURATION PANEL
 	-->
@@ -167,8 +214,9 @@
 				</span>
 			</button>	
 			&nbsp
-			<div id="success_status" style="display:none">Events uploaded successfully</div>
-			<div id="error_status" style="display:none">Error: something went wrong...</div>
+			<div id="validation_comment" style="display:none">Please fill all the empty cells before uploading</div>
+			<div id="success_status" style="display:none">Upload procedure completed! This panel can now be closed</div>
+			<!--<div id="error_status" style="display:none">Error: something went wrong...</div>-->
 			<div id="update_spinner" class="spinner" style="display:none"></div>		
 		</div>
 	</div>
@@ -176,115 +224,36 @@
 
 
 
+
+
+
+
 	<!--============
-		[0.1] MENU
-	==============-->
-	<div id="menu_window">
-		<div class="menu_title">
-			<b>AW-PRODUCER Configuration</b>
-		</div>
-		<br>
-		<div id="sepa-config-wrapper" class="menu_form_wrapper">
-			SEPA CONFIGURATION
-			<hr>
-			<form id="sepa-config-form">
-				<label for="hostname_options">HostName:</label><br>
-				<input type="text" id="hostname_options" name="hostname_options" value="dld.arces.unibo.it"><br>
-
-				<label for="http_port_options">http_port:</label><br>
-				<input type="text" id="http_port_options" name="http_port_options" value="8500"><br>
-
-				<label for="ws_port_options">ws_port:</label><br>
-				<input type="text" id="ws_port_options" name="ws_port_options" value="9500"><br>
-
-				<label for="tls_options">tls:</label><br>
-				<input type="text" id="tls_options" name="tls_options" value="false"><br>
-
-			</form>
-
-		</div>
-
-		<br>
-
-		<div id="whitelist-config" class="menu_form_wrapper">
-			WATCHERS WHITELIST
-			<hr>
-			<form id="whitelist-form">
-				<label for="whitelist_options">Insert watchers clientname separated by comma:</label><br>
-				<textarea rows="4" id="whitelist_options" name="whitelist_options">aw-watcher-window</textarea><br>
-			</form>
-
-		</div>
-
-			<br>
-
-		<div id="app-config" class="menu_form_wrapper">
-			USER CONFIGURATION
-			<hr>
-			<form id="username-form">
-				<label for="username_options">Username:</label><br>
-				<input type="text" id="username_options" name="username_options" value="greg" contenteditable="true"><br>
-			</form>
-
-		</div>
-
-			<br>
-		
-		<div id="save-options-wrapper" class="menu_save_button_wrapper">
-			SAVE OPTIONS AND RESTART
-			<hr>
-			<button id="save_options_button" onclick="save_options_button()"><img src="Assets/icons/save-action-floppy.svg"></button>
-		</div>
-
-		<div id="menu_bottombar">
-			<a href="">GitHub<img class="white-icon" src="Assets/icons/github.svg"></a>
-		</div>
-
-	</div>
-
-
-
-
-
-<!------------------------------------------------------------------------------------------------------------------------------>
-	<!--=========================================
-		[1] HOME SCREEN
-	=========================================-->
+		HOME
+	==============----------------------------------------------------------------------------------->
 	<div id="home_screen">
 
 		<!--USER HEADER-->
 		<div id="user_header">
 			
 			<div id="welcome-board">
-				<span id="user_welcome"><b>Welcome back, <span id="user_name_welcome">USER</span>!</b></span>
-				<br>
-				<span>You have collected a total of <b><span id="sub_counter">0</span></b> events</span>
+				<span id="user_welcome"><b>Welcome back, <span id="user_name_welcome">USER</span>!</b>
 				<button onclick="refreshSupersetDashboard('my-superset-container')">
 					<img src="Assets/icons/reload-window.svg">
 				</button>
+				</span>
+				<br>
 				
 			</div>
 			
 			<div id="events_control_panel">
 				<div id="my2sec-api-buttons">
-					<button id="start-stop-button" class="default-button" onclick="start_button()">
+					<button id="start-stop-button" class="default-button" onclick="on_start_button_pressed()">
 						<span id="start-stop-innertext" style="display:flex;align-items:center;justify-content:center;">	
 							Start Scan&nbsp
 							<img class="white-icon" src="Assets/icons/play-outline.svg">
 						</span>
 					</button>
-
-					<button id="explorer-button" class="default-button" onclick="switch_content()">
-						<span style="display:flex;align-items:center;justify-content:center;">
-							Explorer&nbsp
-							<img class="white-icon" src="Assets/icons/table-rows.svg">
-						</span>
-					</button>
-				</div>
-				<div id="update_status" style="margin-top:5px;display:flex;align-items:center;justify-content:space-between;">
-					<div id="ready_status" align="center" style="width:50%;">Waiting for data...</div>
-
-
 					<button id="update-procedure-button" class="default-button" onclick="start_update_procedure()">
 						<span style="display:flex;align-items:center;justify-content:center;">	
 							Upload&nbsp
@@ -292,6 +261,11 @@
 						</span>
 					</button>
 				</div>
+
+				<div id="update_status" style="margin-top:5px;display:flex;align-items:center;justify-content:center;">
+					<div id="ready_status" align="center" style="width:50%;">Press "start scan"</div>
+				</div>
+
 			</div>
 
 		
@@ -302,7 +276,7 @@
 		<div class="dashboards-wrapper">
 			
 			<div class="task-container">
-				<div id="task-header">
+				<div id="task-header" class="task-header">
 					<h3>Your Tasks &nbsp</h3>
 					<img class="white-icon" src="Assets/icons/clipboard-check.svg">
 				</div>
@@ -313,6 +287,19 @@
 
 				<div id="task-info" align="center">
 					<p>Tasks fetched from OpenProject</p>
+				</div>
+
+				<div id="log-times-panel-wrapper">
+					<div id="log-times-header" class="task-header">
+						<h3>Log Times &nbsp</h3>(Last 14 Days)
+						&nbsp
+						<img class="white-icon" src="Assets/icons/clipboard-check.svg">
+					</div>
+					
+					<div id="log-times-container">
+						No log times to show yet
+					</div>
+					
 				</div>
 			</div>
 
@@ -327,113 +314,64 @@
 
 
 
-
-
-
-<!------------------------------------------------------------------------------------------------------------------------------>
-	<!--=========================================
-		[2] CONTENITORE PER IL WATCHER VIEW PANEL
-	=========================================-->
-	
-	<div id="content-wrapper">
-		<br>
-		<button class="default-button" onclick="switch_content()">back to home</button>
-
-		<div id="row-0">
-
-
-			<div id="nav-points-wrapper">
-
-				<!--
-				<div class="nav-point"></div>
-				<div class="nav-point"></div>
-				<div class="nav-point"></div>
-				<div class="nav-point"></div>
-				-->
-
-			</div>
-
-			<div id="watcher-title">
-				<h2>AW-WATCHER-WINDOW [1/4]</h2>
-			</div>
-
-
-		</div>
-		<!--#ROW-ZERO-->
-
-
-		<br>
-		<div id="row-1">
-
-
-			<button class="round_button" onclick="change_watcher('l')" align="center">
-				<img src="Assets/icons/arrow-left.svg" class="white-icon" id="sepabutton_icon" width="36px">
-			</button>
-
-			<!--TABLE CARD-->
-			<div id="table-card">
-				<span id="events-title">Loading events...</span>
-				<br><br>
-
-				<!--CONTAINS THE TABLE-->
-				<div id="table_wrapper">
-					<div class="spinner"></div>
-					<div id="content_obscurer">
-						<table id="events_table" class="display">
-							<thead>
-  								<tr id="cols_header">     					
-								</tr>
-							</thead>
-   							<tbody id="table_rows">
-   							</tbody>
-						</table>
-					</div>
-				</div>
-				<!--#table_wrapper-->
-			</div>
-			<!--#table-card-->
-
-
-			<button class="round_button" onclick="change_watcher('r')" align="center">
-				<img src="Assets/icons/arrow-right.svg" class="white-icon" id="sepabutton_icon" width="36px">
-			</button>
-
-
-		</div>
-		<!--#row-1-->
-	</div>
-	<!--#content-wrapper-->
-
-
-
-
 	<!--Load external scripts-->
 	<!--JSAP
 	<script type="text/javascript" src="Resources/my2sec_19-1-2023.jsap.js"></script>-->
 	<!--PACFACTORY-->
+	<script type="text/javascript" src="resources/logger_config.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/GregLogs.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/PacFactory.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/Consumer.js"></script>
+	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/CachedConsumer.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/Producer.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/SynchronousConsumer.js"></script>
 	<script type="text/javascript" src="lib/PacFactoryJs/Pattern/SynchronousProducer.js"></script>
 	<!--Remove outdated local_storage_menu
 	<script type="text/javascript" src="JS/local_storage_menu.js"></script>-->
 	<!--CLIENTS-->
-	<script type="text/javascript" src="lib/AwClient.js"></script>
+	<script type="text/javascript" src="JS/clients/My2secApiClient.js"></script>
+	<script type="text/javascript" src="JS/clients/base/ActivityWatchClient.js"></script>
+	<script type="text/javascript" src="JS/clients/base/ActivityWatchSafeClient.js"></script>
+	<script type="text/javascript" src="JS/clients/ProducerBucketClient.js"></script>
+	<script type="text/javascript" src="JS/clients/AwQueryManager.js"></script>
 	<!--SUPERSET-->
 	<script type="text/javascript" src="lib/superset-embed.js"></script>
 
 	<!--PAC MODULES-->
-	<script type="text/javascript" src="JS/PacModules/tasksConsumer.js"></script>
-	<script type="text/javascript" src="JS/PacModules/AwProducer.js"></script>
-	<script type="text/javascript" src="JS/PacModules/AwManager.js"></script>
+	<script type="text/javascript" src="JS/pac/FlagProducer.js"></script>
+	<script type="text/javascript" src="JS/pac/FlagRemover.js"></script>
+
+	<script type="text/javascript" src="JS/pac/TasksConsumer.js"></script>
+	<script type="text/javascript" src="JS/pac/LogTimesConsumer.js"></script>
+
+	<script type="text/javascript" src="JS/pac/AwMessagesProducer.js"></script>
+	<script type="text/javascript" src="JS/pac/ProductionFinishedFlagProducer.js"></script>
+	<script type="text/javascript" src="JS/pac/ValidatedActivitiesProducer.js"></script>
+	<script type="text/javascript" src="JS/pac/ValidatedActivitiesFlagProducer.js"></script>
+	<script type="text/javascript" src="JS/pac/TrainingActivitiesRemover.js"></script>
+
+	<script type="text/javascript" src="JS/pac/ActivityTypesConsumer.js"></script>
+	<script type="text/javascript" src="JS/pac/WorkerTypesConsumer.js"></script>
+	<script type="text/javascript" src="JS/pac/WorkerTypeProducer.js"></script>
+	<!--<script type="text/javascript" src="JS/pac/AwProducer.js"></script>
+	<script type="text/javascript" src="JS/pac/AwManager.js"></script>-->
+	
+	<!--UTILS-->
+	<script type="text/javascript" src="JS/utils/ErrorManager.js"></script>
+	<script type="text/javascript" src="JS/utils/ConnectionTester.js"></script>
+	<script type="text/javascript" src="JS/utils/TableManager.js"></script>
+	<script type="text/javascript" src="JS/utils/BugReport.js"></script>
+	
 	<!--MODULES-->
-	<script type="text/javascript" src="JS/UserInfo/UserInfoConsumer.js"></script>
-	<script type="text/javascript" src="JS/ControlPanel/AwApiUpdateManager.js"></script>
-	<script type="text/javascript" src="JS/ControlPanel/ScanManager.js"></script>
-	<script type="text/javascript" src="JS/BugReportPanel/BugReport.js"></script>
+	<script type="text/javascript" src="JS/account/UserInfoConsumer.js"></script>
+	<script type="text/javascript" src="JS/modules/LogTimesManager.js"></script>
+	<script type="text/javascript" src="JS/modules/TasksManager.js"></script>
+	<script type="text/javascript" src="JS/modules/ScanManager.js"></script>
+	<script type="text/javascript" src="JS/modules/UpdateManager.js"></script>
+	<script type="text/javascript" src="JS/account/AccountPanelManager.js"></script>
+	
 	<!--MAIN-->
+	<script type="text/javascript" src="JS/Initializer.js"></script>
 	<script type="text/javascript" src="JS/main.js"></script>
 </body>
 </html>

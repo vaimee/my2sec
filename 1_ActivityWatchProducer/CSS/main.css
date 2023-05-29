@@ -4,7 +4,8 @@
 	--gianlu_dark_blue: rgb(19, 64, 98);
 	--gianlu_black: rgb(42,45,46);
 
-
+	text-align: left;
+	font-family: Arial, Helvetica, sans-serif;
 	--main_color: var(--gianlu_black)
 
 }
@@ -14,7 +15,10 @@ body{
 }
 
 
-
+/*
+Topbar+homebar=4+7=11vh
+left: 89vh
+*/
 
 /*=============
 	[0] TOPBAR
@@ -38,8 +42,13 @@ body{
 }
 
 #user-menu-icon{
-	transform: rotate(180deg)
+	transform: rotate(180deg);
 }
+#user_info_wrapper:hover{
+	background:rgb(66, 70, 72);
+	border-radius: 10px;
+}
+
 
 
 /*=============

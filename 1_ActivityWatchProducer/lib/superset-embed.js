@@ -1,4 +1,4 @@
-var log=new Greglogs();
+var log=new GregLogs();
 var _embed;
 async function createDashboard(dash_id,superset_host,container_id){
     var embed= await supersetEmbeddedSdk.embedDashboard({
@@ -28,8 +28,8 @@ async function refreshSupersetDashboard(container_id){
 	var superset_host="http://dld.arces.unibo.it:8087";
 	var container_id="my-superset-container";
 	try{
-		var dash_id=await userInfoConsumer.sepa_getUserDashboard();//"755f0434-6ac6-4d4f-8415-3b2b80c571e9";
-		log.info("Fetched dashboard_id of "+userInfoConsumer.userName+" :"+dash_id)
+		var dash_id=await _userInfoConsumer.sepa_getUserDashboard();//"755f0434-6ac6-4d4f-8415-3b2b80c571e9";
+		log.info("Fetched dashboard_id of "+_userInfoConsumer.userName+" :"+dash_id)
 		if(!dash_id){
 			log.error("Error: invalid dashboard id, showing error message to the user")
 			document.getElementById(container_id).innerHTML=`

@@ -56,7 +56,6 @@
 			},
 			"loglevel":0
 		},
-
 		"OpenProjectClientConfiguration":{
         	"host": "dld.arces.unibo.it",
         	"port": 8078,
@@ -226,7 +225,7 @@
 			}
 		},
 		"REMOVE_TRAINING_EVENT":{
-			"sparql":"DELETE {GRAPH <http://vaimee.it/my2sec/events> {?event ?p ?o ;my2sec:hasTimeInterval ?d .?d ?p1 ?o1 } } WHERE{GRAPH <http://vaimee.it/my2sec/events> {?event ?p ?o ; my2sec:hasTimeInterval ?d . ?d ?p1 ?o1 }}",
+			"sparql":"DELETE {GRAPH <http://vaimee.it/my2sec/events> {?event ?p ?o ; my2sec:hasTimeInterval ?d . ?d ?p1 ?o1 } } WHERE{ GRAPH <http://vaimee.it/my2sec/events> {?event ?p ?o ; my2sec:hasTimeInterval ?d . ?d ?p1 ?o1 }}",
 			"forcedBindings": {
 				"event": {
 					"type": "uri",
@@ -571,8 +570,109 @@
 					"type": "literal",
 					"value": "2.5"
 				}
-			}			
+			}
+		},
+
+
+
+
+		"ADD_ACTIVITY_TYPE":{
+			"sparql":"INSERT{GRAPH <http://www.vaimee.it/activitytypes#>{ ?uuid rdf:type my2sec:ActivityType; rdf:type ?activity_type . }}WHERE{BIND(UUID() AS ?uuid)}",
+			"forcedBindings": {
+				"activity_type": {
+					"type": "uri",
+					"value": "my2sec:Developing"
+				}
+			}	
+		},
+		"DELETE_ACTIVITY_TYPE":{
+			"sparql":"DELETE{ GRAPH <http://www.vaimee.it/activitytypes#> { ?uuid rdf:type my2sec:ActivityType; ?p ?o . }}WHERE{ GRAPH <http://www.vaimee.it/activitytypes#> { ?uuid rdf:type my2sec:ActivityType; ?p ?o . }}",
+			"forcedBindings": {
+				"uuid": {
+					"type": "uri",
+					"value": "urn:uri"
+				}
+			}		
+		},
+		"ADD_PROFESSION":{
+			"sparql":"INSERT{ GRAPH <http://www.vaimee.it/professions#>{ ?uuid rdf:type my2sec:Profession; rdf:type ?profession_type; my2sec:hasActivitiesGraph ?activities_graph; my2sec:hasEventsGraph ?events_graph . }}WHERE{BIND(UUID() AS ?uuid)}",
+			"forcedBindings": {
+				"profession_type": {
+					"type": "uri",
+					"value": "my2sec:Developing"
+				},
+				"activities_graph": {
+					"type": "uri",
+					"value": "http://vaimee.it/my2sec/activities"
+				},
+				"events_graph": {
+					"type": "uri",
+					"value": "http://vaimee.it/my2sec/events"
+				}
+			}	
+		},
+		"DELETE_PROFESSION":{
+			"sparql":"DELETE{ GRAPH <http://www.vaimee.it/professions#> { ?uuid rdf:type my2sec:Profession; ?p ?o . }}WHERE{ GRAPH <http://www.vaimee.it/professions#> { ?uuid rdf:type my2sec:Profession; ?p ?o . }}",
+			"forcedBindings": {
+				"uuid": {
+					"type": "uri",
+					"value": "urn:uri"
+				}
+			}		
+		},
+		"ADD_ACTIVITY_TYPE_LINK_TO_PROFESSION":{
+			"sparql":"INSERT DATA{ GRAPH <http://www.vaimee.it/professions#>{ ?profession_uuid my2sec:hasActivityType ?activity_type_uuid }}",
+			"forcedBindings": {
+				"profession_uuid": {
+					"type": "uri",
+					"value": "urn:uuid"
+				},
+				"activity_type_uuid": {
+					"type": "uri",
+					"value": "urn:uuid"
+				}			
 		}
+				},
+		"REMOVE_ACTIVITY_TYPE_LINK_FROM_PROFESSION":{
+			"sparql":"DELETE DATA{ GRAPH <http://www.vaimee.it/professions#>{ ?profession_uuid my2sec:hasActivityType ?activity_type_uuid}}",
+			"forcedBindings": {
+				"profession_uuid": {
+					"type": "uri",
+					"value": "urn:uuid"
+				},
+				"activity_type_uuid": {
+					"type": "uri",
+					"value": "urn:uuid"
+				}
+			}		
+		},
+		"ADD_PROFESSION_LINK_TO_USER":{
+			"sparql":"DELETE{ GRAPH <http://www.vaimee.it/userslinks#>{ ?usergraph my2sec:hasProfession ?old_profession_uuid }}INSERT{ GRAPH <http://www.vaimee.it/userslinks#>{ ?usergraph my2sec:hasProfession ?profession_uuid }}WHERE{ GRAPH <http://www.vaimee.it/userslinks#>{ OPTIONAL { ?usergraph my2sec:hasProfession ?old_profession_uuid }}}",
+			"forcedBindings": {
+				"usergraph": {
+					"type": "uri",
+					"value": "urn:uuid"
+				},
+				"profession_uuid": {
+					"type": "uri",
+					"value": "urn:uuid"
+				}
+			}			
+		},
+		"DELETE_PROFESSION_LINK_FOR_USER":{
+			"sparql":"DELETE{ GRAPH <http://www.vaimee.it/userslinks#>{ ?usergraph my2sec:hasProfession ?profession_uuid }}WHERE{ GRAPH <http://www.vaimee.it/userslinks#>{ ?usergraph my2sec:hasProfession ?profession_uuid }}",
+			"forcedBindings": {
+				"usergraph": {
+					"type": "uri",
+					"value": "urn:uuid"
+				},
+				"profession_uuid": {
+					"type": "uri",
+					"value": "urn:uuid"
+				}
+			}	
+		}
+
 	},
 	"queries": {
 		"ALL_USERNAMES": {
@@ -650,6 +750,15 @@
 		"ALL_USERS_TRAINING_ACTIVITIES":{
 			"sparql":"SELECT * WHERE { GRAPH <http://vaimee.it/my2sec/activities> {?nodeid rdf:type my2sec:TrainingActivity; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration . OPTIONAL { ?nodeid my2sec:taskTitle ?task} FILTER (?event_type != my2sec:TrainingActivity)   }}"	
 		},
+		"USER_TRAINING_ACTIVITIES":{
+			"sparql":"SELECT * WHERE { GRAPH <http://vaimee.it/my2sec/activities> {?nodeid rdf:type my2sec:TrainingActivity; my2sec:hasMember ?usergraph; rdf:type ?event_type; my2sec:nameApp ?app; my2sec:titleFile ?title; time:inXSDDateTimeStamp ?datetimestamp; my2sec:activityType ?activity_type; my2sec:hasTimeInterval ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitSecond ; time:numericDuration ?duration . OPTIONAL { ?nodeid my2sec:taskTitle ?task} FILTER (?event_type != my2sec:TrainingActivity) VALUES ?usergraph {?forceUserGraph} }}",
+			"forcedBindings": {
+				"forceUserGraph": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/admin@vaimee.it"
+				}
+			}
+		},
 
 		"ALL_OP_MESSAGES":{
 			"sparql":"SELECT * WHERE{ GRAPH ?usergraph { _:b my2sec:messageValue ?msgvalue; my2sec:messageSource ?source ;  time:inXSDDateTimeStamp ?msgtimestamp . }}",
@@ -668,10 +777,10 @@
 			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?projecturi rdf:type my2sec:project; my2sec:projectId ?project_id; my2sec:projectIdentifier ?project_identifier } }"
 		},
 		"ALL_OP_TASKS":{
-			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?bnode rdf:type my2sec:Task; my2sec:hasProject ?progetto; my2sec:taskId ?taskid; my2sec:taskTitle ?tasktitle; my2sec:hasMember ?assignee; my2sec:spentTime _:timenode . _:timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?spent_time }}"
+			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?bnode rdf:type my2sec:Task; my2sec:hasProject ?progetto; my2sec:taskId ?taskid; my2sec:taskTitle ?tasktitle; my2sec:hasMember ?assignee; my2sec:spentTime ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?spent_time }}"
 		},
 		"USER_TASKS":{
-			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?bnode rdf:type my2sec:Task; my2sec:hasProject ?progetto; my2sec:taskId ?taskid; my2sec:taskTitle ?tasktitle; my2sec:hasMember ?assignee; my2sec:spentTime _:timenode . _:timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?spent_time}}",
+			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?bnode rdf:type my2sec:Task; my2sec:hasProject ?progetto; my2sec:taskId ?taskid; my2sec:taskTitle ?tasktitle; my2sec:hasMember ?assignee; my2sec:spentTime ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?spent_time}}",
 			"forcedBindings": {
 				"assignee": {
 					"type": "uri",
@@ -679,8 +788,20 @@
 				}
 			}
 		},
+		"ALL_OP_TASKS_NO_SPENT_TIME":{
+			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?bnode rdf:type my2sec:Task; my2sec:hasProject ?progetto; my2sec:taskId ?taskid; my2sec:taskTitle ?tasktitle; my2sec:hasMember ?assignee}}"
+		},
 		"ALL_LOG_TIMES":{
 			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/my2sec/logtime> { ?b rdf:type my2sec:Logtime; my2sec:hasMember ?usergraph; my2sec:hasTask ?task_uri; time:inXSDDateTimeStamp ?now; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType ?unit_type ; time:numericDuration ?log_time }}"
+		},
+		"USER_LOG_TIMES":{
+			"sparql":"SELECT * WHERE { GRAPH <http://www.vaimee.it/my2sec/logtime> { ?b rdf:type my2sec:Logtime; my2sec:hasMember ?usergraph; my2sec:hasTask ?task_uri; time:inXSDDateTimeStamp ?now; my2sec:hasTimeInterval _:d . _:d rdf:type time:Duration; time:unitType ?unit_type ; time:numericDuration ?log_time }}",
+			"forcedBindings": {
+				"usergraph": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/admin@vaimee.it"
+				}
+			}
 		},
 		"GET_SYNCHRONIZATION_FLAG":{
 			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/my2sec/flags> {?flag rdf:type ?flag_type ; my2sec:hasMember ?usergraph ; time:inXSDDateTimeStamp ?timestamp}}",
@@ -693,6 +814,55 @@
 		},
 		"GET_ALL_GRAPHS_COUNT":{
 			"sparql":"SELECT ?g (COUNT(?s) AS ?ntriples) WHERE {GRAPH ?g { ?s ?p ?o }}GROUP BY ?g"
+		},
+		"GET_USER_SYNCHRONIZATION_FLAG":{
+			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/my2sec/flags> {?flag rdf:type ?flag_type ; my2sec:hasMember ?usergraph ; time:inXSDDateTimeStamp ?timestamp}}",
+			"forcedBindings": {
+				"flag_type": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/production_finished_flag"
+				},
+				"usergraph": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/defuser@vaimee.it"
+				}
+			}
+		},
+		
+
+		"ALL_ACTIVITY_TYPES":{
+			"sparql":"SELECT * WHERE{ GRAPH <http://www.vaimee.it/activitytypes#>{ ?uuid rdf:type my2sec:ActivityType; rdf:type ?activity_type . FILTER (?activity_type != my2sec:ActivityType) }}"
+		},	
+		"ALL_PROFESSION_TYPES":{
+			"sparql": "SELECT * WHERE{ GRAPH <http://www.vaimee.it/professions#>{ ?uuid rdf:type my2sec:Profession; rdf:type ?profession_type; my2sec:hasActivitiesGraph ?activities_graph; my2sec:hasEventsGraph ?events_graph . FILTER (?profession_type != my2sec:Profession)}}"
+		},
+		"PROFESSION_INFO":{
+			"sparql":"SELECT * WHERE{ GRAPH <http://www.vaimee.it/professions#>{ ?uuid rdf:type my2sec:Profession; rdf:type ?profession_type; my2sec:hasActivitiesGraph ?activities_graph; my2sec:hasEventsGraph ?events_graph; my2sec:hasActivityType ?activity_type_uuid . FILTER (?profession_type != my2sec:Profession) }GRAPH <http://www.vaimee.it/activitytypes#>{ ?activity_type_uuid rdf:type my2sec:ActivityType; rdf:type ?activity_type . FILTER (?activity_type != my2sec:ActivityType)}}",
+			"forcedBindings": {
+				"uuid": {
+					"type": "uri",
+					"value": "urn:uri"
+				}
+			}				
+		},
+		"ALL_USERS_LINKS":{
+			"sparql":"SELECT * WHERE{GRAPH <http://www.vaimee.it/userslinks#>{?usergraph my2sec:hasProfession ?profession_uuid}}",
+			"forcedBindings": {
+				"usergraph": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/defuser@vaimee.it"
+				}
+			}			
+		},
+		"USER_ACTIVITY_TYPES":{
+			"sparql":"SELECT * WHERE{GRAPH <http://www.vaimee.it/userslinks#>{ ?usergraph my2sec:hasProfession ?profession_uuid }GRAPH <http://www.vaimee.it/professions#>{ ?profession_uuid rdf:type my2sec:Profession; rdf:type ?profession_type; my2sec:hasActivityType ?activity_type_uuid . FILTER (?profession_type != my2sec:Profession)}GRAPH <http://www.vaimee.it/activitytypes#>{ ?activity_type_uuid rdf:type my2sec:ActivityType; rdf:type ?activity_type . FILTER (?activity_type != my2sec:ActivityType)}}",
+			"forcedBindings": {
+				"usergraph": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/defuser@vaimee.it"
+				}
+			}
 		}
+
 	}
 }

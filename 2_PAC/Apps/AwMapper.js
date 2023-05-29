@@ -19,6 +19,9 @@ class AwMapper{
     this.log = new GregLogs();
     this.log.loglevel=1;
     this._ACTIVE_PROCESSES=0;
+    //!FALLBACK
+    this.DEFAULT_EVENTS_GRAPH="";
+
     //Configure awmessages consumer
     var messagesquery="ALL_USERS_MESSAGES";
     var data={
@@ -28,7 +31,12 @@ class AwMapper{
     this.awMessagesConsumer=new SynchronousConsumer(jsap_file,messagesquery,data,flagname,false);
     this.awMessagesConsumer.log.loglevel=this.log.loglevel;
     this.awMessagesConsumer.em.on("newsyncflag",not=>{
-      this.on_production_finished(not)
+      this.on_production_finished(not).catch((error)=>{
+        //ERROR HANDLING PROCEDURE
+        this.log.error("Unhandled error in on_production_finished(). I caught it for you!")
+        console.log(error)
+        //send(error)
+      })
     }) //when the flag consumer emits a flag
     //Configure awmessages remover
     this.awMessagesRemover=new Producer(jsap_file,"DELETE_MESSAGE");

@@ -26,7 +26,7 @@ class JsapConfigurationManager {
             this.log.info(`- Run mode: production (NODE_ENV=${process.env.NODE_ENV})`)
         }
         this.log.info(" ")
-        this.log.info("------------------------< GET LOOPBACK ADDRESS >------------------------")
+        this.log.info("------------------------< GET LOOPBACK ADDRESS FOR AW API >------------------------")
         var loopbackAddress= await this.getLoopbackAddress();
         this.log.info(" ")
         this.log.info("------------------------< CONFIGURE JSAP >------------------------")
@@ -75,22 +75,38 @@ class JsapConfigurationManager {
         //TEST DATASOURCES
         var loopbacks=["localhost","127.0.0.1","[::1]"]
         var workingLoopbackAddress="";
+        var loopbacksToTest=loopbacks.length;
+        var errorCount=0;
         for(var i in loopbacks){
             var currHost= loopbacks[i]
             //[1] LOCALHOST
             try{
                 this.log.info("===============================")
                 this.log.info(`** Request ${i}: ${currHost} **`)
-                var res= await axios.get(`http://${currHost}:5600/api/0/buckets/`)
+                const config = {
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'Connection': 'close'
+                    }
+                  };
+                var res= await axios.get(`http://${currHost}:5600/api/0/buckets/`,config)
                 this.log.info("Response status: "+res.status)
                 this.log.info("Response DATA: "+JSON.stringify(res.data))
                 workingLoopbackAddress=currHost
             }catch(e){
                 this.log.error(e.cause)
+                //Increment error counter. If it reaches the size of looparr, throw error
+                errorCount++;
+                this.log.info(`Failed ${errorCount}/${loopbacksToTest} requests`)
             }finally{
                 this.log.info(`Request to ${currHost} executed`)
             }
         }
+
+        if(errorCount==loopbacksToTest){
+            throw new Error("ActivityWatch Api is UNREACHABLE: this error is probably caused by the ActivityWatch application being off. Please activate the application or, if it is not installed, download it.")
+        }
+
         return workingLoopbackAddress
     }
 

@@ -12,12 +12,12 @@ class PacFactory extends Sepajs.Jsap {
     //SUBSCRIPTIONS ARRAY
     this._SUBARR=[]
     //INIT CLIENTS
-    this.queryBenchClient=new Sepajs.SEPA(jsap);//querybench client, for static queries
+    this.basicSepaClient=new Sepajs.SEPA(jsap);//static queries
     //this.app = express(); //RECEIVE REQUESTS
     //this.httpClient=new AdminKeycloakClient() //MAKE REQUESTS
     //this.sqlClient;//SQL CLIENT, INITIALIZE ONLY IF REQUESTED
     //FINISH
-    this.log= new Greglogs();
+    this.log= new GregLogs();
     //this.testingGraphName="";
     //this.log.info("New Pac module created!");
   }
@@ -51,6 +51,25 @@ class PacFactory extends Sepajs.Jsap {
     })
   }
   */
+
+  //!NON SERVE PIU'
+  /**
+   * Query sepa with QueryBench, merging sparql with bindings
+   * @param {*} querytext 
+   * @param {*} bindings 
+   */
+  /* NON SERVE
+  async querySepaWithBench(querytext,bindings){
+    //const bench= new Sepajs.bench();
+    var query=this.bench.sparql(querytext,bindings)
+    var res=await this.query(query);
+    var cleanRes=this.extractResultsBindings(res);
+    return cleanRes
+  }
+  */
+
+
+  //!DEPRECATED
   sparqlQuery(queryname,data){
     return new Promise(resolve=>{
       var sub =this[queryname](data);
@@ -74,13 +93,13 @@ class PacFactory extends Sepajs.Jsap {
       if(!firstResults){
         if(!this._isRemovedResults(not)){
           //console.log(not)
-          var bindings=this.extractAddedResultsBindings(not);
+          const bindings=this.extractAddedResultsBindings(not);
           this.log.trace(`### ${queryname}: added results received (${bindings.length}) ###`)
           for(var i=0;i<bindings.length;i++){
             this[added](bindings[i]);
           }
         }else{
-          var bindings=this.extractRemovedResultsBindings(not);
+          const bindings=this.extractRemovedResultsBindings(not);
           this.log.trace(`### ${queryname}: removed results received (${bindings.length}) ###`)
           for(var i=0;i<bindings.length;i++){
             try{
@@ -90,12 +109,16 @@ class PacFactory extends Sepajs.Jsap {
         }
       }else{
         firstResults=false;
-        var bindings=this.extractAddedResultsBindings(not);
+        const bindings=this.extractAddedResultsBindings(not);
         //this.saveUpdateTemplate(JSON.stringify(not))
         this.log.trace(`### ${queryname}: first results received (${bindings.length}) ###`)
         for(var i=0;i<bindings.length;i++){
           try{
-            this[first](bindings[i]);
+            this.log.trace("**Notifying first result "+i+":")
+            const binding=bindings[i]
+            //console.log(binding)
+            
+            this[first](binding);
           }catch(e){console.log(e)}
         }
       }
@@ -212,7 +235,7 @@ class PacFactory extends Sepajs.Jsap {
     //console.log(updatetext)
     
     return new Promise(resolve=>{
-      this.queryBenchClient.update(updatetext)
+      this.basicSepaClient.update(updatetext)
           .then((res)=>{
             resolve(res)
           })
@@ -220,7 +243,7 @@ class PacFactory extends Sepajs.Jsap {
   }
   rawQuery(querytext){
     return new Promise(resolve=>{
-      this.queryBenchClient.query(querytext)
+      this.basicSepaClient.query(querytext)
           .then((res)=>{
             resolve(res)
           })
