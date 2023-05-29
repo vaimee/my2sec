@@ -63,12 +63,12 @@ if(arguments.length>1){
         //console.log(arguments)
     }else{
         console.log("No jsap argument found, loading default jsap")
-        jsap=await load_and_override_jsap("./my2sec_4-4-2023.jsap")
+        jsap=await load_and_override_jsap("./my2sec_26-5-2023.jsap")
         //console.log(arguments)
     }
 }else{
     console.log("No jsap argument found, loading default jsap")
-    jsap=await load_and_override_jsap("./my2sec_4-4-2023.jsap")
+    jsap=await load_and_override_jsap("./my2sec_26-5-2023.jsap")
     //console.log(arguments)
 }
 

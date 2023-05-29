@@ -7,7 +7,7 @@
 	},
 	"sparql11protocol": {
 		"protocol": "http",
-		"port": 8667,
+		"port": 8666,
 		"query": {
 			"path": "/query",
 			"method": "POST",
@@ -23,7 +23,7 @@
 		"protocol": "ws",
 		"availableProtocols": {
 			"ws": {
-				"port": 9667,
+				"port": 9666,
 				"path": "/subscribe"
 			},
 			"wss": {
@@ -476,12 +476,43 @@
 				},
 				"spent_time": {
 					"type": "literal",
-					"value": "15.50",
-					"datatype": "xsd:decimal"
+					"value": "PT0S"
 				}
 			}
 		},
-		"UPDATE_TASK":{
+
+
+
+		"PATCH_TASK":{
+			"sparql":"DELETE { GRAPH <http://www.vaimee.it/projects#> { ?old_bnode rdf:type my2sec:Task; my2sec:hasProject ?old_project; my2sec:taskId ?task_id; my2sec:taskTitle ?old_task_title ; my2sec:hasMember ?old_member; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value }} INSERT { GRAPH <http://www.vaimee.it/projects#> { ?old_bnode rdf:type my2sec:Task ; my2sec:hasProject ?projecturi ; my2sec:taskId ?task_id; my2sec:taskTitle ?task_title; my2sec:hasMember ?assignee; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?spent_time }} WHERE { GRAPH <http://www.vaimee.it/projects#> { OPTIONAL { ?old_bnode rdf:type my2sec:Task; my2sec:hasProject ?old_project; my2sec:taskId ?task_id; my2sec:taskTitle ?old_task_title ; my2sec:hasMember ?old_member; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value }}}",
+			"forcedBindings": {		
+				"projecturi": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/projects#demo-project"
+				},
+				"task_id": {
+					"type": "literal",
+					"value": 1,
+					"datatype": "xsd:integer"
+				},
+				"task_title": {
+					"type": "uri",
+					"value": "ATaskTitle"
+				},
+				"assignee": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/members/gregorio.monari@gmail.com"
+				},
+				"spent_time": {
+					"type": "literal",
+					"value": "PT0S"
+				}
+			}
+		},
+
+
+
+		"UPDATE_TASK_OLD":{
 			"sparql":"DELETE { GRAPH ?graph { ?old_bnode rdf:type my2sec:Task; my2sec:hasProject ?old_project; my2sec:taskId ?task_id; my2sec:taskTitle ?old_task_title ; my2sec:hasMember ?old_member; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value}} INSERT { GRAPH ?graph { _:bnode rdf:type my2sec:Task ; my2sec:hasProject ?projecturi ; my2sec:taskId ?task_id; my2sec:taskTitle ?task_title; my2sec:hasMember ?assignee; my2sec:spentTime ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value }} WHERE { GRAPH ?graph { OPTIONAL { ?old_bnode rdf:type my2sec:Task; my2sec:hasProject ?old_project; my2sec:taskId ?task_id; my2sec:taskTitle ?old_task_title ; my2sec:Member ?old_member; my2sec:spentTime ?old_timenode . ?old_timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?old_value }} BIND(UUID() AS ?timenode)}",
 			"forcedBindings": {
 				"graph": {
@@ -774,7 +805,7 @@
 			}
 		},
 		"ALL_PROJECTS":{
-			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?projecturi rdf:type my2sec:project; my2sec:projectId ?project_id; my2sec:projectIdentifier ?project_identifier } }"
+			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?projecturi rdf:type my2sec:Project; my2sec:projectId ?project_id; my2sec:projectIdentifier ?project_identifier } }"
 		},
 		"ALL_OP_TASKS":{
 			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/projects#> { ?bnode rdf:type my2sec:Task; my2sec:hasProject ?progetto; my2sec:taskId ?taskid; my2sec:taskTitle ?tasktitle; my2sec:hasMember ?assignee; my2sec:spentTime ?timenode . ?timenode rdf:type time:Duration; time:unitType time:unitHour ; time:numericDuration ?spent_time }}"
