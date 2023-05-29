@@ -124,6 +124,8 @@ class LogTimesManager{
 
 
     mapLogTimes(tasks,logtimes){
+        this.log.trace("TASKS")
+        this.log.trace(tasks)
         var logTimesMappedWithTasks=[];
         for(var i in logtimes){
             var logged_time=this.secondsToTimeString(logtimes[i].log_time)
@@ -147,32 +149,63 @@ class LogTimesManager{
 
         }
 
-        
-        logTimesMappedWithTasks=logTimesMappedWithTasks.sort(function(x, y){
-            return x.now - y.now;
-        })
+        this.log.debug("Unsorted logTimes")
+        this.log.debug(logTimesMappedWithTasks)
+        var logTimesMappedWithTasks=this.sortLogTimesByTimestamp(logTimesMappedWithTasks)
 
         this.log.debug(logTimesMappedWithTasks)
 
         //AGGREGATE TIMESTAMPS
         var logTimesObject={}
-        var lastTimeStamp="";
+        //var lastTimeStamp="";
         for(var i in logTimesMappedWithTasks){
             var timeStamp=logTimesMappedWithTasks[i].now.split("T")[0];
-            if(timeStamp!=lastTimeStamp){
-                lastTimeStamp=timeStamp;
-
+            //if(timeStamp!=lastTimeStamp){
+            if(!logTimesObject.hasOwnProperty(timeStamp)){ //!BUGFIX
+                //lastTimeStamp=timeStamp;
+                this.log.trace("Creating new timestamp in logTimesObj");
                 logTimesObject[timeStamp]=[];
                 logTimesObject[timeStamp].push(logTimesMappedWithTasks[i])
                 
 
             }else{
+                this.log.trace("Pushing into existing timestamp in logTimesObj");
                 logTimesObject[timeStamp].push(logTimesMappedWithTasks[i])
             }
         }
 
         //this.log.debug(logTimesObject)
         return logTimesObject
+    }
+    sortLogTimesByTimestamp(logTimesArr){
+        var temp=[] //!DEEP COPY
+        for(var i in logTimesArr){
+            temp[i]={}
+            Object.keys(logTimesArr[i]).forEach(k=>{
+                if(k!="now"){
+                    temp[i][k]=logTimesArr[i][k]
+                }else{
+                    temp[i][k]=new Date(logTimesArr[i][k])
+                }
+            })
+        }
+        var out=temp.sort(function(x, y){
+            return y.now - x.now;
+        })
+
+        var temp2=[] //!DEEP COPY
+        for(var i in out){
+            temp2[i]={}
+            Object.keys(out[i]).forEach(k=>{
+                if(k!="now"){
+                    temp2[i][k]=out[i][k]
+                }else{
+                    temp2[i][k]=out[i][k].toISOString();
+                }
+            })
+        }
+
+        return temp2;
     }
 
 

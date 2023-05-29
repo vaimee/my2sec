@@ -1,33 +1,33 @@
-[2023-05-29 00:10:00.356] [info]  [ My2secProducer logs ]
-[2023-05-29 00:10:00.362] [info]  # JSAP CONFIGURATOR STARTED #
-[2023-05-29 00:10:00.364] [info]  ------------------------< DETECTING RUNTIME ENVIRONMENT >------------------------
-[2023-05-29 00:10:00.365] [info]  - Running environment: windows/linux
-[2023-05-29 00:10:00.367] [info]  - Run mode: development (NODE_ENV=dev )
-[2023-05-29 00:10:00.369] [info]   
-[2023-05-29 00:10:00.371] [info]  ------------------------< GET LOOPBACK ADDRESS FOR AW API >------------------------
-[2023-05-29 00:10:00.372] [info]  ===============================
-[2023-05-29 00:10:00.374] [info]  ** Request 0: localhost **
-[2023-05-29 00:10:00.693] [info]  Response status: 200
-[2023-05-29 00:10:00.694] [info]  Response DATA: {"aw-watcher-afk_LAPTOP-A3FDT9J3":{"id":"aw-watcher-afk_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.646448+00:00","name":null,"type":"afkstatus","client":"aw-watcher-afk","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T21:58:51.226000+00:00"},"aw-watcher-window_LAPTOP-A3FDT9J3":{"id":"aw-watcher-window_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.737074+00:00","name":null,"type":"currentwindow","client":"aw-watcher-window","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T22:09:58.521000+00:00"},"aw-producer":{"id":"aw-producer","created":"2022-08-05T13:09:01.586327+00:00","name":null,"type":"sepaconnector","client":"aw-producer","hostname":"unknown","last_updated":"2023-05-28T11:36:40.841000+00:00"},"aw-watcher-scan_LAPTOP-A3FDT9J3":{"id":"aw-watcher-scan_LAPTOP-A3FDT9J3","created":"2022-10-17T14:34:37.689112+00:00","name":null,"type":"scan","client":"aw-my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2022-12-05T09:23:36.384000+00:00"},"aw-watcher-working_LAPTOP-A3FDT9J3":{"id":"aw-watcher-working_LAPTOP-A3FDT9J3","created":"2022-10-17T14:36:22.826305+00:00","name":null,"type":"working","client":"aw-watcher-working","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T11:36:24.241000+00:00"},"aw-watcher-start-stop_LAPTOP-A3FDT9J3":{"id":"aw-watcher-start-stop_LAPTOP-A3FDT9J3","created":"2022-12-05T12:35:53.528196+00:00","name":null,"type":"start-stop","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T11:36:27.179000+00:00"},"aw-watcher-notshutdown_LAPTOP-A3FDT9J3":{"id":"aw-watcher-notshutdown_LAPTOP-A3FDT9J3","created":"2022-12-05T12:52:48.080634+00:00","name":null,"type":"not_shutdown","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T11:36:13.085000+00:00"}}
-[2023-05-29 00:10:00.696] [info]  Request to localhost executed
-[2023-05-29 00:10:00.697] [info]  ===============================
-[2023-05-29 00:10:00.698] [info]  ** Request 1: 127.0.0.1 **
-[2023-05-29 00:10:00.991] [info]  Response status: 200
-[2023-05-29 00:10:00.992] [info]  Response DATA: {"aw-watcher-afk_LAPTOP-A3FDT9J3":{"id":"aw-watcher-afk_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.646448+00:00","name":null,"type":"afkstatus","client":"aw-watcher-afk","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T21:58:51.226000+00:00"},"aw-watcher-window_LAPTOP-A3FDT9J3":{"id":"aw-watcher-window_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.737074+00:00","name":null,"type":"currentwindow","client":"aw-watcher-window","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T22:09:58.521000+00:00"},"aw-producer":{"id":"aw-producer","created":"2022-08-05T13:09:01.586327+00:00","name":null,"type":"sepaconnector","client":"aw-producer","hostname":"unknown","last_updated":"2023-05-28T11:36:40.841000+00:00"},"aw-watcher-scan_LAPTOP-A3FDT9J3":{"id":"aw-watcher-scan_LAPTOP-A3FDT9J3","created":"2022-10-17T14:34:37.689112+00:00","name":null,"type":"scan","client":"aw-my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2022-12-05T09:23:36.384000+00:00"},"aw-watcher-working_LAPTOP-A3FDT9J3":{"id":"aw-watcher-working_LAPTOP-A3FDT9J3","created":"2022-10-17T14:36:22.826305+00:00","name":null,"type":"working","client":"aw-watcher-working","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T11:36:24.241000+00:00"},"aw-watcher-start-stop_LAPTOP-A3FDT9J3":{"id":"aw-watcher-start-stop_LAPTOP-A3FDT9J3","created":"2022-12-05T12:35:53.528196+00:00","name":null,"type":"start-stop","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T11:36:27.179000+00:00"},"aw-watcher-notshutdown_LAPTOP-A3FDT9J3":{"id":"aw-watcher-notshutdown_LAPTOP-A3FDT9J3","created":"2022-12-05T12:52:48.080634+00:00","name":null,"type":"not_shutdown","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-28T11:36:13.085000+00:00"}}
-[2023-05-29 00:10:00.993] [info]  Request to 127.0.0.1 executed
-[2023-05-29 00:10:00.995] [info]  ===============================
-[2023-05-29 00:10:00.996] [info]  ** Request 2: [::1] **
-[2023-05-29 00:10:01.000] [error] Error: connect ECONNREFUSED ::1:5600
+[2023-05-29 11:51:55.420] [info]  [ My2secProducer logs ]
+[2023-05-29 11:51:55.426] [info]  # JSAP CONFIGURATOR STARTED #
+[2023-05-29 11:51:55.427] [info]  ------------------------< DETECTING RUNTIME ENVIRONMENT >------------------------
+[2023-05-29 11:51:55.429] [info]  - Running environment: windows/linux
+[2023-05-29 11:51:55.431] [info]  - Run mode: development (NODE_ENV=dev )
+[2023-05-29 11:51:55.433] [info]   
+[2023-05-29 11:51:55.435] [info]  ------------------------< GET LOOPBACK ADDRESS FOR AW API >------------------------
+[2023-05-29 11:51:55.437] [info]  ===============================
+[2023-05-29 11:51:55.439] [info]  ** Request 0: localhost **
+[2023-05-29 11:51:55.773] [info]  Response status: 200
+[2023-05-29 11:51:55.774] [info]  Response DATA: {"aw-watcher-afk_LAPTOP-A3FDT9J3":{"id":"aw-watcher-afk_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.646448+00:00","name":null,"type":"afkstatus","client":"aw-watcher-afk","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T09:51:48.223000+00:00"},"aw-watcher-window_LAPTOP-A3FDT9J3":{"id":"aw-watcher-window_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.737074+00:00","name":null,"type":"currentwindow","client":"aw-watcher-window","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T09:51:53.987000+00:00"},"aw-producer":{"id":"aw-producer","created":"2022-08-05T13:09:01.586327+00:00","name":null,"type":"sepaconnector","client":"aw-producer","hostname":"unknown","last_updated":"2023-05-29T01:15:22.287000+00:00"},"aw-watcher-scan_LAPTOP-A3FDT9J3":{"id":"aw-watcher-scan_LAPTOP-A3FDT9J3","created":"2022-10-17T14:34:37.689112+00:00","name":null,"type":"scan","client":"aw-my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2022-12-05T09:23:36.384000+00:00"},"aw-watcher-working_LAPTOP-A3FDT9J3":{"id":"aw-watcher-working_LAPTOP-A3FDT9J3","created":"2022-10-17T14:36:22.826305+00:00","name":null,"type":"working","client":"aw-watcher-working","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T01:15:03.121000+00:00"},"aw-watcher-start-stop_LAPTOP-A3FDT9J3":{"id":"aw-watcher-start-stop_LAPTOP-A3FDT9J3","created":"2022-12-05T12:35:53.528196+00:00","name":null,"type":"start-stop","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T01:15:09.820000+00:00"},"aw-watcher-notshutdown_LAPTOP-A3FDT9J3":{"id":"aw-watcher-notshutdown_LAPTOP-A3FDT9J3","created":"2022-12-05T12:52:48.080634+00:00","name":null,"type":"not_shutdown","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T01:14:59.817000+00:00"}}
+[2023-05-29 11:51:55.776] [info]  Request to localhost executed
+[2023-05-29 11:51:55.777] [info]  ===============================
+[2023-05-29 11:51:55.778] [info]  ** Request 1: 127.0.0.1 **
+[2023-05-29 11:51:56.143] [info]  Response status: 200
+[2023-05-29 11:51:56.144] [info]  Response DATA: {"aw-watcher-afk_LAPTOP-A3FDT9J3":{"id":"aw-watcher-afk_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.646448+00:00","name":null,"type":"afkstatus","client":"aw-watcher-afk","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T09:51:48.223000+00:00"},"aw-watcher-window_LAPTOP-A3FDT9J3":{"id":"aw-watcher-window_LAPTOP-A3FDT9J3","created":"2022-08-04T17:47:01.737074+00:00","name":null,"type":"currentwindow","client":"aw-watcher-window","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T09:51:53.987000+00:00"},"aw-producer":{"id":"aw-producer","created":"2022-08-05T13:09:01.586327+00:00","name":null,"type":"sepaconnector","client":"aw-producer","hostname":"unknown","last_updated":"2023-05-29T01:15:22.287000+00:00"},"aw-watcher-scan_LAPTOP-A3FDT9J3":{"id":"aw-watcher-scan_LAPTOP-A3FDT9J3","created":"2022-10-17T14:34:37.689112+00:00","name":null,"type":"scan","client":"aw-my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2022-12-05T09:23:36.384000+00:00"},"aw-watcher-working_LAPTOP-A3FDT9J3":{"id":"aw-watcher-working_LAPTOP-A3FDT9J3","created":"2022-10-17T14:36:22.826305+00:00","name":null,"type":"working","client":"aw-watcher-working","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T01:15:03.121000+00:00"},"aw-watcher-start-stop_LAPTOP-A3FDT9J3":{"id":"aw-watcher-start-stop_LAPTOP-A3FDT9J3","created":"2022-12-05T12:35:53.528196+00:00","name":null,"type":"start-stop","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T01:15:09.820000+00:00"},"aw-watcher-notshutdown_LAPTOP-A3FDT9J3":{"id":"aw-watcher-notshutdown_LAPTOP-A3FDT9J3","created":"2022-12-05T12:52:48.080634+00:00","name":null,"type":"not_shutdown","client":"aw_my2sec","hostname":"LAPTOP-A3FDT9J3","last_updated":"2023-05-29T01:14:59.817000+00:00"}}
+[2023-05-29 11:51:56.145] [info]  Request to 127.0.0.1 executed
+[2023-05-29 11:51:56.146] [info]  ===============================
+[2023-05-29 11:51:56.147] [info]  ** Request 2: [::1] **
+[2023-05-29 11:51:56.152] [error] Error: connect ECONNREFUSED ::1:5600
     at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1157:16)
-[2023-05-29 00:10:01.002] [info]  Failed 1/3 requests
-[2023-05-29 00:10:01.003] [info]  Request to [::1] executed
-[2023-05-29 00:10:01.006] [info]   
-[2023-05-29 00:10:01.008] [info]  ------------------------< CONFIGURE JSAP >------------------------
-[2023-05-29 00:10:01.012] [info]  - modifying endpoint: ActivityWatch
-[2023-05-29 00:10:01.013] [info]  - modifying endpoint: AwApiRouter
-[2023-05-29 00:10:01.014] [info]  - modifying endpoint: My2secApi
-[2023-05-29 00:10:01.015] [info]  - modifying endpoint: MongoDbRouter
-[2023-05-29 00:10:01.016] [info]  {
+[2023-05-29 11:51:56.153] [info]  Failed 1/3 requests
+[2023-05-29 11:51:56.154] [info]  Request to [::1] executed
+[2023-05-29 11:51:56.155] [info]   
+[2023-05-29 11:51:56.157] [info]  ------------------------< CONFIGURE JSAP >------------------------
+[2023-05-29 11:51:56.162] [info]  - modifying endpoint: ActivityWatch
+[2023-05-29 11:51:56.163] [info]  - modifying endpoint: AwApiRouter
+[2023-05-29 11:51:56.164] [info]  - modifying endpoint: My2secApi
+[2023-05-29 11:51:56.165] [info]  - modifying endpoint: MongoDbRouter
+[2023-05-29 11:51:56.166] [info]  {
   AwProducer: {
     endpoints: {
       Keycloak: 'https://keycloak.vaimee.org',
@@ -47,29 +47,29 @@
     apiKey: 'd8f31b5a597d11be8f2037fbc3d7da3689a5c79dde45adc3fc12a457e0d76b94'
   }
 }
-[2023-05-29 00:10:01.020] [info]  127.0.0.1:5600
-[2023-05-29 00:10:01.031] [info]  Preflight: testing ActivityWatch connection
-[2023-05-29 00:10:01.042] [info]  - AwApiRouter started
-[2023-05-29 00:10:01.043] [info]  STARTING PYTHON API IN DEV MODE
-[2023-05-29 00:10:01.045] [info]  Spawning python: C:\Users\Utente\git\my2sec\1_ActivityWatchProducer\PY\my2sec\main
-[2023-05-29 00:10:01.160] [info]  ** started python api
-[2023-05-29 00:10:01.163] [info]  - Python api started
-[2023-05-29 00:10:01.170] [info]  - MongoDbClient started
-[2023-05-29 00:10:01.229] [info]  aw api is listening on port 1340
-[2023-05-29 00:10:05.153] [error] stderr: [nltk_data] Downloading package stopwords to
+[2023-05-29 11:51:56.171] [info]  127.0.0.1:5600
+[2023-05-29 11:51:56.176] [info]  Preflight: testing ActivityWatch connection
+[2023-05-29 11:51:56.184] [info]  - AwApiRouter started
+[2023-05-29 11:51:56.185] [info]  STARTING PYTHON API IN DEV MODE
+[2023-05-29 11:51:56.187] [info]  Spawning python: C:\Users\Utente\git\my2sec\1_ActivityWatchProducer\PY\my2sec\main
+[2023-05-29 11:51:56.321] [info]  ** started python api
+[2023-05-29 11:51:56.323] [info]  - Python api started
+[2023-05-29 11:51:56.330] [info]  - MongoDbClient started
+[2023-05-29 11:51:56.395] [info]  aw api is listening on port 1340
+[2023-05-29 11:52:22.528] [error] stderr: [nltk_data] Downloading package stopwords to
 [nltk_data]     C:\Users\Utente/nltk_data...
 
-[2023-05-29 00:10:05.157] [error] stderr: [nltk_data]   Package stopwords is already up-to-date!
+[2023-05-29 11:52:22.549] [error] stderr: [nltk_data]   Package stopwords is already up-to-date!
 [nltk_data] Downloading package punkt to C:\Users\Utente/nltk_data...
 
-[2023-05-29 00:10:05.198] [error] stderr: [nltk_data]   Package punkt is already up-to-date!
+[2023-05-29 11:52:22.609] [error] stderr: [nltk_data]   Package punkt is already up-to-date!
 
-[2023-05-29 00:10:05.211] [info]  {
+[2023-05-29 11:52:22.630] [info]  {
   type: 'Buffer',
   data: [
      49,  50,  55,  46,  48,  46,  48,  46,  49,  32,  45,  45,
      32,  91,  50,  57,  47,  48,  53,  47,  50,  48,  50,  51,
-     32,  48,  48,  58,  49,  48,  58,  48,  53,  93,  32,  65,
+     32,  49,  49,  58,  53,  50,  58,  50,  50,  93,  32,  65,
      80,  73,  58,  32,  65,  87,  83, 101, 114, 118, 101, 114,
      32, 111, 110, 108, 105, 110, 101,  13,  10,  32,  42,  32,
      83, 101, 114, 118, 105, 110, 103,  32,  70, 108,  97, 115,
@@ -77,35 +77,5 @@
     121,  50, 115, 101,  99,  39,  13,  10,  32,  42,  32,  68,
     101,  98, 117, 103,
     ... 12 more items
-  ]
-}
-[2023-05-29 03:07:09.428] [info]  {
-  type: 'Buffer',
-  data: [
-     49,  50, 55,  46,  48,  46,  48,  46,  49,  32,  45,  45,
-     32,  91, 50,  57,  47,  48,  53,  47,  50,  48,  50,  51,
-     32,  48, 48,  58,  49,  49,  58,  48,  50,  93,  32,  69,
-     82,  82, 79,  82,  58,  32,  65,  99, 116, 105, 118, 105,
-    116, 121, 87,  97, 116,  99, 104,  32,  83, 101, 114, 118,
-    101, 114, 32, 111, 102, 102, 108, 105, 110, 101,  13,  10,
-     49,  50, 55,  46,  48,  46,  48,  46,  49,  32,  45,  45,
-     32,  91, 50,  57,  47,  48,  53,  47,  50,  48,  50,  51,
-     32,  48, 48,  58,
-    ... 8077 more items
-  ]
-}
-[2023-05-29 03:15:20.845] [info]  {
-  type: 'Buffer',
-  data: [
-    123,  39, 119,  97, 116,  99, 104, 101, 114,  45,  97, 112,
-    105,  45, 114, 101, 113, 117, 101, 115, 116,  39,  58,  32,
-    123,  39, 114, 101, 113, 117, 101, 115, 116,  65,  99, 116,
-    105, 111, 110,  39,  58,  32, 123,  39, 119,  97, 116,  99,
-    104, 101, 114, 115,  45, 109,  97, 110,  97, 103, 101, 109,
-    101, 110, 116,  39,  58,  32, 123,  39,  83, 101, 116,  87,
-    111, 114, 107, 105, 110, 103,  69, 118, 101, 110, 116, 115,
-     39,  58,  32, 123,  39,  97, 112, 112,  39,  58,  32,  91,
-     39,  67, 111, 100,
-    ... 7231 more items
   ]
 }
