@@ -30,6 +30,7 @@ class TasksConsumer extends CachedConsumer{
         super.add_binding_to_cache(newBinding)
     }
 
+
     //@Override
     remove_binding_from_cache(binding){
         if(!binding.hasOwnProperty("bnode")){throw new Error("Invalid task, missing bnode key")}

@@ -84,28 +84,28 @@ class PacFactory extends Sepajs.Jsap {
 
   
   
-  subscribeAndNotify(queryname,data,added,first,removed,error){
+  async subscribeAndNotify(queryname,data,added,first,removed,error){
     var firstResults=true;
     var sub = this[queryname](data);
     sub.on("subscription",console.log)
-    sub.on("notification",not=>{
+    sub.on("notification",async (not)=>{
       //console.log("NOTIFICATION RECEIVED")
       if(!firstResults){
-        if(!this._isRemovedResults(not)){
-          //console.log(not)
-          const bindings=this.extractAddedResultsBindings(not);
-          this.log.trace(`### ${queryname}: added results received (${bindings.length}) ###`)
-          for(var i=0;i<bindings.length;i++){
-            this[added](bindings[i]);
-          }
-        }else{
+        //If removed results are present, call remove first
+        if(this._isRemovedResults(not)){
           const bindings=this.extractRemovedResultsBindings(not);
-          this.log.trace(`### ${queryname}: removed results received (${bindings.length}) ###`)
+          this.log.debug(`### ${queryname}: removed results received (${bindings.length}) ###`)
           for(var i=0;i<bindings.length;i++){
             try{
-              this[removed](bindings[i]);
+              await this[removed](bindings[i]);
             }catch(e){console.log(e)}
           }
+        }
+        //console.log(not)
+        const bindings=this.extractAddedResultsBindings(not);
+        this.log.debug(`### ${queryname}: added results received (${bindings.length}) ###`)
+        for(var i=0;i<bindings.length;i++){
+          await this[added](bindings[i]);
         }
       }else{
         firstResults=false;
@@ -167,9 +167,9 @@ class PacFactory extends Sepajs.Jsap {
 
 
   _isRemovedResults(not){
-    var AddL=not.addedResults.results.bindings.length;
+    //var AddL=not.addedResults.results.bindings.length;
     var RemL=not.removedResults.results.bindings.length;
-    if(AddL==0 && RemL!=0){
+    if(RemL!=0){
       return true
     }else{
       return false

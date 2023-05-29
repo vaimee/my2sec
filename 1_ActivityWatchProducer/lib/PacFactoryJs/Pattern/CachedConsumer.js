@@ -37,7 +37,7 @@ class CachedConsumer extends Consumer{
       this.em.emit("addedResultsToCache")
     }
     onRemovedResults(not){
-      //this.log.trace("Removing results from cache");
+      this.log.debug("Removing results from cache");
       this.remove_binding_from_cache(not)
       //this.log.trace(JSON.stringify(not));  
       this.em.emit("removedResultsFromCache")
@@ -102,7 +102,7 @@ class CachedConsumer extends Consumer{
 
     remove_binding_from_cache(binding){
       //Dobbiamo tentare di rimuovere questo binding
-      //console.log("Binding: ",binding)
+      console.log("Removing Binding: ",binding)
         //ritorna true quando vuoi rimuovere l'item
         this.cache = this.cache.filter(function(item) {
               //console.log(item)
@@ -131,7 +131,7 @@ class CachedConsumer extends Consumer{
           });
   
           var temp=this.cache.length
-          this.log.trace("Cache udpated, graph length: "+temp)
+          this.log.debug("Cache udpated, graph length: "+temp)
   
     }
   
