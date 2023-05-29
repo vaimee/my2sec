@@ -44,6 +44,7 @@ async function init(){
 		var producerClient= new ProducerBucketClient(_initializer.get_jsap())
 		var producerExists=await awQueryManager.producer_bucket_exists()
 		if(!producerExists){
+			this.log.info("Aw Producer bucket does not exist, creating bucket...")
 			await producerClient.create_bucket()
 		}else{
 			this.log.info("Producer bucket exists, skipping bucket creation")

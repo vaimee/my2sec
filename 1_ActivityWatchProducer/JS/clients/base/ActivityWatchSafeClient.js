@@ -11,7 +11,11 @@ class ActivityWatchSafeClient extends ActivityWatchClient{
      */
     async create_bucket(){
         return await super.create_bucket(this.producerId,
-        "{ \"client\": \"aw-producer\", \"type\": \"sepaconnector\", \"hostname\": \"unknown\"}")
+            {
+                client: "aw-producer",
+                type: "sepaconnector",
+                hostname: "unknown"
+            })
     }
 
     /**
