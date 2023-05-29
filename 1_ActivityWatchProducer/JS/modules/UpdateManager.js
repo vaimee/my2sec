@@ -20,6 +20,7 @@ class UpdateManager{
         this.atm= new ActivityTableManager("validation_body")
 
         //PAC
+        this.activityTypesConsumer= new ActivityTypesConsumer(jsap,userEmail);
         this.awMessagesProducer= new AwMessagesProducer(jsap,userEmail);
         this.productionFinishedFlagProducer = new ProductionFinishedFlagProducer(jsap,userEmail);
         //TRAINING ACTIVITIES
@@ -310,6 +311,24 @@ class UpdateManager{
         this.atm.originalBindings=cache;
         //this.atm.training_events_flag_uri=training_events_flag_uri
         var known_categories="Developing,Meeting,Reporting,Researching,Testing,Email,Other"
+        try{
+            this.log.info("Loading activityTypes")
+            var activityTypes= await this.activityTypesConsumer.querySepa();
+            this.log.info(activityTypes)
+            var activityTypesString="";
+            for(var i in activityTypes){
+                this.log.info(activityTypes[i])
+                var activityType=activityTypes[i].activity_type.split("#")[1].trim();
+                activityTypesString=activityTypesString+activityType
+                if(i!=activityTypes.length-1){activityTypesString=activityTypesString+","}
+            }
+            known_categories=activityTypesString;
+
+        }catch(e){
+            known_categories="Developing,Meeting,Reporting,Researching,Testing,Email,Other"
+            console.error(e)
+        }
+        this.log.info(known_categories)
 
         this.log.info("Injecting Activities table")
         this.atm.injectTable(cache,"activity_type,app,title,duration,datetimestamp",known_categories)

@@ -31,6 +31,7 @@ class Consumer extends PacFactory{
     }else{
       this.log.debug("Executing override query")
       var query=this.bench.sparql(this.queryText,bindings)
+      //this.log.info("QUERY SEPA:"+query)
       res=await this.basicSepaClient.query(query,override);
       //res=await this.query(queryname,bindings,override);
     }
