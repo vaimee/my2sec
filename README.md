@@ -85,7 +85,13 @@ If you are a developer, or you have trouble using the official release of My2sec
   <pre>python -m pip install -r requirements.txt</pre>
 ## Starting the application
 Now that all requirements have been fullfilled, you can start the Producer Application: open a new terminal and type <pre>cd C://Users/User/.../1_ActivityWatchProducer</pre> to move into the Producer Directory.
-Start the application by typing: <pre>npm start</pre> from inside the Producer Directory.
+Start the application by typing: 
+<pre>
+npm run start:windows #on windows
+npm run start:posix #on Mac/linux
+</pre> 
+
+from inside the Producer Directory.
 
 
 
