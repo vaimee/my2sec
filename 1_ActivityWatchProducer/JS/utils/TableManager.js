@@ -99,9 +99,24 @@ class TableManager{
 			}
 			var tochange=document.getElementById(id);
 			tochange.innerHTML=selection
+			//?uncomment to update only visible cells
 			this.logicalArray["working_selection"][logicalArrayIndex]=flag
 			console.log(this.logicalArray)			
 		}
+		//!UPDATE ALL LOGICAL ARRAY! (not yet, you need to update the table internal memory)
+		/*
+		var flag_1=0
+		if(value=="working"){
+			flag_1=1
+		}else{
+			if(value=="notworking"){
+				flag_1=0
+			}
+		}
+		for(var i in this.logicalArray["working_selection"]){
+			this.logicalArray["working_selection"][logicalArrayIndex]=flag
+		}
+		console.log(this.logicalArray)*/
 	}
 
 	on_selection_change(i){

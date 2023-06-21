@@ -1,0 +1,128 @@
+.task-container{
+	width: 25%;
+	background: white;
+    font-family: Arial, Helvetica, sans-serif;
+	display:flex;
+	flex-flow: column;
+	/*height:100%;*/
+	align-items: stretch;
+    /*resize: horizontal;*/
+    /*overflow: auto;*/
+}
+    .task-header_OLD{
+		transform: translateY(3px);
+		border-radius: 5px;
+		height: 5vh;
+        background: rgb(42,45,46);
+		display:flex;
+		align-items: center;
+		justify-content: center;
+		margin:auto;
+		width:94%;
+		/*padding-top:1.5%;
+		padding-bottom: 1.5%;*/
+		padding-left: 2%;
+		padding-right: 2%;
+		color:white;
+    }
+	.task-header{
+		height: 5vh;
+        
+		display:flex;
+		align-items: center;
+		
+		margin:auto;
+		width:94%;
+		/*padding-top:1.5%;
+		padding-bottom: 1.5%;*/
+		padding-left: 2%;
+		padding-right: 2%;
+		
+    }
+		.task-header h3{
+			margin:0;
+		}
+    #task-wrapper{
+		margin:auto;
+		border-width:0px;
+		border-style: solid;
+		border-color:black;
+        width: 90%;
+		height: 20vh;
+		overflow-y:scroll;
+        padding: 2%;
+        /*overflow: scroll;*/
+        background: white;
+		flex: 1 1 auto;
+		
+    }
+	#task-info{
+		width:100%;
+	}
+
+/*LOADING BAR*/
+.task-loading-wrapper{
+
+}
+.task-loading_box{
+	display:block;
+	position: relative;
+	width: 98%;
+	height:5px;
+	border: 1px solid var(--main_color);
+	border-radius: 10px;
+	padding:2px;
+}
+.task-loading_bar{
+	border-radius: 10px;
+	width:100px;
+	height: 5px;
+	background-color: var(--main_color);
+	/*animation: load 1s infinite linear;*/
+	animation: none;
+
+}
+@keyframes load{
+	from {
+		width: 0px;
+	}to{
+		width: 100px;
+	}
+}
+
+
+
+#log-times-panel-wrapper{
+	width:100%;
+}
+#log-times-container{
+	width: 90%;
+	height: 47vh;
+	overflow: scroll;
+	padding-left: 2%;
+	padding-right: 2%;
+	margin:auto;
+	border-width:0px;
+	border-style: solid;
+	border-color:black;
+}
+.log_time_cell-logged_time{
+	display:flex;
+	align-items: center;
+}
+.work-day-cell{
+	background: rgb(42,45,46);
+	width: 96%;
+	padding: 2%;
+	border-radius: 6px;
+}
+.work-day-date{
+	color:white;
+}
+.log_time_cell{
+	border-radius: 6px;
+	background: white;
+	width: 99%;
+	padding: 0.5%;
+	margin-bottom: 2%;
+}

@@ -5,6 +5,7 @@ body{
 }
 .content-wrapper{
     margin:0;
+    height:auto;
     position:absolute;
     text-align: center;
     font-family: Montserrat;
@@ -30,7 +31,7 @@ body{
         width:100%;
     }
         .form-wrapper input{
-            width:60%;
+            width:80%;
             font-size:18px;
             border-top: none;
             border-left: none;
@@ -39,6 +40,17 @@ body{
             border-bottom: solid;
             border-bottom-color: orangered;
             border-bottom-width: 2.75px;
+        }
+        .form-wrapper select{
+            width:50%;
+            font-size:18px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+
+            border-bottom: solid;
+            border-bottom-color: orangered;
+            border-bottom-width: 2.75px;    
         }
         .formbutton{
             width: 60%;

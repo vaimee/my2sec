@@ -13,4 +13,12 @@ class ErrorManager{
         this.log.error(description)
     }
 
+    hideErrorPanel(){
+        this.error_panel.style.display="none";
+    }
+
+    getErrorTitle(){
+        return this.error_title
+    }
+
 }

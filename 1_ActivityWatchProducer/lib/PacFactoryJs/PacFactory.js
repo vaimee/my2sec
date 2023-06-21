@@ -24,7 +24,9 @@ class PacFactory extends Sepajs.Jsap {
 
   exit(){
     //process.exit()
+    console.log("Unsubscribing from "+this._SUBARR.length+" active subscriptions")
     for(var i in this._SUBARR){
+      console.log("Unsubscribing sub: "+this._SUBARR[i])
       this._SUBARR[i].unsubscribe()
     }
   }

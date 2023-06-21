@@ -7,12 +7,14 @@
 || 	DESCRIPTION: login and create-user interface for my2sec
 \\-------------------------------------------------------->
 <head>
-<title>Login</title>
-<link rel="stylesheet" type="text/css" href="css/loginform.css">
-<!-- Font -->
-<link href='https://fonts.googleapis.com/css?family=Montserrat'
-	rel='stylesheet'
-> 
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="css/loginform.css">
+    <!--SEPA CLIENT-->
+    <script src="https://cdn.jsdelivr.net/npm/@arces-wot/sepa-js/web/sepa.js"></script>
+    <!-- Font -->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat'
+        rel='stylesheet'
+    > 
 </head>
 
 <body>
@@ -65,6 +67,11 @@
             =============================-->
         <div id="createuserform-wrapper" class="form-wrapper" style="display:none;">
             <form id="createuserform">
+                Worker type:&nbsp
+                <select name="worker_type_selection" id="worker_type_selection">
+                    <option value="DefaultProfession">DefaultProfession</option>
+                </select>
+                <br><br>
                 <input type="text" id="firstName" name="firstName" placeholder="First Name"><br>
                 <br>
                 <input type="text" id="lastName" name="lastName" placeholder="Last Name"><br>
@@ -92,7 +99,21 @@
     </div>
     <!--/CONTENT WRAPPER-->
 
-    
+	<!--PACFACTORY-->
+	<script type="text/javascript" src="../resources/logger_config.js"></script>
+	<script type="text/javascript" src="../lib/PacFactoryJs/GregLogs.js"></script>
+	<script type="text/javascript" src="../lib/PacFactoryJs/PacFactory.js"></script>
+	<script type="text/javascript" src="../lib/PacFactoryJs/Pattern/Consumer.js"></script>
+	<script type="text/javascript" src="../lib/PacFactoryJs/Pattern/CachedConsumer.js"></script>
+	<script type="text/javascript" src="../lib/PacFactoryJs/Pattern/Producer.js"></script>
+	<script type="text/javascript" src="../lib/PacFactoryJs/Pattern/SynchronousConsumer.js"></script>
+	<script type="text/javascript" src="../lib/PacFactoryJs/Pattern/SynchronousProducer.js"></script>
+
+    <!--PAC MODULES-->
+    <script type="text/javascript" src="../JS/pac/WorkerTypesConsumer.js"></script>
+	<script type="text/javascript" src="../JS/pac/WorkerTypeProducer.js"></script>
+
+    <!--KEYCLOACK, LOGIN INTERFACE-->
     <script src="js/keycloak_client.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/main.js"></script>

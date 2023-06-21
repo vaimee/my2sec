@@ -67,8 +67,9 @@ async function tryCreateUser(){
     var createUserForm=document.getElementById("createuserform");
     
     if(createUserForm.create_password.value==createUserForm.confirm_password.value){
-        //console.log(createUserForm.create_password.value+"|"+createUserForm.confirm_password.value)
-        
+
+        var worker_profession=createUserForm.worker_type_selection.value;
+
         var data={
             firstName: createUserForm.firstName.value,
             lastName: createUserForm.lastName.value,
@@ -81,10 +82,7 @@ async function tryCreateUser(){
                 temporary:false
             }],
         }
-        //data.firstName="gregtest"
-        //data.lastName="gregcognome"
-        //data.email="gregoriunibus@gmail.com"
-        //data.username="gg"
+        
         var success=false;
         try{
             await my2secCreateUserApp.post_new_user(data,keycloak_loginApp_config.realm)
@@ -94,10 +92,18 @@ async function tryCreateUser(){
             success=true;
         }catch(e){
             console.log(e)
+            return
         }    
         if(!success){
             errorbox.innerHTML="Error creating user: already exists"
+            return;
         }
+        
+
+        //?CREATE USER LINK TO PROFESSION
+        //CREATE NEW USER
+        console.log("# ADDING PROFESSION LINK #")
+        await create_user_link_to_profession(data.email,worker_profession)
         
         
     }else{
@@ -107,3 +113,20 @@ async function tryCreateUser(){
 
 }
 
+
+
+async function create_user_link_to_profession(userEmail,profession_uuid){
+    const string_jsap_package=await window.versions.request_jsap()
+    const jsap_package=JSON.parse(string_jsap_package)
+    const jsap=jsap_package["my2sec_jsap"]
+    console.log(userEmail);
+    console.log(profession_uuid)
+    var workerTypeProducer= new WorkerTypeProducer(jsap);
+    await workerTypeProducer.updateSepa({
+        usergraph:"http://www.vaimee.it/my2sec/"+userEmail,
+        profession_uuid:profession_uuid
+    })
+}
+
+
+//switch_view()

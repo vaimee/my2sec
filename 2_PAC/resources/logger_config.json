@@ -1,0 +1,10 @@
+{
+    "logLevel":0,
+    "separator":" > ",
+    "divLogger":{
+        "enabled":false,
+        "logLevel":0,
+        "elementId":"console"
+    }
+
+}

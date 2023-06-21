@@ -53,12 +53,13 @@ const createLoginWindow = () => {
   loginWindow = new BrowserWindow({
     show: false,
     //frame: false,
-    width: 360,
-    height: 580,
+    width: 380,
+    height: 660,
     webPreferences: {
       preload: path.join(__dirname, './SECURITY/preload.js')
     }
   })
+  ipcMain.handle('request_jsap', () => JSON.stringify(json_package))//!JSAP FOR LOGIN INTERFACE, NEEDED TO CREATE WORKER TYPE
   ipcMain.handle('loginsuccess', async (event, arg) => {
     handleLoginSuccess(arg);
   })
@@ -131,7 +132,10 @@ app.whenReady().then(async () => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
+  console.log("CLOSING APPLICATION")
+  //TODO: CLOSE APP ON MACOS
+  //if (process.platform !== 'darwin') app.quit()
+  app.quit();
 })
 
 
@@ -159,9 +163,10 @@ async function initMainElectronModules(){
   log.info("- Python api started")   
 
 
-  var mongodb_uri=json_package["my2sec_jsap"].extended.AwProducer.endpoints.MongoDb;//"mongodb://root:Gregnet-99@dld.arces.unibo.it:27017/"
-  var database="my2sec_aw_messages"
-  var collection="test"
+  const mongoConfig=json_package["my2sec_jsap"].extended.MongoDbClientConfiguration//.AwProducer.endpoints.MongoDb;//"mongodb://root:Gregnet-99@dld.arces.unibo.it:27017/"
+  var mongodb_uri=mongoConfig.uri;
+  var database=mongoConfig.database;//"my2sec_aw_messages"
+  var collection=mongoConfig.collection;//"test"
   var mongodb_router_port=1341
   let mongoDbRouter = new MongoDbRouter(mongodb_uri,database,collection,mongodb_router_port)
   mongoDbRouter.start();

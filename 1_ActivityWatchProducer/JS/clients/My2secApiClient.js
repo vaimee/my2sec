@@ -14,6 +14,7 @@ class My2secApiClient{
 		//console.log(this.my2secapi_host)
 		//this.host="127.0.0.1:5000";
 		//RESET: apps_current.csv / apps_selection da cancellare
+		this.getAWClient='{"watcher-api-request":{"getAction":"GetAWClient"}}' //CURRENT EVENTS (not filtered)
 		this.startAction='{"watcher-api-request":{"requestAction":{"watchers-management":"START_ALL"}}}' //START SCAN
 		this.stopAction='{"watcher-api-request":{"requestAction":{"watchers-management":"STOP_ALL"}}}' //STOP SCAN
 		this.getAppsCurrentCSV='{"watcher-api-request":{"getAction":"GetCurrentCSV"}}' //CURRENT EVENTS (not filtered)
@@ -38,6 +39,7 @@ class My2secApiClient{
 
 	//==============================
 	//API ACTIONS
+	async getAwClient(){return await this.action("getAWClient")}
 	async startWatchers(){ return await this.action("startAction") }
 	async stopWatchers(){ return await this.action("stopAction") }
 	async getAppsCurrentCsv(){ return await this.action("getAppsCurrentCSV") }

@@ -11,14 +11,15 @@ WORKDIR /home/pn/app
 COPY . /home/pn/app
 
 #PIP INSTALL
-RUN pip install pandas
+# PANDAS DEVE ESSERE QUESTA VERSIONE!!!
+RUN pip install pandas==1.5.3
 #RUN pip install collections
 RUN pip install numpy
 RUN pip install nltk
 RUN pip install scikit-learn
 RUN python -c "import nltk;nltk.download('stopwords');nltk.download('punkt');nltk.download('wordnet');nltk.download('omw-1.4')"
 
-#INSTALL SEPA CLIENT API
+# INSTALL SEPA CLIENT API
 #RUN npm i @arces-wot/sepa-js #already installed locally, test if it works anyways
 
 # replace this with your application's default port

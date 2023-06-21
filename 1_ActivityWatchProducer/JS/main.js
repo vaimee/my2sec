@@ -25,6 +25,8 @@ init();
 
 async function init(){
 	log.info("Initializing Application") 
+
+
 	try{
 		//Get json configuration
 		var json_package=await window.versions.request_user_credentials();
@@ -53,16 +55,21 @@ async function init(){
 		//Initialize UserInfoConsumer
 		_userInfoConsumer= await _initializer.get_userinfomanager()
 
+
+
+		
+
+		
 		//Initialize TaskManager
 		_tasksManager= _initializer.get_tasksmanager(_userInfoConsumer);
 
 
-
 		//Initialize Scan Manager
-		_scanManager= await _initializer.get_scanmanager()
+		_initializer.get_scanmanager().then(res=>{
+			_scanManager=res;
+		}) //!DO NOT AWAIT, CONTAINS A POLLING AND COULD BLOCK CODE EXECUTION
 		//_scanManager.test()
-
-
+		
 
 		//INITIALIZE LOG TIMES MANAGER
 		_logTimesManager= new LogTimesManager(
@@ -74,6 +81,7 @@ async function init(){
 
 
 
+		
 		//CHECK FOR UNVALIDATED ACTIVITIES LEFT, IN CASE PROCEDURE WAS CUT
 		const queryRes=await new SynchronousConsumer(
             _initializer.get_jsap(),
@@ -107,10 +115,13 @@ async function init(){
 
 
 		_initializer.init_dashboardmanager(_userInfoConsumer)
-
 		
-		
-
+		this.log.debug("Querying profession")
+		var userProfessionConsumer=new UserProfessionInfoConsumer(_initializer.get_jsap(),_userInfoConsumer.get_userEmail())
+		const worker_type=await userProfessionConsumer.querySepa();
+		const profession_type=worker_type[0].profession_type.split("#")[1]
+		const div=document.getElementById("user_welcome_worker_type");
+		div.innerHTML=profession_type
 
 	}catch(e){
 		var title="Initialization error in main.js"
@@ -153,6 +164,10 @@ function close_error_panel(){
 //# START-STOP SCAN #
 //###################
 function on_start_button_pressed(){
+	if(document.getElementById("start-stop-button").className=="default-button-deactivated"){
+		this.log.warning("DEFAULT BUTTON IS NOT ACTIVE YET, WAIT A FEW SECONDS PLEASE...")
+		return;
+	}
 	try{
 		_scanManager.onStartButtonPressed()
 	}catch(e){
@@ -205,7 +220,10 @@ async function abort_update_procedure(){
 		_updateManager.trainingActivitiesConsumer.cachedGraphs=[];//clean cache
 		_updateManager.tm.logicalArray={}//clean cache
 		_updateManager.atm.logicalArray={}//clean cache
-		document.getElementById("update-procedure-button").className="default-button-deactivated"
+		//document.getElementById("update-procedure-button").className="default-button-deactivated"
+		//?Reset update panel
+		_scanManager.init_update_button();
+        
 	}catch(e){console.log(e)}
 	
 }

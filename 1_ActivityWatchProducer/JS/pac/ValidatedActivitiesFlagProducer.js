@@ -1,8 +1,8 @@
 class ValidatedActivitiesFlagProducer extends FlagProducer{
-    constructor(jsap,userEmail){
+    constructor(jsap,userEmail,_validatedActivitiesFlag){
         super(jsap)
         if(userEmail==null||userEmail==undefined){throw new Error("User Email must be specified")}
-        this.flag_type="http://www.vaimee.it/my2sec/validatedactivitiesflag";
+        this.flag_type=_validatedActivitiesFlag//"http://www.vaimee.it/my2sec/validatedactivitiesflag";
         this.usergraph="http://www.vaimee.it/my2sec/"+userEmail;
     }
 

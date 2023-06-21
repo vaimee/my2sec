@@ -40,7 +40,43 @@ class AwQueryManager{
     }
 
     //------------------MAIN QUERY--------------------
-    async get_aw_messages(){
+    //?UPDATED FOR MONGO
+    async get_aw_messages_jsonarr(){
+        //Get buckets and time interval
+        var bucketsJson= await this.get_useful_buckets();
+        var startTime=await this.producerBucketClient.get_last_update();
+        var stopTime=await this.producerBucketClient.get_last_stop();
+        this.log.debug("Start Time: "+startTime)
+        this.log.debug("Stop Time: "+stopTime)
+
+        //TODO: CONTROLLA SE FUNZIONA SENZA IL PRIMO START TIME
+        var events={};
+        if(startTime!=null){
+            //TODO: TEST BUGFIX
+            //!BUGFIX: TAKE NOW IF STOPTIME IS NULL 
+            if(stopTime==null){
+                stopTime=new Date().toISOString();
+            }
+            //Adjust interval
+            startTime=new Date(startTime);
+            startTime.setSeconds(startTime.getSeconds()-10)
+            startTime=startTime.toISOString();
+            stopTime=new Date(stopTime);
+            stopTime.setSeconds(stopTime.getSeconds()+10)
+            stopTime=stopTime.toISOString();
+            //Get timeinterval events
+            events= await this.get_useful_events(bucketsJson,startTime,stopTime);
+        }else{
+            //Get all events
+            events= await this.get_all_useful_events(bucketsJson);
+        }
+
+        //return json events
+        return events
+    }
+
+    //!DEPRECATED, SENDS STRING MESSAGE DIRECTLY TO SEPA. CAN LEAD TO SLOW EXECUTION AND INSTABILITY
+    async get_aw_messages_stringarr_formatted4sepa(){
         //Get buckets and time interval
         var bucketsJson= await this.get_useful_buckets();
         var startTime=await this.producerBucketClient.get_last_update();

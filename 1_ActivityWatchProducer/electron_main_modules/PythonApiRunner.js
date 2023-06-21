@@ -8,6 +8,10 @@ class PythonApiRunner{
         this.log=logger;
     }
 
+
+
+
+
     start(){
         //this.pyProcess=spawn("python",[this.pathToExecutable]);
         //var relativePath="./PY/install"
@@ -64,17 +68,35 @@ class PythonApiRunner{
       })   
     }
 
-    start_dev(){
+    async start_dev(){
+      var pythonName="python"
+      const isPy3=await this.is_python_3()
+      if(isPy3){
+        pythonName="python3"
+        this.log.info("Launching dev python api with python3")
+      }else{
+        this.log.info("Launching dev python api with standard python (not python3)")
+      }
       var executablePath="./PY/my2sec/main";
       var cwd=path.resolve(executablePath);
       try{
-        
         this.log.info("Spawning python: "+cwd)
-        this.pyProcess=spawn("python",["API_my2sec.py"],{
+        this.pyProcess=spawn(pythonName,["API_my2sec.py"],{
           cwd:cwd,
           stdio: ['pipe', 'pipe', 'pipe'],
           encoding: 'utf-8'
         });
+        this.pyProcess.stdout.on("data",(data)=>{
+          this.log.info(data)
+        })
+        //on new error
+        this.pyProcess.stderr.on('data', (data) => {
+          this.log.error(`stderr: ${data}`);
+        });
+        //on app close
+        this.pyProcess.stdout.on("close", (code)=>{
+          this.log.info("App exited with code: "+code)
+        })   
         this.log.info("** started python api")
       }catch(e){
         console.log(e)
@@ -84,19 +106,30 @@ class PythonApiRunner{
         //this.log.info("** started python api")   
       }
 
-      //console.log("started python api")
-      //on new data chunk
-      this.pyProcess.stdout.on("data",(data)=>{
-          this.log.info(data)
+ 
+    }
+
+    /**
+     * Detects the current installed version of Python.
+     * Returns true if Python must be launched with the command python3
+     */
+    is_python_3(){
+      return new Promise(resolve=>{
+        const pyProcess=spawn("python3",["-c","print('hello')"]);
+          pyProcess.stdout.on("data",(data)=>{
+            //console.log(data)
+          })
+          //on new error
+          pyProcess.stderr.on('data', (data) => {
+            console.log(`stderr: ${data}`);
+            resolve(false)
+          });
+          //on app close
+          pyProcess.stdout.on("close", (code)=>{
+            console.log("Test python app exited with code: "+code)
+            resolve(true)
+          })   
       })
-      //on new error
-      this.pyProcess.stderr.on('data', (data) => {
-        this.log.error(`stderr: ${data}`);
-      });
-      //on app close
-      this.pyProcess.stdout.on("close", (code)=>{
-        this.log.info("App exited with code: "+code)
-      })   
     }
 
 }

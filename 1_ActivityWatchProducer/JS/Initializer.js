@@ -108,6 +108,9 @@ class Initializer{
         this.log.info("----------< Init SCAN MANAGER >----------")
         //await initControlPanel();
         var scanManager=new ScanManager(this.get_jsap());
+        //console.log(scanManager.secondsToTimeString(60))
+        
+        await scanManager.init_start_scan_button(); //! DO NOT AWAIT INIT SCAN MANAGER, IT IS POLLING SO IT WILL BLOCK CODE EXECUTION UNTIL AW API IS STARTED
         await scanManager.init_update_button();
         this.log.info("Scan manager initialized")
         this.log.debug(`Scan status: ${scanManager.is_scan_running()}`)

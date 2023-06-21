@@ -1,7 +1,8 @@
 class ValidatedActivitiesProducer extends Producer{
-    constructor(jsap,userEmail){
+    constructor(jsap,userEmail,_activities_graph){
         super(jsap,"ADD_VALIDATED_ACTIVITY")
         this.userEmail=userEmail;
+        this._activities_graph=_activities_graph
         if(this.userEmail==null||this.userEmail==undefined){throw new Error("UserEmail cannot be null")}
     }
 
@@ -23,6 +24,7 @@ class ValidatedActivitiesProducer extends Producer{
         title=title.replace(/\'/g,"\\\'"); //POI GLI ASTERISCHI
         var usergraph="http://www.vaimee.it/my2sec/"+this.userEmail;
         var res={
+            activities_graph:this._activities_graph,
             usergraph:usergraph,
             title:title,
             event_type:binding.event_type,

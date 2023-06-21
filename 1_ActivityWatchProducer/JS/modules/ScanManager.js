@@ -1,5 +1,6 @@
 class ScanManager{
     constructor(jsap){
+		this.connectionTester= new ConnectionTester(jsap);
 		this.my2secApiClient= new My2secApiClient(jsap);
 		this.producerBucketClient= new ProducerBucketClient(jsap);
 		this.log=new GregLogs();
@@ -13,6 +14,7 @@ class ScanManager{
         this.updatebutton=document.getElementById("update-procedure-button")
         this.explorerbutton=document.getElementById("explorer-button")
         this.startbutton=document.getElementById("start-stop-innertext")
+		this.startbuttonWrapper=document.getElementById("start-stop-button")
 		//this.producerBucketClient.set_scanned_time(0)
     }
 
@@ -37,6 +39,7 @@ class ScanManager{
 			}catch(e){
 				this.set_scan_status(false);
 				this.log.error(e);
+				_errorManager.injectError("Start watchers error",e)
 			}
 		}else{
 			//stop scan
@@ -45,6 +48,7 @@ class ScanManager{
 				await this.stop_scan();
 			}catch(e){
 				this.log.error(e);
+				_errorManager.injectError("Stop watchers error",e)
 			}
 		}
 	}
@@ -99,10 +103,28 @@ class ScanManager{
 		this.updatebutton.className="default-button"
         this.startbutton.innerHTML=`Resume Scan&nbsp <img class="white-icon" src="Assets/icons/play-outline.svg">`
 	}
+
+
+	async init_start_scan_button(){
+		var status=false
+		while(!status){
+			status=await this.connectionTester.get_my2sec_api_status()
+			if(status){
+				break;
+			}else{
+				await this.wait(3000)
+			}
+		}
+		this.log.info("Activity watch api online!")
+		//this.startbutton.innerHTML=`Start Scan&nbsp <img class="white-icon" src="Assets/icons/play-outline.svg">`
+	}
 	/**
 	 * Collects the scanned time from Aw db and updates the control panel accordingly
 	 */
 	async init_update_button(){
+		//!
+
+
 		var time_scanned = await this.producerBucketClient.get_scanned_time();
 		//console.log(time_scanned)
 		if(time_scanned!=0 && time_scanned!=null){
@@ -111,6 +133,7 @@ class ScanManager{
 			this.updatebutton.className="default-button"
 			//this.explorerbutton.className="default-button-deactivated"
 			this.startbutton.innerHTML=`Resume Scan&nbsp <img class="white-icon" src="Assets/icons/play-outline.svg">`
+			this.startbuttonWrapper.className="default-button"
 			var string=this.secondsToTimeString(time_scanned);
 			this.timerSpan.innerHTML="Scanned: <b>"+string+"</b>"
 		
@@ -120,12 +143,14 @@ class ScanManager{
 			this.updatebutton.className="default-button-deactivated"
 			//this.explorerbutton.className="default-button-deactivated"
 			this.startbutton.innerHTML=`Start Scan&nbsp <img class="white-icon" src="Assets/icons/play-outline.svg">`
+			this.startbuttonWrapper.className="default-button"
+			this.timerSpan.innerHTML="Press \"start scan\""
 		}
 	}
 
 	/**
 	 * Starts a timer synchronized with the private variable this.scan_running.
-	 * Check is scan is running with this.is_scan_running()
+	 * Check if scan is running with this.is_scan_running()
 	 */
 	async start_timer(){
 		this.log.info("Starting timer")
@@ -208,14 +233,15 @@ class ScanManager{
 				seconds=seconds-(minutes*60)
 				string= minutes+"m:"+seconds+"s"
 			}else{
-
+				//ORE
 				var h=Math.floor(seconds/3600)
 				var left_s=seconds-(h*3600);
 				if(left_s<60){
-					string=  h+"h"
+					string=  h+"h:"+"0m:"+left_s+"s"
 				}else{
 					var m=Math.floor(left_s/60)
-					string=  h+"h:"+m+"m"
+					var last_s=left_s-(m*60)
+					string=  h+"h:"+m+"m:"+last_s+"s"
 				}
 
 			}

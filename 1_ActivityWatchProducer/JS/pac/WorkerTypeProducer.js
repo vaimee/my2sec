@@ -66,7 +66,6 @@ class WorkerTypeProducer extends Producer{
         this.log.trace("bindings ok")
         }
 
-        this.log.debug("Executing override query")
         var query=this.bench.sparql(
             this.privateJsap.updates[this.updatename].sparql,
             bindings)

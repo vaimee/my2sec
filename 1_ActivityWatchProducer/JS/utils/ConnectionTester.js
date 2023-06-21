@@ -3,6 +3,7 @@ class ConnectionTester{
         this.log=new GregLogs()
         this.listen_to_connection_status();
         this.awClient=new ActivityWatchSafeClient(jsap)
+        this.my2secApiClient=new My2secApiClient(jsap)
     }
 
     async poll(){
@@ -42,19 +43,19 @@ class ConnectionTester{
             this.log.info("Connected to ActivityWatch")
             if(!isOffline){this.get_connection_div().innerHTML=`<img id="user-menu-icon" style="transform:rotate(0deg);" class="white-icon" src="Assets/icons/wifi.svg" width="20px"> &nbsp Connected `}
         }
+
         console.timeEnd("Connection test completed in")
         console.log(" ")
     }
 
     listen_to_connection_status(){
         window.addEventListener('online', () => {
-            console.error('Became offline')
-            _errorManager.injectError(
-                "Connection Offline",
-                "The application can still perform scans, but upload is disabled."
-                )
-            this.get_connection_div().innerHTML="Offline"
-
+            console.error('Became online')
+            this.get_connection_div().innerHTML="Online"
+            const error_title=_errorManager.getErrorTitle()
+            if(error_title=="Connection Offline"){
+                _errorManager.hideErrorPanel();
+            }
         });
 
         window.addEventListener('offline', () => {
@@ -71,6 +72,17 @@ class ConnectionTester{
 
     async get_sepa_status(){
         var basicSepaClient=new Sepajs.SEPA(jsap);//static queries
+    }
+
+    async get_my2sec_api_status(){
+        try{
+            var res=await this.my2secApiClient.getAwClient()
+            this.log.debug(res)
+        }catch(e){
+            this.log.error(e)
+            return false
+        }
+        return true
     }
 
     async get_activity_watch_status(){

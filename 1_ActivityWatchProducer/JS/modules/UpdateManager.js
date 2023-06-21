@@ -1,5 +1,6 @@
 class UpdateManager{
     constructor(jsap,userEmail,logTimesManager){
+        this.dynamicSubsJsap=jsap;
         this.log=new GregLogs()
         this.userEmail=userEmail;
         this.logTimesManager=logTimesManager;
@@ -21,16 +22,67 @@ class UpdateManager{
 
         //PAC
         this.activityTypesConsumer= new ActivityTypesConsumer(jsap,userEmail);
-        this.awMessagesProducer= new AwMessagesProducer(jsap,userEmail);
-        this.productionFinishedFlagProducer = new ProductionFinishedFlagProducer(jsap,userEmail);
+        this.professionInfoConsumer=new UserProfessionInfoConsumer(jsap,userEmail);
+        this.currentProfessionInfo={}
+
+
+        //TODO: CHANGE TO MONGO
+        this.awMessagesProducer= new MongoDbMessagesProducer(jsap,userEmail);//AwMessagesProducer(jsap,userEmail);
+        //TODO: CHANGE TO MONGO FLAG
+        this.productionFinishedFlagProducer = new MongoProductionFinishedFlagProducer(jsap,userEmail);
+
+
         //TRAINING ACTIVITIES
+        //TODO: MAKE CONFIGURABLE GRAPH AND FLAG!!! @DONE
+        this.trainingActivitiesConsumer; //dichiara
+        //VALIDATED ACTIVITIES
+        //TODO: MAKE CONFIGURABLE GRAPH AND FLAG!!!
+        this.validatedActivitiesProducer//=new ValidatedActivitiesProducer(jsap,userEmail)
+        //TODO: MAKE CONFIGURABLE FLAG
+        this.validatedActivitiesFlagProducer//=new ValidatedActivitiesFlagProducer(jsap,userEmail)
+        //TODO: MAKE CONFIGURABLE GRAPH
+        this.trainingActivitiesRemover//= new TrainingActivitiesRemover(jsap);
+    }
+    getCurrentProfessionInfo(){
+        return this.currentProfessionInfo
+    }
+
+
+    async initDynamicSubscriptions(professionInfo){
+        this.log.info("Initializing Dynamic Subscriptions")
+        this.log.debug(professionInfo)
+        const jsap=this.dynamicSubsJsap
+        const userEmail=this.userEmail;
+        //var _events_graph="http://www.vaimee.it/my2sec/events";
+        var _activities_graph="http://vaimee.it/my2sec/activities";
+        //var _awmapperFlag="http://www.vaimee.it/my2sec/awmapperflag"; //ricevuto dall'aggregatore
+        var _trainingActivitiesFlag="http://www.vaimee.it/my2sec/trainingactivitiesflag"; //prodotto dall'aggregatore
+        var _validatedActivitiesFlag="http://www.vaimee.it/my2sec/validatedactivitiesflag"; //ricevuto dall'aggregatore
+        //CONFIGURABLE GRAPH AND FLAG!!!
+        if(professionInfo.hasOwnProperty("activities_graph")){
+            _activities_graph=professionInfo.activities_graph;
+            this.log.debug("Activities graph override with: "+_activities_graph)
+        }else{this.log.warning("Activities graph is undefined, using default activities graph: "+_activities_graph)}
+      
+        if(professionInfo.hasOwnProperty("trainingActivitiesFlag")){
+            _trainingActivitiesFlag=professionInfo.trainingActivitiesFlag;
+            this.log.debug("trainingActivitiesFlag override with: "+_trainingActivitiesFlag)
+        }else{this.log.warning("trainingActivitiesFlag is undefined, using default trainingActivitiesFlag: "+_trainingActivitiesFlag)}
+        
+        if(professionInfo.hasOwnProperty("validatedActivitiesFlag")){
+            _validatedActivitiesFlag=professionInfo.validatedActivitiesFlag;
+            this.log.debug("validatedActivitiesFlag override with: "+_validatedActivitiesFlag)
+        }else{this.log.warning("validatedActivitiesFlag is undefined, using default validatedActivitiesFlag: "+_validatedActivitiesFlag)}
+
+
         this.trainingActivitiesConsumer=new SynchronousConsumer(
             jsap,
             "USER_TRAINING_ACTIVITIES",
             {
+                activities_graph:_activities_graph,
                 forceUserGraph:"http://www.vaimee.it/my2sec/"+userEmail
             },
-            "http://www.vaimee.it/my2sec/trainingactivitiesflag",
+            _trainingActivitiesFlag,//"http://www.vaimee.it/my2sec/trainingactivitiesflag",
             false,
             true
         );
@@ -39,7 +91,7 @@ class UpdateManager{
             this.log.debug("ACTIVITIES FLAG TRIGGERED")
             var cache
             try{
-                cache=this.trainingActivitiesConsumer.get_cache_by_user("http://www.vaimee.it/my2sec/"+userEmail)
+                cache=this.trainingActivitiesConsumer.get_cache_by_user("http://www.vaimee.it/my2sec/"+userEmail);
             }catch(e){
                 this.log.error(e)
             }
@@ -50,11 +102,17 @@ class UpdateManager{
 		        _errorManager.injectError(title,e)
             })
         })
-        //VALIDATED ACTIVITIES
-        this.validatedActivitiesProducer=new ValidatedActivitiesProducer(jsap,userEmail)
-        this.validatedActivitiesFlagProducer=new ValidatedActivitiesFlagProducer(jsap,userEmail)
-        this.trainingActivitiesRemover= new TrainingActivitiesRemover(jsap);
+
+
+        //TODO: MAKE CONFIGURABLE GRAPH AND FLAG!!!
+        this.validatedActivitiesProducer=new ValidatedActivitiesProducer(jsap,userEmail,_activities_graph)
+        //TODO: MAKE CONFIGURABLE FLAG
+        this.validatedActivitiesFlagProducer=new ValidatedActivitiesFlagProducer(jsap,userEmail,_validatedActivitiesFlag)
+        //TODO: MAKE CONFIGURABLE GRAPH
+        this.trainingActivitiesRemover= new TrainingActivitiesRemover(jsap,_activities_graph);
+        
     }
+
 
     async test(){
         console.log("HELLO!")
@@ -63,10 +121,10 @@ class UpdateManager{
 
     //---------------------------------INTERACTIONS MANAGEMENT---------------------------------
     select_all_visible_rows(){
-        _updateManager.tm.select_all_visible_rows()
+        this.tm.select_all_visible_rows()
     }
     set_all_rows_to_value(value){
-        _updateManager.tm.set_all_rows_to_value(value)
+        this.tm.set_all_rows_to_value(value)
         if(!this.tm.check_none_events()){
             this.log.info("No None events found, reactivating update button")
             this.get_validation_button().className="default-button";
@@ -101,6 +159,9 @@ class UpdateManager{
     async on_update_button_clicked(){
         this.open_validation_panel();
         try{
+            var res=await this.professionInfoConsumer.querySepa();
+            this.currentProfessionInfo=res[0];
+            await this.initDynamicSubscriptions(this.getCurrentProfessionInfo()) //?DYNAMIC UPDATE!
             this.log.info("** Loading working events");
             await this.load_working_events();
             this.log.info("** Working events loaded correctly!");
@@ -110,6 +171,7 @@ class UpdateManager{
         }
     }
     async on_close_button_clicked(){
+        this.activityTypesConsumer.exit()
         this.close_validation_panel();
         /*try{
             await this.abort_procedure()
@@ -125,7 +187,6 @@ class UpdateManager{
                 case "validate_events":
                     console.log(" ")
                     this.log.info("----------< Publishing validated EVENTS >----------")
-                    //this.log.info("** Publishing validated events")
                     await this.publish_validated_events()
                     this.trainingActivitiesConsumer.subscribeToSepa() //!NECESSARY
                     this.set_state("validate_activities")
@@ -429,6 +490,7 @@ class UpdateManager{
 
     //PUBLISH DATA
     async publish_validated_events(){
+        
         //Ask user for confirmation
         if(!confirm("Are you sure?")){
             this.log.info("User aborted upload procedure")
@@ -459,18 +521,23 @@ class UpdateManager{
         this.log.debug("Saving events into AW db")
         var currCsvRes=await this.my2secApiClient.sendCurrentCsv()
         this.log.debug(currCsvRes)
+        
+
+        
 
         //[2] Fetch all events and upload
         //Fetch all events from AwDb
         this.log.debug("Fetching all events from AwDb")
-        var rawEvents=await this.awQueryManager.get_aw_messages()
-        this.log.debug(rawEvents);
+        const jsonEventsArr=await this.awQueryManager.get_aw_messages_jsonarr()
+        this.log.debug(jsonEventsArr);
 
+        
         //Send to SEPA
         //if mongo -> qui invia sia sepa che mongo
         //else solo sepa
         this.log.debug("Updating SEPA")
-        await this.awMessagesProducer.send_messages_to_sepa(rawEvents);
+        //await this.awMessagesProducer.send_messages_to_sepa(rawEvents);
+        await this.awMessagesProducer.send_messages_to_sepa_and_mongo(jsonEventsArr);
 
         this.log.debug("Messages published correctly, sending flag")
         await this.productionFinishedFlagProducer.updateSepa()

@@ -1,25 +1,44 @@
 const express = require('express');
 const MongoDbClient = require("./MongoDbClient")
 
-class MongoDbRouter extends MongoDbClient{
+class MongoDbRouter{
     constructor(uri,database,collection,port){
-        super(uri,database,collection)
+        this.mongoClient=new MongoDbClient(uri,database,collection)
         this.port=port;
         this.router = express();
-        this.router.use(express.json()); 
+        this.router.use(express.json({
+            limit: '20mb'
+        })); 
+        
         this.setup();
     }
 
     setup(){
         this.router.get('/mongodb/api', (request, response) => { //listen to all requests
             console.log(`----<received mongodb GET request>----`)
-            response.json("hello from MongoDbApi!");
+            response.json("{\'status\':\'Hello from MongoDbApi!\'}");
         });
         
         this.router.post('/mongodb/api/insert', async (request,response)=>{
             console.log(`----<received mongodb request>----`)
-            await this.insertFile(request.body)
-            response.json("OK");    
+            try{
+                var res=await this.mongoClient.insertFile(request.body)
+                console.log(res)
+                response.json(res);  
+            }catch(e){
+                response.status(500).json(e)
+            }
+  
+        });
+        this.router.post('/mongodb/api/insertMany', async (request,response)=>{
+            console.log(`----<received mongodb request>----`)
+            try{
+                var res=await this.mongoClient.insertManyFiles(request.body)
+                console.log(res)
+                response.json(res);  
+            }catch(e){
+                response.status(500).json(e)
+            }
         });
         this.router.post('/mongodb/api/find', async (request,response)=>{
             console.log(`----<received mongodb request>----`)
@@ -29,7 +48,7 @@ class MongoDbRouter extends MongoDbClient{
         this.router.post('/mongodb/api/delete', async (request,response)=>{
             console.log(`----<received mongodb request>----`)
             console.log("to be implemented")
-            response.json("TO BE IMPLEMENTED");    
+            response.json("{\'status\':\'TO BE IMPLEMENTED\'}");    
         });
     }
 

@@ -7,6 +7,10 @@ class UserInfoConsumer {
         //log.info("New UserInfoConsumer created!")
     }
 
+    get_userEmail(){
+        return this.usermail
+    }
+
     logspan_usermail(element){
         document.getElementById(element).innerHTML=this.usermail;
     }

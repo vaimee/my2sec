@@ -40,7 +40,7 @@
 	<link rel="stylesheet" type="text/css" href="CSS/updateInterface.css">
 	<link rel="stylesheet" type="text/css" href="CSS/embeddedDashboard.css">
 	<link rel="stylesheet" type="text/css" href="CSS/UserInterface.css">
-	<link rel="stylesheet" type="text/css" href="CSS/taskdashboard.css">
+	<link rel="stylesheet" type="text/css" href="CSS/taskdashboard_material.css">
 	<link rel="stylesheet" type="text/css" href="CSS/bugreport.css">  
 	<link rel="stylesheet" type="text/css" href="CSS/account_panel.css">  
 
@@ -63,11 +63,12 @@
 			&nbsp
 
 		</div>
+		<!--
 		<button style="border-width:2px;border-color:white;border-style:solid;border-radius:5px;" id="bug-report-button"  onclick="onBugReportClick()">
 			report bug
 			<img style="transform: rotate(0deg);" id="user-menu-icon" class="white-icon" src="Assets/icons/message-alert.svg" width="24px">
-		</button>
-		<div id="user_info_wrapper" class="mini-wrapper" onclick="switch_account_panel()">
+		</button>-->
+		<div id="user_info_wrapper" class="mini-wrapper"><!--onclick="switch_account_panel()">-->
 			<img id="user-account-menu-icon" style="transform:rotate(90deg);" class="white-icon" src="Assets/icons/triangle.svg" width="15px"> <!--onclick="switch_user_menu()"> -->
 			&nbsp
 			<span id="user_name">User</span>
@@ -243,18 +244,22 @@
 				</button>
 				</span>
 				<br>
+				<div id="user_welcome_worker_type_wrapper">
+					Profession Type: <b><span id="user_welcome_worker_type">DefaultProfession</span></b>
+				</div>
 				
 			</div>
 			
 			<div id="events_control_panel">
 				<div id="my2sec-api-buttons">
-					<button id="start-stop-button" class="default-button" onclick="on_start_button_pressed()">
+					<button id="start-stop-button" class="default-button-deactivated" onclick="on_start_button_pressed()">
 						<span id="start-stop-innertext" style="display:flex;align-items:center;justify-content:center;">	
-							Start Scan&nbsp
-							<img class="white-icon" src="Assets/icons/play-outline.svg">
+							Start Scan&nbsp&nbsp
+							<div id="update_spinner" class="spinner_inline"></div>
+							<!--<img class="white-icon" src="Assets/icons/play-outline.svg">-->
 						</span>
 					</button>
-					<button id="update-procedure-button" class="default-button" onclick="start_update_procedure()">
+					<button id="update-procedure-button" class="default-button-deactivated" onclick="start_update_procedure()">
 						<span style="display:flex;align-items:center;justify-content:center;">	
 							Upload&nbsp
 							<img class="white-icon" src="Assets/icons/upload.svg">
@@ -329,6 +334,7 @@
 	<!--Remove outdated local_storage_menu
 	<script type="text/javascript" src="JS/local_storage_menu.js"></script>-->
 	<!--CLIENTS-->
+	<script type="text/javascript" src="JS/clients/MongoDbClient.js"></script>
 	<script type="text/javascript" src="JS/clients/My2secApiClient.js"></script>
 	<script type="text/javascript" src="JS/clients/base/ActivityWatchClient.js"></script>
 	<script type="text/javascript" src="JS/clients/base/ActivityWatchSafeClient.js"></script>
@@ -346,10 +352,13 @@
 
 	<script type="text/javascript" src="JS/pac/AwMessagesProducer.js"></script>
 	<script type="text/javascript" src="JS/pac/ProductionFinishedFlagProducer.js"></script>
+	<script type="text/javascript" src="JS/pac/MongoDbMessagesProducer.js"></script>
+	<script type="text/javascript" src="JS/pac/MongoProductionFinishedFlagProducer.js"></script>
 	<script type="text/javascript" src="JS/pac/ValidatedActivitiesProducer.js"></script>
 	<script type="text/javascript" src="JS/pac/ValidatedActivitiesFlagProducer.js"></script>
 	<script type="text/javascript" src="JS/pac/TrainingActivitiesRemover.js"></script>
 
+	<script type="text/javascript" src="JS/pac/UserProfessionInfoConsumer.js"></script>
 	<script type="text/javascript" src="JS/pac/ActivityTypesConsumer.js"></script>
 	<script type="text/javascript" src="JS/pac/WorkerTypesConsumer.js"></script>
 	<script type="text/javascript" src="JS/pac/WorkerTypeProducer.js"></script>

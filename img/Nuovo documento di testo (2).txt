@@ -1,0 +1,24 @@
+HashMap => [
+
+	"s" => ["sensor1","sensor2"]
+
+	"o" => ["temp1","temp2"]
+]
+
+
+
+[
+
+	{
+		"s":{
+			"value":"sensor1",
+			"type":"literal"
+		},
+		"o":"temp1"
+	},
+	{
+		"s":"sensor2",
+		"o":"temp2"
+	}
+
+]

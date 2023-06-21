@@ -89,7 +89,7 @@ class LogTimesManager{
             <div class="work-day-date">
                 <b>&nbspWork day: ${curr_day}</b>
             </div>
-            <hr>
+            <br>
             <div class="work-day-log-times">
                 ${log_times_cells}
             </div>

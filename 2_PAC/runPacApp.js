@@ -1,22 +1,27 @@
-var AwMapper = require("./Apps/AwMapper.js")
-//var KeycloakProducer = require("./Apps/KeycloakProducer.js")
-//var KeycloakMapper = require("./Apps/KeycloakMapper.js")
-var KeycloakAdapter = require("./Apps/KeycloakAdapter.js")
-var SupersetUsersConsumer = require("./Apps/SupersetUsersConsumer.js")
-var OpUsersConsumer = require("./Apps/OpUsersConsumer.js")
-var testClient = require("./Apps/testClient/testClient.js")
-var My2secTester = require("./Apps/testClient/My2secTester.js")
-var AwMapperTester = require("./Apps/testClient/AwMapperTester.js")
-var MultipleBindingsTester = require("./Apps/testClient/MultipleBindingsTester.js")
-var OpAdapterTester = require("./Apps/testClient/OpAdapterTester.js")
-var TestMaster = require("./Apps/testClient/TestMaster.js")
-var AtAggregatorTester = require("./Apps/testClient/AtAggregatorTester.js")
-var AtAggregator = require("./Apps/ActivityTypeAggregator/AtAggregator.js")
-var OpAdapter= require("./Apps/OpAdapter.js")
-var OpConsumer= require("./Apps/OpConsumer.js")
-var SqlActivitiesConsumer= require("./Apps/SqlActivitiesConsumer.js")
-var My2secFormConsumer= require("./Apps/My2secFormConsumer.js")
-var WeatherForecastAdapter= require("./Apps/WeatherForecastAdapter/WeatherForecastAdapter.js")
+const AwMapper=require("./Apps/My2Sec/AwMapper.js")
+//const KeycloakProducer = require("./Apps/My2Sec/KeycloakProducer.js")
+//const KeycloakMapper = require("./Apps/My2Sec/KeycloakMapper.js")
+const KeycloakAdapter = require("./Apps/My2Sec/KeycloakAdapter.js")
+const SupersetUsersConsumer = require("./Apps/My2Sec/SupersetUsersConsumer.js")
+const OpUsersConsumer = require("./Apps/My2Sec/OpUsersConsumer.js")
+const testClient = require("./Tests/My2Sec/testClient.js")
+const My2secTester = require("./Tests/My2Sec/My2secTester.js")
+const AwMapperTester = require("./Tests/My2Sec/AwMapperTester.js")
+const MultipleBindingsTester = require("./Tests/My2Sec/MultipleBindingsTester.js")
+const OpAdapterTester = require("./Tests/My2Sec/OpAdapterTester.js")
+const TestMaster = require("./Tests/My2Sec/TestMaster.js")
+const AtAggregatorTester = require("./Tests/My2Sec/AtAggregatorTester.js")
+const AtAggregator = require("./Apps/My2Sec/ActivityTypeAggregator/AtAggregator.js")
+const OpAdapter= require("./Apps/My2Sec/OpAdapter.js")
+const OpConsumer= require("./Apps/My2Sec/OpConsumer.js")
+const SqlActivitiesConsumer= require("./Apps/My2Sec/SqlActivitiesConsumer.js")
+const My2secFormConsumer= require("./Apps/My2Sec/My2secFormConsumer.js")
+const WeatherForecastAdapter= require("./Apps/Criteria/WeatherForecastAdapter/WeatherForecastAdapter.js")
+const UsersProfessionsConsumer= require("./core/Pattern/My2Sec/UsersProfessionsConsumer.js")
+const ProfessionInfoConsumer= require("./core/Pattern/My2Sec/ProfessionInfoConsumer.js")
+const MongoDbMessagesTester=require("./Tests/My2Sec/MongoDbMessagesTester")
+const MongoTestMaster = require("./Tests/My2Sec/MongoTestMaster.js")
+const MongoAtAggregatorTester = require("./Tests/My2Sec/MongoAtAggregatorTester")
 jsap={};//GLOBAL
 /*##############################################################
 # MAIN INTERFACE OF PAC FACTORY RELOADED, CALL START METHOD HERE
@@ -26,12 +31,6 @@ jsap={};//GLOBAL
 */
 init()
 async function init(){
-console.clear();
-/*console.log("╔═════════════════════════════╗");
-console.log("║    PAC FACTORY INTERFACE    ║");
-console.log("║ ___________________________ ║")
-console.log("║ @Author: Gregorio Monari    ║");=============
-console.log("╚═════════════════════════════╝");.██▓███...▄▄▄*/
 console.log(
 `============================================================================================
 .██▓███...▄▄▄.......▄████▄.......█████▒▄▄▄.......▄████▄..▄▄▄█████▓.▒█████...██▀███.▓██...██▓
@@ -43,7 +42,7 @@ console.log(
 ░▒.░.......▒...▒▒.░..░..▒.......░.......▒...▒▒.░..░..▒.......░......░.▒.▒░...░▒.░.▒░▓██.░▒░.
 ░░.........░...▒...░............░.░.....░...▒...░..........░......░.░.░.▒....░░...░.▒.▒.░░..
 ...............░..░░.░......................░..░░.░...................░.░.....░.....░.░.....
-.. Version 0.6.7 ..░............................░...................................░.░.....
+.. Version 0.7.12 .░............................░...................................░.░.....
 .. Author: Gregorio Monari .................................................................
 ============================================================================================`
 );
@@ -63,12 +62,12 @@ if(arguments.length>1){
         //console.log(arguments)
     }else{
         console.log("No jsap argument found, loading default jsap")
-        jsap=await load_and_override_jsap("./my2sec_26-5-2023.jsap")
+        jsap=await load_and_override_jsap("./resources/my2sec_26-5-2023.jsap")
         //console.log(arguments)
     }
 }else{
     console.log("No jsap argument found, loading default jsap")
-    jsap=await load_and_override_jsap("./my2sec_26-5-2023.jsap")
+    jsap=await load_and_override_jsap("./resources/my2sec_26-5-2023.jsap")
     //console.log(arguments)
 }
 
@@ -138,6 +137,21 @@ switch (arguments[0]) {
     case "WeatherForecastAdapter":
         initWeatherForecastAdapter(arguments.slice(1))
         break;    
+    case "UsersProfessionsConsumer":
+        initUsersProfessionsConsumer(arguments.slice(1))
+        break;  
+    case "ProfessionInfoConsumer":
+        initProfessionInfoConsumer(arguments.slice(1))
+        break;  
+    case "MongoDbMessagesTester":
+        initMongoDbMessagesTester(arguments.slice(1))
+        break;    
+    case "MongoTestMaster":
+        initMongoTestMaster(arguments.slice(1))
+        break;    
+    case "MongoAtAggregatorTester":
+        initMongoAtAggregatorTester(arguments.slice(1))
+        break;    
     case "help":
         showHelp()
         break;
@@ -148,6 +162,36 @@ switch (arguments[0]) {
 }
 }
 
+function initProfessionInfoConsumer(args){
+    var consumer=new ProfessionInfoConsumer(jsap)
+    if(args[0]=="--test"){
+        consumer.test()
+    }else{
+        consumer.start()
+    }
+}
+function initMongoAtAggregatorTester(args){
+    var tester=new MongoAtAggregatorTester(jsap,args)
+    //tester.log.loglevel=0;
+    tester.startMaster()   
+}
+function initMongoTestMaster(args){
+    var tester=new MongoTestMaster(jsap,args)
+    //tester.log.loglevel=0;
+    tester.startMaster()   
+}
+function initMongoDbMessagesTester(args){
+    var test=new MongoDbMessagesTester(jsap,args)
+    test.start()
+}
+function initUsersProfessionsConsumer(args){
+    var consumer=new UsersProfessionsConsumer(jsap)
+    if(args[0]=="--test"){
+        consumer.test()
+    }else{
+        consumer.start()
+    }
+}
 
 function initWeatherForecastAdapter(args){
     var adapter=new WeatherForecastAdapter(jsap,args)
@@ -212,8 +256,6 @@ function initMy2secTester(args){
 
 async function initAtAggregator(args){
     var aggr= new AtAggregator(jsap)
-    var log=aggr.log;
-    log.loglevel=parseInt(args)||0;
     aggr.start()    
 }
 
