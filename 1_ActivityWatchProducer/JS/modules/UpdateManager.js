@@ -75,7 +75,7 @@ class UpdateManager{
         }else{this.log.warning("validatedActivitiesFlag is undefined, using default validatedActivitiesFlag: "+_validatedActivitiesFlag)}
 
 
-        this.trainingActivitiesConsumer=new SynchronousConsumer(
+        this.trainingActivitiesConsumer=new UserSynchronousConsumer(
             jsap,
             "USER_TRAINING_ACTIVITIES",
             {
@@ -83,6 +83,7 @@ class UpdateManager{
                 forceUserGraph:"http://www.vaimee.it/my2sec/"+userEmail
             },
             _trainingActivitiesFlag,//"http://www.vaimee.it/my2sec/trainingactivitiesflag",
+            "http://www.vaimee.it/my2sec/"+userEmail, //!FORCE FLAG USER!
             false,
             true
         );

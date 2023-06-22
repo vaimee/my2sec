@@ -83,13 +83,14 @@ async function init(){
 
 		
 		//CHECK FOR UNVALIDATED ACTIVITIES LEFT, IN CASE PROCEDURE WAS CUT
-		const queryRes=await new SynchronousConsumer(
+		/*const queryRes=await new UserSynchronousConsumer(
             _initializer.get_jsap(),
             "USER_TRAINING_ACTIVITIES",
             {
                 forceUserGraph:"http://www.vaimee.it/my2sec/"+_userInfoConsumer.usermail
             },
             "http://www.vaimee.it/my2sec/trainingactivitiesflag",
+			"http://www.vaimee.it/my2sec/"+userEmail,
             false
         ).querySepa()
 		//var queryRes=await trainingActivitiesConsumer.querySepa();
@@ -108,7 +109,7 @@ async function init(){
 					_errorManager.injectError(title,e)
 				}
 			}
-		}
+		}*/
 
 
 		_accountPanelManager= new AccountPanelManager(_initializer.get_jsap(),_userInfoConsumer)
@@ -221,6 +222,11 @@ async function abort_update_procedure(){
 		_updateManager.tm.logicalArray={}//clean cache
 		_updateManager.atm.logicalArray={}//clean cache
 		//document.getElementById("update-procedure-button").className="default-button-deactivated"
+		try{
+			_updateManager.trainingActivitiesConsumer.exit()
+		}catch(e){
+			console.log(e)
+		}
 		//?Reset update panel
 		_scanManager.init_update_button();
         

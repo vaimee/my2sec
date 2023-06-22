@@ -805,6 +805,19 @@
 				}
 			}
 		},
+		"GET_USER_SYNCHRONIZATION_FLAG":{
+			"sparql":"SELECT * WHERE {GRAPH <http://www.vaimee.it/my2sec/flags> {?flag rdf:type ?flag_type ; my2sec:hasMember ?usergraph ; time:inXSDDateTimeStamp ?timestamp}}",
+			"forcedBindings": {
+				"flag_type": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/production_finished_flag"
+				},
+				"usergraph": {
+					"type": "uri",
+					"value": "http://www.vaimee.it/my2sec/admin@vaimee.it"
+				}
+			}
+		},
 		"GET_ALL_GRAPHS_COUNT":{
 			"sparql":"SELECT ?g (COUNT(?s) AS ?ntriples) WHERE {GRAPH ?g { ?s ?p ?o }}GROUP BY ?g"
 		},
