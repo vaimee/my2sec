@@ -22,6 +22,7 @@ const ProfessionInfoConsumer= require("./core/Pattern/My2Sec/ProfessionInfoConsu
 const MongoDbMessagesTester=require("./Tests/My2Sec/MongoDbMessagesTester")
 const MongoTestMaster = require("./Tests/My2Sec/MongoTestMaster.js")
 const MongoAtAggregatorTester = require("./Tests/My2Sec/MongoAtAggregatorTester")
+const TasksDiagnostics = require("./Apps/My2Sec/TasksDiagnostics")
 jsap={};//GLOBAL
 /*##############################################################
 # MAIN INTERFACE OF PAC FACTORY RELOADED, CALL START METHOD HERE
@@ -151,7 +152,10 @@ switch (arguments[0]) {
         break;    
     case "MongoAtAggregatorTester":
         initMongoAtAggregatorTester(arguments.slice(1))
-        break;    
+        break;   
+    case "TasksDiagnostics":
+        initTasksDiagnostics(arguments.slice(1))
+        break;     
     case "help":
         showHelp()
         break;
@@ -160,6 +164,11 @@ switch (arguments[0]) {
         showHelp()
         break;
 }
+}
+
+function initTasksDiagnostics(args){
+    var pac=new TasksDiagnostics(jsap)
+    pac.start()
 }
 
 function initProfessionInfoConsumer(args){

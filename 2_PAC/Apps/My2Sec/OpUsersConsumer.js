@@ -19,7 +19,6 @@ class OpUsersConsumer extends Consumer{
     console.log("║║ # App: OpUsersConsumer v0.2");
     console.log("║║ ###########################");
     super(jsap_file,"ALL_USERNAMES",{},true);
-    this.log.loglevel=1;
     this.opClient=new OpClient(jsap_file.extended.OpenProjectClientConfiguration);
     this.tasksArr = [
         "http://www.vaimee.it/ontology/my2sec#Developing",
